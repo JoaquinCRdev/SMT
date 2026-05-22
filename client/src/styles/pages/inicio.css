@@ -1,0 +1,252 @@
+body{
+    background-color: #212629;
+    margin: 0%;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#container{
+    background-color: #333;
+    margin: 0%;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+}
+
+#parteBlanca{
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f5;
+    width: 40%;
+    height: 100vh;
+    padding-bottom: 50vh;
+    padding-top: 50vh;
+    border-radius: 0 25% 25% 0 /  50%;
+}
+
+#parteBlanca h1{
+    text-align: center;
+    font-family: 'kantumruy pro';
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+#parteBlanca p{
+    text-align: center;
+    font-family: 'kantumruy pro';
+    font-weight: bold;
+    padding-bottom: 50px;
+}
+
+#formDiv{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    width: 60%;
+    height: 100vh;
+}
+
+#divisor{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+
+#linea1{
+    width: 98%;
+    margin-right: 2%;
+    height: 5px;
+    background-color: #fdf5eb;
+}
+
+
+#linea2{
+    width: 98%;
+    margin-left: 2%;
+    height: 5px;
+    background-color: #fdf5eb;
+}
+
+
+#divRegistrar{
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
+
+.botonRegistrar{
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#tituloRegistro{
+    font-family: 'Kantumruy Pro', sans-serif;
+    color: #fdf5eb;
+    font-size: 50px;
+    font-weight: 800;
+}
+
+
+#botonIniciodeSesión{
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0px 25px;
+}
+
+#o{
+    color: #fdf5eb;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: 'Kantumruy Pro', sans-serif;
+    text-align: center;
+}
+
+#tituloIniciarSesion{
+    color: #fdf5eb;
+    font-size: 50px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+}
+.linkRegistro{
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 0px 25px;
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    body {
+        height: auto;
+        overflow: hidden;
+        align-items: flex-start;
+        width: 100%;
+        border: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #container {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+        width: 100%;
+        background-color: #212629;
+    }
+
+    #parteBlanca {
+        width: 150%;
+        height: 300px;
+        padding: 0 50vw; 
+        padding-top: 50px;
+        border-radius: 0 0 50% 50% / 0 0 60px 60px;
+        box-sizing: border-box;
+    }
+
+    #parteBlanca h1 {
+        font-size: 22px;
+        margin-top: 10px;
+    }
+
+    #logo {
+        width: 100px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    #parteBlanca p {
+        font-size: 14px;
+        padding-bottom: 0;
+    }
+
+    #formDiv {
+        width: 100%;
+        margin-top: 30px;
+        height: auto;
+        padding-bottom: 40px;
+        gap: 16px;
+    }
+
+    #tituloRegistro {
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+
+    #divRegistrar {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+    }
+
+    .linkRegistro {
+        width: 220px;
+        height: 55px;
+        font-size: 20px;
+        margin: 0;
+        justify-content: center;
+        padding: 0;
+    }
+
+    #divisor {
+        width: 80%;
+        height: 40px;
+    }
+
+    #linea1,
+    #linea2 {
+        height: 3px;
+    }
+
+    #o {
+        font-size: 20px;
+    }
+
+    #tituloIniciarSesion {
+        font-size: 16px;
+    }
+
+    #botonIniciodeSesión {
+        width: 220px;
+        height: 55px;
+        font-size: 20px;
+        justify-content: center;
+        padding: 0;
+    }
+}
