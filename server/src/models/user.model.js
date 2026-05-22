@@ -1,21 +1,29 @@
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      trim: true,
+      minlength: [3, "Name must be at least 3 characters long"],
+      maxlength: [50, "Name must be at most 50 characters long"],
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lowercase: true,
+      minlength: [3, "HOW????"],
+      maxlength: [255, "WHY????"],
     },
     password: {
       type: String,
       required: true,
       select: false,
+      minlength: [6, "Password must be at least 6 characters long"],
     },
     role: {
       type: String,
@@ -26,9 +34,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    refreshToken: {
-      type: String,
+    refreshTokens: {
+      type: [String],
       select: false,
+      default: [],
     },
   },
   {
@@ -36,14 +45,24 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = bcrypt.hash(this.password, process.env.SALT_ROUNDS);
-  next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await bcrypt.hash(
+    this.password,
+    process.env.SALT_ROUNDS || 10,
+  );
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  delete obj.refreshTokens;
+  delete obj.__v; //?
+  return obj;
 };
 
 export default mongoose.model("User", userSchema);

@@ -1,10 +1,74 @@
 import * as userService from "../services/user.service.js";
 
-export async function createUser(req, res) {
+export async function register(req, res, next) {
   try {
-    const user = await userService.createUser(req.body);
-    res.status(201).json(user);
+    const result = await userService.register(req.body);
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: true, // solo HTTPS
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+    });
+    res
+      .status(201)
+      .json({ user: result.user, accessToken: result.accessToken });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
+  }
+}
+
+export async function login(req, res, next) {
+  try {
+    const result = await userService.login(req.body);
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: true, // solo HTTPS
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+    });
+    res
+      .status(200)
+      .json({ user: result.user, accessToken: result.accessToken });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function refresh(req, res, next) {
+  try {
+    const result = await userService.refreshToken(req.cookies.refreshToken);
+    res
+      .status(200)
+      .json({ user: result.user, accessToken: result.accessToken });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function logout(req, res, next) {
+  try {
+    await userService.logout(req.user.id, req.cookies.refreshToken);
+    res.clearCookie("refreshToken");
+    res.status(200).json({ message: "Logged out" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getProfile(req, res, next) {
+  try {
+    const result = await userService.getProfile(req.user.id);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getUsers(req, res, next) {
+  try {
+    const result = await userService.getUsers();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
   }
 }

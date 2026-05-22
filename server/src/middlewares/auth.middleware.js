@@ -1,7 +1,7 @@
-import { verifyToken } from "../utils/token.js";
 import { ApiError } from "../utils/ApiError.js";
+import { verifyToken } from "../utils/token.js";
 
-export const authMiddleware = (req, res, next) => {
+export const authenticate = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
