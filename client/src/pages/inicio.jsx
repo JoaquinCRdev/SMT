@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Inicio = () => {
   return (
-    <div id="container">
+    <div id="containerInicio">
       <div id="parteBlanca">
         <h1>Bienvenidos a</h1>
         <img id="logo" src="/logo.png" alt="" />
@@ -13,10 +13,10 @@ const Inicio = () => {
       <div id="formDiv">
         <h1 id="tituloRegistro">Crea Tu Cuenta</h1>
         <div id="divRegistrar">
-          <Link className="linkRegistro" to="/register">
+          <Link className="linkRegistro" to="/registerAdmin">
             Admin
           </Link>
-          <Link className="linkRegistro" to="/register">
+          <Link className="linkRegistro" to="/registerPersonal">
             Personal
           </Link>
         </div>
