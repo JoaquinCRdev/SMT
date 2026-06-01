@@ -148,7 +148,7 @@ body{
     align-items: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 992px) {
     body {
         height: auto;
         overflow: hidden;
