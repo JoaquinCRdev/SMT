@@ -3,13 +3,13 @@
   padding: 0px;
 }
 
-#containerRegisterAdmin {
+#containerRegisterPersonal {
   display: flex;
   min-height: 100vh;          
   background-color: #fcf3e9;
 }
 
-#ladoIzquierdoAdmin {
+#ladoIzquierdoPersonal {
   width: 50%;
   background-color: #fcf3e9;
   display: flex;
@@ -20,7 +20,7 @@
   padding: 40px 60px;
 }
 
-#ladoIzquierdoAdmin h1 {
+#ladoIzquierdoPersonal h1 {
   font-size: 40px;
   font-weight: 900;
   color: #1c2127;
@@ -78,7 +78,7 @@
   border: 2px solid #ff7a00;
 }
 
-#ladoIzquierdoAdmin button {
+#ladoIzquierdoPersonal button {
   width: 220px;
   height: 58px;
   border: none;
@@ -93,11 +93,11 @@
   align-self: center;
 }
 
-#ladoIzquierdoAdmin button:hover {
+#ladoIzquierdoPersonal button:hover {
   transform: scale(1.03);
 }
 
-#ladoIzquierdoAdmin p {
+#ladoIzquierdoPersonal p {
   font-size: 20px;
   font-weight: 700;
   font-family: 'kantumruy pro';
@@ -105,14 +105,14 @@
   align-self: center;
 }
 
-#ladoIzquierdoAdmin a {
+#ladoIzquierdoPersonal a {
   color: #1c2127;
   font-family: 'kantumruy pro';
   font-weight: 900;
   text-decoration: none;
 }
 
-#ladoDerechoAdmin {
+#ladoDerechoPersonal {
   width: 50%;                
   display: flex;
   align-items: center;       
@@ -120,7 +120,7 @@
   overflow: hidden;        
 }
 
-#ladoDerechoAdmin img {
+#ladoDerechoPersonal img {
   width: 100%;
   height: 100%;
   object-fit: contain;        
@@ -137,12 +137,12 @@
   padding: 22px 28px;
 }
 
-#ladoDerechoAdmin {
+#ladoDerechoPersonal {
   align-items: flex-end;       
   justify-content: flex-end;         
 }
 
-#ladoDerechoAdmin img {
+#ladoDerechoPersonal img {
   width: 80%;
   height: auto;   
 }
@@ -151,19 +151,19 @@
 /*celular*/
 @media (max-width: 700px) {
 
-  #containerRegisterAdmin {
+  #containerRegisterPersonal {
     flex-direction: column;
     min-height: 100vh;
   }
 
-  #ladoIzquierdoAdmin {
+  #ladoIzquierdoPersonal {
     width: 100%;
     padding: 20px 12px;
     box-sizing: border-box;
     gap: 14px;
   }
 
-  #ladoIzquierdoAdmin h1 {
+  #ladoIzquierdoPersonal h1 {
     width: 100%;
     font-size: 28px;
     line-height: 1.2;
@@ -171,7 +171,7 @@
   }
 
   .form-container {
-    width: 100%;
+    width: 90%;
     padding: 16px;
     box-sizing: border-box;
     border-radius: 24px;
@@ -195,26 +195,27 @@
     box-sizing: border-box;
   }
 
-  #ladoIzquierdoAdmin button {
-    width: 110px;
-    height: 40px;
-    font-size: 16px;
+  #ladoIzquierdoPersonal button {
+    width: 200px;
+    height: 70px;
+    font-size: 30px;
     border-radius: 30px;
+    margin-top: 50px;
   }
 
-  #ladoIzquierdoAdmin p {
+  #ladoIzquierdoPersonal p {
     font-size: 14px;
     text-align: center;
   }
 
-  #ladoDerechoAdmin {
+  #ladoDerechoPersonal {
     width: 100%;
     justify-content: flex-end;
     align-items: flex-end;
     margin-top: -20px;
   }
 
-  #ladoDerechoAdmin img {
+  #ladoDerechoPersonal img {
     display: none;
   }
 }
