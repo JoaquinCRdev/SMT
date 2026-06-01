@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
@@ -39,6 +40,14 @@ const userSchema = new mongoose.Schema(
       select: false,
       default: [],
     },
+    resetPasswordToken: {
+      type: String,
+      select: false,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -57,10 +66,31 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+userSchema.methods.generateResetToken = function () {
+  const raw = crypto.randomBytes(32).toString("hex");
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(raw)
+    .digest("hex");
+  this.resetPasswordExpires = new Date(Date.now() + 10 * 60 * 1000); //10 minutos
+
+  return raw;
+};
+
+userSchema.statics.findByResetToken = function (token) {
+  const hashed = crypto.createHash("sha256").update(token).digest("hex");
+  return this.findOne({
+    resetPasswordToken: hashed,
+    resetPasswordExpires: { $gt: Date.now() },
+  }).select("+resetPasswordToken +resetPasswordExpires");
+};
+
 userSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   delete obj.refreshTokens;
+  delete obj.resetPasswordToken;
+  delete obj.resetPasswordExpires;
   delete obj.__v; //?
   return obj;
 };

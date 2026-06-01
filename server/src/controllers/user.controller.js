@@ -72,3 +72,21 @@ export async function getUsers(req, res, next) {
     next(error);
   }
 }
+
+export async function forgotPassword(req, res, next) {
+  try {
+    await userService.forgotPassword(req.body.email);
+    res.status(200).json({ message: "Password reset link sent" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPassword(req, res, next) {
+  try {
+    await userService.resetPassword(req.body.token, req.body.newPassword);
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    next(error);
+  }
+}

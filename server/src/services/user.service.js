@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
+import { sendResetEmail } from "../utils/email.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 
 export const register = async (userData) => {
@@ -70,4 +71,29 @@ export const getProfile = async (userId) => {
 export const getUsers = async () => {
   const users = await User.find();
   return users;
+};
+
+export const forgotPassword = async (email) => {
+  const user = await User.findOne({ email }).select(
+    "+resetPasswordToken +resetPasswordExpires",
+  );
+  if (user) {
+    const rawToken = user.generateResetToken();
+    await user.save({ validateBeforeSave: false });
+    await sendResetEmail({ to: email, rawToken });
+  }
+  return { message: "If that user exists a code will be sent" };
+};
+
+export const resetPassword = async (token, newPassword) => {
+  const user = await User.findByResetToken(token);
+  if (!user) {
+    throw new ApiError(400, "Invalid or expired token");
+  }
+  user.password = newPassword;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+
+  return { message: "Password reset successfully" };
 };
