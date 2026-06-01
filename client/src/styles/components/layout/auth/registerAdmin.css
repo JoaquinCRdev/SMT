@@ -1,0 +1,128 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+#containerRegisterAdmin {
+  display: flex;
+  min-height: 100vh;          /* changed from nothing — lets both sides grow together */
+  background-color: #008cff;
+}
+
+#ladoIzquierdoAdmin {
+  width: 50%;
+  background-color: #fcf3e9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  padding: 40px 60px;
+}
+
+#ladoIzquierdoAdmin h1 {
+  font-size: 58px;
+  font-weight: 900;
+  color: #1c2127;
+  line-height: 1.1;
+  max-width: 700px;
+  font-family: 'kantumruy pro';
+}
+.form-container {
+  width: 560px;
+  background: #161d23;
+  border-radius: 28px;
+  padding: 22px 28px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.input-group label {
+  color: #f3eadf;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  font-family: 'kantumruy pro';
+}
+
+.input-group input,
+.input-group select {
+  width: 75%;
+  height: 28px;
+  border-radius: 18px;
+  border: 2px solid #000;
+  background: #f3eadf;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-group select {
+  cursor: pointer;
+  width: 85%;
+  font-family: 'kantumruy pro';
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border: 2px solid #ff7a00;
+}
+
+#ladoIzquierdoAdmin button {
+  width: 220px;
+  height: 58px;
+  border: none;
+  border-radius: 40px;
+  background: #161d23;
+  color: #fdf5eb;
+  font-size: 28px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'kantumruy pro';
+}
+
+#ladoIzquierdoAdmin button:hover {
+  transform: scale(1.03);
+}
+
+#ladoIzquierdoAdmin p {
+  font-size: 20px;
+  font-weight: 700;
+font-family: 'kantumruy pro';
+  color: #1c2127;
+}
+
+#ladoIzquierdoAdmin a {
+  color: #1c2127;
+  font-family: 'kantumruy pro';
+
+  font-style: italic;
+  font-weight: 900;
+
+  text-decoration: none;
+}
+
+#ladoDerechoAdmin {
+  width: 50%;                
+  display: flex;
+  align-items: center;       
+  justify-content: center;    
+  overflow: hidden;        
+}
+
+#ladoDerechoAdmin img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;        
+  display: block;          
+}
