@@ -6,24 +6,24 @@ const RegisterAdmin = () => {
     <div id="containerRegisterAdmin">
       <div id="ladoIzquierdoAdmin">
         <h1>Registra el taller que administras</h1>
-        <div className="form-container">
-          <div className="form-grid">
-            <div className="input-group">
+        <div className="form-containerAdmin">
+          <div className="form-gridAdmin">
+            <div className="input-groupAdmin">
               <label>Nombre</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Razon Social</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>CUIT/RFC/NIT</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Tipo</label>
 
               <select>
@@ -33,22 +33,22 @@ const RegisterAdmin = () => {
               </select>
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Direccion</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Ciudad</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Codigo Postal</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupAdmin">
               <label>Provincia</label>
               <input type="text" />
             </div>

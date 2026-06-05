@@ -1,3 +1,4 @@
+
 body{
     background-color: #212629;
     margin: 0%;
@@ -17,7 +18,7 @@ body{
 
 #parteBlanca{
     display: flex;
-    flex-direction: column;
+    align-items: center;
     background: #f5f5f5;
     width: 40%;
     height: 100vh;
@@ -26,18 +27,35 @@ body{
     border-radius: 0 25% 25% 0 /  50%;
 }
 
-#parteBlanca h1{
+#contenido-parte-blanca{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+}
+
+#contenido-parte-blanca h1{
     text-align: center;
     font-family: 'kantumruy pro';
+    font-size: 50px;
     font-weight: bold;
     margin-top: 50px;
 }
 
-#parteBlanca p{
+#contenido-parte-blanca p{
     text-align: center;
     font-family: 'kantumruy pro';
     font-weight: bold;
+    font-size: 30px;
     padding-bottom: 50px;
+}
+
+#contenido-parte-blanca img{
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    display: block;
 }
 
 #formDiv{
@@ -51,13 +69,16 @@ body{
 
 #divisor{
     display: flex;
+    position:absolute;
+    top: 48vh;
+    left: 40%;
     align-items: center;
-    width: 100%;
+    width: 60%;
     height: 50px;
 }
 
 #linea1{
-    width: 98%;
+    width: 48%;
     margin-right: 2%;
     height: 5px;
     background-color: #fdf5eb;
@@ -65,7 +86,7 @@ body{
 
 
 #linea2{
-    width: 98%;
+    width: 48%;
     margin-left: 2%;
     height: 5px;
     background-color: #fdf5eb;
@@ -76,6 +97,22 @@ body{
     display: flex;
     align-items: center;
     height: 150px;
+}
+
+#contenedorRegistro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    height: 150px;
+}
+
+#contenedorIniciarSesion{
+    display: flex;
+    flex-direction: column;
+    margin-top: 25vh;
+    align-items: center;
+    height: 500px;
 }
 
 .botonRegistrar{
@@ -96,6 +133,7 @@ body{
     color: #fdf5eb;
     font-size: 50px;
     font-weight: 800;
+    margin-bottom: 50px;
 }
 
 
@@ -126,9 +164,11 @@ body{
 
 #tituloIniciarSesion{
     color: #fdf5eb;
+    text-align: center;
     font-size: 50px;
     font-family: 'Kantumruy Pro', sans-serif;
     font-weight: 800;
+    margin-bottom: 50px;
 }
 .linkRegistro{
     margin-right: 10%;
@@ -148,84 +188,100 @@ body{
     align-items: center;
 }
 
-@media (max-width: 992px) {
-    body {
-        height: auto;
-        overflow: hidden;
-        align-items: flex-start;
-        width: 100%;
-        border: 0px;
-        display: flex;
+/* Tablet responsivo: 768px a 992px */
+@media (min-width: 768px) and (max-width: 992px) {
+    #containerInicio {
         flex-direction: column;
-        align-items: center;
-    }
-
-    #container {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-        min-height: 100vh;
+        height: fit-content;
         overflow: auto;
-        width: 100%;
-        background-color: #212629;
     }
 
     #parteBlanca {
-        width: 150%;
+        width: 100%;
         height: 300px;
-        padding: 0 50vw; 
-        padding-top: 50px;
+        padding: 0;
         border-radius: 0 0 50% 50% / 0 0 60px 60px;
-        box-sizing: border-box;
     }
 
-    #parteBlanca h1 {
-        font-size: 22px;
-        margin-top: 10px;
+    #contenido-parte-blanca h1 {
+        font-size: 35px;
+        margin-top: 15px;
     }
 
-    #logo {
-        width: 100px;
-        margin: 0 auto;
-        display: block;
+    #contenido-parte-blanca p {
+        font-size: 20px;
+        padding-bottom: 15px;
     }
 
-    #parteBlanca p {
-        font-size: 14px;
-        padding-bottom: 0;
+    #contenido-parte-blanca img {
+        width: 120px;
+        height: 120px;
     }
 
     #formDiv {
         width: 100%;
-        margin-top: 30px;
+        margin-top: 40px;
         height: auto;
         padding-bottom: 40px;
-        gap: 16px;
     }
 
     #tituloRegistro {
-        font-size: 24px;
-        margin-bottom: 0;
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    #tituloIniciarSesion {
+        font-size: 32px;
+        margin-bottom: 30px;
     }
 
     #divRegistrar {
-        flex-direction: column;
+        flex-direction: row;
         height: auto;
-        gap: 16px;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    #contenedorRegistro {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #contenedorIniciarSesion {
+        height: auto;
+        margin-top: 0;
     }
 
     .linkRegistro {
-        width: 220px;
-        height: 55px;
-        font-size: 20px;
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
         margin: 0;
         justify-content: center;
         padding: 0;
     }
 
+    .botonRegistrar {
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
+    }
+
+    #botonIniciodeSesión {
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
+        justify-content: center;
+        padding: 0;
+    }
+
     #divisor {
-        width: 80%;
+        position: static;
+        width: 100%;
         height: 40px;
+        margin: 20px 0;
+        left: auto;
+        top: auto;
     }
 
     #linea1,
@@ -234,18 +290,166 @@ body{
     }
 
     #o {
-        font-size: 20px;
+        font-size: 25px;
+    }
+}
+
+/* Celular responsivo: hasta 767px */
+@media (max-width: 767.9px) {
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    #root{
+        height: 100%;
+    }
+
+    #containerInicio {
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    #parteBlanca {
+        width: 100%;
+        height: 250px;
+        padding: 30px 20px;
+        margin: 0;
+        padding-bottom: 20px;
+        border-radius: 0 0 50% 50% / 0 0 60px 60px;
+        box-sizing: border-box;
+    }
+
+    #contenido-parte-blanca h1 {
+        font-size: 24px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    #contenido-parte-blanca p {
+        font-size: 14px;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+
+    #contenido-parte-blanca img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    #formDiv {
+        width: 100%;
+        margin-top: 0;
+        height: auto;
+        box-sizing: border-box;
+        gap: 0;
+    }
+
+    #tituloRegistro {
+        font-size: 24px;
+        margin-bottom: 30px;
+        margin-top: 20px;
     }
 
     #tituloIniciarSesion {
-        font-size: 16px;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    #contenedorRegistro {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #contenedorIniciarSesion {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #divRegistrar {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .linkRegistro {
+        width: 80%;
+        height: 50px;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .botonRegistrar {
+        width: 80%;
+        height: 50px;
+        font-size: 18px;
+        margin: 0 auto;
     }
 
     #botonIniciodeSesión {
-        width: 220px;
-        height: 55px;
-        font-size: 20px;
+        width: 180px;
+        height: 50px;
+        font-size: 16px;
+        margin: 0 auto;
         justify-content: center;
         padding: 0;
     }
+
+
+    #tituloRegistro,
+    #tituloIniciarSesion {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    #o {
+        font-size: 16px;
+    }
+
+
+
+
+
+    #divisor {
+        position: static;
+        width: 100%;
+        height: 50px;
+        margin: 20px 0;
+        left: auto;
+        top: auto;
+    }
+
+    #linea1,
+    #linea2 {
+        height: 2px;
+    }
+
+    #o {
+        font-size: 18px;
+    }
+}
+
+/* Celular extra pequeño: hasta 480px */
+@media (max-width: 480px) {
+    #parteBlanca {
+        height: 250px;
+    }
+
+    #contenido-parte-blanca h1 {
+        font-size: 18px;
+    }
+
+    #contenido-parte-blanca p {
+        font-size: 12px;
+    }
+
 }
