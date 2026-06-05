@@ -7,35 +7,35 @@ const RegisterPersonal = () => {
     <div id="containerRegisterPersonal">
       <div id="ladoIzquierdoPersonal">
         <h1>Cuentanos sobre ti y el taller donde trabajas</h1>
-        <div className="form-container">
-          <div className="form-grid">
+        <div className="form-containerPersonal">
+          <div className="form-gridPersonal">
 
-            <div className="input-group">
+            <div className="input-groupPersonal">
               <label>Nombre completo</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupPersonal">
               <label>Carga</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupPersonal">
               <label>Contrasenia</label>
               <input type="password" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupPersonal">
               <label>correo electronico</label>
               <input type="email" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupPersonal">
               <label>taller</label>
               <input type="text" />
             </div>
 
-            <div className="input-group">
+            <div className="input-groupPersonal ">
               <label>Confirmar contrasenia</label>
               <input type="password" />
             </div>
