@@ -1,0 +1,455 @@
+
+body{
+    background-color: #212629;
+    margin: 0%;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#containerInicio{
+    background-color: #333;
+    margin: 0%;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+}
+
+#parteBlanca{
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    width: 40%;
+    height: 100vh;
+    padding-bottom: 50vh;
+    padding-top: 50vh;
+    border-radius: 0 25% 25% 0 /  50%;
+}
+
+#contenido-parte-blanca{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+}
+
+#contenido-parte-blanca h1{
+    text-align: center;
+    font-family: 'kantumruy pro';
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+#contenido-parte-blanca p{
+    text-align: center;
+    font-family: 'kantumruy pro';
+    font-weight: bold;
+    font-size: 30px;
+    padding-bottom: 50px;
+}
+
+#contenido-parte-blanca img{
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    display: block;
+}
+
+#formDiv{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    width: 60%;
+    height: 100vh;
+}
+
+#divisor{
+    display: flex;
+    position:absolute;
+    top: 48vh;
+    left: 40%;
+    align-items: center;
+    width: 60%;
+    height: 50px;
+}
+
+#linea1{
+    width: 48%;
+    margin-right: 2%;
+    height: 5px;
+    background-color: #fdf5eb;
+}
+
+
+#linea2{
+    width: 48%;
+    margin-left: 2%;
+    height: 5px;
+    background-color: #fdf5eb;
+}
+
+
+#divRegistrar{
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
+
+#contenedorRegistro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    height: 150px;
+}
+
+#contenedorIniciarSesion{
+    display: flex;
+    flex-direction: column;
+    margin-top: 25vh;
+    align-items: center;
+    height: 500px;
+}
+
+.botonRegistrar{
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#tituloRegistro{
+    font-family: 'Kantumruy Pro', sans-serif;
+    color: #fdf5eb;
+    font-size: 50px;
+    font-weight: 800;
+    margin-bottom: 50px;
+}
+
+
+#botonIniciodeSesión{
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0px 25px;
+}
+
+#o{
+    color: #fdf5eb;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: 'Kantumruy Pro', sans-serif;
+    text-align: center;
+}
+
+#tituloIniciarSesion{
+    color: #fdf5eb;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    margin-bottom: 50px;
+}
+.linkRegistro{
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 0px 25px;
+    width: 200px;
+    height: 75px;
+    font-size: 30px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 800;
+    background-color: #fdf5eb;
+    color: #212629;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Tablet responsivo: 768px a 992px */
+@media (min-width: 768px) and (max-width: 992px) {
+    #containerInicio {
+        flex-direction: column;
+        height: fit-content;
+        overflow: auto;
+    }
+
+    #parteBlanca {
+        width: 100%;
+        height: 300px;
+        padding: 0;
+        border-radius: 0 0 50% 50% / 0 0 60px 60px;
+    }
+
+    #contenido-parte-blanca h1 {
+        font-size: 35px;
+        margin-top: 15px;
+    }
+
+    #contenido-parte-blanca p {
+        font-size: 20px;
+        padding-bottom: 15px;
+    }
+
+    #contenido-parte-blanca img {
+        width: 120px;
+        height: 120px;
+    }
+
+    #formDiv {
+        width: 100%;
+        margin-top: 40px;
+        height: auto;
+        padding-bottom: 40px;
+    }
+
+    #tituloRegistro {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    #tituloIniciarSesion {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    #divRegistrar {
+        flex-direction: row;
+        height: auto;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    #contenedorRegistro {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #contenedorIniciarSesion {
+        height: auto;
+        margin-top: 0;
+    }
+
+    .linkRegistro {
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
+        margin: 0;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .botonRegistrar {
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
+    }
+
+    #botonIniciodeSesión {
+        width: 200px;
+        height: 60px;
+        font-size: 18px;
+        justify-content: center;
+        padding: 0;
+    }
+
+    #divisor {
+        position: static;
+        width: 100%;
+        height: 40px;
+        margin: 20px 0;
+        left: auto;
+        top: auto;
+    }
+
+    #linea1,
+    #linea2 {
+        height: 3px;
+    }
+
+    #o {
+        font-size: 25px;
+    }
+}
+
+/* Celular responsivo: hasta 767px */
+@media (max-width: 767.9px) {
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    #root{
+        height: 100%;
+    }
+
+    #containerInicio {
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    #parteBlanca {
+        width: 100%;
+        height: 250px;
+        padding: 30px 20px;
+        margin: 0;
+        padding-bottom: 20px;
+        border-radius: 0 0 50% 50% / 0 0 60px 60px;
+        box-sizing: border-box;
+    }
+
+    #contenido-parte-blanca h1 {
+        font-size: 24px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    #contenido-parte-blanca p {
+        font-size: 14px;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+
+    #contenido-parte-blanca img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    #formDiv {
+        width: 100%;
+        margin-top: 0;
+        height: auto;
+        box-sizing: border-box;
+        gap: 0;
+    }
+
+    #tituloRegistro {
+        font-size: 24px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+    }
+
+    #tituloIniciarSesion {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    #contenedorRegistro {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #contenedorIniciarSesion {
+        height: auto;
+        margin-top: 0;
+    }
+
+    #divRegistrar {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .linkRegistro {
+        width: 80%;
+        height: 50px;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .botonRegistrar {
+        width: 80%;
+        height: 50px;
+        font-size: 18px;
+        margin: 0 auto;
+    }
+
+    #botonIniciodeSesión {
+        width: 180px;
+        height: 50px;
+        font-size: 16px;
+        margin: 0 auto;
+        justify-content: center;
+        padding: 0;
+    }
+
+
+    #tituloRegistro,
+    #tituloIniciarSesion {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    #o {
+        font-size: 16px;
+    }
+
+
+
+
+
+    #divisor {
+        position: static;
+        width: 100%;
+        height: 50px;
+        margin: 20px 0;
+        left: auto;
+        top: auto;
+    }
+
+    #linea1,
+    #linea2 {
+        height: 2px;
+    }
+
+    #o {
+        font-size: 18px;
+    }
+}
+
+/* Celular extra pequeño: hasta 480px */
+@media (max-width: 480px) {
+    #parteBlanca {
+        height: 250px;
+    }
+
+    #contenido-parte-blanca h1 {
+        font-size: 18px;
+    }
+
+    #contenido-parte-blanca p {
+        font-size: 12px;
+    }
+
+}
