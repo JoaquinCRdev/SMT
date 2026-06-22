@@ -75,8 +75,8 @@ export async function getUsers(req, res, next) {
 
 export async function forgotPassword(req, res, next) {
   try {
-    await userService.forgotPassword(req.body.email);
-    res.status(200).json({ message: "Password reset link sent" });
+    const result = await userService.forgotPassword(req.body.email);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
