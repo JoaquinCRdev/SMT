@@ -1,8 +1,9 @@
-import cors from "cors";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
-import userRoutes from "./routes/user.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
+import machineRoutes from "./routes/machine.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api", userRoutes);
+app.use("/api", machineRoutes);
 app.use(errorHandler);
 
 export default app;

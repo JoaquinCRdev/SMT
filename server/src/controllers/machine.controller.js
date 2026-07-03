@@ -20,7 +20,10 @@ export async function getMachines(req, res, next) {
 
 export async function getMachineById(req, res, next) {
   try {
-    const machine = await machineService.getMachineById(req.params.id, req.user);
+    const machine = await machineService.getMachineById(
+      req.params.id,
+      req.user,
+    );
     res.status(200).json(machine);
   } catch (error) {
     next(error);
@@ -29,7 +32,11 @@ export async function getMachineById(req, res, next) {
 
 export async function updateMachine(req, res, next) {
   try {
-    const machine = await machineService.updateMachine(req.params.id, req.body, req.user);
+    const machine = await machineService.updateMachine(
+      req.params.id,
+      req.body,
+      req.user,
+    );
     res.status(200).json(machine);
   } catch (error) {
     next(error);

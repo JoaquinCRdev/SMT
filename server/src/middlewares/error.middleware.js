@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/ApiError.js";
+import ApiError from "../utils/ApiError.js";
 export default function errorHandler(err, req, res, next) {
   // Si el error es conocido (ApiError), usamos su status
   if (err instanceof ApiError) {

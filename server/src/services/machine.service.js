@@ -4,7 +4,7 @@ import Machine from "../models/machine.model.js";
 import MachineImage from "../models/machineImage.model.js";
 import MachineDocument from "../models/machineDocument.model.js";
 import MachineTask from "../models/machineTask.model.js";
-import TaskLog from "../models/taskLog.model.js";
+import TaskLog from "../models/Tasklog.model.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
@@ -70,10 +70,16 @@ export async function getMachineById(id, user) {
     throw new ApiError("Invalid machine id", 400);
   }
 
-  const machine = await Machine.findById(id).populate("userId", "name email role");
+  const machine = await Machine.findById(id).populate(
+    "userId",
+    "name email role",
+  );
   if (!machine) throw new ApiError("Machine not found", 404);
 
-  if (user?.role !== "admin" && String(machine.userId?._id || machine.userId) !== String(user.id)) {
+  if (
+    user?.role !== "admin" &&
+    String(machine.userId?._id || machine.userId) !== String(user.id)
+  ) {
     throw new ApiError("Forbidden", 403);
   }
 

@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import { ApiError } from "../utils/ApiError.js";
+import ApiError from "../utils/ApiError.js";
 import { sendResetEmail } from "../utils/email.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 
