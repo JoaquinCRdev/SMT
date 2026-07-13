@@ -7,5 +7,5 @@ export const machineSchema = z.object({
   serialNumber: z.string(),
   description: z.string(),
   status: z.string(),
-  userId: z.string(),
+  userId: z.string().optional(),
 });

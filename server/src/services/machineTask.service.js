@@ -1,31 +1,32 @@
 import mongoose from "mongoose";
-import ApiError from "../utils/ApiError.js";
 import Machine from "../models/machine.model.js";
 import MachineTask from "../models/machineTask.model.js";
 import TaskLog from "../models/taskLog.model.js";
+import ApiError from "../utils/ApiError.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
 async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId)) throw new ApiError("Invalid machine id", 400);
+  if (!isValidObjectId(machineId))
+    throw new ApiError(400, "Invalid machine id");
 
   const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError("Machine not found", 404);
+  if (!machine) throw new ApiError(404, "Machine not found");
 
   if (user?.role !== "admin" && String(machine.userId) !== String(user.id)) {
-    throw new ApiError("Forbidden", 403);
+    throw new ApiError(403, "Forbidden");
   }
 
   return machine;
 }
 
 async function getAccessibleTask(taskId, user) {
-  if (!isValidObjectId(taskId)) throw new ApiError("Invalid task id", 400);
+  if (!isValidObjectId(taskId)) throw new ApiError(400, "Invalid task id");
 
   const task = await MachineTask.findById(taskId);
-  if (!task) throw new ApiError("Task not found", 404);
+  if (!task) throw new ApiError(404, "Task not found");
 
   await getAccessibleMachine(task.machineId, user);
 
@@ -110,7 +111,7 @@ export async function updateTask(id, payload, user) {
 
 export async function changeTaskStatus(id, status, user) {
   if (!["pending", "in_progress", "done"].includes(status)) {
-    throw new ApiError("Invalid status", 400);
+    throw new ApiError(400, "Invalid status");
   }
 
   const task = await getAccessibleTask(id, user);
@@ -119,7 +120,8 @@ export async function changeTaskStatus(id, status, user) {
   task.status = status;
   await task.save();
 
-  const action = previousStatus === "done" && status !== "done" ? "reopened" : "updated";
+  const action =
+    previousStatus === "done" && status !== "done" ? "reopened" : "updated";
 
   await createTaskLog({
     machineId: task.machineId,

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
-import ApiError from "../utils/ApiError.js";
 import Machine from "../models/machine.model.js";
-import MachineImage from "../models/machineImage.model.js";
 import MachineDocument from "../models/machineDocument.model.js";
+import MachineImage from "../models/machineImage.model.js";
 import MachineTask from "../models/machineTask.model.js";
+import MaintenancePlan from "../models/maintenancePlan.model.js";
 import TaskLog from "../models/Tasklog.model.js";
+import ApiError from "../utils/ApiError.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
@@ -67,20 +68,20 @@ export async function getMachines(user, query = {}) {
 
 export async function getMachineById(id, user) {
   if (!isValidObjectId(id)) {
-    throw new ApiError("Invalid machine id", 400);
+    throw new ApiError(400, "Invalid machine id");
   }
 
   const machine = await Machine.findById(id).populate(
     "userId",
     "name email role",
   );
-  if (!machine) throw new ApiError("Machine not found", 404);
+  if (!machine) throw new ApiError(404, "Machine not found");
 
   if (
     user?.role !== "admin" &&
     String(machine.userId?._id || machine.userId) !== String(user.id)
   ) {
-    throw new ApiError("Forbidden", 403);
+    throw new ApiError(403, "Forbidden");
   }
 
   return machine;
@@ -95,7 +96,7 @@ export async function updateMachine(id, payload, user) {
     await machine.save();
   } catch (error) {
     if (error?.code === 11000) {
-      throw new ApiError("Serial number already exists", 409);
+      throw new ApiError(409, "Serial number already exists");
     }
     throw error;
   }
@@ -105,7 +106,7 @@ export async function updateMachine(id, payload, user) {
 
 export async function changeMachineStatus(id, status, user) {
   if (!["active", "inactive", "maintenance"].includes(status)) {
-    throw new ApiError("Invalid status", 400);
+    throw new ApiError(400, "Invalid status");
   }
 
   const machine = await getMachineById(id, user);
@@ -123,6 +124,7 @@ export async function deleteMachine(id, user) {
     MachineDocument.deleteMany({ machineId: machine._id }),
     MachineTask.deleteMany({ machineId: machine._id }),
     TaskLog.deleteMany({ machineId: machine._id }),
+    MaintenancePlan.deleteMany({ machineId: machine._id }),
     Machine.findByIdAndDelete(machine._id),
   ]);
 

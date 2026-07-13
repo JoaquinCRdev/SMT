@@ -1,20 +1,21 @@
 import mongoose from "mongoose";
-import ApiError from "../utils/ApiError.js";
 import Machine from "../models/machine.model.js";
 import MachineDocument from "../models/machineDocument.model.js";
+import ApiError from "../utils/ApiError.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
 async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId)) throw new ApiError("Invalid machine id", 400);
+  if (!isValidObjectId(machineId))
+    throw new ApiError(400, "Invalid machine id");
 
   const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError("Machine not found", 404);
+  if (!machine) throw new ApiError(404, "Machine not found");
 
   if (user?.role !== "admin" && String(machine.userId) !== String(user.id)) {
-    throw new ApiError("Forbidden", 403);
+    throw new ApiError(403, "Forbidden");
   }
 
   return machine;
@@ -38,15 +39,17 @@ export async function uploadMachineDocument(machineId, payload, user) {
 export async function getMachineDocuments(machineId, user) {
   await getAccessibleMachine(machineId, user);
 
-  const documents = await MachineDocument.find({ machineId }).sort({ createdAt: -1 });
+  const documents = await MachineDocument.find({ machineId }).sort({
+    createdAt: -1,
+  });
   return documents;
 }
 
 export async function getMachineDocumentById(id, user) {
-  if (!isValidObjectId(id)) throw new ApiError("Invalid document id", 400);
+  if (!isValidObjectId(id)) throw new ApiError(400, "Invalid document id");
 
   const document = await MachineDocument.findById(id);
-  if (!document) throw new ApiError("Document not found", 404);
+  if (!document) throw new ApiError(404, "Document not found");
 
   await getAccessibleMachine(document.machineId, user);
 
@@ -58,7 +61,8 @@ export async function updateMachineDocument(id, payload, user) {
 
   if (payload.fileName !== undefined) document.fileName = payload.fileName;
   if (payload.fileUrl !== undefined) document.fileUrl = payload.fileUrl;
-  if (payload.storagePath !== undefined) document.storagePath = payload.storagePath;
+  if (payload.storagePath !== undefined)
+    document.storagePath = payload.storagePath;
   if (payload.fileType !== undefined) document.fileType = payload.fileType;
   if (payload.fileSize !== undefined) document.fileSize = payload.fileSize;
 

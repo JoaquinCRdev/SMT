@@ -1,20 +1,21 @@
 import mongoose from "mongoose";
-import ApiError from "../utils/ApiError.js";
 import Machine from "../models/machine.model.js";
 import MachineImage from "../models/machineImage.model.js";
+import ApiError from "../utils/ApiError.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
 async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId)) throw new ApiError("Invalid machine id", 400);
+  if (!isValidObjectId(machineId))
+    throw new ApiError(400, "Invalid machine id");
 
   const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError("Machine not found", 404);
+  if (!machine) throw new ApiError(404, "Machine not found");
 
   if (user?.role !== "admin" && String(machine.userId) !== String(user.id)) {
-    throw new ApiError("Forbidden", 403);
+    throw new ApiError(403, "Forbidden");
   }
 
   return machine;
@@ -36,15 +37,18 @@ export async function addMachineImage(machineId, payload, user) {
 export async function getMachineImages(machineId, user) {
   await getAccessibleMachine(machineId, user);
 
-  const images = await MachineImage.find({ machineId }).sort({ sortOrder: 1, createdAt: -1 });
+  const images = await MachineImage.find({ machineId }).sort({
+    sortOrder: 1,
+    createdAt: -1,
+  });
   return images;
 }
 
 export async function updateMachineImage(id, payload, user) {
-  if (!isValidObjectId(id)) throw new ApiError("Invalid image id", 400);
+  if (!isValidObjectId(id)) throw new ApiError(400, "Invalid image id");
 
   const image = await MachineImage.findById(id);
-  if (!image) throw new ApiError("Image not found", 404);
+  if (!image) throw new ApiError(404, "Image not found");
 
   await getAccessibleMachine(image.machineId, user);
 
@@ -61,10 +65,10 @@ export async function updateMachineImageOrder(id, sortOrder, user) {
 }
 
 export async function deleteMachineImage(id, user) {
-  if (!isValidObjectId(id)) throw new ApiError("Invalid image id", 400);
+  if (!isValidObjectId(id)) throw new ApiError(400, "Invalid image id");
 
   const image = await MachineImage.findById(id);
-  if (!image) throw new ApiError("Image not found", 404);
+  if (!image) throw new ApiError(404, "Image not found");
 
   await getAccessibleMachine(image.machineId, user);
 
