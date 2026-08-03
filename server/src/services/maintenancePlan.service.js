@@ -3,6 +3,7 @@ import Machine from "../models/machine.model.js";
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import ApiError from "../utils/ApiError.js";
+import { getPagination } from "../utils/pagination.js";
 
 const FREQUENCY_DAYS = {
   daily: 1,
@@ -100,9 +101,7 @@ export async function getPlansByMachine(machineId, user, query = {}) {
   if (query.status) filter.status = query.status;
   if (query.frequency) filter.frequency = query.frequency;
 
-  const page = Math.max(parseInt(query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(parseInt(query.limit, 10) || 10, 1), 100);
-  const skip = (page - 1) * limit;
+  const { page, limit, skip } = getPagination(query);
 
   const [items, total] = await Promise.all([
     MaintenancePlan.find(filter)

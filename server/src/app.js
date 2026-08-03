@@ -4,7 +4,7 @@ import express from "express";
 import errorHandler from "./middlewares/error.middleware.js";
 import machineRoutes from "./routes/machine.routes.js";
 import userRoutes from "./routes/user.routes.js";
-import maintenanceRecordRoutes from "./routes/maintenanceRecord.routes.js";
+import maintenanceRecordAllRoutes from "./routes/maintenanceRecordAll.routes.js";
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use("/api", userRoutes);
 app.use("/api", machineRoutes);
-app.use("/api/records", maintenanceRecordRoutes);
+app.use("/api/records", maintenanceRecordAllRoutes);
 app.use(errorHandler);
 
 export default app;

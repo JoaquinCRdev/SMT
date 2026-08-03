@@ -6,6 +6,7 @@ import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
+import { getPagination } from "../utils/pagination.js";
 
 function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
@@ -27,9 +28,7 @@ export async function createMachine(payload, user) {
 }
 
 export async function getMachines(user, query = {}) {
-  const page = Math.max(parseInt(query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(parseInt(query.limit, 10) || 10, 1), 100);
-  const skip = (page - 1) * limit;
+  const { page, limit, skip } = getPagination(query);
 
   const filter = buildAccessFilter(user);
 

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import ApiError from "../utils/ApiError.js";
 import Machine from "../models/machine.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import MaintenanceRecord from "../models/maintenanceRecord.model.js";
+import ApiError from "../utils/ApiError.js";
+import { getPagination } from "../utils/pagination.js";
 
 const FREQUENCY_DAYS = {
   daily: 1,
@@ -74,9 +75,7 @@ export async function createRecord(payload, user) {
 }
 
 export async function getRecords(user, query = {}) {
-  const page = Math.max(parseInt(query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(parseInt(query.limit, 10) || 10, 1), 100);
-  const skip = (page - 1) * limit;
+  const { page, limit, skip } = getPagination(query);
 
   const filter = {};
   if (user?.role !== "admin") filter.userId = user.id;
@@ -102,9 +101,7 @@ export async function getRecords(user, query = {}) {
 export async function getRecordsByMachine(machineId, user, query = {}) {
   await getAccessibleMachine(machineId, user);
 
-  const page = Math.max(parseInt(query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(parseInt(query.limit, 10) || 10, 1), 100);
-  const skip = (page - 1) * limit;
+  const { page, limit, skip } = getPagination(query);
 
   const [items, total] = await Promise.all([
     MaintenanceRecord.find({ machineId })
