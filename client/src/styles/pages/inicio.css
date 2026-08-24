@@ -1,4 +1,3 @@
-
 body{
     background-color: #212629;
     margin: 0%;
@@ -8,7 +7,7 @@ body{
 }
 
 #containerInicio{
-    background-color: #333;
+    background-color: #181a1d;
     margin: 0%;
     display: flex;
     height: 100vh;
@@ -19,7 +18,7 @@ body{
 #parteBlanca{
     display: flex;
     align-items: center;
-    background: #f5f5f5;
+    background: #111315;
     width: 40%;
     height: 100vh;
     padding-bottom: 50vh;
@@ -37,25 +36,28 @@ body{
 
 #contenido-parte-blanca h1{
     text-align: center;
-    font-family: 'kantumruy pro';
+    font-family: 'inter';
     font-size: 50px;
     font-weight: bold;
     margin-top: 50px;
+    color:#f5f5f5;
 }
 
 #contenido-parte-blanca p{
     text-align: center;
-    font-family: 'kantumruy pro';
+    font-family: 'inter';
     font-weight: bold;
-    font-size: 30px;
-    padding-bottom: 50px;
+    font-size: 25px;
+    padding-bottom: 70px;
+    color:#b4b4b4;
 }
 
 #contenido-parte-blanca img{
     width: 80%;
     aspect-ratio: 1 / 1;
-    margin: 0 auto;
+    margin: 15px auto;
     display: block;
+    height: 450px;
 }
 
 #formDiv{
@@ -81,7 +83,7 @@ body{
     width: 48%;
     margin-right: 2%;
     height: 5px;
-    background-color: #fdf5eb;
+    background-color: #111315;
 }
 
 
@@ -89,7 +91,7 @@ body{
     width: 48%;
     margin-left: 2%;
     height: 5px;
-    background-color: #fdf5eb;
+    background-color: #111315;
 }
 
 
@@ -119,17 +121,15 @@ body{
     width: 200px;
     height: 75px;
     font-size: 30px;
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 800;
-    background-color: #fdf5eb;
-    color: #212629;
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
 #tituloRegistro{
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #fdf5eb;
     font-size: 50px;
     font-weight: 800;
@@ -141,10 +141,10 @@ body{
     width: 200px;
     height: 75px;
     font-size: 30px;
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'inter', sans-serif;
     font-weight: 800;
-    background-color: #fdf5eb;
-    color: #212629;
+    background: linear-gradient(to right, #c85d11, #d87b24);
+    color: #f5f5f5;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -158,7 +158,7 @@ body{
     color: #fdf5eb;
     font-size: 50px;
     font-weight: bold;
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'inter', sans-serif;
     text-align: center;
 }
 
@@ -166,10 +166,11 @@ body{
     color: #fdf5eb;
     text-align: center;
     font-size: 50px;
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'inter', sans-serif;
     font-weight: 800;
     margin-bottom: 50px;
 }
+
 .linkRegistro{
     margin-right: 10%;
     margin-left: 10%;
@@ -177,10 +178,10 @@ body{
     width: 200px;
     height: 75px;
     font-size: 30px;
-    font-family: 'Kantumruy Pro', sans-serif;
+    font-family: 'inter', sans-serif;
     font-weight: 800;
-    background-color: #fdf5eb;
-    color: #212629;
+    background: linear-gradient(to right, #c85d11, #d87b24);
+    color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
@@ -296,16 +297,18 @@ body{
 
 /* Celular responsivo: hasta 767px */
 @media (max-width: 767.9px) {
-    body {
-        min-height: 100vh;
+
+    body{
+        background-color: #181a1d;
+    }
+
+html {
+        height: 100%;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
     }
 
-    #root{
-        height: 100%;
-    }
 
     #containerInicio {
         flex-direction: column;
@@ -440,6 +443,9 @@ body{
 
 /* Celular extra pequeño: hasta 480px */
 @media (max-width: 480px) {
+    body{
+        height:100%;
+    }
     #parteBlanca {
         height: 250px;
     }

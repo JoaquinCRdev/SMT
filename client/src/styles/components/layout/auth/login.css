@@ -6,12 +6,12 @@
 #containerLogin {
   display: flex;
   min-height: 100vh;          
-  background-color: #FBEDE1;
+  background-color: #111315;
 }
 
 #ladoIzquierdoLogin {
   width: 50%;
-  background-color: #FBEDE1;
+  background-color: #111315;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,25 +28,25 @@
 #ladoIzquierdoLogin h1 {
   font-size: 40px;
   font-weight: 900;
-  color: #1c2127;
+  color: #f5f5f5;
   line-height: 1.1;
   max-width: 700px;
-  font-family: 'kantumruy pro';
+  font-family: 'inter';
 }
 
 .form-containerLogin {
   width: 560px;
-  background: #161d23;
+  background: #1f2125;
   max-width: 100%;
   box-sizing: border-box;
-  border-radius: 28px;
+  border-radius: 18px;
   padding: 22px 28px;
 }
 
 .form-gridLogin {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .input-groupLogin {
@@ -55,18 +55,18 @@
 }
 
 .input-groupLogin label {
-  color: #f3eadf;
+  color: #b4b4b4;
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 6px;
-  font-family: 'kantumruy pro';
+  font-family: 'inter';
 }
 
 .input-groupLogin input,
 .input-groupLogin select {
   width: 90%;
-  height: 28px;
-  border-radius: 18px;
+  height: 40px;
+  border-radius: 5px;
   border: 2px solid #000;
   background: #f3eadf;
   padding: 0 12px;
@@ -77,7 +77,7 @@
 .input-groupLogin select {
   cursor: pointer;
   width: 85%;
-  font-family: 'kantumruy pro';
+  font-family: 'inter';
 }
 
 .input-groupLogin input:focus,
@@ -86,17 +86,17 @@
 }
 
 #ladoIzquierdoLogin button {
-  width: 220px;
-  height: 58px;
+  width: 550px;
+  height: 70px;
   border: none;
-  border-radius: 40px;
-  background: #161d23;
-  color: #fdf5eb;
+  border-radius: 10px;
+  background: linear-gradient(to right, #c85d11, #d87b24);
+  color: #f5f5f5;
   font-size: 28px;
   font-weight: 800;
   cursor: pointer;
   transition: 0.3s;
-  font-family: 'kantumruy pro';
+  font-family: 'inter';
   align-self: center;
 }
 
@@ -105,16 +105,16 @@
 }
 
 #ladoIzquierdoLogin p {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 700;
-  font-family: 'kantumruy pro';
-  color: #1c2127; 
+  font-family: 'inter';
+  color: #b4b4b4; 
   align-self: center;
 }
 
 #ladoIzquierdoLogin a {
-  color: #1c2127;
-  font-family: 'kantumruy pro';
+  color: #c85d11;
+  font-family: 'inter';
   font-weight: 900;
   text-decoration: none;
 }
@@ -134,6 +134,12 @@
   display: block;          
 }
 
+#loginIniciarSesion a{
+  text-decoration: none;
+  color: #fdf5eb;
+
+}
+
 /*tablet*/
 @media (min-width: 700px) and (max-width: 992px) {
 
@@ -149,9 +155,10 @@
 
   .logoMobileLogin {
   display: block;
-  width: 80%;
+  width: 30%;
   max-width: 450px;
   height: auto;
+  padding-top: 20px;
   margin: 0 auto;
 }
 
@@ -164,6 +171,7 @@
   }
 }
 
+/*celu*/
 @media (max-width: 700px) {
 
   #containerLogin {
@@ -187,6 +195,7 @@
   width: 180px;
   height: auto;
   margin: 0 auto;
+  padding-top: 30px;
 }
 
 #ladoDerechoLogin {
@@ -199,7 +208,7 @@
 
   .form-containerLogin {
     width: 100%;
-    padding: 16px;
+    padding-top: 16px;
     border-radius: 24px;
   }
 

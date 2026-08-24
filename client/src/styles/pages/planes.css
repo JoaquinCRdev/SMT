@@ -1,0 +1,260 @@
+#nuevo{
+    background-color:#111315;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+#containerPlanes{
+    margin: 0;
+    padding: 24px 20px 30px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: 'inter', sans-serif;
+    color: #b4b4b4;
+}
+
+#smtpro{
+    width: 230px;
+    height: auto;
+    margin-top: 0;
+    display: block;
+}
+
+#accede{
+    margin: 8px 0 0;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+}
+
+#containerfuncionalidades{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 12px 20px;
+    width: min(780px, 100%);
+    margin-top: 24px;
+    margin-bottom: 18px;
+}
+
+.funcionalidades{
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    align-items: center;
+    background-color: #222428;
+    border-radius: 14px;
+    padding: 10px 12px;
+    min-height: 62px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+}
+
+.iconos{
+    width: 34px;
+    height: 34px;
+    grid-row: 1 / span 2;
+    align-self: center;
+    justify-self: start;
+}
+
+.funcionalidades h1{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.funcionalidades p{
+    margin: 2px 0 0;
+    font-size: 11px;
+    line-height: 1.2;
+    color: #b4b4b4;
+}
+
+#planes{
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.plan{
+    background-color: #222428;
+    width: 180px;
+    min-height: 108px;
+    padding: 14px 16px 12px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(196, 107, 48, 0.04);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.plan:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    border: 1px solid #ff7a1a;
+}
+
+.plan h1{
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.plan p{
+    margin: 0;
+    color: #f5f5f5;
+}
+
+.plan p:first-of-type{
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.plan p:last-of-type{
+    font-size: 11px;
+    color: #b4b4b4;
+}
+
+.plan.seleccionado{
+    border: 2px solid #ff7a1a;
+    box-shadow: 0 10px 24px rgba(255, 122, 26, 0.25);
+}
+
+.plan.seleccionado h1,
+.plan.seleccionado p:first-of-type{
+    color: #ff7a1a;
+}
+
+#botoncomprar{
+    width: min(700px, 92vw);
+    height: 56px;
+    border: none;
+    border-radius: 16px;
+    margin-top: 24px;
+    background: linear-gradient(to right, #c85d11, #d87b24);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 22px rgba(255, 122, 26, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#botoncomprar:hover{
+    transform: translateY(-3px);
+    background-color: #ff8c36;
+    box-shadow: 0 14px 28px rgba(255, 122, 26, 0.45);
+}
+
+#botoncomprar:active{
+    transform: scale(0.98);
+}
+
+#pago{
+    margin-top: 14px;
+    font-size: 14px;
+    color: #7a7a7a;
+}
+
+/*celular*/
+@media (max-width: 700px) {
+
+    #containerPlanes{
+        padding: 20px 16px 30px;
+    }
+
+    #smtpro{
+        width: 180px;
+    }
+
+    #accede{
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    #containerfuncionalidades{
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .funcionalidades{
+        width: 100%;
+        min-height: 58px;
+    }
+
+    .funcionalidades h1{
+        font-size: 14px;
+    }
+
+    .funcionalidades p{
+        font-size: 10px;
+    }
+
+    #masinfo{
+        width: 135px;
+        height: 34px;
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    #planes{
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .plan{
+        width: 100%;
+        max-width: 420px;
+        min-height: 80px;
+        padding: 10px 14px;
+    }
+
+    .plan h1{
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .plan p:first-of-type{
+        font-size: 24px;
+        margin-bottom: 4px;
+    }
+
+    .plan p:last-of-type{
+        font-size: 10px;
+    }
+
+    #botoncomprar{
+        width: 100%;
+        max-width: 420px;
+        height: 52px;
+        margin-top: 14px;
+        font-size: 16px;
+    }
+
+    #pago{
+        font-size: 13px;
+        text-align: center;
+    }
+}

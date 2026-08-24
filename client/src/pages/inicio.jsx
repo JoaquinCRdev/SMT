@@ -7,8 +7,8 @@ const Inicio = () => {
       <div id="parteBlanca">
         <div id="contenido-parte-blanca">
         <h1>Bienvenidos a</h1>
-        <img id="logo" src="/logo.png" alt="" />
-        <p>Tu espacio donde administras tus maquinas mas facil</p>
+        <img id="logo" src="/logoblanco.png" alt="" />
+        <p>Tu taller, tu informacion, todo en un solo lugar.</p>
         </div>
       </div>
 
@@ -16,7 +16,7 @@ const Inicio = () => {
 
 
         <div id="contenedorRegistro">
-          <h1 id="tituloRegistro">Crea Tu Cuenta</h1>
+          <h1 id="tituloRegistro">Crea tu cuenta</h1>
           <div id="divRegistrar">
             <Link className="linkRegistro" to="/registerAdmin">
               Admin

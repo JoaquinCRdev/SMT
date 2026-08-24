@@ -72,7 +72,13 @@ const RegisterTallerCodigo = () => {
     <div id="containerRegistroTallerCodigo">
       <h1>¡Un último paso para abrir tu taller!</h1>
 
-      <img id="imgcodigo" src="codigo.png" alt="Código de verificación" />
+      <img id="imgcodigo" src="correo.png" alt="" />
+      <div id="descodigo">
+        <h2>Verifica tu correo electrónico</h2>
+        <p>
+          Te hemos enviado un código
+        </p>
+      </div>
 
       <div id="containerInputsCodigo">
         {codigo.map((valor, index) => (
@@ -88,13 +94,14 @@ const RegisterTallerCodigo = () => {
           />
         ))}
       </div>
+
+      <button id="verificarcodigo">Verificar código</button>
+
       <div id="recibisteCodigo">
-        <p>¿No has recibido tu código?</p>
+        <p>¿No recibiste el código?</p>
 
         <button>Reenviar código</button>
       </div>
-
-      <img id="imglogo" src="logo.png" alt="Logo" />
     </div>
   );
 };

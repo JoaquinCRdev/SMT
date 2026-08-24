@@ -1,0 +1,921 @@
+#containermismaquinas {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  background-color: #111315;
+  font-family: "inter";
+}
+
+#ladomismaquinas {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+
+  padding: 25px 35px;
+  box-sizing: border-box;
+
+  background-color: #111315;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: auto;
+}
+
+
+/* =========================================================
+   HEADER MOBILE
+   ========================================================= */
+
+#headermobile {
+
+  width: 100%;
+  height: 45px;
+
+  margin-bottom: 25px;
+
+  padding: 4px;
+
+  box-sizing: border-box;
+
+  background-color: #171717;
+
+  border: 1px solid #2d3135;
+  border-radius: 12px;
+
+  gap: 4px;
+}
+
+#headermobile button {
+  flex: 1;
+
+  border: none;
+  border-radius: 9px;
+
+  background-color: #111315;
+
+  color: #b4b4b4;
+
+  font-family: "inter";
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+#headermobile button.activo {
+  background-color: #b4b4b4;
+  color: #111315;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PARTE SUPERIOR
+   ========================================================= */
+
+#primerdivmismaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 20px;
+}
+
+#primerdivmismaquinas p {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: bold;
+
+  color: #f5f5f5;
+}
+
+#primerdivmismaquinas input {
+  width: 250px;
+  height: 40px;
+
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  border: 1px solid #242424;
+  border-radius: 15px;
+
+  background-color: #171717;
+
+  color: #f5f5f5;
+  font-family: "inter";
+  font-size: 18px;
+
+  outline: none;
+}
+
+#primerdivmismaquinas input::placeholder {
+  color: #b4b4b4;
+}
+
+
+/* =========================================================
+   BOTÓN +
+   ========================================================= */
+
+.botonmas {
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: 1px solid #2d3135;
+  border-radius: 10px;
+
+  background-color: #171717;
+
+  color: #f5f5f5;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.botonmas:hover {
+  background-color: #242424;
+  border-color: #b4b4b4;
+}
+
+
+/* =========================================================
+   CANTIDAD
+   ========================================================= */
+
+#segundodivmismaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-top: 20px;
+}
+#segundodivmismaquinas p {
+  margin: 0;
+
+  color: #b4b4b4;
+
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   LISTA
+   ========================================================= */
+
+#listamaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   TARJETAS - ESCRITORIO
+   ========================================================= */
+
+.tarjetamaquina {
+  width: 100%;
+  min-width: 0;
+  min-height: 145px;
+
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  border: 1px solid #242424;
+  border-radius: 25px;
+
+  background-color: #171717 !important;
+
+  display: grid;
+
+  grid-template-columns:
+    120px
+    minmax(160px, 220px)
+    minmax(0, 1fr)
+    110px;
+
+  align-items: center;
+
+  column-gap: 18px;
+}
+
+
+/* =========================================================
+   IMAGEN
+   ========================================================= */
+
+.imagentarjeta {
+  position: relative;
+
+  width: 120px;
+  height: 120px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #b4b4b4;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.imagentarjeta::after {
+  content: "";
+
+  position: absolute;
+
+  width: 170px;
+  height: 1px;
+
+  background-color: #b4b4b4;
+
+  transform: rotate(-45deg);
+}
+
+.imagentarjeta span {
+  position: relative;
+  z-index: 1;
+
+  color: #b4b4b4;
+
+  font-size: 22px;
+  font-family: "inter";
+
+  transform: rotate(-45deg);
+}
+
+
+/* =========================================================
+   INFORMACIÓN
+   ========================================================= */
+
+.infomaquina {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.infomaquina h2 {
+  width: 100%;
+
+  margin: 0;
+
+  color: #f5f5f5;
+
+  font-size: 20px;
+  font-family: "inter";
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ETIQUETAS
+   ========================================================= */
+
+.etiquetas {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.etiquetas span {
+  padding: 3px 12px;
+
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+
+  color: #f5f5f5;
+
+  font-size: 16px;
+  font-family: "inter";
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   FECHA
+   ========================================================= */
+
+.fecha {
+  margin: 0;
+
+  color: #b4b4b4;
+
+  font-size: 16px;
+  font-family: "inter";
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN
+   ========================================================= */
+
+.descripcionmaquina {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+.descripcionmaquina h3 {
+  margin: 0 0 12px 0;
+
+  color: #b4b4b4;
+
+  font-size: 18px;
+  font-family: "inter";
+}
+
+.descripcionmaquina p {
+  width: 100%;
+
+  margin: 0;
+
+  color: #b4b4b4;
+
+  font-size: 16px;
+  line-height: 1.35;
+  font-family: "inter";
+
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.linea {
+  width: 90%;
+  height: 1px;
+
+  margin-bottom: 22px;
+
+  background-color: #b4b4b4;
+}
+
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+.estado {
+  width: 110px;
+  height: 40px;
+
+  justify-self: end;
+
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #f5f5f5;
+
+  font-size: 16px;
+  font-family: "inter";
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.estado:hover {
+  border-color: #f5f5f5;
+}
+
+
+/* =========================================================
+   TABLET
+   700px - 992px
+   ========================================================= */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+  #ladomismaquinas {
+    padding: 20px;
+  }
+
+
+  /* ---------- PARTE SUPERIOR ---------- */
+
+  #primerdivmismaquinas {
+    gap: 12px;
+  }
+
+  #primerdivmismaquinas p {
+    font-size: 22px;
+  }
+
+  #primerdivmismaquinas input {
+    width: 190px;
+    height: 36px;
+
+    font-size: 15px;
+  }
+
+  .botonmas {
+    width: 28px;
+    height: 28px;
+
+    font-size: 24px;
+  }
+
+
+  /* ---------- CANTIDAD ---------- */
+
+  #segundodivmismaquinas {
+    margin-top: 15px;
+  }
+
+  #segundodivmismaquinas p {
+    font-size: 18px;
+  }
+
+
+  /* ---------- LISTA ---------- */
+
+  #listamaquinas {
+    gap: 14px;
+    margin-top: 15px;
+  }
+
+
+  /* =====================================================
+     TARJETA TABLET
+
+     Sigue siendo horizontal, pero todo se achica.
+     ===================================================== */
+
+  .tarjetamaquina {
+    min-height: 120px;
+
+    padding: 10px 12px;
+
+    border-radius: 20px;
+
+    grid-template-columns:
+      80px
+      minmax(125px, 150px)
+      minmax(0, 1fr)
+      75px;
+
+    column-gap: 12px;
+  }
+
+
+  /* ---------- IMAGEN ---------- */
+
+  .imagentarjeta {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 14px;
+  }
+
+  .imagentarjeta::after {
+    width: 115px;
+  }
+
+  .imagentarjeta span {
+    font-size: 16px;
+  }
+
+
+  /* ---------- INFORMACIÓN ---------- */
+
+  .infomaquina {
+    gap: 7px;
+  }
+
+  .infomaquina h2 {
+    font-size: 16px;
+  }
+
+  .etiquetas {
+    gap: 5px;
+  }
+
+  .etiquetas span {
+    padding: 3px 7px;
+
+    font-size: 12px;
+
+    border-radius: 8px;
+  }
+
+  .fecha {
+    font-size: 12px;
+  }
+
+
+  /* ---------- DESCRIPCIÓN ---------- */
+
+  .descripcionmaquina h3 {
+    margin-bottom: 7px;
+
+    font-size: 14px;
+  }
+
+  .descripcionmaquina p {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .linea {
+    width: 90%;
+
+    margin-bottom: 10px;
+  }
+
+
+  /* ---------- ESTADO ---------- */
+
+  .estado {
+    width: 75px;
+    height: 32px;
+
+    font-size: 12px;
+
+    border-radius: 8px;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+   0 - 699px
+   ========================================================= */
+
+@media (max-width: 699px) {
+
+  #containermismaquinas {
+    display: block;
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+  }
+
+  #headermobile {
+  display: none;
+}
+
+  #ladomismaquinas {
+    width: 100%;
+    height: 100vh;
+
+    padding: 80px 15px 25px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+  }
+
+
+  #primerdivmismaquinas {
+    width: 100%;
+
+    display: flex;
+
+    gap: 8px;
+  }
+
+  #primerdivmismaquinas p {
+    display: none;
+  }
+
+  #primerdivmismaquinas input {
+    flex: 1;
+
+    width: auto;
+    height: 40px;
+
+    padding: 0 14px;
+
+    font-size: 16px;
+
+    border-radius: 12px;
+  }
+
+  .botonmas {
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    font-size: 25px;
+  }
+
+
+  /* =====================================================
+     CANTIDAD
+     ===================================================== */
+
+  #segundodivmismaquinas {
+    margin-top: 15px;
+  }
+
+  #segundodivmismaquinas p {
+    font-size: 18px;
+  }
+
+
+  /* =====================================================
+     LISTA
+     ===================================================== */
+
+  #listamaquinas {
+    width: 100%;
+
+    gap: 15px;
+
+    margin-top: 15px;
+  }
+
+
+  /* =====================================================
+     TARJETA CELULAR
+
+     FILA 1:
+     IMG | INFORMACIÓN
+
+     FILA 2:
+     DESCRIPCIÓN
+
+     FILA 3:
+     ESTADO
+     ===================================================== */
+
+  .tarjetamaquina {
+    width: 100%;
+    min-height: 0;
+
+    padding: 14px;
+
+    border-radius: 20px;
+
+    display: grid;
+
+    grid-template-columns: 82px minmax(0, 1fr);
+
+    grid-template-rows: auto auto auto;
+
+    column-gap: 12px;
+    row-gap: 14px;
+
+    align-items: start;
+  }
+
+
+  /* =====================================================
+     IMAGEN
+     ===================================================== */
+
+  .imagentarjeta {
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 82px;
+    height: 82px;
+
+    border-radius: 13px;
+  }
+
+  .imagentarjeta::after {
+    width: 120px;
+  }
+
+  .imagentarjeta span {
+    font-size: 16px;
+  }
+
+
+  /* =====================================================
+     INFORMACIÓN
+
+     IMPORTANTE:
+     min-width: 0 evita que el texto empuje
+     toda la tarjeta hacia afuera.
+     ===================================================== */
+
+  .infomaquina {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 7px;
+  }
+
+  .infomaquina h2 {
+    width: 100%;
+
+    font-size: 18px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  /* =====================================================
+     ETIQUETAS
+     ===================================================== */
+
+  .etiquetas {
+    display: flex;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
+  }
+
+  .etiquetas span {
+    padding: 3px 8px;
+
+    font-size: 12px;
+
+    border-radius: 8px;
+  }
+
+
+  /* =====================================================
+     FECHA
+     ===================================================== */
+
+  .fecha {
+    max-width: 100%;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+  }
+
+
+  /* =====================================================
+     DESCRIPCIÓN
+
+     Ahora ocupa TODO el ancho de la tarjeta.
+     ===================================================== */
+
+  /* .descripcionmaquina {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+  }
+
+  .descripcionmaquina h3 {
+    margin: 0 0 8px 0;
+
+    font-size: 15px;
+  }
+
+  .descripcionmaquina p {
+    width: 100%;
+
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.4;
+
+    overflow-wrap: break-word;
+  }
+
+  .linea {
+    width: 100%;
+
+    margin-bottom: 10px;
+  } */
+
+
+  /* =====================================================
+     ESTADO
+
+     Ocupa todo el ancho y queda ABAJO de la descripción.
+     ===================================================== */
+
+  .estado {
+    grid-column: 1 / -1;
+    grid-row: 3;
+
+    width: 100%;
+    height: 36px;
+
+    justify-self: stretch;
+
+    margin: 0;
+
+    font-size: 13px;
+
+    border-radius: 9px;
+  }
+}
+
+
+/* =========================================================
+   CELULARES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  #ladomismaquinas {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .tarjetamaquina {
+    grid-template-columns: 70px minmax(0, 1fr);
+
+    padding: 11px;
+
+    column-gap: 10px;
+  }
+
+  .imagentarjeta {
+    width: 70px;
+    height: 70px;
+  }
+
+  .imagentarjeta::after {
+    width: 105px;
+  }
+
+  .imagentarjeta span {
+    font-size: 14px;
+  }
+
+  .infomaquina h2 {
+    font-size: 16px;
+  }
+
+  .etiquetas span {
+    font-size: 11px;
+    padding: 3px 7px;
+  }
+
+  .fecha {
+    font-size: 11px;
+  }
+
+  .descripcionmaquina h3 {
+    font-size: 14px;
+  }
+
+  .descripcionmaquina p {
+    font-size: 12px;
+  }
+
+  .estado {
+    height: 34px;
+    font-size: 12px;
+  }
+}
