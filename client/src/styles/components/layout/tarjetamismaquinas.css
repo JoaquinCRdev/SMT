@@ -1,0 +1,262 @@
+body {
+  margin: 0;
+}
+
+#containertarjeta {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #feefe0;
+  font-family: "kantumruy pro";
+}
+
+.tarjeta {
+  width: 410px;
+  background: #feefe0;
+  border: 1px solid black;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.tarjetaimagen {
+  position: relative;
+  height: 190px;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.tarjetaimagen::after {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 1px;
+  background: black;
+  transform: rotate(22deg);
+}
+
+.tarjetaimagen span {
+  font-size: 22px;
+  font-weight: bold;
+  transform: rotate(22deg);
+  z-index: 1;
+}
+
+.configuracion {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.configuracion img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.tarjetainfo {
+  padding: 20px;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.encabezado h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.estado {
+  width: 125px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: "kantumruy pro";
+}
+
+
+.descripcion {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.descripcion span {
+  font-size: 18px;
+}
+
+.linea {
+  flex: 1;
+  height: 1px;
+  background: black;
+}
+
+.linea2 {
+  width: 100%;
+  height: 1px;
+  background: black;
+  margin-bottom: 20px;
+}
+
+.fecha {
+  margin: 0 0 25px 0;
+  font-size: 18px;
+}
+
+
+.botonaccion {
+  width: 100%;
+  height: 38px;
+  margin-bottom: 14px;
+  border: 1px solid black;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: "kantumruy pro";
+}
+
+.botonaccion:last-child {
+  margin-bottom: 0;
+}
+
+/*tablet*/
+@media (min-width: 700px) and (max-width: 992px) {
+  #containertarjeta {
+    min-height: 100vh;
+    padding: 20px 15px;
+    box-sizing: border-box;
+  }
+
+  .tarjeta {
+    width: 360px;
+  }
+
+  .tarjetaimagen {
+    height: 170px;
+  }
+
+  .tarjetaimagen::after {
+    width: 450px;
+  }
+
+  .encabezado h2 {
+    font-size: 24px;
+  }
+
+  .estado {
+    width: 110px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .descripcion span,
+  .fecha,
+  .botonaccion {
+    font-size: 16px;
+  }
+
+  .botonaccion {
+    height: 36px;
+  }
+
+  .tarjetainfo {
+    padding: 18px;
+  }
+}
+
+/*celular*/
+@media (max-width: 700px) {
+  #containertarjeta {
+    min-height: 100vh;
+    padding: 20px 15px;
+    box-sizing: border-box;
+  }
+
+  .tarjeta {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .tarjetaimagen {
+    height: 160px;
+  }
+
+  .tarjetaimagen::after {
+    width: 420px;
+  }
+
+  .configuracion {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .configuracion img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .tarjetainfo {
+    padding: 15px;
+  }
+
+  .encabezado {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .encabezado h2 {
+    font-size: 22px;
+  }
+
+  .estado {
+    width: 100%;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .descripcion {
+    gap: 10px;
+  }
+
+  .descripcion span {
+    font-size: 16px;
+  }
+
+  .fecha {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .botonaccion {
+    height: 40px;
+    font-size: 16px;
+  }
+}

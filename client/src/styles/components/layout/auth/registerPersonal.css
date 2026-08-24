@@ -1,222 +1,300 @@
-* {
-  margin: 0px;
-  padding: 0px;
-}
-
-#containerRegisterPersonal {
+#contenedorRegisterPersonal {
   display: flex;
-  min-height: 100vh;          
-  background-color: #fcf3e9;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111315;
 }
 
-#ladoIzquierdoPersonal {
-  width: 50%;
-  background-color: #fcf3e9;
+#ladoIzquierdoRegisterPersonal {
+  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
-  gap: 25px;
-  padding: 40px 60px;
+  align-items: center;
+  
 }
 
-#ladoIzquierdoPersonal h1 {
-  font-size: 40px;
-  font-weight: 900;
-  color: #1c2127;
-  line-height: 1.1;
-  max-width: 700px;
-  font-family: 'kantumruy pro';
+#ladoIzquierdoRegisterPersonal h1 {
+  color: #f5f5f5;
+  font-family: "inter";
+  font-size: 50px;
 }
 
-.form-containerPersonal {
-  width: 560px;
-  background: #161d23;
-  border-radius: 28px;
-  padding: 22px 28px;
-}
-
-.form-gridPersonal {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 32px;
-}
-
-.input-groupPersonal {
+#inputsRegisterPersonal {
   display: flex;
   flex-direction: column;
+  padding-top: 60px;
+  padding-bottom: 50px;
+  gap: 15px;
 }
 
-.input-groupPersonal label {
-  color: #f3eadf;
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  font-family: 'kantumruy pro';
-}
-
-.input-groupPersonal input,
-.input-groupPersonal select {
-  width: 75%;
-  height: 28px;
-  border-radius: 18px;
-  border: 2px solid #000;
-  background: #f3eadf;
-  padding: 0 12px;
-  font-size: 14px;
+#inputsRegisterPersonal input {
+  width: 600px;
+  height: 50px;
+  background-color: #222428;
+  border: 2px solid #2d3135;
+  color: #b4b4b4;
+  font-family: "inter";
   outline: none;
+  box-sizing: border-box;
 }
 
-.input-groupPersonal select {
-  cursor: pointer;
-  width: 85%;
-  font-family: 'kantumruy pro';
+#inputsRegisterPersonal input::placeholder {
+  color: #b4b4b4;
 }
 
-.input-groupPersonal input:focus,
-.input-groupPersonal select:focus {
-  border: 2px solid #ff7a00;
+#inputsRegisterPersonal input:focus {
+  border-color: #ff7a00; 
 }
 
-#ladoIzquierdoPersonal button {
-  width: 220px;
-  height: 58px;
-  border: none;
-  border-radius: 40px;
-  background: #161d23;
-  color: #fdf5eb;
-  font-size: 28px;
-  font-weight: 800;
+#ladoIzquierdoRegisterPersonal button {
+  width: 600px;
+  height: 50px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #c85d11, #d87b24);
+  border: #2d3135 2px solid;
+  color: #f5f5f5;
+  font-family: "inter";
+  font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
-  font-family: 'kantumruy pro';
-  align-self: center;
 }
 
-#ladoIzquierdoPersonal button:hover {
+#ladoIzquierdoRegisterPersonal button:hover {
   transform: scale(1.03);
 }
 
-#ladoIzquierdoPersonal p {
-  font-size: 20px;
-  font-weight: 700;
-  font-family: 'kantumruy pro';
-  color: #1c2127; 
-  align-self: center;
+#ladoIzquierdoRegisterPersonal p {
+  color: #b4b4b4;
+  font-family: "inter";
+  font-size: 15px;
+  padding-top: 20px;
 }
 
-#ladoIzquierdoPersonal a {
-  color: #1c2127;
-  font-family: 'kantumruy pro';
-  font-weight: 900;
+#ladoIzquierdoRegisterPersonal p a {
+  color: #f97316;
+  font-family: "inter";
+  font-size: 15px;
   text-decoration: none;
+  cursor: pointer;
 }
 
-#ladoDerechoPersonal {
-  width: 50%;                
+#ladoIzquierdoRegisterPersonal p a:hover{
+  color:#d36313
+}
+
+#ladoDerechoRegisterPersonal {
+  width: 30%;
   display: flex;
-  align-items: center;       
-  justify-content: center;    
-  overflow: hidden;        
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 4px solid #f97316;
+  border-radius: 20px 0px 0px 20px;
 }
 
-#ladoDerechoPersonal img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;        
-  display: block;          
+#ladoDerechoRegisterPersonal h2{
+  color: #b4b4b4;
+  font-family: "inter";
+  font-size: 30px;
+  text-align: center;
 }
 
-/*tablet*/
-@media (min-width: 700px) and (max-width: 992px) {
-.form-containerPersonal {
-  margin-left: 40px;
-  width: 450px;
-  background: #161d23;
-  border-radius: 28px;
-  padding: 22px 28px;
+#contactoRegisterPersonal {
+    display: flex;
+    align-items: center;
+    gap: 30px;         
+    margin-top: 56px;
+    padding-top: 30px;
+    border-top: 1px solid #2d3135;
 }
 
-#ladoDerechoPersonal {
-  align-items: flex-end;       
-  justify-content: flex-end;         
-}
-
-#ladoDerechoPersonal img {
-  width: 80%;
-  height: auto;   
-}
-}
-
-/*celular*/
-@media (max-width: 700px) {
-
-  #containerRegisterPersonal {
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  #ladoIzquierdoPersonal {
-    width: 100%;
-    padding: 20px 12px;
-    box-sizing: border-box;
-    gap: 14px;
-  }
-
-  #ladoIzquierdoPersonal h1 {
-    width: 100%;
-    font-size: 28px;
-    line-height: 1.2;
-    text-align: left;
-  }
-
-  .form-containerPersonal {
-    width: 90%;
-    padding: 16px;
-    box-sizing: border-box;
-    border-radius: 24px;
-  }
-
-  .form-gridPersonal {
+#textoContactoRegisterPersonal {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
+    gap: 5px;
+}
 
-  .input-groupPersonal label {
+#textoContactoRegisterPersonal p {
+    font-family: "inter";
+}
+
+#textoContactoRegisterPersonal p:first-child {
+    color: #b4b4b4;
+    font-size: 15px;
+}
+
+#textoContactoRegisterPersonal p:last-child {
+    color: #f97316;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#textoContactoRegisterPersonal a {
+    color: #f97316;
+    font-size: 15px;
+    font-family: "inter";
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#contactoRegisterPersonal img {
+    width: 38px;
+    height: 38px;
+}
+
+#beneficiosRegisterPersonal {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 60px;
+}
+
+#beneficiosRegisterPersonal div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#beneficiosRegisterPersonal img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+#beneficiosRegisterPersonal p {
+    margin: 0;
+    color: #b4b4b4;
+    font-family: "inter";
     font-size: 16px;
-    margin-bottom: 4px;
-  }
+}
 
-  .input-groupPersonal input,
-  .input-groupPersonal select {
+#inputFileRegisterPersonal {
+    width: 600px;
+}
+
+#inputFileRegisterPersonal label {
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 26px;
+    height: 50px;
+    padding: 0 15px;
+    background-color: #222428;
+    border: 2px solid #2d3135;
+    color: #b4b4b4;
+    font-family: "inter";
+    cursor: pointer;
     box-sizing: border-box;
-  }
+    transition: border-color 0.3s;
+}
 
-  #ladoIzquierdoPersonal button {
-    width: 200px;
-    height: 70px;
-    font-size: 30px;
-    border-radius: 30px;
-    margin-top: 50px;
-  }
+#inputFileRegisterPersonal label:hover {
+    border-color: #ff7a00;
+}
 
-  #ladoIzquierdoPersonal p {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  #ladoDerechoPersonal {
-    width: 100%;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-top: -20px;
-  }
-
-  #ladoDerechoPersonal img {
+#inputFileRegisterPersonal input {
     display: none;
+}
+
+/* TABLET */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+  #ladoIzquierdoRegisterPersonal {
+    width: 65%;
+  }
+
+  #ladoDerechoRegisterPersonal {
+    width: 35%;
+  }
+
+  #ladoIzquierdoRegisterPersonal h1 {
+    font-size: 38px;
+    text-align: center;
+    width: 90%;
+  }
+
+  #ladoDerechoRegisterPersonal h2 {
+    font-size: 24px;
+    width: 90%;
+  }
+
+  #inputsRegisterPersonal input,
+  #inputFileRegisterPersonal{
+    width: 100%;
+  }
+
+  #ladoIzquierdoRegisterPersonal button {
+    width: 60%;
+  }
+
+  #inputFileRegisterPersonal label {
+    width: 100%;
+  }
+
+  #beneficiosRegisterPersonal p {
+    font-size: 14px;
+  }
+
+  #beneficiosRegisterPersonal img {
+    width: 28px;
+    height: 28px;
+  }
+
+  #contactoRegisterPersonal {
+    gap: 20px;
+  }
+
+  #contactoRegisterPersonal img {
+    width: 34px;
+    height: 34px;
+  }
+
+  #textContactoRegisterPersonal p {
+    font-size: 15px
+    
   }
 }
 
+/* CELULAR */
+@media (max-width: 700px) {
+
+  #ladoDerechoRegisterPersonal {
+    display: none;
+  }
+
+  #ladoIzquierdoRegisterPersonal {
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  #ladoIzquierdoRegisterPersonal h1 {
+    font-size: 32px;
+    text-align: center;
+    width: 100%;
+  }
+
+  #inputsRegisterPersonal {
+    width: 100%;
+    align-items: center;
+  }
+
+  #inputsRegisterPersonal input,
+  #inputFileRegisterPersonal,
+  #ladoIzquierdoRegisterPersonal button {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  #inputFileRegisterPersonal label {
+    width: 100%;
+  }
+
+  #ladoIzquierdoRegisterPersonal p {
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+  }
+}
