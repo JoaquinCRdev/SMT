@@ -9,6 +9,7 @@ import Mismaquinas from "./pages/mismaquinas"
 import TarjetaMaquina from "./components/tarjetamismaquinas"
 import RegistrarTaller from "./pages/registrarTaller"
 import Home from "./pages/home"
+import Configuracion from "./pages/configuracion"
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/tarjetamaquina" element={<TarjetaMaquina />} />
           <Route path="/registrarTaller" element={<RegistrarTaller />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/configuracion" element={<Configuracion />} />
         </Routes>
       </BrowserRouter>
     </div> 

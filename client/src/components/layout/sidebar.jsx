@@ -64,7 +64,7 @@ const Sidebar = () => {
 
         {/* MIS MAQUINAS */}
         <NavLink
-          to="/maquinas"
+          to="/mismaquinas"
           className="botonhome"
           onClick={cerrarMenu}
         >
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
         {/* MANTENIMIENTOS */}
         <NavLink
-          to="/mantenimientos"
+          to="/mantenimiento"
           className="botonhome"
           onClick={cerrarMenu}
         >
