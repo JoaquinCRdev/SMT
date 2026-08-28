@@ -10,12 +10,14 @@ import TarjetaMaquina from "./components/tarjetamismaquinas"
 import RegistrarTaller from "./pages/registrarTaller"
 import Home from "./pages/home"
 import Configuracion from "./pages/configuracion"
+import Historial from "./pages/historial"
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path="/historial" element={<Historial/>} />
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/registerAdmin" element={<RegisterAdmin />} />
           <Route path="/registerPersonal" element={<RegisterPersonal />} />
