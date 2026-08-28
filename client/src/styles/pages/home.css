@@ -1,21 +1,36 @@
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
 #containerhome {
   display: flex;
-  background-color: #111315;
+  background-color: var(--FondoPrincipal);
   font-family: "inter";
   height: 100vh;
   margin: 0;
   overflow: hidden;
 }
 
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+========================================================= */
+
 #ladohome {
   flex: 1;
-  background-color: #feefe0;
-  padding: 25px 35px;
+  background-color: var(--FondoPrincipal);
+  padding: 0 32px 30px 32px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  color: var(--TextoPrincipal);
 }
 
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
 
 #primerdivhome {
   display: flex;
@@ -28,18 +43,30 @@
   font-weight: bold;
   margin: 0;
   font-family: "inter";
+  color: var(--TextoPrincipal);
 }
 
 #primerdivhome input {
   width: 250px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 15px;
   padding: 0 15px;
   font-size: 18px;
   background-color: transparent;
+  color: var(--TextoPrincipal);
   font-family: "inter";
+  outline: none;
 }
+
+#primerdivhome input::placeholder {
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   SEGUNDO DIV
+========================================================= */
 
 #segundodivhome {
   display: flex;
@@ -52,17 +79,24 @@
   font-size: 22px;
   margin: 0;
   font-family: "inter";
+  color: var(--TextoPrincipal);
 }
 
 #segundodivhome button {
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 12px;
   background: transparent;
+  color: var(--TextoPrincipal);
   padding: 6px 18px;
   font-size: 18px;
   cursor: pointer;
   font-family: "inter";
 }
+
+
+/* =========================================================
+   LISTA DE MÁQUINAS
+========================================================= */
 
 #listamaquinas {
   display: flex;
@@ -71,16 +105,22 @@
   margin-top: 20px;
 }
 
+
+/* =========================================================
+   AGREGAR MÁQUINA
+========================================================= */
+
 #agregarmaquina {
   margin-top: 20px;
   width: 100%;
   height: 120px;
-  border: 2px dashed #7a7a7a;
+  border: 2px dashed var(--Gris);
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: transparent;
 }
 
 #agregarmaquina img {
@@ -88,19 +128,26 @@
 }
 
 #agregarmaquina:hover {
-  border: 2px solid #7a7a7a;
+  border: 2px solid var(--Gris);
 }
 
 #agregarmaquina:hover img {
   transform: scale(1.1);
 }
 
+
+/* =========================================================
+   TARJETA MÁQUINA
+========================================================= */
+
 .tarjetamaquina {
   width: 100%;
   height: 145px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 25px;
-  background-color: #feefe0;
+  background-color: var(--FondoSecundario);
+  color: var(--TextoPrincipal);
+
   display: flex;
   align-items: center;
   gap: 18px;
@@ -108,15 +155,22 @@
   box-sizing: border-box;
 }
 
+
+/* =========================================================
+   IMAGEN TARJETA
+========================================================= */
+
 .imagentarjeta {
   position: relative;
   width: 120px;
   height: 120px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 18px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   overflow: hidden;
 }
 
@@ -125,15 +179,21 @@
   position: absolute;
   width: 170px;
   height: 1px;
-  background: black;
+  background: var(--TextoPrincipal);
   transform: rotate(-45deg);
 }
 
 .imagentarjeta span {
   font-size: 22px;
   font-family: "inter";
+  color: var(--TextoPrincipal);
   transform: rotate(-45deg);
 }
+
+
+/* =========================================================
+   INFORMACIÓN MÁQUINA
+========================================================= */
 
 .infomaquina {
   width: 220px;
@@ -146,7 +206,13 @@
   margin: 0;
   font-size: 20px;
   font-family: "inter";
+  color: var(--TextoPrincipal);
 }
+
+
+/* =========================================================
+   ETIQUETAS
+========================================================= */
 
 .etiquetas {
   display: flex;
@@ -154,18 +220,30 @@
 }
 
 .etiquetas span {
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 10px;
   padding: 3px 12px;
   font-size: 16px;
   font-family: "inter";
+  color: var(--TextoPrincipal);
 }
+
+
+/* =========================================================
+   FECHA
+========================================================= */
 
 .fecha {
   margin: 0;
   font-size: 16px;
   font-family: "inter";
+  color: var(--TextoSecundario);
 }
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
 
 .descripcionmaquina {
   flex: 1;
@@ -175,6 +253,7 @@
   margin: 0 0 12px 0;
   font-size: 18px;
   font-family: "inter";
+  color: var(--TextoPrincipal);
 }
 
 .descripcionmaquina p {
@@ -182,38 +261,36 @@
   font-size: 16px;
   line-height: 1.3;
   font-family: "inter";
+  color: var(--TextoSecundario);
 }
+
+
+/* =========================================================
+   LÍNEA
+========================================================= */
 
 .linea {
   width: 90%;
   height: 1px;
-  background-color: black;
+  background-color: var(--BordePrincipal);
   margin-bottom: 22px;
 }
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
 
 .estado {
   width: 110px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 10px;
   background: transparent;
+  color: var(--TextoPrincipal);
   font-size: 16px;
   font-family: "inter";
   cursor: pointer;
-}
-
-/* =========================================================
-   HOME - CONTENIDO PRINCIPAL
-========================================================= */
-
-#ladohome {
-  flex: 1;
-  background-color: #0d0d0d;
-  padding: 0 32px 30px 32px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  color: #f5f5f5;
 }
 
 
@@ -235,7 +312,9 @@
 }
 
 
-/* BOTON + */
+/* =========================================================
+   BOTÓN +
+========================================================= */
 
 .botonmas {
   width: 35px;
@@ -244,7 +323,7 @@
   border: none;
   background: transparent;
 
-  color: #8f8f8f;
+  color: var(--Gris);
 
   font-size: 32px;
   font-weight: 300;
@@ -259,11 +338,13 @@
 }
 
 .botonmas:hover {
-  color: #c85d11;
+  color: var(--NaranjaHover);
 }
 
 
-/* NOTIFICACIONES */
+/* =========================================================
+   NOTIFICACIONES
+========================================================= */
 
 .botonnotificaciones {
   position: relative;
@@ -297,8 +378,8 @@
 
   border-radius: 50%;
 
-  background-color: #f97316;
-  color: white;
+  background-color: var(--Naranja);
+  color: #ffffff;
 
   font-size: 10px;
 
@@ -308,22 +389,25 @@
 }
 
 
-/* SEPARADOR */
+/* =========================================================
+   SEPARADOR HEADER
+========================================================= */
 
 .separadorheader {
   width: 1px;
   height: 40px;
 
-  background-color: #2d2d2d;
+  background-color: var(--BordeSuave);
 }
 
 
-/* USUARIO */
+/* =========================================================
+   USUARIO
+========================================================= */
 
 .usuarioheader {
   display: flex;
   align-items: center;
-
   gap: 12px;
 }
 
@@ -337,7 +421,7 @@
 }
 
 .textousuario strong {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   font-size: 12px;
 
@@ -345,7 +429,7 @@
 }
 
 .textousuario span {
-  color: #888;
+  color: var(--TextoSecundario);
 
   font-size: 11px;
 
@@ -353,15 +437,17 @@
 }
 
 
-/* ICONO PERFIL */
+/* =========================================================
+   ICONO PERFIL
+========================================================= */
 
 .iconousuario {
   width: 40px;
   height: 40px;
 
-  background-color: #1c1c1c;
+  background-color: var(--FondoTarjeta);
 
-  border: 1px solid #2d2d2d;
+  border: 1px solid var(--BordeSuave);
 
   border-radius: 8px;
 
@@ -391,11 +477,12 @@
 }
 
 
-/* COLUMNA PRINCIPAL */
+/* =========================================================
+   COLUMNA PRINCIPAL
+========================================================= */
 
 #columnaprincipalhome {
   flex: 1;
-
   min-width: 0;
 }
 
@@ -408,10 +495,10 @@
   width: 100%;
   min-height: 98px;
 
-  border: 1px solid #242424;
+  border: 1px solid var(--BordeSecundario);
   border-radius: 18px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   display: flex;
   align-items: center;
@@ -424,7 +511,9 @@
 }
 
 
-/* ICONO */
+/* =========================================================
+   ICONO BIENVENIDA
+========================================================= */
 
 .iconobienvenida {
   width: 48px;
@@ -447,14 +536,16 @@
 }
 
 
-/* TEXTO */
+/* =========================================================
+   TEXTO BIENVENIDA
+========================================================= */
 
 #bienvenidahome h1 {
   margin: 0;
 
   font-size: 20px;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   font-family: "inter";
 }
@@ -464,14 +555,14 @@
 
   font-size: 14px;
 
-  color: #777;
+  color: var(--TextoSecundario);
 
   font-family: "inter";
 }
 
 
 /* =========================================================
-   TITULOS DE SECCIONES
+   TÍTULOS DE SECCIONES
 ========================================================= */
 
 #resumengeneral {
@@ -487,10 +578,9 @@
   margin: 0 0 20px;
 
   font-size: 19px;
-
   font-weight: 400;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   font-family: "inter";
 }
@@ -508,15 +598,13 @@
   gap: 15px;
 }
 
-
 .tarjetaresumen {
   min-height: 100px;
 
-  border: 1px solid #292929;
-
+  border: 1px solid var(--BordePrincipal);
   border-radius: 12px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   padding: 15px;
 
@@ -528,7 +616,6 @@
   box-sizing: border-box;
 }
 
-
 .tarjetaresumen > div {
   display: flex;
   flex-direction: column;
@@ -536,31 +623,27 @@
   gap: 5px;
 }
 
-
 .tarjetaresumen p {
   margin: 0;
 
   font-size: 12px;
 
-  color: #888;
+  color: var(--TextoSecundario);
 }
-
 
 .tarjetaresumen strong {
   font-size: 24px;
 
   line-height: 1;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 }
-
 
 .tarjetaresumen span {
   font-size: 11px;
 
-  color: #777;
+  color: var(--TextoTerciario);
 }
-
 
 .tarjetaresumen > img {
   width: 38px;
@@ -577,15 +660,14 @@
 #tablaactividad {
   width: 100%;
 
-  border: 1px solid #292929;
+  border: 1px solid var(--BordePrincipal);
 
   border-radius: 17px;
 
   overflow: hidden;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 }
-
 
 .filaactividad {
   min-height: 56px;
@@ -600,37 +682,36 @@
 
   box-sizing: border-box;
 
-  border-bottom: 1px solid #292929;
+  border-bottom: 1px solid var(--BordePrincipal);
 }
-
 
 .filaactividad:last-child {
   border-bottom: none;
 }
 
-
 .filaactividad span {
   font-size: 13px;
 
-  color: #888;
+  color: var(--TextoSecundario);
 
   font-family: "inter";
 }
 
-
 .filaactividad span:first-child {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 }
 
 
-/* CABECERA */
+/* =========================================================
+   CABECERA ACTIVIDAD
+========================================================= */
 
 .encabezadoactividad {
   min-height: 48px;
 }
 
 .encabezadoactividad span {
-  color: #777;
+  color: var(--TextoTerciario);
 
   font-size: 11px;
 
@@ -638,7 +719,9 @@
 }
 
 
-/* ESTADOS */
+/* =========================================================
+   ESTADOS DE ACTIVIDAD
+========================================================= */
 
 .filaactividad .estado {
   width: fit-content;
@@ -658,27 +741,25 @@
   font-family: "inter";
 }
 
-
 .estado.progreso {
-  color: #f97316;
+  color: var(--Naranja);
 
-  background-color: rgba(249, 115, 22, 0.10);
+  background-color: rgba(249, 115, 22, 0.1);
 
   border: 1px solid rgba(249, 115, 22, 0.25);
 }
 
-
 .estado.completado {
-  color: #19c463;
+  color: var(--Verde);
 
-  background-color: rgba(25, 196, 99, 0.10);
+  background-color: rgba(25, 196, 99, 0.1);
 
   border: 1px solid rgba(25, 196, 99, 0.25);
 }
 
 
 /* =========================================================
-   ACCIONES RAPIDAS
+   ACCIONES RÁPIDAS
 ========================================================= */
 
 #accionesrapidas {
@@ -690,18 +771,17 @@
 
   border-radius: 17px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   padding: 24px;
 
   box-sizing: border-box;
 }
 
-
 #accionesrapidas h2 {
   margin: 0 0 25px;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   font-size: 18px;
 
@@ -711,7 +791,9 @@
 }
 
 
-/* BOTONES */
+/* =========================================================
+   BOTONES ACCIONES
+========================================================= */
 
 .accionrapida {
   width: 100%;
@@ -724,9 +806,9 @@
 
   border-radius: 12px;
 
-  background-color: #222222;
+  background-color: var(--FondoBoton);
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   display: flex;
 
@@ -743,18 +825,15 @@
   transition: 0.2s;
 }
 
-
 .accionrapida:last-child {
   margin-bottom: 0;
 }
 
-
 .accionrapida:hover {
-  background-color: #292929;
+  background-color: var(--FondoTarjeta);
 
   transform: translateY(-2px);
 }
-
 
 .accionrapida span {
   font-size: 13px;
@@ -767,7 +846,9 @@
 }
 
 
-/* ICONO ACCION */
+/* =========================================================
+   ICONO ACCIÓN
+========================================================= */
 
 .iconoaccion {
   width: 40px;
@@ -782,523 +863,523 @@
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 }
-
 
 .iconoaccion img {
   width: 22px;
   height: 22px;
 }
- /* =========================================================
-    COMPUTADORA
-   ========================================================= */
+
+
+/* =========================================================
+   COMPUTADORA
+========================================================= */
 
 #accionesrapidas {
-    display: none;
+  display: none;
 }
 
 
 /* =========================================================
    TABLET
-   Mismo diseño que computadora, pero más pequeño
-   ========================================================= */
+========================================================= */
 
 @media (min-width: 700px) and (max-width: 992px) {
 
-    /* ---------- CONTENEDOR GENERAL ---------- */
+  /* ---------- CONTENEDOR GENERAL ---------- */
 
-    #containerhome {
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-    }
+  #containerhome {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    /* ---------- SIDEBAR ---------- */
 
-    #sidebarhome {
-        width: 22%;
-        min-width: 175px;
+  /* ---------- SIDEBAR ---------- */
 
-        padding: 30px 0;
-    }
+  #sidebarhome {
+    width: 22%;
+    min-width: 175px;
 
-    #logohome {
-        width: 110px;
-    }
+    padding: 30px 0;
+  }
 
-    .botonhome {
-        width: 160px;
-        height: 40px;
+  #logohome {
+    width: 110px;
+  }
 
-        font-size: 14px;
+  .botonhome {
+    width: 160px;
+    height: 40px;
 
-        gap: 9px;
-        padding-left: 10px;
-    }
+    font-size: 14px;
 
-    .imageniconoshome {
-        width: 22px;
-        height: 22px;
-    }
+    gap: 9px;
 
-    #botoncerrarsesion {
-        width: 160px;
-        height: 40px;
+    padding-left: 10px;
+  }
 
-        font-size: 14px;
+  .imageniconoshome {
+    width: 22px;
+    height: 22px;
+  }
 
-        gap: 9px;
-        padding-left: 10px;
-    }
+  #botoncerrarsesion {
+    width: 160px;
+    height: 40px;
 
-    #botoncerrarsesion img {
-        width: 22px;
-        height: 22px;
-    }
+    font-size: 14px;
 
+    gap: 9px;
 
-    /* ---------- CONTENIDO ---------- */
+    padding-left: 10px;
+  }
 
-    #ladohome {
-        width: 78%;
-        min-width: 0;
+  #botoncerrarsesion img {
+    width: 22px;
+    height: 22px;
+  }
 
-        padding: 0 18px 20px 18px;
 
-        box-sizing: border-box;
-    }
+  /* ---------- CONTENIDO ---------- */
 
+  #ladohome {
+    width: 78%;
+    min-width: 0;
 
-    /* ---------- BARRA SUPERIOR ---------- */
+    padding: 0 18px 20px 18px;
 
-    #botonesarribahome {
-        height: 60px;
+    box-sizing: border-box;
+  }
 
-        gap: 12px;
-    }
 
-    .botonmas {
-        width: 30px;
-        height: 30px;
+  /* ---------- BARRA SUPERIOR ---------- */
 
-        font-size: 27px;
-    }
+  #botonesarribahome {
+    height: 60px;
 
-    .botonnotificaciones {
-        width: 30px;
-        height: 30px;
-    }
+    gap: 12px;
+  }
 
-    .botonnotificaciones img {
-        width: 21px;
-        height: 21px;
-    }
+  .botonmas {
+    width: 30px;
+    height: 30px;
 
-    .separadorheader {
-        height: 30px;
-    }
+    font-size: 27px;
+  }
 
-    .usuarioheader {
-        gap: 8px;
-    }
+  .botonnotificaciones {
+    width: 30px;
+    height: 30px;
+  }
 
-    .textousuario {
-        gap: 2px;
-    }
+  .botonnotificaciones img {
+    width: 21px;
+    height: 21px;
+  }
 
-    .textousuario strong {
-        font-size: 10px;
-    }
+  .separadorheader {
+    height: 30px;
+  }
 
-    .textousuario span {
-        font-size: 9px;
-    }
+  .usuarioheader {
+    gap: 8px;
+  }
 
-    .iconousuario {
-        width: 34px;
-        height: 34px;
-    }
+  .textousuario {
+    gap: 2px;
+  }
 
-    .iconousuario img {
-        width: 19px;
-        height: 19px;
-    }
+  .textousuario strong {
+    font-size: 10px;
+  }
 
+  .textousuario span {
+    font-size: 9px;
+  }
 
-    /* ---------- CONTENIDO HOME ---------- */
+  .iconousuario {
+    width: 34px;
+    height: 34px;
+  }
 
-    #contenidohome {
-        width: 100%;
+  .iconousuario img {
+    width: 19px;
+    height: 19px;
+  }
 
-        display: block;
-    }
 
-    #columnaprincipalhome {
-        width: 100%;
-    }
+  /* ---------- CONTENIDO HOME ---------- */
 
+  #contenidohome {
+    width: 100%;
 
-    /* ---------- BIENVENIDA ---------- */
+    display: block;
+  }
 
-    #bienvenidahome {
-        min-height: 80px;
+  #columnaprincipalhome {
+    width: 100%;
+  }
 
-        padding: 15px 18px;
 
-        gap: 12px;
+  /* ---------- BIENVENIDA ---------- */
 
-        border-radius: 14px;
-    }
+  #bienvenidahome {
+    min-height: 80px;
 
-    .iconobienvenida {
-        width: 40px;
-        height: 40px;
+    padding: 15px 18px;
 
-        border-radius: 10px;
-    }
+    gap: 12px;
 
-    .iconobienvenida img {
-        width: 21px;
-        height: 21px;
-    }
+    border-radius: 14px;
+  }
 
-    #bienvenidahome h1 {
-        font-size: 18px;
-    }
+  .iconobienvenida {
+    width: 40px;
+    height: 40px;
 
-    #bienvenidahome p {
-        font-size: 12px;
-    }
+    border-radius: 10px;
+  }
 
+  .iconobienvenida img {
+    width: 21px;
+    height: 21px;
+  }
 
-    /* ---------- RESUMEN ---------- */
+  #bienvenidahome h1 {
+    font-size: 18px;
+  }
 
-    #resumengeneral {
-        margin-top: 22px;
-    }
+  #bienvenidahome p {
+    font-size: 12px;
+  }
 
-    #resumengeneral h2,
-    #actividadhome h2 {
-        margin-bottom: 14px;
 
-        font-size: 17px;
-    }
+  /* ---------- RESUMEN ---------- */
 
+  #resumengeneral {
+    margin-top: 22px;
+  }
 
-    /* ---------- TARJETAS ---------- */
+  #resumengeneral h2,
+  #actividadhome h2 {
+    margin-bottom: 14px;
 
-    #tarjetasresumen {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    font-size: 17px;
+  }
 
-        gap: 10px;
-    }
 
-    .tarjetaresumen {
-        min-height: 85px;
+  /* ---------- TARJETAS ---------- */
 
-        padding: 10px;
+  #tarjetasresumen {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
-        border-radius: 10px;
-    }
+    gap: 10px;
+  }
 
-    .tarjetaresumen > div {
-        gap: 3px;
-    }
+  .tarjetaresumen {
+    min-height: 85px;
 
-    .tarjetaresumen p {
-        font-size: 10px;
-    }
+    padding: 10px;
 
-    .tarjetaresumen strong {
-        font-size: 20px;
-    }
+    border-radius: 10px;
+  }
 
-    .tarjetaresumen span {
-        font-size: 9px;
-    }
+  .tarjetaresumen > div {
+    gap: 3px;
+  }
 
-    .tarjetaresumen > img {
-        width: 28px;
-        height: 28px;
-    }
+  .tarjetaresumen p {
+    font-size: 10px;
+  }
 
+  .tarjetaresumen strong {
+    font-size: 20px;
+  }
 
-    /* ---------- ACTIVIDAD ---------- */
+  .tarjetaresumen span {
+    font-size: 9px;
+  }
 
-    #actividadhome {
-        margin-top: 22px;
-    }
+  .tarjetaresumen > img {
+    width: 28px;
+    height: 28px;
+  }
 
-    #tablaactividad {
-        width: 100%;
 
-        border-radius: 13px;
-    }
+  /* ---------- ACTIVIDAD ---------- */
 
-    .filaactividad {
-        min-height: 46px;
+  #actividadhome {
+    margin-top: 22px;
+  }
 
-        padding: 0 14px;
-    }
+  #tablaactividad {
+    width: 100%;
 
-    .filaactividad span {
-        font-size: 10px;
-    }
+    border-radius: 13px;
+  }
 
-    .encabezadoactividad {
-        min-height: 40px;
-    }
+  .filaactividad {
+    min-height: 46px;
 
-    .encabezadoactividad span {
-        font-size: 8px;
-    }
+    padding: 0 14px;
+  }
 
-    .filaactividad .estado {
-        padding: 3px 8px;
+  .filaactividad span {
+    font-size: 10px;
+  }
 
-        font-size: 8px;
-    }
+  .encabezadoactividad {
+    min-height: 40px;
+  }
 
+  .encabezadoactividad span {
+    font-size: 8px;
+  }
 
-    /* ---------- ACCIONES ---------- */
+  .filaactividad .estado {
+    padding: 3px 8px;
 
-    /* No se muestran en tablet */
-    #accionesrapidas {
-        display: none;
-    }
+    font-size: 8px;
+  }
+
+
+  /* ---------- ACCIONES ---------- */
+
+  #accionesrapidas {
+    display: none;
+  }
 }
 
 
 /* =========================================================
    CELULAR
-   Todo el Home menos Acciones rápidas
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 699px) {
 
-    /* ---------- CONTENEDOR ---------- */
+  /* ---------- CONTENEDOR ---------- */
 
-    #containerhome {
-        width: 100%;
-        min-height: 100vh;
+  #containerhome {
+    width: 100%;
+    min-height: 100vh;
 
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-        overflow: hidden;
-    }
+    overflow: hidden;
+  }
 
 
-    /* ---------- CONTENIDO ---------- */
+  /* ---------- CONTENIDO ---------- */
 
-    #ladohome {
-        width: 100%;
-        height: 100vh;
+  #ladohome {
+    width: 100%;
+    height: 100vh;
 
-        padding: 25px 15px 20px 15px;
+    padding: 25px 15px 20px 15px;
 
-        box-sizing: border-box;
+    box-sizing: border-box;
 
-        overflow-y: auto;
-    }
+    overflow-y: auto;
+  }
 
 
-    /* ---------- BARRA SUPERIOR ---------- */
+  /* ---------- BARRA SUPERIOR ---------- */
 
-    #botonesarribahome {
-        width: 100%;
-        height: 55px;
+  #botonesarribahome {
+    width: 100%;
+    height: 55px;
 
-        gap: 8px;
-    }
+    gap: 8px;
+  }
 
-    .botonmas {
-        width: 28px;
-        height: 28px;
+  .botonmas {
+    width: 28px;
+    height: 28px;
 
-        font-size: 25px;
-    }
+    font-size: 25px;
+  }
 
-    .botonnotificaciones {
-        width: 28px;
-        height: 28px;
-    }
+  .botonnotificaciones {
+    width: 28px;
+    height: 28px;
+  }
 
-    .botonnotificaciones img {
-        width: 20px;
-        height: 20px;
-    }
+  .botonnotificaciones img {
+    width: 20px;
+    height: 20px;
+  }
 
-    .separadorheader {
-        height: 28px;
-    }
+  .separadorheader {
+    height: 28px;
+  }
 
-    .usuarioheader {
-        gap: 7px;
-    }
+  .usuarioheader {
+    gap: 7px;
+  }
 
-    .textousuario strong {
-        font-size: 10px;
-    }
+  .textousuario strong {
+    font-size: 10px;
+  }
 
-    .textousuario span {
-        font-size: 9px;
-    }
+  .textousuario span {
+    font-size: 9px;
+  }
 
-    .iconousuario {
-        width: 32px;
-        height: 32px;
-    }
+  .iconousuario {
+    width: 32px;
+    height: 32px;
+  }
 
-    .iconousuario img {
-        width: 18px;
-        height: 18px;
-    }
+  .iconousuario img {
+    width: 18px;
+    height: 18px;
+  }
 
 
-    /* ---------- CONTENIDO ---------- */
+  /* ---------- CONTENIDO ---------- */
 
-    #contenidohome {
-        width: 100%;
+  #contenidohome {
+    width: 100%;
 
-        display: block;
-    }
+    display: block;
+  }
 
-    #columnaprincipalhome {
-        width: 100%;
-    }
+  #columnaprincipalhome {
+    width: 100%;
+  }
 
 
-    /* ---------- BIENVENIDA ---------- */
+  /* ---------- BIENVENIDA ---------- */
 
-    #bienvenidahome {
-        width: 100%;
-        min-height: 80px;
+  #bienvenidahome {
+    width: 100%;
+    min-height: 80px;
 
-        padding: 14px;
+    padding: 14px;
 
-        gap: 10px;
+    gap: 10px;
 
-        border-radius: 14px;
-    }
+    border-radius: 14px;
+  }
 
-    .iconobienvenida {
-        width: 40px;
-        height: 40px;
+  .iconobienvenida {
+    width: 40px;
+    height: 40px;
 
-        flex-shrink: 0;
-    }
+    flex-shrink: 0;
+  }
 
-    .iconobienvenida img {
-        width: 21px;
-        height: 21px;
-    }
+  .iconobienvenida img {
+    width: 21px;
+    height: 21px;
+  }
 
-    #bienvenidahome h1 {
-        font-size: 17px;
-    }
+  #bienvenidahome h1 {
+    font-size: 17px;
+  }
 
-    #bienvenidahome p {
-        font-size: 11px;
-    }
+  #bienvenidahome p {
+    font-size: 11px;
+  }
 
 
-    /* ---------- RESUMEN ---------- */
+  /* ---------- RESUMEN ---------- */
 
-    #resumengeneral {
-        margin-top: 20px;
-    }
+  #resumengeneral {
+    margin-top: 20px;
+  }
 
-    #resumengeneral h2,
-    #actividadhome h2 {
-        margin-bottom: 12px;
+  #resumengeneral h2,
+  #actividadhome h2 {
+    margin-bottom: 12px;
 
-        font-size: 17px;
-    }
+    font-size: 17px;
+  }
 
 
-    /* ---------- TARJETAS ---------- */
+  /* ---------- TARJETAS ---------- */
 
-    #tarjetasresumen {
-        width: 100%;
+  #tarjetasresumen {
+    width: 100%;
 
-        grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
-        gap: 10px;
-    }
+    gap: 10px;
+  }
 
-    .tarjetaresumen {
-        min-height: 90px;
+  .tarjetaresumen {
+    min-height: 90px;
 
-        padding: 12px;
+    padding: 12px;
 
-        border-radius: 10px;
-    }
+    border-radius: 10px;
+  }
 
-    .tarjetaresumen p {
-        font-size: 10px;
-    }
+  .tarjetaresumen p {
+    font-size: 10px;
+  }
 
-    .tarjetaresumen strong {
-        font-size: 21px;
-    }
+  .tarjetaresumen strong {
+    font-size: 21px;
+  }
 
-    .tarjetaresumen span {
-        font-size: 9px;
-    }
+  .tarjetaresumen span {
+    font-size: 9px;
+  }
 
-    .tarjetaresumen > img {
-        width: 30px;
-        height: 30px;
-    }
+  .tarjetaresumen > img {
+    width: 30px;
+    height: 30px;
+  }
 
 
-    /* ---------- TABLA ---------- */
+  /* ---------- TABLA ---------- */
 
-    #actividadhome {
-        margin-top: 22px;
-    }
+  #actividadhome {
+    margin-top: 22px;
+  }
 
-    #tablaactividad {
-        width: 100%;
+  #tablaactividad {
+    width: 100%;
 
-        overflow-x: auto;
+    overflow-x: auto;
 
-        border-radius: 13px;
-    }
+    border-radius: 13px;
+  }
 
-    .filaactividad {
-        min-width: 520px;
+  .filaactividad {
+    min-width: 520px;
 
-        min-height: 48px;
+    min-height: 48px;
 
-        padding: 0 14px;
-    }
+    padding: 0 14px;
+  }
 
-    .filaactividad span {
-        font-size: 10px;
-    }
+  .filaactividad span {
+    font-size: 10px;
+  }
 
-    .encabezadoactividad {
-        min-height: 40px;
-    }
+  .encabezadoactividad {
+    min-height: 40px;
+  }
 
-    .encabezadoactividad span {
-        font-size: 8px;
-    }
+  .encabezadoactividad span {
+    font-size: 8px;
+  }
 
-    .filaactividad .estado {
-        padding: 3px 8px;
+  .filaactividad .estado {
+    padding: 3px 8px;
 
-        font-size: 8px;
-    }
+    font-size: 8px;
+  }
 
 
-    /* ---------- ACCIONES RÁPIDAS ---------- */
+  /* ---------- ACCIONES RÁPIDAS ---------- */
 
-    #accionesrapidas {
-        display: none;
-    }
+  #accionesrapidas {
+    display: none;
+  }
 }
