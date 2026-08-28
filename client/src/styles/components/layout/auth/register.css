@@ -197,6 +197,35 @@
     display: none;
 }
 
+#rolRegisterPersonal {
+  display: flex;
+  gap: 15px;
+  width: 600px;
+}
+
+#rolRegisterPersonal button {
+  flex: 1;
+  height: 50px;
+  background: none;
+  border: 2px solid #2d3135;
+  color: #b4b4b4;
+  font-family: "inter";
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+#rolRegisterPersonal button:hover {
+  border-color: #ff7a00;
+}
+
+#rolRegisterPersonal button.rolActivo {
+  background: none;
+  border-color: #f97316;
+  color: #f5f5f5;
+}
+
 /* TABLET */
 
 @media (min-width: 700px) and (max-width: 992px) {
@@ -296,5 +325,10 @@
     text-align: center;
     width: 100%;
     font-size: 14px;
+  }
+
+  #rolRegisterPersonal {
+    width: 100%;
+    max-width: 400px;
   }
 }
