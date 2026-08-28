@@ -1,0 +1,563 @@
+#containermantenimiento{
+    background-color: #212629;
+    margin: 0%;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#ladomantenimiento{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ================= BARRA SUPERIOR ================= */
+
+#botonesarribamantenimiento{
+    display: flex;
+    align-items: center;
+    height: 90px;
+    padding: 0 40px;
+    background-color: #181a1d;
+    border-bottom: 1px solid #111315;
+}
+
+.botonvolver{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.botonvolver:hover{
+    background-color: #111315;
+}
+
+.botonvolver img{
+    width: 22px;
+    height: 22px;
+}
+
+#titulobarramantenimiento{
+    font-family: 'inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #f5f5f5;
+    margin: 0;
+}
+
+#titulobarramantenimiento span{
+    color: #b4b4b4;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.botonmas{
+    margin-left: auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 26px;
+    font-weight: 800;
+    color: #f5f5f5;
+    background: linear-gradient(to right, #c85d11, #d87b24);
+}
+
+/* ================= PASOS DEL REGISTRO ================= */
+
+#pasosregistro{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 40px;
+    background-color: #181a1d;
+    border-bottom: 1px solid #111315;
+}
+
+.paso{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.5;
+}
+
+.pasonumero{
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid #b4b4b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'inter', sans-serif;
+    font-size: 12px;
+    color: #b4b4b4;
+}
+
+.pasotexto{
+    font-family: 'inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b4b4b4;
+    white-space: nowrap;
+}
+
+.pasoactivo{
+    opacity: 1;
+}
+
+.pasoactivo .pasonumero{
+    border: 2px solid #d87b24;
+    color: #d87b24;
+}
+
+.pasoactivo .pasotexto{
+    color: #fdf5eb;
+}
+
+/* ================= CONTENIDO ================= */
+
+#contenidomantenimiento{
+    flex: 1;
+    display: flex;
+    gap: 25px;
+    padding: 35px 40px;
+    overflow-y: auto;
+}
+
+/* ================= FORMULARIO ================= */
+
+#columnaformulario{
+    flex: 2;
+    background-color: #181a1d;
+    border-radius: 15px;
+    padding: 35px;
+}
+
+#columnaformulario h3{
+    font-family: 'inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #f5f5f5;
+    margin: 0 0 30px 0;
+}
+
+#filacampos{
+    display: flex;
+    gap: 30px;
+}
+
+.columnacampos{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label{
+    font-family: 'inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #b4b4b4;
+}
+
+.campo input,
+.campo select,
+.campo textarea{
+    background-color: #111315;
+    border: 1px solid #2c3033;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'inter', sans-serif;
+    font-size: 14px;
+    color: #f5f5f5;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus{
+    outline: none;
+    border-color: #d87b24;
+}
+
+#inputserie{
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+}
+
+.campo textarea{
+    resize: none;
+}
+
+.inputconicono{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputconicono input{
+    width: 100%;
+    padding-right: 40px;
+}
+
+.inputconicono img{
+    position: absolute;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+/* ================= FOTOS ================= */
+
+#seccionfotos{
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #2c3033;
+}
+
+#seccionfotos p{
+    font-family: 'inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #b4b4b4;
+    margin: 0 0 14px 0;
+}
+
+#filafotos{
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+}
+
+.fotomaquina{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #111315;
+    border: 1px solid #2c3033;
+    flex-shrink: 0;
+}
+
+.fotomaquina img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.botonquitarfoto{
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(17, 19, 21, 0.85);
+    border: none;
+    border-radius: 6px;
+    padding: 3px;
+    cursor: pointer;
+    display: flex;
+}
+
+.botonquitarfoto img{
+    width: 12px;
+    height: 12px;
+}
+
+#botonagregarfoto{
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    border: 2px dashed #2c3033;
+    background-color: #131517;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+#botonagregarfoto:hover{
+    border-color: #d87b24;
+}
+
+#botonagregarfoto img{
+    width: 20px;
+    height: 20px;
+}
+
+#botonagregarfoto span{
+    font-family: 'inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #b4b4b4;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* ================= RESUMEN / PLACA ================= */
+
+#resumenmaquina{
+    flex: 1;
+    background-color: #111315;
+    border-radius: 15px;
+    padding: 30px;
+    height: fit-content;
+}
+
+#resumenmaquina h2{
+    font-family: 'inter', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #f5f5f5;
+    margin: 0 0 20px 0;
+}
+
+#placamaquina{
+    background-color: #212629;
+    border: 1px solid #2c3033;
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+}
+
+#placamaquina::before,
+#placamaquina::after{
+    content: "";
+    position: absolute;
+    top: 10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #565d66;
+}
+
+#placamaquina::before{
+    left: 10px;
+}
+
+#placamaquina::after{
+    right: 10px;
+}
+
+#etiquetaplaca{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9aa4b2;
+    margin: 0 0 8px 0;
+}
+
+#nombreplaca{
+    font-family: 'inter', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fdf5eb;
+    margin: 0 0 2px 0;
+}
+
+#tipoplaca{
+    font-family: 'inter', sans-serif;
+    font-size: 13px;
+    color: #9aa4b2;
+    margin: 0 0 16px 0;
+}
+
+#serieplaca{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #2c3033;
+    padding-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #767c85;
+}
+
+#estadomaquina{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 2px 0 2px;
+    font-family: 'inter', sans-serif;
+    font-size: 13px;
+    color: #b4b4b4;
+}
+
+.estado{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.estado.operativo{
+    background-color: rgba(61, 220, 132, 0.1);
+    color: #3ddc84;
+    border: 1px solid rgba(61, 220, 132, 0.3);
+}
+
+.estado.mantenimiento{
+    background-color: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.estado.baja{
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+#botonactualizar{
+    width: 100%;
+    height: 55px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'inter', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #f5f5f5;
+    background: linear-gradient(to right, #c85d11, #d87b24);
+    cursor: pointer;
+}
+
+#botoneliminar{
+    width: 100%;
+    height: 55px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #2c3033;
+    background: none;
+    font-family: 'inter', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #ff6b6b;
+    cursor: pointer;
+}
+
+#botoneliminar:hover{
+    border-color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.05);
+}
+
+/* Tablet responsivo: 768px a 992px */
+@media (min-width: 768px) and (max-width: 992px) {
+
+    #botonesarribamantenimiento{
+        padding: 0 20px;
+    }
+
+    #pasosregistro{
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    .pasotexto{
+        display: none;
+    }
+
+    #contenidomantenimiento{
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #columnaformulario{
+        padding: 25px;
+    }
+
+    #filacampos{
+        flex-direction: column;
+        gap: 22px;
+    }
+
+}
+
+/* Celular responsivo: hasta 767px */
+@media (max-width: 767.9px) {
+
+    #containermantenimiento{
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+
+    #botonesarribamantenimiento{
+        padding: 0 16px;
+        height: 70px;
+    }
+
+    #titulobarramantenimiento{
+        font-size: 18px;
+    }
+
+    #pasosregistro{
+        padding: 16px;
+        gap: 12px;
+        overflow-x: auto;
+    }
+
+    .pasotexto{
+        display: none;
+    }
+
+    #contenidomantenimiento{
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    #columnaformulario{
+        padding: 20px;
+    }
+
+    #filacampos{
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    #resumenmaquina{
+        padding: 20px;
+    }
+
+}
+
+/* Celular extra pequeño: hasta 480px */
+@media (max-width: 480px) {
+
+    #nombreplaca{
+        font-size: 18px;
+    }
+
+    .fotomaquina,
+    #botonagregarfoto{
+        width: 80px;
+        height: 80px;
+    }
+
+}
