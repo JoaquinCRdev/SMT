@@ -1,31 +1,71 @@
-import "../../../styles/components/layout/auth/registerPersonal.css";
+import "../../../styles/components/layout/auth/register.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const RegisterPersonal = () => {
+const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
     password: "",
+    role: "user",
   });
+
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
     setFormData({
       ...formData,
       [name]: files ? files[0] : value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleRoleSelect = (role) => {
+    setFormData({ ...formData, role });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!formData.nombre.trim()) {
-      alert("ingrese un nombre completo");
+      setError("Ingrese un nombre completo");
       return;
     }
 
-    console.log(formData);
+    setSubmitting(true);
+
+    try {
+      console.log("import.meta.env.VITE_API_URL:", import.meta.env.VITE_API_URL);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/register`,
+        {
+          name: formData.nombre,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        },
+        { withCredentials: true } // necesario para que viaje la cookie del refreshToken
+      );
+
+      // Guardamos el accessToken donde lo estés manejando por ahora
+      // (por ejemplo localStorage, hasta que se arme un manejo en memoria)
+      localStorage.setItem("accessToken", data.accessToken);
+
+      if (data.user.role === "admin") {
+        navigate("/crearTaller");
+      } else {
+        navigate("/asociarseTaller");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Error al crear la cuenta");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -33,6 +73,8 @@ const RegisterPersonal = () => {
       <div id="ladoIzquierdoRegisterPersonal">
         <h1>Crea tu cuenta para comenzar</h1>
         <div id="inputsRegisterPersonal">
+          {error && <p id="errorRegisterPersonal">{error}</p>}
+
           <input
             type="text"
             name="nombre"
@@ -59,15 +101,31 @@ const RegisterPersonal = () => {
             minLength={8}
             required
           />
+
+          <div id="rolRegisterPersonal">
+            <button
+              type="button"
+              className={formData.role === "user" ? "rolActivo" : ""}
+              onClick={() => handleRoleSelect("user")}
+            >
+              Personal
+            </button>
+            <button
+              type="button"
+              className={formData.role === "admin" ? "rolActivo" : ""}
+              onClick={() => handleRoleSelect("admin")}
+            >
+              Admin
+            </button>
+          </div>
         </div>
-        <button onClick={handleSubmit}>Crear cuenta</button>
+        <button onClick={handleSubmit} disabled={submitting}>
+          {submitting ? "Creando cuenta..." : "Crear cuenta"}
+        </button>
         <p>
           ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
         </p>
       </div>
-
-
-
 
       <div id="ladoDerechoRegisterPersonal">
         <h2>
@@ -81,8 +139,8 @@ const RegisterPersonal = () => {
           <div>
             <img src="registrartaller.png" alt="Registra tu taller"></img>
             <p>
-              Accede desde 
-              <br /> 
+              Accede desde
+              <br />
               cualquier dispositivo
             </p>
           </div>
@@ -93,18 +151,13 @@ const RegisterPersonal = () => {
             ></img>
             <p>
               Informacion segura
-              <br/>
+              <br />
               y confiable
             </p>
           </div>
           <div>
-            <img
-              src="contactanos.png"
-              alt="Contacto"
-            ></img>
-            <p> 
-              Soporte tecnico
-            </p>
+            <img src="contactanos.png" alt="Contacto"></img>
+            <p>Soporte tecnico</p>
           </div>
         </div>
 
@@ -118,4 +171,4 @@ const RegisterPersonal = () => {
   );
 };
 
-export default RegisterPersonal;
+export default Register;

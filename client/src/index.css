@@ -1,6 +1,134 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-body{
-    height: 100%;
+
+/* =========================================================
+   BODY
+========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--FondoPrincipal);
+    color: var(--TextoPrincipal);
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+/* =========================================================
+   MODO OSCURO
+========================================================= */
+
+:root {
+    --TamTitulo: 22px;
+    --TamTexto: 12px;
+
+    /* ---------- FONDOS ---------- */
+
+    --FondoPrincipal: #0d0d0d;
+    --FondoSecundario: #171717;
+    --FondoTarjeta: #1c1c1c;
+    --FondoBoton: #222222;
+
+    /* ---------- SIDEBAR ---------- */
+
+    --FondoSidebar: #151618;
+    --FondoSidebarBoton: #151618;
+
+    /* ---------- BORDES ---------- */
+
+    --BordePrincipal: #292929;
+    --BordeSecundario: #242424;
+    --BordeSuave: #2d2d2d;
+
+    /* ---------- TEXTOS ---------- */
+
+    --TextoPrincipal: #ffffff;
+    --TextoSecundario: #888888;
+    --TextoTerciario: #777777;
+
+    /* ---------- NARANJA ---------- */
+
+    --Naranja: #f25c05;
+    --NaranjaHover: #d94f04;
+
+    /* ---------- OTROS ---------- */
+
+    --Verde: #19c463;
+    --Gris: #8f8f8f;
+}
+
+
+/* =========================================================
+   MODO CLARO
+========================================================= */
+
+body.light-mode {
+
+    /* ---------- FONDOS ---------- */
+
+    --FondoPrincipal: #feefe0;
+    --FondoSecundario: #fff8f2;
+    --FondoTarjeta: #ffffff;
+    --FondoBoton: #f5e8dc;
+
+    /* ---------- SIDEBAR ---------- */
+
+    --FondoSidebar: #fff8f2;
+    --FondoSidebarBoton: #fff8f2;
+
+    /* ---------- BORDES ---------- */
+
+    --BordePrincipal: #d8c8bb;
+    --BordeSecundario: #ded2c8;
+    --BordeSuave: #cfc1b5;
+
+    /* ---------- TEXTOS ---------- */
+
+    --TextoPrincipal: #222222;
+    --TextoSecundario: #666666;
+    --TextoTerciario: #777777;
+
+    /* ---------- NARANJA ---------- */
+
+    --Naranja: #f25c05;
+    --NaranjaHover: #d94f04;
+
+    /* ---------- OTROS ---------- */
+
+    --Verde: #19a957;
+    --Gris: #777777;
+}
+
+body.tamano-grande {
+    --TamTitulo: 28px;
+    --TamTexto: 18px;
+}
+
+/* =========================================================
+   TRANSICIÓN GENERAL
+========================================================= */
+
+#containerhome,
+#sidebarhome,
+#ladohome,
+.botonhome,
+#botoncerrarsesion,
+#bienvenidahome,
+.tarjetaresumen,
+#tablaactividad,
+#accionesrapidas {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }

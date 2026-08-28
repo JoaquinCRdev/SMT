@@ -55,9 +55,8 @@ body{
 #contenido-parte-blanca img{
     width: 80%;
     aspect-ratio: 1 / 1;
-    margin: 15px auto;
+    margin: auto auto;
     display: block;
-    height: 450px;
 }
 
 #formDiv{

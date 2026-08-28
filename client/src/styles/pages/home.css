@@ -1,21 +1,36 @@
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
 #containerhome {
   display: flex;
-  background-color: #111315;
-  font-family: "inter";
+  background-color: var(--FondoPrincipal);
+  font-family: "Inter", sans-serif;
   height: 100vh;
   margin: 0;
   overflow: hidden;
 }
 
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+========================================================= */
+
 #ladohome {
   flex: 1;
-  background-color: #feefe0;
-  padding: 25px 35px;
+  background-color: var(--FondoPrincipal);
+  padding: 0 32px 30px 32px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  color: var(--TextoPrincipal);
 }
 
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
 
 #primerdivhome {
   display: flex;
@@ -24,22 +39,36 @@
 }
 
 #primerdivhome p {
-  font-size: 28px;
+  font-size: var(--TamTitulo);
   font-weight: bold;
   margin: 0;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
 }
 
 #primerdivhome input {
   width: 250px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 15px;
   padding: 0 15px;
-  font-size: 18px;
+
+  font-size: var(--TamTexto);
+
   background-color: transparent;
-  font-family: "inter";
+  color: var(--TextoPrincipal);
+  font-family: "Inter", sans-serif;
+  outline: none;
 }
+
+#primerdivhome input::placeholder {
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   SEGUNDO DIV
+========================================================= */
 
 #segundodivhome {
   display: flex;
@@ -49,20 +78,29 @@
 }
 
 #segundodivhome p {
-  font-size: 22px;
+  font-size: var(--TamTitulo);
   margin: 0;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
 }
 
 #segundodivhome button {
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 12px;
   background: transparent;
+  color: var(--TextoPrincipal);
   padding: 6px 18px;
-  font-size: 18px;
+
+  font-size: var(--TamTexto);
+
   cursor: pointer;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
+
+
+/* =========================================================
+   LISTA DE MÁQUINAS
+========================================================= */
 
 #listamaquinas {
   display: flex;
@@ -71,16 +109,22 @@
   margin-top: 20px;
 }
 
+
+/* =========================================================
+   AGREGAR MÁQUINA
+========================================================= */
+
 #agregarmaquina {
   margin-top: 20px;
   width: 100%;
   height: 120px;
-  border: 2px dashed #7a7a7a;
+  border: 2px dashed var(--Gris);
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: transparent;
 }
 
 #agregarmaquina img {
@@ -88,19 +132,26 @@
 }
 
 #agregarmaquina:hover {
-  border: 2px solid #7a7a7a;
+  border: 2px solid var(--Gris);
 }
 
 #agregarmaquina:hover img {
   transform: scale(1.1);
 }
 
+
+/* =========================================================
+   TARJETA MÁQUINA
+========================================================= */
+
 .tarjetamaquina {
   width: 100%;
   height: 145px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 25px;
-  background-color: #feefe0;
+  background-color: var(--FondoSecundario);
+  color: var(--TextoPrincipal);
+
   display: flex;
   align-items: center;
   gap: 18px;
@@ -108,15 +159,22 @@
   box-sizing: border-box;
 }
 
+
+/* =========================================================
+   IMAGEN TARJETA
+========================================================= */
+
 .imagentarjeta {
   position: relative;
   width: 120px;
   height: 120px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 18px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   overflow: hidden;
 }
 
@@ -125,15 +183,21 @@
   position: absolute;
   width: 170px;
   height: 1px;
-  background: black;
+  background: var(--TextoPrincipal);
   transform: rotate(-45deg);
 }
 
 .imagentarjeta span {
-  font-size: 22px;
-  font-family: "inter";
+  font-size: var(--TamTitulo);
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
   transform: rotate(-45deg);
 }
+
+
+/* =========================================================
+   INFORMACIÓN MÁQUINA
+========================================================= */
 
 .infomaquina {
   width: 220px;
@@ -144,9 +208,17 @@
 
 .infomaquina h2 {
   margin: 0;
-  font-size: 20px;
-  font-family: "inter";
+
+  font-size: var(--TamTitulo);
+
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
 }
+
+
+/* =========================================================
+   ETIQUETAS
+========================================================= */
 
 .etiquetas {
   display: flex;
@@ -154,18 +226,34 @@
 }
 
 .etiquetas span {
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 10px;
   padding: 3px 12px;
-  font-size: 16px;
-  font-family: "inter";
+
+  font-size: var(--TamTexto);
+
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
 }
+
+
+/* =========================================================
+   FECHA
+========================================================= */
 
 .fecha {
   margin: 0;
-  font-size: 16px;
-  font-family: "inter";
+
+  font-size: var(--TamTexto);
+
+  font-family: "Inter", sans-serif;
+  color: var(--TextoSecundario);
 }
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
 
 .descripcionmaquina {
   flex: 1;
@@ -173,47 +261,52 @@
 
 .descripcionmaquina h3 {
   margin: 0 0 12px 0;
-  font-size: 18px;
-  font-family: "inter";
+
+  font-size: var(--TamTexto);
+
+  font-family: "Inter", sans-serif;
+  color: var(--TextoPrincipal);
 }
 
 .descripcionmaquina p {
   margin: 0;
-  font-size: 16px;
+
+  font-size: var(--TamTexto);
+
   line-height: 1.3;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
+  color: var(--TextoSecundario);
 }
+
+
+/* =========================================================
+   LÍNEA
+========================================================= */
 
 .linea {
   width: 90%;
   height: 1px;
-  background-color: black;
+  background-color: var(--BordePrincipal);
   margin-bottom: 22px;
 }
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
 
 .estado {
   width: 110px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid var(--BordePrincipal);
   border-radius: 10px;
   background: transparent;
-  font-size: 16px;
-  font-family: "inter";
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+
+  font-family: "Inter", sans-serif;
   cursor: pointer;
-}
-
-/* =========================================================
-   HOME - CONTENIDO PRINCIPAL
-========================================================= */
-
-#ladohome {
-  flex: 1;
-  background-color: #0d0d0d;
-  padding: 0 32px 30px 32px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  color: #f5f5f5;
 }
 
 
@@ -235,7 +328,9 @@
 }
 
 
-/* BOTON + */
+/* =========================================================
+   BOTÓN +
+========================================================= */
 
 .botonmas {
   width: 35px;
@@ -244,9 +339,10 @@
   border: none;
   background: transparent;
 
-  color: #8f8f8f;
+  color: var(--Gris);
 
-  font-size: 32px;
+  font-size: var(--TamTitulo);
+
   font-weight: 300;
 
   cursor: pointer;
@@ -259,11 +355,13 @@
 }
 
 .botonmas:hover {
-  color: #c85d11;
+  color: var(--NaranjaHover);
 }
 
 
-/* NOTIFICACIONES */
+/* =========================================================
+   NOTIFICACIONES
+========================================================= */
 
 .botonnotificaciones {
   position: relative;
@@ -297,10 +395,10 @@
 
   border-radius: 50%;
 
-  background-color: #f97316;
-  color: white;
+  background-color: var(--Naranja);
+  color: #ffffff;
 
-  font-size: 10px;
+  font-size: calc(var(--TamTexto) - 2px);
 
   display: flex;
   align-items: center;
@@ -308,22 +406,25 @@
 }
 
 
-/* SEPARADOR */
+/* =========================================================
+   SEPARADOR HEADER
+========================================================= */
 
 .separadorheader {
   width: 1px;
   height: 40px;
 
-  background-color: #2d2d2d;
+  background-color: var(--BordeSuave);
 }
 
 
-/* USUARIO */
+/* =========================================================
+   USUARIO
+========================================================= */
 
 .usuarioheader {
   display: flex;
   align-items: center;
-
   gap: 12px;
 }
 
@@ -337,31 +438,33 @@
 }
 
 .textousuario strong {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 12px;
+  font-size: calc(var(--TamTexto) - 2px);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 .textousuario span {
-  color: #888;
+  color: var(--TextoSecundario);
 
-  font-size: 11px;
+  font-size: calc(var(--TamTexto) - 3px);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 
-/* ICONO PERFIL */
+/* =========================================================
+   ICONO PERFIL
+========================================================= */
 
 .iconousuario {
   width: 40px;
   height: 40px;
 
-  background-color: #1c1c1c;
+  background-color: var(--FondoTarjeta);
 
-  border: 1px solid #2d2d2d;
+  border: 1px solid var(--BordeSuave);
 
   border-radius: 8px;
 
@@ -391,11 +494,12 @@
 }
 
 
-/* COLUMNA PRINCIPAL */
+/* =========================================================
+   COLUMNA PRINCIPAL
+========================================================= */
 
 #columnaprincipalhome {
   flex: 1;
-
   min-width: 0;
 }
 
@@ -408,10 +512,10 @@
   width: 100%;
   min-height: 98px;
 
-  border: 1px solid #242424;
+  border: 1px solid var(--BordeSecundario);
   border-radius: 18px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   display: flex;
   align-items: center;
@@ -424,7 +528,9 @@
 }
 
 
-/* ICONO */
+/* =========================================================
+   ICONO BIENVENIDA
+========================================================= */
 
 .iconobienvenida {
   width: 48px;
@@ -447,31 +553,33 @@
 }
 
 
-/* TEXTO */
+/* =========================================================
+   TEXTO BIENVENIDA
+========================================================= */
 
 #bienvenidahome h1 {
   margin: 0;
 
-  font-size: 20px;
+  font-size: var(--TamTitulo);
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 #bienvenidahome p {
   margin: 5px 0 0;
 
-  font-size: 14px;
+  font-size: var(--TamTexto);
 
-  color: #777;
+  color: var(--TextoSecundario);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 
 /* =========================================================
-   TITULOS DE SECCIONES
+   TÍTULOS DE SECCIONES
 ========================================================= */
 
 #resumengeneral {
@@ -486,13 +594,13 @@
 #actividadhome h2 {
   margin: 0 0 20px;
 
-  font-size: 19px;
+  font-size: var(--TamTitulo);
 
   font-weight: 400;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 
@@ -508,15 +616,13 @@
   gap: 15px;
 }
 
-
 .tarjetaresumen {
   min-height: 100px;
 
-  border: 1px solid #292929;
-
+  border: 1px solid var(--BordePrincipal);
   border-radius: 12px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   padding: 15px;
 
@@ -528,7 +634,6 @@
   box-sizing: border-box;
 }
 
-
 .tarjetaresumen > div {
   display: flex;
   flex-direction: column;
@@ -536,31 +641,27 @@
   gap: 5px;
 }
 
-
 .tarjetaresumen p {
   margin: 0;
 
-  font-size: 12px;
+  font-size: calc(var(--TamTexto) - 1px);
 
-  color: #888;
+  color: var(--TextoSecundario);
 }
 
-
 .tarjetaresumen strong {
-  font-size: 24px;
+  font-size: calc(var(--TamTitulo) + 2px);
 
   line-height: 1;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 }
-
 
 .tarjetaresumen span {
-  font-size: 11px;
+  font-size: calc(var(--TamTexto) - 1px);
 
-  color: #777;
+  color: var(--TextoTerciario);
 }
-
 
 .tarjetaresumen > img {
   width: 38px;
@@ -577,15 +678,14 @@
 #tablaactividad {
   width: 100%;
 
-  border: 1px solid #292929;
+  border: 1px solid var(--BordePrincipal);
 
   border-radius: 17px;
 
   overflow: hidden;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 }
-
 
 .filaactividad {
   min-height: 56px;
@@ -600,45 +700,46 @@
 
   box-sizing: border-box;
 
-  border-bottom: 1px solid #292929;
+  border-bottom: 1px solid var(--BordePrincipal);
 }
-
 
 .filaactividad:last-child {
   border-bottom: none;
 }
 
-
 .filaactividad span {
-  font-size: 13px;
+  font-size: var(--TamTexto);
 
-  color: #888;
+  color: var(--TextoSecundario);
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
-
 
 .filaactividad span:first-child {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 }
 
 
-/* CABECERA */
+/* =========================================================
+   CABECERA ACTIVIDAD
+========================================================= */
 
 .encabezadoactividad {
   min-height: 48px;
 }
 
 .encabezadoactividad span {
-  color: #777;
+  color: var(--TextoTerciario);
 
-  font-size: 11px;
+  font-size: calc(var(--TamTexto) - 2px);
 
   letter-spacing: 0.5px;
 }
 
 
-/* ESTADOS */
+/* =========================================================
+   ESTADOS DE ACTIVIDAD
+========================================================= */
 
 .filaactividad .estado {
   width: fit-content;
@@ -651,34 +752,32 @@
 
   border-radius: 15px;
 
-  font-size: 10px;
+  font-size: calc(var(--TamTexto) - 2px);
 
   font-weight: 500;
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
-
 .estado.progreso {
-  color: #f97316;
+  color: var(--Naranja);
 
-  background-color: rgba(249, 115, 22, 0.10);
+  background-color: rgba(249, 115, 22, 0.1);
 
   border: 1px solid rgba(249, 115, 22, 0.25);
 }
 
-
 .estado.completado {
-  color: #19c463;
+  color: var(--Verde);
 
-  background-color: rgba(25, 196, 99, 0.10);
+  background-color: rgba(25, 196, 99, 0.1);
 
   border: 1px solid rgba(25, 196, 99, 0.25);
 }
 
 
 /* =========================================================
-   ACCIONES RAPIDAS
+   ACCIONES RÁPIDAS
 ========================================================= */
 
 #accionesrapidas {
@@ -690,28 +789,29 @@
 
   border-radius: 17px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
   padding: 24px;
 
   box-sizing: border-box;
 }
 
-
 #accionesrapidas h2 {
   margin: 0 0 25px;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 18px;
+  font-size: var(--TamTitulo);
 
   font-weight: 400;
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 
-/* BOTONES */
+/* =========================================================
+   BOTONES ACCIONES
+========================================================= */
 
 .accionrapida {
   width: 100%;
@@ -724,9 +824,9 @@
 
   border-radius: 12px;
 
-  background-color: #222222;
+  background-color: var(--FondoBoton);
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
   display: flex;
 
@@ -738,26 +838,23 @@
 
   cursor: pointer;
 
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 
   transition: 0.2s;
 }
-
 
 .accionrapida:last-child {
   margin-bottom: 0;
 }
 
-
 .accionrapida:hover {
-  background-color: #292929;
+  background-color: var(--FondoTarjeta);
 
   transform: translateY(-2px);
 }
 
-
 .accionrapida span {
-  font-size: 13px;
+  font-size: var(--TamTexto);
 
   line-height: 1.3;
 
@@ -767,7 +864,9 @@
 }
 
 
-/* ICONO ACCION */
+/* =========================================================
+   ICONO ACCIÓN
+========================================================= */
 
 .iconoaccion {
   width: 40px;
@@ -782,523 +881,504 @@
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 }
-
 
 .iconoaccion img {
   width: 22px;
   height: 22px;
 }
- /* =========================================================
-    COMPUTADORA
-   ========================================================= */
+
+
+/* =========================================================
+   COMPUTADORA
+========================================================= */
 
 #accionesrapidas {
-    display: none;
+  display: none;
 }
 
 
 /* =========================================================
    TABLET
-   Mismo diseño que computadora, pero más pequeño
-   ========================================================= */
+========================================================= */
 
 @media (min-width: 700px) and (max-width: 992px) {
 
-    /* ---------- CONTENEDOR GENERAL ---------- */
+  #containerhome {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    #containerhome {
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-    }
+  #sidebarhome {
+    width: 22%;
+    min-width: 175px;
 
-    /* ---------- SIDEBAR ---------- */
+    padding: 30px 0;
+  }
 
-    #sidebarhome {
-        width: 22%;
-        min-width: 175px;
+  #logohome {
+    width: 110px;
+  }
 
-        padding: 30px 0;
-    }
+  .botonhome {
+    width: 160px;
+    height: 40px;
 
-    #logohome {
-        width: 110px;
-    }
+    font-size: var(--TamTexto);
 
-    .botonhome {
-        width: 160px;
-        height: 40px;
+    gap: 9px;
+    padding-left: 10px;
+  }
 
-        font-size: 14px;
+  .imageniconoshome {
+    width: 22px;
+    height: 22px;
+  }
 
-        gap: 9px;
-        padding-left: 10px;
-    }
+  #botoncerrarsesion {
+    width: 160px;
+    height: 40px;
 
-    .imageniconoshome {
-        width: 22px;
-        height: 22px;
-    }
+    font-size: var(--TamTexto);
 
-    #botoncerrarsesion {
-        width: 160px;
-        height: 40px;
+    gap: 9px;
+    padding-left: 10px;
+  }
 
-        font-size: 14px;
+  #botoncerrarsesion img {
+    width: 22px;
+    height: 22px;
+  }
 
-        gap: 9px;
-        padding-left: 10px;
-    }
 
-    #botoncerrarsesion img {
-        width: 22px;
-        height: 22px;
-    }
+  /* ---------- CONTENIDO ---------- */
 
+  #ladohome {
+    width: 78%;
+    min-width: 0;
 
-    /* ---------- CONTENIDO ---------- */
+    padding: 0 18px 20px 18px;
 
-    #ladohome {
-        width: 78%;
-        min-width: 0;
+    box-sizing: border-box;
+  }
 
-        padding: 0 18px 20px 18px;
 
-        box-sizing: border-box;
-    }
+  /* ---------- BARRA SUPERIOR ---------- */
 
+  #botonesarribahome {
+    height: 60px;
+    gap: 12px;
+  }
 
-    /* ---------- BARRA SUPERIOR ---------- */
+  .botonmas {
+    width: 30px;
+    height: 30px;
 
-    #botonesarribahome {
-        height: 60px;
+    font-size: var(--TamTitulo);
+  }
 
-        gap: 12px;
-    }
+  .botonnotificaciones {
+    width: 30px;
+    height: 30px;
+  }
 
-    .botonmas {
-        width: 30px;
-        height: 30px;
+  .botonnotificaciones img {
+    width: 21px;
+    height: 21px;
+  }
 
-        font-size: 27px;
-    }
+  .separadorheader {
+    height: 30px;
+  }
 
-    .botonnotificaciones {
-        width: 30px;
-        height: 30px;
-    }
+  .usuarioheader {
+    gap: 8px;
+  }
 
-    .botonnotificaciones img {
-        width: 21px;
-        height: 21px;
-    }
+  .textousuario {
+    gap: 2px;
+  }
 
-    .separadorheader {
-        height: 30px;
-    }
+  .textousuario strong {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    .usuarioheader {
-        gap: 8px;
-    }
+  .textousuario span {
+    font-size: calc(var(--TamTexto) - 3px);
+  }
 
-    .textousuario {
-        gap: 2px;
-    }
+  .iconousuario {
+    width: 34px;
+    height: 34px;
+  }
 
-    .textousuario strong {
-        font-size: 10px;
-    }
+  .iconousuario img {
+    width: 19px;
+    height: 19px;
+  }
 
-    .textousuario span {
-        font-size: 9px;
-    }
 
-    .iconousuario {
-        width: 34px;
-        height: 34px;
-    }
+  /* ---------- CONTENIDO HOME ---------- */
 
-    .iconousuario img {
-        width: 19px;
-        height: 19px;
-    }
+  #contenidohome {
+    width: 100%;
+    display: block;
+  }
 
+  #columnaprincipalhome {
+    width: 100%;
+  }
 
-    /* ---------- CONTENIDO HOME ---------- */
 
-    #contenidohome {
-        width: 100%;
+  /* ---------- BIENVENIDA ---------- */
 
-        display: block;
-    }
+  #bienvenidahome {
+    min-height: 80px;
 
-    #columnaprincipalhome {
-        width: 100%;
-    }
+    padding: 15px 18px;
+    gap: 12px;
 
+    border-radius: 14px;
+  }
 
-    /* ---------- BIENVENIDA ---------- */
+  .iconobienvenida {
+    width: 40px;
+    height: 40px;
 
-    #bienvenidahome {
-        min-height: 80px;
+    border-radius: 10px;
+  }
 
-        padding: 15px 18px;
+  .iconobienvenida img {
+    width: 21px;
+    height: 21px;
+  }
 
-        gap: 12px;
+  #bienvenidahome h1 {
+    font-size: var(--TamTitulo);
+  }
 
-        border-radius: 14px;
-    }
+  #bienvenidahome p {
+    font-size: var(--TamTexto);
+  }
 
-    .iconobienvenida {
-        width: 40px;
-        height: 40px;
 
-        border-radius: 10px;
-    }
+  /* ---------- RESUMEN ---------- */
 
-    .iconobienvenida img {
-        width: 21px;
-        height: 21px;
-    }
+  #resumengeneral {
+    margin-top: 22px;
+  }
 
-    #bienvenidahome h1 {
-        font-size: 18px;
-    }
+  #resumengeneral h2,
+  #actividadhome h2 {
+    margin-bottom: 14px;
 
-    #bienvenidahome p {
-        font-size: 12px;
-    }
+    font-size: var(--TamTitulo);
+  }
 
 
-    /* ---------- RESUMEN ---------- */
+  /* ---------- TARJETAS ---------- */
 
-    #resumengeneral {
-        margin-top: 22px;
-    }
+  #tarjetasresumen {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
 
-    #resumengeneral h2,
-    #actividadhome h2 {
-        margin-bottom: 14px;
+  .tarjetaresumen {
+    min-height: 85px;
+    padding: 10px;
+    border-radius: 10px;
+  }
 
-        font-size: 17px;
-    }
+  .tarjetaresumen > div {
+    gap: 3px;
+  }
 
+  .tarjetaresumen p {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    /* ---------- TARJETAS ---------- */
+  .tarjetaresumen strong {
+    font-size: var(--TamTitulo);
+  }
 
-    #tarjetasresumen {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+  .tarjetaresumen span {
+    font-size: calc(var(--TamTexto) - 3px);
+  }
 
-        gap: 10px;
-    }
+  .tarjetaresumen > img {
+    width: 28px;
+    height: 28px;
+  }
 
-    .tarjetaresumen {
-        min-height: 85px;
 
-        padding: 10px;
+  /* ---------- ACTIVIDAD ---------- */
 
-        border-radius: 10px;
-    }
+  #actividadhome {
+    margin-top: 22px;
+  }
 
-    .tarjetaresumen > div {
-        gap: 3px;
-    }
+  #tablaactividad {
+    width: 100%;
+    border-radius: 13px;
+  }
 
-    .tarjetaresumen p {
-        font-size: 10px;
-    }
+  .filaactividad {
+    min-height: 46px;
+    padding: 0 14px;
+  }
 
-    .tarjetaresumen strong {
-        font-size: 20px;
-    }
+  .filaactividad span {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    .tarjetaresumen span {
-        font-size: 9px;
-    }
+  .encabezadoactividad {
+    min-height: 40px;
+  }
 
-    .tarjetaresumen > img {
-        width: 28px;
-        height: 28px;
-    }
+  .encabezadoactividad span {
+    font-size: calc(var(--TamTexto) - 4px);
+  }
 
+  .filaactividad .estado {
+    padding: 3px 8px;
 
-    /* ---------- ACTIVIDAD ---------- */
+    font-size: calc(var(--TamTexto) - 4px);
+  }
 
-    #actividadhome {
-        margin-top: 22px;
-    }
 
-    #tablaactividad {
-        width: 100%;
+  /* ---------- ACCIONES ---------- */
 
-        border-radius: 13px;
-    }
-
-    .filaactividad {
-        min-height: 46px;
-
-        padding: 0 14px;
-    }
-
-    .filaactividad span {
-        font-size: 10px;
-    }
-
-    .encabezadoactividad {
-        min-height: 40px;
-    }
-
-    .encabezadoactividad span {
-        font-size: 8px;
-    }
-
-    .filaactividad .estado {
-        padding: 3px 8px;
-
-        font-size: 8px;
-    }
-
-
-    /* ---------- ACCIONES ---------- */
-
-    /* No se muestran en tablet */
-    #accionesrapidas {
-        display: none;
-    }
+  #accionesrapidas {
+    display: none;
+  }
 }
 
 
 /* =========================================================
    CELULAR
-   Todo el Home menos Acciones rápidas
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 699px) {
 
-    /* ---------- CONTENEDOR ---------- */
+  #containerhome {
+    width: 100%;
+    min-height: 100vh;
 
-    #containerhome {
-        width: 100%;
-        min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 
-        display: flex;
-        flex-direction: column;
+    overflow: hidden;
+  }
 
-        overflow: hidden;
-    }
 
+  /* ---------- CONTENIDO ---------- */
 
-    /* ---------- CONTENIDO ---------- */
+  #ladohome {
+    width: 100%;
+    height: 100vh;
 
-    #ladohome {
-        width: 100%;
-        height: 100vh;
+    padding: 25px 15px 20px 15px;
 
-        padding: 25px 15px 20px 15px;
+    box-sizing: border-box;
 
-        box-sizing: border-box;
+    overflow-y: auto;
+  }
 
-        overflow-y: auto;
-    }
 
+  /* ---------- BARRA SUPERIOR ---------- */
 
-    /* ---------- BARRA SUPERIOR ---------- */
+  #botonesarribahome {
+    width: 100%;
+    height: 55px;
 
-    #botonesarribahome {
-        width: 100%;
-        height: 55px;
+    gap: 8px;
+  }
 
-        gap: 8px;
-    }
+  .botonmas {
+    width: 28px;
+    height: 28px;
 
-    .botonmas {
-        width: 28px;
-        height: 28px;
+    font-size: var(--TamTitulo);
+  }
 
-        font-size: 25px;
-    }
+  .botonnotificaciones {
+    width: 28px;
+    height: 28px;
+  }
 
-    .botonnotificaciones {
-        width: 28px;
-        height: 28px;
-    }
+  .botonnotificaciones img {
+    width: 20px;
+    height: 20px;
+  }
 
-    .botonnotificaciones img {
-        width: 20px;
-        height: 20px;
-    }
+  .separadorheader {
+    height: 28px;
+  }
 
-    .separadorheader {
-        height: 28px;
-    }
+  .usuarioheader {
+    gap: 7px;
+  }
 
-    .usuarioheader {
-        gap: 7px;
-    }
+  .textousuario strong {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    .textousuario strong {
-        font-size: 10px;
-    }
+  .textousuario span {
+    font-size: calc(var(--TamTexto) - 3px);
+  }
 
-    .textousuario span {
-        font-size: 9px;
-    }
+  .iconousuario {
+    width: 32px;
+    height: 32px;
+  }
 
-    .iconousuario {
-        width: 32px;
-        height: 32px;
-    }
+  .iconousuario img {
+    width: 18px;
+    height: 18px;
+  }
 
-    .iconousuario img {
-        width: 18px;
-        height: 18px;
-    }
 
+  /* ---------- CONTENIDO ---------- */
 
-    /* ---------- CONTENIDO ---------- */
+  #contenidohome {
+    width: 100%;
+    display: block;
+  }
 
-    #contenidohome {
-        width: 100%;
+  #columnaprincipalhome {
+    width: 100%;
+  }
 
-        display: block;
-    }
 
-    #columnaprincipalhome {
-        width: 100%;
-    }
+  /* ---------- BIENVENIDA ---------- */
 
+  #bienvenidahome {
+    width: 100%;
+    min-height: 80px;
 
-    /* ---------- BIENVENIDA ---------- */
+    padding: 14px;
+    gap: 10px;
 
-    #bienvenidahome {
-        width: 100%;
-        min-height: 80px;
+    border-radius: 14px;
+  }
 
-        padding: 14px;
+  .iconobienvenida {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
 
-        gap: 10px;
+  .iconobienvenida img {
+    width: 21px;
+    height: 21px;
+  }
 
-        border-radius: 14px;
-    }
+  #bienvenidahome h1 {
+    font-size: var(--TamTitulo);
+  }
 
-    .iconobienvenida {
-        width: 40px;
-        height: 40px;
+  #bienvenidahome p {
+    font-size: var(--TamTexto);
+  }
 
-        flex-shrink: 0;
-    }
 
-    .iconobienvenida img {
-        width: 21px;
-        height: 21px;
-    }
+  /* ---------- RESUMEN ---------- */
 
-    #bienvenidahome h1 {
-        font-size: 17px;
-    }
+  #resumengeneral {
+    margin-top: 20px;
+  }
 
-    #bienvenidahome p {
-        font-size: 11px;
-    }
+  #resumengeneral h2,
+  #actividadhome h2 {
+    margin-bottom: 12px;
 
+    font-size: var(--TamTitulo);
+  }
 
-    /* ---------- RESUMEN ---------- */
 
-    #resumengeneral {
-        margin-top: 20px;
-    }
+  /* ---------- TARJETAS ---------- */
 
-    #resumengeneral h2,
-    #actividadhome h2 {
-        margin-bottom: 12px;
+  #tarjetasresumen {
+    width: 100%;
 
-        font-size: 17px;
-    }
+    grid-template-columns: repeat(2, 1fr);
 
+    gap: 10px;
+  }
 
-    /* ---------- TARJETAS ---------- */
+  .tarjetaresumen {
+    min-height: 90px;
 
-    #tarjetasresumen {
-        width: 100%;
+    padding: 12px;
 
-        grid-template-columns: repeat(2, 1fr);
+    border-radius: 10px;
+  }
 
-        gap: 10px;
-    }
+  .tarjetaresumen p {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    .tarjetaresumen {
-        min-height: 90px;
+  .tarjetaresumen strong {
+    font-size: var(--TamTitulo);
+  }
 
-        padding: 12px;
+  .tarjetaresumen span {
+    font-size: calc(var(--TamTexto) - 3px);
+  }
 
-        border-radius: 10px;
-    }
+  .tarjetaresumen > img {
+    width: 30px;
+    height: 30px;
+  }
 
-    .tarjetaresumen p {
-        font-size: 10px;
-    }
 
-    .tarjetaresumen strong {
-        font-size: 21px;
-    }
+  /* ---------- TABLA ---------- */
 
-    .tarjetaresumen span {
-        font-size: 9px;
-    }
+  #actividadhome {
+    margin-top: 22px;
+  }
 
-    .tarjetaresumen > img {
-        width: 30px;
-        height: 30px;
-    }
+  #tablaactividad {
+    width: 100%;
 
+    overflow-x: auto;
 
-    /* ---------- TABLA ---------- */
+    border-radius: 13px;
+  }
 
-    #actividadhome {
-        margin-top: 22px;
-    }
+  .filaactividad {
+    min-width: 520px;
 
-    #tablaactividad {
-        width: 100%;
+    min-height: 48px;
 
-        overflow-x: auto;
+    padding: 0 14px;
+  }
 
-        border-radius: 13px;
-    }
+  .filaactividad span {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
 
-    .filaactividad {
-        min-width: 520px;
+  .encabezadoactividad {
+    min-height: 40px;
+  }
 
-        min-height: 48px;
+  .encabezadoactividad span {
+    font-size: calc(var(--TamTexto) - 4px);
+  }
 
-        padding: 0 14px;
-    }
+  .filaactividad .estado {
+    padding: 3px 8px;
 
-    .filaactividad span {
-        font-size: 10px;
-    }
+    font-size: calc(var(--TamTexto) - 4px);
+  }
 
-    .encabezadoactividad {
-        min-height: 40px;
-    }
 
-    .encabezadoactividad span {
-        font-size: 8px;
-    }
+  /* ---------- ACCIONES RÁPIDAS ---------- */
 
-    .filaactividad .estado {
-        padding: 3px 8px;
-
-        font-size: 8px;
-    }
-
-
-    /* ---------- ACCIONES RÁPIDAS ---------- */
-
-    #accionesrapidas {
-        display: none;
-    }
+  #accionesrapidas {
+    display: none;
+  }
 }
+
