@@ -1,10 +1,15 @@
+/* =========================================================
+   BODY
+========================================================= */
+
 body {
     height: 100%;
 }
 
-/* =========================
+
+/* =========================================================
    CONTENEDOR PRINCIPAL
-========================= */
+========================================================= */
 
 .containerConfig {
     display: flex;
@@ -16,6 +21,7 @@ body {
     width: 100%;
     flex: 1;
     min-width: 0;
+
     padding: 24px;
     box-sizing: border-box;
 
@@ -30,6 +36,10 @@ body {
     gap: 24px;
 
     -webkit-font-smoothing: antialiased;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .smt-page * {
@@ -40,14 +50,15 @@ body {
 }
 
 
-/* =========================
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     width: 100%;
     padding-bottom: 8px;
 }
@@ -69,8 +80,10 @@ body {
 
 .notification-btn {
     position: relative;
+
     background: transparent;
     border: none;
+
     cursor: pointer;
 
     color: var(--TextoSecundario);
@@ -82,6 +95,7 @@ body {
 
 .notification-badge {
     position: absolute;
+
     top: -2px;
     right: -2px;
 
@@ -104,6 +118,7 @@ body {
 .user-profile {
     display: flex;
     align-items: center;
+
     gap: 10px;
     cursor: pointer;
 }
@@ -111,9 +126,10 @@ body {
 .avatar-circle {
     width: 32px;
     height: 32px;
+
     border-radius: 50%;
 
-    background-color: var(--Inputs);
+    background-color: var(--FondoBoton);
     color: var(--TextoSecundario);
 
     display: flex;
@@ -127,7 +143,7 @@ body {
 }
 
 .user-name {
-    font-size: 13px;
+    font-size: var(--TamTexto);
     font-weight: 600;
 
     color: var(--TextoPrincipal);
@@ -138,14 +154,14 @@ body {
 }
 
 .user-role {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 2px);
     color: var(--TextoSecundario);
 }
 
 
-/* =========================
+/* =========================================================
    PAGE HEADER
-========================= */
+========================================================= */
 
 .page-header {
     display: flex;
@@ -154,25 +170,26 @@ body {
 }
 
 .page-title {
-    font-size: 20px;
+    font-size: var(--TamTitulo);
     font-weight: 700;
+
     color: var(--TextoPrincipal);
 }
 
 .page-subtitle {
-    font-size: 13px;
+    font-size: var(--TamTexto);
     color: var(--TextoSecundario);
 }
 
 
-/* =========================
+/* =========================================================
    SECTION
-========================= */
+========================================================= */
 
 .section-card {
     background-color: var(--FondoSecundario);
 
-    border: 1px solid var(--Inputs);
+    border: 1px solid var(--BordePrincipal);
     border-radius: 12px;
 
     padding: 20px;
@@ -180,6 +197,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .section-header {
@@ -189,31 +211,33 @@ body {
 }
 
 .section-title {
-    font-size: 15px;
+    font-size: var(--TamTexto);
     font-weight: 600;
+
     color: var(--TextoPrincipal);
 }
 
 .section-subtitle {
-    font-size: 12px;
+    font-size: var(--TamTexto);
     color: var(--TextoSecundario);
 }
 
 
-/* =========================
+/* =========================================================
    PERSONALIZACIÓN
-========================= */
+========================================================= */
 
 .personalizacion-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     gap: 16px;
 }
 
 .sub-card {
-    background-color: var(--Inputs);
+    background-color: var(--FondoBoton);
 
-    border: 1px solid var(--FondoSecundario);
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
 
     padding: 14px;
@@ -221,29 +245,36 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .sub-card-title {
-    font-size: 12px;
+    font-size: var(--TamTexto);
     font-weight: 500;
+
     color: var(--TextoSecundario);
 }
 
 
-/* =========================
+/* =========================================================
    PLAN
-========================= */
+========================================================= */
 
 .plan-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     gap: 12px;
 }
 
 .plan-info {
     display: flex;
     align-items: center;
+
     gap: 10px;
 }
 
@@ -272,13 +303,14 @@ body {
 }
 
 .plan-name {
-    font-size: 14px;
+    font-size: var(--TamTexto);
     font-weight: 700;
+
     color: var(--TextoPrincipal);
 }
 
 .plan-desc {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 1px);
     color: var(--TextoSecundario);
 }
 
@@ -292,20 +324,26 @@ body {
     padding: 8px 12px;
     border-radius: 6px;
 
-    font-size: 12px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 
     cursor: pointer;
     white-space: nowrap;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 
-/* =========================
-   MODO
-========================= */
+/* =========================================================
+   BOTONES DE CONFIGURACIÓN
+========================================================= */
 
 .toggle-mode {
-    background-color: var(--Inputs);
+    width: 100%;
+
+    background-color: var(--FondoBoton);
 
     border: 1px solid var(--Naranja);
     color: var(--Naranja);
@@ -314,110 +352,33 @@ body {
 
     padding: 10px 16px;
 
-    font-size: 13px;
+    font-size: var(--TamTexto);
     font-weight: 600;
 
     cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 
-/* =========================
-   SEGMENTED CONTROL
-========================= */
-
-.segmented-control {
-    display: flex;
-
-    background-color: var(--FondoPrincipal);
-    border: 1px solid var(--Inputs);
-
-    border-radius: 6px;
-
-    padding: 3px;
-    gap: 4px;
-}
-
-.segment-btn {
-    flex: 1;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-    padding: 6px 12px;
-
-    background: transparent;
-
-    border: 1px solid transparent;
-    border-radius: 4px;
-
-    color: var(--TextoSecundario);
-
-    font-size: 12px;
-    font-weight: 500;
-
-    cursor: pointer;
-}
-
-.segment-btn.active {
-    border-color: var(--Naranja);
-
-    color: var(--Naranja);
-
-    background-color: color-mix(
-        in srgb,
-        var(--Naranja) 10%,
-        transparent
-    );
-}
-
-
-/* =========================
-   SELECT
-========================= */
-
-.select-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background-color: var(--FondoPrincipal);
-
-    border: 1px solid var(--Inputs);
-
-    border-radius: 6px;
-
-    padding: 8px 12px;
-
-    color: var(--TextoPrincipal);
-
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.select-content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-
-/* =========================
+/* =========================================================
    PERSONAL
-========================= */
+========================================================= */
 
 .staff-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+
     gap: 12px;
 }
 
 .staff-card {
-    background-color: var(--Inputs);
+    background-color: var(--FondoBoton);
 
-    border: 1px solid var(--FondoSecundario);
-
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
 
     padding: 12px;
@@ -425,11 +386,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .staff-header {
     display: flex;
     align-items: center;
+
     gap: 10px;
 }
 
@@ -453,11 +419,12 @@ body {
 .staff-meta {
     display: flex;
     flex-direction: column;
+
     overflow: hidden;
 }
 
 .staff-name {
-    font-size: 12px;
+    font-size: var(--TamTexto);
     font-weight: 600;
 
     color: var(--TextoPrincipal);
@@ -468,38 +435,41 @@ body {
 }
 
 .staff-role {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 1px);
     color: var(--Naranja);
 }
 
 .staff-status {
     display: flex;
     flex-direction: column;
+
     gap: 2px;
 }
 
 .status-label {
-    font-size: 10px;
+    font-size: calc(var(--TamTexto) - 2px);
     color: var(--TextoSecundario);
 }
 
 .status-indicator {
     display: flex;
     align-items: center;
+
     gap: 4px;
 
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 1px);
     color: var(--TextoPrincipal);
 }
 
 .dot {
     width: 6px;
     height: 6px;
+
     border-radius: 50%;
 }
 
 .dot.active {
-    background-color: #22c55e;
+    background-color: var(--Verde);
 }
 
 .dot.inactive {
@@ -507,9 +477,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================================
    BOTONES PERSONAL
-========================= */
+========================================================= */
 
 .btn-modify {
     width: 100%;
@@ -522,7 +492,7 @@ body {
     padding: 6px;
     border-radius: 6px;
 
-    font-size: 11px;
+    font-size: var(--TamTexto);
 
     display: flex;
     align-items: center;
@@ -531,6 +501,10 @@ body {
     gap: 4px;
 
     cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .btn-modify-icon-only {
@@ -541,7 +515,6 @@ body {
     width: 100%;
 
     background-color: var(--Naranja);
-
     border: none;
 
     color: #ffffff;
@@ -549,7 +522,7 @@ body {
     padding: 10px;
     border-radius: 6px;
 
-    font-size: 13px;
+    font-size: var(--TamTexto);
     font-weight: 600;
 
     display: flex;
@@ -559,24 +532,27 @@ body {
     gap: 6px;
 
     cursor: pointer;
+
+    transition:
+        background-color 0.25s ease;
 }
 
 
-/* =========================
+/* =========================================================
    SOLICITUDES
-========================= */
+========================================================= */
 
 .requests-list {
     display: flex;
     flex-direction: column;
+
     gap: 10px;
 }
 
 .request-item {
-    background-color: var(--Inputs);
+    background-color: var(--FondoBoton);
 
-    border: 1px solid var(--FondoSecundario);
-
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
 
     padding: 10px 14px;
@@ -586,13 +562,17 @@ body {
     justify-content: space-between;
 
     gap: 12px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .request-user {
     display: flex;
     align-items: center;
-    gap: 10px;
 
+    gap: 10px;
     flex: 1;
 }
 
@@ -602,51 +582,54 @@ body {
 }
 
 .request-name {
-    font-size: 12px;
+    font-size: var(--TamTexto);
     font-weight: 600;
 
     color: var(--TextoPrincipal);
 }
 
 .request-action-text {
-    font-size: 10px;
+    font-size: calc(var(--TamTexto) - 2px);
     color: var(--TextoSecundario);
 }
 
 .request-date {
     display: flex;
     align-items: center;
+
     gap: 6px;
 
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 1px);
     color: var(--TextoSecundario);
 }
 
 .request-buttons {
     display: flex;
     align-items: center;
+
     gap: 8px;
 }
 
 
-/* =========================
+/* =========================================================
    ACEPTAR / RECHAZAR
-========================= */
+========================================================= */
 
 .btn-accept {
     background-color: transparent;
 
-    border: 1px solid #22c55e;
-    color: #22c55e;
+    border: 1px solid var(--Verde);
+    color: var(--Verde);
 
     padding: 6px 12px;
     border-radius: 6px;
 
-    font-size: 11px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 
     display: flex;
     align-items: center;
+
     gap: 4px;
 
     cursor: pointer;
@@ -661,39 +644,45 @@ body {
     padding: 6px 12px;
     border-radius: 6px;
 
-    font-size: 11px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 
     display: flex;
     align-items: center;
+
     gap: 4px;
 
     cursor: pointer;
 }
 
 
-/* =========================
+/* =========================================================
    ACCIONES
-========================= */
+========================================================= */
 
 .acciones-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     gap: 16px;
 }
 
 .action-card {
-    background-color: var(--Inputs);
+    background-color: var(--FondoBoton);
 
-    border: 1px solid var(--FondoSecundario);
-
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
 
     padding: 16px;
 
     display: flex;
     flex-direction: column;
+
     gap: 12px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .action-card-header {
@@ -741,24 +730,28 @@ body {
 .action-card-info {
     display: flex;
     flex-direction: column;
+
     gap: 2px;
 }
 
 .action-card-title {
-    font-size: 13px;
+    font-size: var(--TamTexto);
     font-weight: 600;
+
     color: var(--TextoPrincipal);
 }
 
 .action-card-desc {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 1px);
     color: var(--TextoSecundario);
+
     line-height: 1.4;
 }
 
 .action-card-btn-container {
     display: flex;
     justify-content: center;
+
     margin-top: 4px;
 }
 
@@ -771,7 +764,7 @@ body {
     padding: 6px 16px;
     border-radius: 6px;
 
-    font-size: 11px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 
     cursor: pointer;
@@ -786,16 +779,16 @@ body {
     padding: 6px 16px;
     border-radius: 6px;
 
-    font-size: 11px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 
     cursor: pointer;
 }
 
 
-/* =========================
+/* =========================================================
    HOVER
-========================= */
+========================================================= */
 
 .btn-outline-orange:hover,
 .btn-modify:hover,
@@ -812,16 +805,16 @@ body {
 }
 
 .btn-accept:hover {
-    background-color: rgba(34, 197, 94, 0.10);
+    background-color: color-mix(
+        in srgb,
+        var(--Verde) 10%,
+        transparent
+    );
 }
 
 .btn-reject:hover,
 .btn-action-outline-red:hover {
     background-color: rgba(239, 68, 68, 0.10);
-}
-
-.segment-btn:hover {
-    color: var(--TextoPrincipal);
 }
 
 .toggle-mode:hover {
@@ -833,9 +826,30 @@ body {
 }
 
 
-/* =========================
+/* =========================================================
+   TRANSICIONES
+========================================================= */
+
+.smt-page,
+.section-card,
+.sub-card,
+.staff-card,
+.request-item,
+.action-card,
+.toggle-mode,
+.btn-outline-orange,
+.btn-modify,
+.btn-add-staff {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 768px) {
 
@@ -847,6 +861,7 @@ body {
     .top-header {
         justify-content: space-between;
         align-items: center;
+
         padding: 4px 0;
     }
 
@@ -857,6 +872,7 @@ body {
         color: var(--TextoPrincipal);
 
         cursor: pointer;
+
         display: flex;
     }
 
@@ -908,6 +924,7 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
         padding: 8px 12px;
     }
 
@@ -948,8 +965,11 @@ body {
 
     .request-date {
         width: 100%;
+
         justify-content: flex-end;
-        font-size: 10px;
+
+        font-size: calc(var(--TamTexto) - 2px);
+
         order: 2;
     }
 
@@ -959,12 +979,15 @@ body {
 
     .request-buttons {
         order: 3;
+
         width: 100%;
+
         justify-content: flex-end;
     }
 
     .action-card {
         flex-direction: row;
+
         align-items: center;
         justify-content: space-between;
     }
