@@ -64,7 +64,7 @@ const Sidebar = () => {
 
         {/* MIS MAQUINAS */}
         <NavLink
-          to="/maquinas"
+          to="/mismaquinas"
           className="botonhome"
           onClick={cerrarMenu}
         >

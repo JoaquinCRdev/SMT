@@ -1,0 +1,489 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+/* ========================= VARIABLES ========================= */
+:root {
+    --sidebar-width: 250px;
+    --bg-main: #0c0c0c;
+    --bg-card: #1b1e22;
+    --bg-secondary: #15171a;
+    --bg-image: #1a1d21;
+    --border: #2b2f36;
+    --border-light: #2e343b;
+    --text-primary: #f0f2f5;
+    --text-secondary: #9aa0a6;
+    --green: #3fb950;
+    --green-border: #238636;
+    --orange: #f59e0b;
+    --orange-border: #d97706;
+    --blue: #60a5fa;
+    --blue-border: #2563eb;
+    --red: #f87171;
+    --red-border: #dc2626;
+    --button-orange: #d9531e;
+}
+
+/* ========================= RESET ========================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+.historial-layout {
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+
+  background-color: #0c0c0c;
+}
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.historial-page {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+
+  padding: 24px 32px;
+
+  background-color: #0c0c0c;
+
+  font-family: "Roboto", system-ui, sans-serif;
+  color: #f0f2f5;
+
+  overflow-x: hidden;
+}
+
+.historial-container {
+  width: 100%;
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* ========================= HEADER ========================= */
+.history-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.history-header>span {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.date-select {
+    position: relative;
+    min-width: 140px;
+    padding: 6px 32px 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--bg-card);
+    font-size: 15px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 12px;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+/* ========================= ESTADÍSTICAS ========================= */
+.stats-container {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.stat-title strong {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stat-title span {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.stat-content {
+    width: 100%;
+}
+
+.operativos {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid var(--green-border);
+    border-radius: 8px;
+    background-color: rgba(35, 134, 54, 0.1);
+    color: var(--green);
+    font-size: 12.7px;
+    font-weight: 500;
+}
+
+/* ========================= TÍTULO ========================= */
+.section-title {
+    width: 100%;
+    padding-top: 4px;
+    font-size: 17.6px;
+    font-weight: 400;
+}
+
+/* ========================= RESUMEN ========================= */
+.maintenance-summary {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+}
+
+.summary-card {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.summary-card span {
+    font-size: 13px;
+}
+
+.summary-card strong {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Realizados */
+.summary-success {
+    border: 1px solid var(--green-border);
+    background-color: rgba(26, 77, 46, 0.4);
+    color: var(--green);
+}
+
+/* Pendientes */
+.summary-warning {
+    border: 1px solid var(--orange-border);
+    background-color: rgba(180, 83, 9, 0.35);
+    color: var(--orange);
+}
+
+/* Próximos */
+.summary-info {
+    border: 1px solid var(--blue-border);
+    background-color: rgba(30, 99, 160, 0.35);
+    color: var(--blue);
+}
+
+/* Vencidos */
+.summary-danger {
+    border: 1px solid var(--red-border);
+    background-color: rgba(153, 27, 27, 0.35);
+    color: var(--red);
+}
+
+/* ========================= FILTROS ========================= */
+.filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group>span {
+    font-size: 15px;
+}
+
+.custom-select {
+    min-width: 100px;
+    padding: 6px 36px 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    position: relative;
+    font-size: 15px;
+}
+
+.filter-group:nth-child(2) .custom-select {
+    min-width: 145px;
+}
+
+/* ========================= LISTA ========================= */
+.maintenance-list {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ========================= TARJETA ========================= */
+.maintenance-card {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ========================= IMAGEN ========================= */
+.maintenance-image {
+    width: 100px;
+    height: 70px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background-color: var(--bg-image);
+}
+
+.diagonal {
+    position: absolute;
+    width: 127.4%;
+    height: 100%;
+    border-top: 1px solid var(--border-light);
+    transform-origin: 0 0;
+}
+
+.diagonal-one {
+    left: 1%;
+    top: 1px;
+    transform: rotate(35deg);
+}
+
+.diagonal-two {
+    left: 24%;
+    top: 74px;
+    transform: rotate(-35deg);
+}
+
+/* ========================= INFORMACIÓN ========================= */
+.maintenance-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.maintenance-header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.maintenance-header strong {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.maintenance-header span {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.maintenance-type {
+    font-size: 13.6px;
+    color: var(--text-secondary);
+}
+
+/* ========================= ACCIONES ========================= */
+.maintenance-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.status-badge {
+    padding: 3px 14px;
+    border: 1px solid var(--green-border);
+    border-radius: 12px;
+    background-color: rgba(26, 77, 46, 0.4);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.maintenance-button {
+    padding: 6px 14px;
+    border: 1px solid var(--button-orange);
+    border-radius: 8px;
+    color: var(--button-orange);
+    font-size: 12.8px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.maintenance-button:hover {
+    background-color: var(--button-orange);
+    color: #ffffff;
+}
+
+/* ========================= TABLET ========================= */
+@media (max-width: 900px) {
+    .historial-page {
+        padding: 24px 20px;
+    }
+
+    .historial-container {
+        max-width: 100%;
+    }
+
+    .maintenance-summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ========================= MOBILE ========================= */
+@media (max-width: 700px) {
+
+    /* En mobile asumimos que el sidebar deja de ocupar espacio lateral. */
+    .historial-page {
+        width: 100%;
+        margin-left: 0;
+        padding: 16px 12px;
+    }
+
+    .stats-container {
+        flex-direction: column;
+    }
+
+    .maintenance-card {
+        flex-wrap: wrap;
+    }
+
+    .maintenance-info {
+        min-width: calc(100% - 116px);
+    }
+
+    .maintenance-actions {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+/* ========================= MOBILE PEQUEÑO ========================= */
+@media (max-width: 480px) {
+    .history-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .date-select {
+        width: 100%;
+    }
+
+    .maintenance-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        justify-content: space-between;
+    }
+
+    .custom-select {
+        flex: 1;
+    }
+
+    .maintenance-list {
+        padding: 10px;
+    }
+
+    .maintenance-card {
+        padding: 10px;
+    }
+
+    .maintenance-image {
+        width: 80px;
+        height: 60px;
+    }
+
+    .maintenance-info {
+        min-width: calc(100% - 96px);
+    }
+
+    .maintenance-header {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .maintenance-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .maintenance-button {
+        width: 100%;
+    }
+}
