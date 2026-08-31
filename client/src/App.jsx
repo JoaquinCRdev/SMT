@@ -1,7 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Inicio from "./pages/inicio"
 import RegisterAdmin from "./components/layout/auth/registerAdmin"
-import Register from "./components/layout/auth/register"
 import AsociarseTaller from "./components/layout/asociarseTaller"
 import Login from "./components/layout/auth/login"
 import RegisterTallerCodigo from "./pages/registroTallerCodigo"
@@ -13,6 +12,7 @@ import Home from "./pages/home"
 import Mantenimiento from "./pages/mantenimiento";
 import Configuracion from "./pages/configuracion"
 import Historial from "./pages/historial"
+import Ayuda from "./pages/ayuda"
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/historial" element={<Historial/>} />
           {/* <Route path="/inicio" element={<Inicio />} /> */}
           <Route path="/crearTaller" element={<RegisterAdmin />} />
-          <Route path="/registerPersonal" element={<Register />} />
+           {/* <Route path="/registerPersonal" element={<Register />} />*/}
           <Route path="/asociarseTaller" element={<AsociarseTaller />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registerTallerCodigo" element={<RegisterTallerCodigo />} />
@@ -31,6 +31,9 @@ const App = () => {
           <Route path="/tarjetamaquina" element={<TarjetaMaquina />} />
           <Route path="/registrarTaller" element={<RegistrarTaller />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/mantenimiento" element={<Mantenimiento />} />
+          <Route path="/configuracion" element={<Configuracion />} />
+          <Route path="/ayuda" element={<Ayuda />} />
         </Routes>
       </BrowserRouter>
     </div> 
