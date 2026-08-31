@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/pages/planes.css";
 
 const Planes = () => {
   const [planSeleccionado, setPlanSeleccionado] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div id="nuevo">

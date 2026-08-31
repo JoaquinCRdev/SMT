@@ -5,7 +5,7 @@
   margin: 0;
   overflow: hidden;
 
-  background-color: #111315;
+  background-color: var(--FondoPrincipal);
   font-family: "inter";
 }
 
@@ -17,7 +17,7 @@
   padding: 25px 35px;
   box-sizing: border-box;
 
-  background-color: #111315;
+  background-color: var(--FondoPrincipal);
 
   display: flex;
   flex-direction: column;
@@ -26,9 +26,10 @@
   overflow-y: auto;
 }
 
+
 /* =========================================================
-   HEADER MOBILE (SEGMENTED CONTROL)
-   ========================================================= */
+   HEADER MOBILE
+========================================================= */
 
 #headermobile {
   display: flex;
@@ -39,47 +40,69 @@
   margin-bottom: 25px;
   padding: 4px;
   box-sizing: border-box;
-  background-color: #171717;
-  border: 1px solid #2d3135;
+
+  background-color: var(--FondoSecundario);
+  border: 1px solid var(--BordeSuave);
   border-radius: 12px;
+
   gap: 4px;
 }
 
 #headermobile button {
   flex: 1;
   height: 100%;
+
   border: none;
   border-radius: 8px;
+
   background-color: transparent;
-  color: #8e8e93;
+  color: var(--TextoSecundario);
+
   font-family: "inter", sans-serif;
-  font-size: 14px;
+
+  font-size: var(--TamTexto);
   font-weight: 500;
+
   cursor: pointer;
+
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   outline: none;
 }
 
 #headermobile button:hover:not(.activo) {
-  color: #f5f5f5;
-  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--TextoPrincipal);
+
+  background-color: color-mix(
+    in srgb,
+    var(--TextoPrincipal) 3%,
+    transparent
+  );
 }
 
 #headermobile button.activo {
-  background-color: #cb7219;
-  color: #ffffff;
+  background-color: var(--Naranja);
+  color: var(--TextoPrincipal);
+
   font-weight: 600;
-  border: 1px solid #3a3f45;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  border: 1px solid var(--BordePrincipal);
+
+  box-shadow: 0 2px 8px color-mix(
+    in srgb,
+    var(--FondoPrincipal) 35%,
+    transparent
+  );
 }
 
 
 /* =========================================================
    PARTE SUPERIOR
-   ========================================================= */
+========================================================= */
 
 #primerdivmismaquinas {
   width: 100%;
@@ -95,10 +118,10 @@
 #primerdivmismaquinas p {
   margin: 0;
 
-  font-size: 28px;
+  font-size: var(--TamTitulo);
   font-weight: bold;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 }
 
 #primerdivmismaquinas input {
@@ -108,26 +131,27 @@
   padding: 0 15px;
   box-sizing: border-box;
 
-  border: 1px solid #242424;
+  border: 1px solid var(--BordeSecundario);
   border-radius: 15px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
   font-family: "inter";
-  font-size: 18px;
+
+  font-size: var(--TamTexto);
 
   outline: none;
 }
 
 #primerdivmismaquinas input::placeholder {
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 }
 
 
 /* =========================================================
    BOTÓN +
-   ========================================================= */
+========================================================= */
 
 .botonmas {
   width: 42px;
@@ -135,14 +159,14 @@
 
   padding: 0;
 
-  border: 1px solid #2d3135;
+  border: 1px solid var(--BordeSuave);
   border-radius: 10px;
 
-  background-color: #171717;
+  background-color: var(--FondoSecundario);
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 28px;
+  font-size: var(--TamTitulo);
   line-height: 1;
 
   cursor: pointer;
@@ -155,14 +179,14 @@
 }
 
 .botonmas:hover {
-  background-color: #242424;
-  border-color: #b4b4b4;
+  background-color: var(--BordeSecundario);
+  border-color: var(--TextoSecundario);
 }
 
 
 /* =========================================================
    CANTIDAD
-   ========================================================= */
+========================================================= */
 
 #segundodivmismaquinas {
   width: 100%;
@@ -174,18 +198,19 @@
 
   margin-top: 20px;
 }
+
 #segundodivmismaquinas p {
   margin: 0;
 
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 
-  font-size: 18px;
+  font-size: var(--TamTexto);
 }
 
 
 /* =========================================================
    LISTA
-   ========================================================= */
+========================================================= */
 
 #listamaquinas {
   width: 100%;
@@ -201,8 +226,8 @@
 
 
 /* =========================================================
-   TARJETAS - ESCRITORIO
-   ========================================================= */
+   TARJETAS
+========================================================= */
 
 .tarjetamaquina {
   width: 100%;
@@ -212,10 +237,10 @@
   padding: 15px 20px;
   box-sizing: border-box;
 
-  border: 1px solid #242424;
+  border: 1px solid var(--BordeSecundario);
   border-radius: 25px;
 
-  background-color: #171717 !important;
+  background-color: var(--FondoSecundario) !important;
 
   display: grid;
 
@@ -233,7 +258,7 @@
 
 /* =========================================================
    IMAGEN
-   ========================================================= */
+========================================================= */
 
 .imagentarjeta {
   position: relative;
@@ -243,7 +268,7 @@
 
   box-sizing: border-box;
 
-  border: 1px solid #b4b4b4;
+  border: 1px solid var(--TextoSecundario);
   border-radius: 18px;
 
   display: flex;
@@ -261,7 +286,7 @@
   width: 170px;
   height: 1px;
 
-  background-color: #b4b4b4;
+  background-color: var(--TextoSecundario);
 
   transform: rotate(-45deg);
 }
@@ -270,9 +295,10 @@
   position: relative;
   z-index: 1;
 
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 
-  font-size: 22px;
+  font-size: var(--TamTitulo);
+
   font-family: "inter";
 
   transform: rotate(-45deg);
@@ -281,7 +307,7 @@
 
 /* =========================================================
    INFORMACIÓN
-   ========================================================= */
+========================================================= */
 
 .infomaquina {
   width: 100%;
@@ -298,9 +324,9 @@
 
   margin: 0;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 20px;
+  font-size: var(--TamTexto);
   font-family: "inter";
 
   white-space: nowrap;
@@ -311,7 +337,7 @@
 
 /* =========================================================
    ETIQUETAS
-   ========================================================= */
+========================================================= */
 
 .etiquetas {
   display: flex;
@@ -325,12 +351,13 @@
 .etiquetas span {
   padding: 3px 12px;
 
-  border: 1px solid #b4b4b4;
+  border: 1px solid var(--TextoSecundario);
   border-radius: 10px;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 16px;
+  font-size: calc(var(--TamTexto) - 2px);
+
   font-family: "inter";
 
   white-space: nowrap;
@@ -339,14 +366,15 @@
 
 /* =========================================================
    FECHA
-   ========================================================= */
+========================================================= */
 
 .fecha {
   margin: 0;
 
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 
-  font-size: 16px;
+  font-size: calc(var(--TamTexto) - 2px);
+
   font-family: "inter";
 
   white-space: nowrap;
@@ -355,7 +383,7 @@
 
 /* =========================================================
    DESCRIPCIÓN
-   ========================================================= */
+========================================================= */
 
 .descripcionmaquina {
   width: 100%;
@@ -367,9 +395,10 @@
 .descripcionmaquina h3 {
   margin: 0 0 12px 0;
 
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 
-  font-size: 18px;
+  font-size: var(--TamTexto);
+
   font-family: "inter";
 }
 
@@ -378,10 +407,12 @@
 
   margin: 0;
 
-  color: #b4b4b4;
+  color: var(--TextoSecundario);
 
-  font-size: 16px;
+  font-size: var(--TamTexto);
+
   line-height: 1.35;
+
   font-family: "inter";
 
   overflow-wrap: break-word;
@@ -394,13 +425,13 @@
 
   margin-bottom: 22px;
 
-  background-color: #b4b4b4;
+  background-color: var(--TextoSecundario);
 }
 
 
 /* =========================================================
    ESTADO
-   ========================================================= */
+========================================================= */
 
 .estado {
   width: 110px;
@@ -408,14 +439,15 @@
 
   justify-self: end;
 
-  border: 1px solid #b4b4b4;
+  border: 1px solid var(--TextoSecundario);
   border-radius: 10px;
 
   background: transparent;
 
-  color: #f5f5f5;
+  color: var(--TextoPrincipal);
 
-  font-size: 16px;
+  font-size: calc(var(--TamTexto) - 1px);
+
   font-family: "inter";
 
   cursor: pointer;
@@ -424,14 +456,14 @@
 }
 
 .estado:hover {
-  border-color: #f5f5f5;
+  border-color: var(--TextoPrincipal);
 }
 
 
 /* =========================================================
    TABLET
    700px - 992px
-   ========================================================= */
+========================================================= */
 
 @media (min-width: 700px) and (max-width: 992px) {
 
@@ -447,21 +479,21 @@
   }
 
   #primerdivmismaquinas p {
-    font-size: 22px;
+    font-size: var(--TamTitulo);
   }
 
   #primerdivmismaquinas input {
     width: 190px;
     height: 36px;
 
-    font-size: 15px;
+    font-size: var(--TamTexto);
   }
 
   .botonmas {
     width: 28px;
     height: 28px;
 
-    font-size: 24px;
+    font-size: var(--TamTexto);
   }
 
 
@@ -472,7 +504,7 @@
   }
 
   #segundodivmismaquinas p {
-    font-size: 18px;
+    font-size: var(--TamTexto);
   }
 
 
@@ -484,11 +516,7 @@
   }
 
 
-  /* =====================================================
-     TARJETA TABLET
-
-     Sigue siendo horizontal, pero todo se achica.
-     ===================================================== */
+  /* ---------- TARJETA ---------- */
 
   .tarjetamaquina {
     min-height: 120px;
@@ -521,7 +549,7 @@
   }
 
   .imagentarjeta span {
-    font-size: 16px;
+    font-size: var(--TamTexto);
   }
 
 
@@ -532,7 +560,7 @@
   }
 
   .infomaquina h2 {
-    font-size: 16px;
+    font-size: var(--TamTexto);
   }
 
   .etiquetas {
@@ -542,13 +570,13 @@
   .etiquetas span {
     padding: 3px 7px;
 
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 3px);
 
     border-radius: 8px;
   }
 
   .fecha {
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 3px);
   }
 
 
@@ -557,11 +585,12 @@
   .descripcionmaquina h3 {
     margin-bottom: 7px;
 
-    font-size: 14px;
+    font-size: var(--TamTexto);
   }
 
   .descripcionmaquina p {
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 3px);
+
     line-height: 1.3;
   }
 
@@ -578,7 +607,7 @@
     width: 75px;
     height: 32px;
 
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 2px);
 
     border-radius: 8px;
   }
@@ -588,7 +617,7 @@
 /* =========================================================
    CELULAR
    0 - 699px
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 699px) {
 
@@ -602,8 +631,8 @@
   }
 
   #headermobile {
-  display: none;
-}
+    display: none;
+  }
 
   #ladomismaquinas {
     width: 100%;
@@ -637,7 +666,7 @@
 
     padding: 0 14px;
 
-    font-size: 16px;
+    font-size: var(--TamTexto);
 
     border-radius: 12px;
   }
@@ -648,26 +677,26 @@
     width: 40px;
     height: 40px;
 
-    font-size: 25px;
+    font-size: var(--TamTitulo);
   }
 
 
   /* =====================================================
      CANTIDAD
-     ===================================================== */
+  ===================================================== */
 
   #segundodivmismaquinas {
     margin-top: 15px;
   }
 
   #segundodivmismaquinas p {
-    font-size: 18px;
+    font-size: var(--TamTexto);
   }
 
 
   /* =====================================================
      LISTA
-     ===================================================== */
+  ===================================================== */
 
   #listamaquinas {
     width: 100%;
@@ -680,16 +709,7 @@
 
   /* =====================================================
      TARJETA CELULAR
-
-     FILA 1:
-     IMG | INFORMACIÓN
-
-     FILA 2:
-     DESCRIPCIÓN
-
-     FILA 3:
-     ESTADO
-     ===================================================== */
+  ===================================================== */
 
   .tarjetamaquina {
     width: 100%;
@@ -714,7 +734,7 @@
 
   /* =====================================================
      IMAGEN
-     ===================================================== */
+  ===================================================== */
 
   .imagentarjeta {
     grid-column: 1;
@@ -731,17 +751,13 @@
   }
 
   .imagentarjeta span {
-    font-size: 16px;
+    font-size: var(--TamTexto);
   }
 
 
   /* =====================================================
      INFORMACIÓN
-
-     IMPORTANTE:
-     min-width: 0 evita que el texto empuje
-     toda la tarjeta hacia afuera.
-     ===================================================== */
+  ===================================================== */
 
   .infomaquina {
     grid-column: 2;
@@ -756,7 +772,7 @@
   .infomaquina h2 {
     width: 100%;
 
-    font-size: 18px;
+    font-size: var(--TamTexto);
 
     white-space: nowrap;
     overflow: hidden;
@@ -766,7 +782,7 @@
 
   /* =====================================================
      ETIQUETAS
-     ===================================================== */
+  ===================================================== */
 
   .etiquetas {
     display: flex;
@@ -779,7 +795,7 @@
   .etiquetas span {
     padding: 3px 8px;
 
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 3px);
 
     border-radius: 8px;
   }
@@ -787,12 +803,12 @@
 
   /* =====================================================
      FECHA
-     ===================================================== */
+  ===================================================== */
 
   .fecha {
     max-width: 100%;
 
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 3px);
 
     white-space: nowrap;
   }
@@ -800,11 +816,10 @@
 
   /* =====================================================
      DESCRIPCIÓN
+  ===================================================== */
 
-     Ahora ocupa TODO el ancho de la tarjeta.
-     ===================================================== */
-
-  /* .descripcionmaquina {
+  /*
+  .descripcionmaquina {
     grid-column: 1 / -1;
     grid-row: 2;
 
@@ -817,7 +832,7 @@
   .descripcionmaquina h3 {
     margin: 0 0 8px 0;
 
-    font-size: 15px;
+    font-size: var(--TamTexto);
   }
 
   .descripcionmaquina p {
@@ -825,7 +840,8 @@
 
     margin: 0;
 
-    font-size: 13px;
+    font-size: calc(var(--TamTexto) - 1px);
+
     line-height: 1.4;
 
     overflow-wrap: break-word;
@@ -835,14 +851,13 @@
     width: 100%;
 
     margin-bottom: 10px;
-  } */
+  }
+  */
 
 
   /* =====================================================
      ESTADO
-
-     Ocupa todo el ancho y queda ABAJO de la descripción.
-     ===================================================== */
+  ===================================================== */
 
   .estado {
     grid-column: 1 / -1;
@@ -855,7 +870,7 @@
 
     margin: 0;
 
-    font-size: 13px;
+    font-size: calc(var(--TamTexto) - 1px);
 
     border-radius: 9px;
   }
@@ -864,7 +879,7 @@
 
 /* =========================================================
    CELULARES MUY PEQUEÑOS
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 380px) {
 
@@ -891,32 +906,34 @@
   }
 
   .imagentarjeta span {
-    font-size: 14px;
+    font-size: calc(var(--TamTexto) - 2px);
   }
 
   .infomaquina h2 {
-    font-size: 16px;
+    font-size: var(--TamTexto);
   }
 
   .etiquetas span {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 4px);
+
     padding: 3px 7px;
   }
 
   .fecha {
-    font-size: 11px;
+    font-size: calc(var(--TamTexto) - 4px);
   }
 
   .descripcionmaquina h3 {
-    font-size: 14px;
+    font-size: var(--TamTexto);
   }
 
   .descripcionmaquina p {
-    font-size: 12px;
+    font-size: calc(var(--TamTexto) - 1px);
   }
 
   .estado {
     height: 34px;
-    font-size: 12px;
+
+    font-size: calc(var(--TamTexto) - 2px);
   }
 }

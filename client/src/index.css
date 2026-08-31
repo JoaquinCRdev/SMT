@@ -29,6 +29,8 @@ body {
 ========================================================= */
 
 :root {
+    --TamTitulo: 22px;
+    --TamTexto: 12px;
 
     /* ---------- FONDOS ---------- */
 
@@ -107,6 +109,10 @@ body.light-mode {
     --Gris: #777777;
 }
 
+body.tamano-grande {
+    --TamTitulo: 28px;
+    --TamTexto: 18px;
+}
 
 /* =========================================================
    TRANSICIÓN GENERAL

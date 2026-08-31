@@ -27,13 +27,28 @@ const Configuracion = () => {
     return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
   });
 
- useEffect(() => {
-  document.body.classList.toggle("light-mode", !modoOscuro);
+  useEffect(() => {
+    document.body.classList.toggle("light-mode", !modoOscuro);
 
-  localStorage.setItem("mode", JSON.stringify(modoOscuro));
-}, [modoOscuro]);
+    localStorage.setItem("mode", JSON.stringify(modoOscuro));
+  }, [modoOscuro]);
 
   const toggleModoOscuro = () => setModoOscuro((v) => !v);
+
+  const [tamanoGrande, setTamanoGrande] = useState(() => {
+    const saved = localStorage.getItem("fontSize");
+    return saved === "grande";
+  });
+
+  useEffect(() => {
+    document.body.classList.toggle("tamano-grande", tamanoGrande);
+
+    localStorage.setItem("fontSize", tamanoGrande ? "grande" : "pequeno");
+  }, [tamanoGrande]);
+
+  const toggleTamano = () => {
+    setTamanoGrande((v) => !v);
+  };
 
   return (
     <div className="containerConfig">
@@ -148,33 +163,54 @@ const Configuracion = () => {
                   </div>
                 </div>
 
-                <NavLink className="btn-outline-orange" to={"/planes"}>Actualizar a Pro</NavLink>
+                <NavLink className="btn-outline-orange" to={"/planes"}>
+                  Actualizar a Pro
+                </NavLink>
               </div>
             </div>
 
             {/* MODO */}
             <button
-      className="toggle-mode"
-      type="button"
-      onClick={toggleModoOscuro}
-      aria-pressed={modoOscuro}
-      aria-label={modoOscuro ? "Cambiar a modo claro (Alt+D)" : "Cambiar a modo oscuro (Alt+D)"}
-      title={modoOscuro ? "Modo oscuro activo — Alt+D" : "Modo claro activo — Alt+D"}
-      >
-      {modoOscuro ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
-      </button>
+              className="toggle-mode"
+              type="button"
+              onClick={toggleModoOscuro}
+              aria-pressed={modoOscuro}
+              aria-label={
+                modoOscuro
+                  ? "Cambiar a modo claro (Alt+D)"
+                  : "Cambiar a modo oscuro (Alt+D)"
+              }
+              title={
+                modoOscuro
+                  ? "Modo oscuro activo — Alt+D"
+                  : "Modo claro activo — Alt+D"
+              }
+            >
+              {modoOscuro ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
+            </button>
 
             {/* FUENTE */}
             <div className="sub-card">
               <span className="sub-card-title">Tamaño de fuente</span>
 
-              <div className="segmented-control">
-                <button className="segment-btn">Pequeño</button>
-
-                <button className="segment-btn active">Mediano</button>
-
-                <button className="segment-btn">Grande</button>
-              </div>
+              <button
+                className="toggle-mode"
+                type="button"
+                onClick={toggleTamano}
+                aria-pressed={tamanoGrande}
+                aria-label={
+                  tamanoGrande
+                    ? "Cambiar a tamaño pequeño"
+                    : "Cambiar a tamaño grande"
+                } 
+                title={
+                  tamanoGrande
+                    ? "Tamaño grande activo"
+                    : "Tamaño pequeño activo"
+                }
+              >
+                {tamanoGrande ? "Grande" : "Pequeño"}
+              </button>
             </div>
 
             {/* IDIOMA */}

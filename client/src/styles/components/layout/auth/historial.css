@@ -41,45 +41,36 @@ button {
     color: inherit;
     cursor: pointer;
 }
+
 .historial-layout {
-  height: 100vh;
-  width: 100%;
-
-  display: flex;
-
-  background-color: #0c0c0c;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: var(--bg-main);
 }
 
-/* =========================
-   CONTENIDO
-========================= */
-
+/* ========================= CONTENIDO ========================= */
 .historial-page {
-  flex: 1;
-  min-width: 0;
-  min-height: 100vh;
-
-  padding: 24px 32px;
-
-  background-color: #0c0c0c;
-
-  font-family: "Roboto", system-ui, sans-serif;
-  color: #f0f2f5;
-
-  overflow-x: hidden;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 24px 32px;
+    background-color: var(--bg-main);
+    font-family: "Roboto", system-ui, sans-serif;
+    color: var(--text-primary);
+    overflow-x: hidden;
 }
 
 .historial-container {
-  width: 100%;
-  max-width: 1100px;
-
-  margin: 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
-/* ========================= HEADER ========================= */
+
+/* ========================= HEADER & SELECTS ========================= */
 .history-header {
     width: 100%;
     display: flex;
@@ -87,30 +78,41 @@ button {
     gap: 12px;
 }
 
-.history-header>span {
+.history-header > span {
     font-size: 20px;
     font-weight: 500;
 }
 
+.custom-select,
 .date-select {
-    position: relative;
-    min-width: 140px;
-    padding: 6px 32px 6px 14px;
+    width: fit-content;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
     border: 1px solid var(--border);
     border-radius: 8px;
-    background-color: var(--bg-card);
-    font-size: 15px;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 6px 32px 6px 14px;
+    font-size: 14.5px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    transition: border-color 0.2s ease;
 }
 
-.select-arrow {
-    position: absolute;
-    right: 12px;
-    color: var(--text-secondary);
-    font-size: 18px;
+.custom-select:hover,
+.date-select:hover {
+    border-color: #555566;
+}
+
+.custom-select option,
+.date-select option {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
 }
 
 /* ========================= ESTADÍSTICAS ========================= */
@@ -193,6 +195,7 @@ button {
 
 .summary-card span {
     font-size: 13px;
+    font-weight: 500;
 }
 
 .summary-card strong {
@@ -200,28 +203,24 @@ button {
     font-weight: 700;
 }
 
-/* Realizados */
 .summary-success {
     border: 1px solid var(--green-border);
     background-color: rgba(26, 77, 46, 0.4);
     color: var(--green);
 }
 
-/* Pendientes */
 .summary-warning {
     border: 1px solid var(--orange-border);
     background-color: rgba(180, 83, 9, 0.35);
     color: var(--orange);
 }
 
-/* Próximos */
 .summary-info {
     border: 1px solid var(--blue-border);
     background-color: rgba(30, 99, 160, 0.35);
     color: var(--blue);
 }
 
-/* Vencidos */
 .summary-danger {
     border: 1px solid var(--red-border);
     background-color: rgba(153, 27, 27, 0.35);
@@ -243,23 +242,8 @@ button {
     gap: 8px;
 }
 
-.filter-group>span {
+.filter-group > span {
     font-size: 15px;
-}
-
-.custom-select {
-    min-width: 100px;
-    padding: 6px 36px 6px 14px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    position: relative;
-    font-size: 15px;
-}
-
-.filter-group:nth-child(2) .custom-select {
-    min-width: 145px;
 }
 
 /* ========================= LISTA ========================= */
@@ -349,7 +333,7 @@ button {
     color: var(--text-secondary);
 }
 
-/* ========================= ACCIONES ========================= */
+/* ========================= ACCIONES Y DIVERSIFICACIÓN POR ESTADO ========================= */
 .maintenance-actions {
     display: flex;
     flex-direction: column;
@@ -358,31 +342,220 @@ button {
 }
 
 .status-badge {
-    padding: 3px 14px;
-    border: 1px solid var(--green-border);
+    padding: 4px 12px;
     border-radius: 12px;
-    background-color: rgba(26, 77, 46, 0.4);
-    color: var(--green);
     font-size: 13px;
     font-weight: 500;
+    display: inline-block;
+}
+
+.status-realizado {
+    background-color: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+}
+
+.status-pendiente {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--orange);
+    border: 1px solid var(--orange-border);
+}
+
+.status-proximo {
+    background-color: rgba(96, 165, 250, 0.15);
+    color: var(--blue);
+    border: 1px solid var(--blue-border);
+}
+
+.status-vencido {
+    background-color: rgba(248, 113, 113, 0.15);
+    color: var(--red);
+    border: 1px solid var(--red-border);
 }
 
 .maintenance-button {
     padding: 6px 14px;
-    border: 1px solid var(--button-orange);
+    background-color: transparent;
     border-radius: 8px;
-    color: var(--button-orange);
     font-size: 12.8px;
     font-weight: 500;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.maintenance-button:hover {
-    background-color: var(--button-orange);
-    color: #ffffff;
+.button-realizado {
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+.button-realizado:hover {
+    background-color: rgba(63, 185, 80, 0.15);
 }
 
-/* ========================= TABLET ========================= */
+.button-pendiente {
+    border: 1px solid var(--orange);
+    color: var(--orange);
+}
+.button-pendiente:hover {
+    background-color: rgba(245, 158, 11, 0.15);
+}
+
+.button-proximo {
+    border: 1px solid var(--blue);
+    color: var(--blue);
+}
+.button-proximo:hover {
+    background-color: rgba(96, 165, 250, 0.15);
+}
+
+.button-vencido {
+    border: 1px solid var(--red);
+    color: var(--red);
+}
+.button-vencido:hover {
+    background-color: rgba(248, 113, 113, 0.15);
+}
+
+/* ========================= OVERLAY Y DRAWER ========================= */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Panel Deslizable */
+.drawer-panel {
+    position: fixed;
+    top: 0;
+    right: -440px;
+    width: 420px;
+    max-width: 90vw;
+    height: 100vh;
+    background-color: var(--bg-card);
+    border-left: 1px solid var(--border);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: "Roboto", system-ui, sans-serif;
+}
+
+.drawer-panel.open {
+    right: 0;
+}
+
+.drawer-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px;
+}
+
+/* Header del Menú Lateral */
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-header h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.close-drawer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.close-drawer:hover {
+    color: var(--text-primary);
+    background-color: var(--border-light);
+}
+
+/* Cuerpo del Menú Lateral */
+.drawer-body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding-top: 24px;
+    overflow-y: auto;
+}
+
+.drawer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.drawer-section h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.drawer-section p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.drawer-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14.5px !important;
+    color: var(--text-primary);
+    text-transform: capitalize;
+}
+
+/* Cuadro explicativo */
+.drawer-description {
+    background-color: var(--bg-secondary);
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-primary);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.no-data {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 24px;
+    font-size: 14px;
+}
+
+/* ========================= RESPONSIVE ========================= */
 @media (max-width: 900px) {
     .historial-page {
         padding: 24px 20px;
@@ -398,10 +571,7 @@ button {
     }
 }
 
-/* ========================= MOBILE ========================= */
 @media (max-width: 700px) {
-
-    /* En mobile asumimos que el sidebar deja de ocupar espacio lateral. */
     .historial-page {
         width: 100%;
         margin-left: 0;
@@ -428,8 +598,12 @@ button {
     }
 }
 
-/* ========================= MOBILE PEQUEÑO ========================= */
 @media (max-width: 480px) {
+    .drawer-panel {
+        width: 100vw;
+        max-width: 100vw;
+    }
+
     .history-header {
         align-items: flex-start;
         flex-direction: column;
@@ -454,6 +628,7 @@ button {
 
     .custom-select {
         flex: 1;
+        width: 100%;
     }
 
     .maintenance-list {

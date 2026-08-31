@@ -10,6 +10,7 @@ import Mismaquinas from "./pages/mismaquinas"
 import TarjetaMaquina from "./components/tarjetamismaquinas"
 import RegistrarTaller from "./pages/registrarTaller"
 import Home from "./pages/home"
+import Mantenimiento from "./pages/mantenimiento";
 import Configuracion from "./pages/configuracion"
 import Historial from "./pages/historial"
 
@@ -30,7 +31,6 @@ const App = () => {
           <Route path="/tarjetamaquina" element={<TarjetaMaquina />} />
           <Route path="/registrarTaller" element={<RegistrarTaller />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/configuracion" element={<Configuracion />} />
         </Routes>
       </BrowserRouter>
     </div> 
