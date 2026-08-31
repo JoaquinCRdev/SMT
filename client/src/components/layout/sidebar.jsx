@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/components/layout/sidebar.css";
+import i18n from "../../i18n/i18n";
 
 const Sidebar = () => {
+  const [, setIdioma] = useState(i18n.language);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   const cerrarMenu = () => {
     setMenuAbierto(false);
   };
 
+  // Escucha los cambios de idioma realizados desde cualquier componente
+  i18n.on("languageChanged", (nuevoIdioma) => {
+    setIdioma(nuevoIdioma);
+  });
+
   return (
     <aside id="sidebarhome">
 
       {/* ================= LOGO ================= */}
       <div id="headerSidebar">
+
         <img
           src="/logoblanco.png"
           alt="Logo"
@@ -30,6 +38,7 @@ const Sidebar = () => {
           <span></span>
           <span></span>
         </button>
+
       </div>
 
 
@@ -58,7 +67,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Inicio
+          {i18n.t("layout.sidebar.inicio")}
         </NavLink>
 
 
@@ -80,7 +89,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Mis maquinas
+          {i18n.t("layout.sidebar.mis_maquinas")}
         </NavLink>
 
 
@@ -102,7 +111,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Mantenimiento
+          {i18n.t("layout.sidebar.mantenimientos")}
         </NavLink>
 
 
@@ -124,7 +133,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Configuracion
+          {i18n.t("layout.sidebar.configuracion")}
         </NavLink>
 
 
@@ -146,8 +155,9 @@ const Sidebar = () => {
             alt=""
           />
 
-          Historial
+          {i18n.t("layout.sidebar.historial")}
         </NavLink>
+
 
         {/* NOTIFICACIONES */}
         <NavLink
@@ -167,7 +177,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Notificaciones
+          {i18n.t("layout.sidebar.notificaciones")}
         </NavLink>
 
 
@@ -189,7 +199,7 @@ const Sidebar = () => {
             alt=""
           />
 
-          Ayuda
+          {i18n.t("layout.sidebar.ayuda")}
         </NavLink>
 
       </div>
@@ -213,7 +223,7 @@ const Sidebar = () => {
           alt=""
         />
 
-        Cerrar Sesion
+        {i18n.t("layout.sidebar.cerrar_sesion")}
       </Link>
 
     </aside>
