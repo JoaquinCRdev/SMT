@@ -332,32 +332,6 @@
    BOTÓN +
 ========================================================= */
 
-.botonmas {
-  width: 35px;
-  height: 35px;
-
-  border: none;
-  background: transparent;
-
-  color: var(--Gris);
-
-  font-size: var(--TamTitulo);
-
-  font-weight: 300;
-
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: 0.2s;
-}
-
-.botonmas:hover {
-  color: var(--NaranjaHover);
-}
-
 
 /* =========================================================
    NOTIFICACIONES
