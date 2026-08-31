@@ -1,0 +1,125 @@
+{
+    "layout": {
+        "sidebar": {
+            "inicio": "Inicio",
+            "mis_maquinas": "Mis Máquinas",
+            "mantenimientos": "Mantenimientos",
+            "configuracion": "Configuración",
+            "historial": "Historial",
+            "notificaciones": "Notificaciones",
+            "ayuda": "Ayuda",
+            "cerrar_sesion": "Cerrar Sesión"
+        }
+    },
+
+    "pages": {
+        "home": {
+            "bienvenidaH1": "Hola",
+            "bienvenidaP": "Bienvenido de nuevo"
+        },
+
+        "mis_maquinas": {
+            "headers": {
+                "mis maquinas": "Mis Máquinas",
+                "otros": "Otros",
+
+                "active": {
+                    "mis maquinas": "Máquinas",
+                    "otros": "Elementos en Otros"
+                }
+            }
+        },
+
+        "mantenimientos": {
+            "titulo": "Mantenimientos",
+            "descripcion": "Programa y realiza seguimientos de los mantenimientos de tus máquinas."
+        },
+
+        "configuracion": {
+            "title": "Personalizacion",
+            "subtitle": "Personaliza y gestiona tu taller",
+
+            "configs": {
+                "plan": {
+                    "basico": {
+                        "name": "Básico",
+                        "description": "Ideal para talleres en crecimiento",
+                        "actualizar": "Actualizar a Pro"
+                    },
+                    "pro": {
+                        "name": "Pro",
+                        "description": "Para talleres que buscan lo mejor"
+                    }
+                },
+
+                "modo": {
+                    "claro": "☀️ Modo Claro",
+                    "oscuro": "🌙 Modo Oscuro"
+                },
+
+                "fuente": {
+                    "h2": "Tamaño de Fuente",
+                    "sizes": {
+                        "pequeño": "Pequeño",
+                        "grande": "Grande"
+                    }
+                },
+
+                "idioma": {
+                    "es": "Español",
+                    "en": "Ingles",
+                    "de": "Aleman"
+                },
+
+                "personal": {
+                    "h2": "Gestion de personal",
+                    "p": "Administra el personal que tiene acceso al taller",
+                    "estado": "Estado",
+                    "modificar": "Modificar",
+                    "agregar": "Agregar personal"
+                },
+
+                "solicitudes": {
+                    "h2": "Solicitudes pendientes",
+                    "p": "Personal que solicitaron unirse al taller",
+
+                    "solicitud": {
+                        "span": "solicita unirse al taller",
+                        "aceptar": "Aceptar",
+                        "rechazar": "Rechazar"
+                    }
+                },
+
+                "acciones": {
+                    "h2": "Acciones sobre el taller",
+                    "p": "Gestiona la informacion general de tu taller",
+
+                    "modificar": {
+                        "span": "Modificar taller",
+                        "descripcion": "Edita la informacion general, configuracion y detalles de tu taller",
+                        "action": "Ir a configuracion"
+                    },
+
+                    "borrar":{
+                        "span": "Borrar taller",
+                        "descripcion": "Elimina tu taller y toda su informacion de manera permanente",
+                        "action": "Borrar taller"
+                    }
+                }
+            }
+        },
+
+        "historial": {
+            "titulo": "Historial",
+            "descripcion": "Revisa el historial de actividades y eventos relacionados con tus máquinas."
+        },
+        "notificaciones": {
+            "titulo": "Notificaciones",
+            "descripcion": "Gestiona tus notificaciones y alertas importantes."
+        },
+        "ayuda": {
+            "titulo": "Ayuda",
+            "descripcion": "Encuentra respuestas a tus preguntas y contacta con soporte si lo necesitas."
+        }
+    }
+}

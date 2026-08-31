@@ -1,28 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
-/* ========================= VARIABLES ========================= */
-:root {
-    --sidebar-width: 250px;
-    --bg-main: #0c0c0c;
-    --bg-card: #1b1e22;
-    --bg-secondary: #15171a;
-    --bg-image: #1a1d21;
-    --border: #2b2f36;
-    --border-light: #2e343b;
-    --text-primary: #f0f2f5;
-    --text-secondary: #9aa0a6;
-    --green: #3fb950;
-    --green-border: #238636;
-    --orange: #f59e0b;
-    --orange-border: #d97706;
-    --blue: #60a5fa;
-    --blue-border: #2563eb;
-    --red: #f87171;
-    --red-border: #dc2626;
-    --button-orange: #d9531e;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-/* ========================= RESET ========================= */
+
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -42,82 +25,161 @@ button {
     cursor: pointer;
 }
 
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+========================================================= */
+
 .historial-layout {
     height: 100vh;
     width: 100%;
     display: flex;
-    background-color: var(--bg-main);
+
+    background-color: var(--FondoPrincipal);
+    color: var(--TextoPrincipal);
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
-/* ========================= CONTENIDO ========================= */
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
 .historial-page {
     flex: 1;
     min-width: 0;
     min-height: 100vh;
+
     padding: 24px 32px;
-    background-color: var(--bg-main);
-    font-family: "Roboto", system-ui, sans-serif;
-    color: var(--text-primary);
+
+    background-color: var(--FondoPrincipal);
+    color: var(--TextoPrincipal);
+
+    font-family: "Inter", sans-serif;
+
     overflow-x: hidden;
+    overflow-y: auto;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+
+    /* Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
 }
+
+
+/* =========================================================
+   SCROLLBAR CHROME / EDGE / OPERA
+========================================================= */
+
+.historial-page::-webkit-scrollbar {
+    width: 8px;
+}
+
+.historial-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.historial-page::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 10px;
+}
+
+.historial-page::-webkit-scrollbar-thumb:hover {
+    background-color: #222222;
+}
+
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
 
 .historial-container {
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
+
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* ========================= HEADER & SELECTS ========================= */
+
+/* =========================================================
+   HEADER & SELECTS
+========================================================= */
+
 .history-header {
     width: 100%;
+
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
 .history-header > span {
-    font-size: 20px;
+    font-size: var(--TamTitulo);
     font-weight: 500;
+    color: var(--TextoPrincipal);
 }
 
 .custom-select,
 .date-select {
     width: fit-content;
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
+
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
+
     padding: 6px 32px 6px 14px;
-    font-size: 14.5px;
+
+    font-size: var(--TamTexto);
     font-weight: 500;
+
     cursor: pointer;
     outline: none;
+
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888888'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 16px;
-    transition: border-color 0.2s ease;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .custom-select:hover,
 .date-select:hover {
-    border-color: #555566;
+    border-color: var(--BordeSuave);
 }
 
 .custom-select option,
 .date-select option {
-    background-color: var(--bg-card);
-    color: var(--text-primary);
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
 }
 
-/* ========================= ESTADÍSTICAS ========================= */
+
+/* =========================================================
+   ESTADÍSTICAS
+========================================================= */
+
 .stats-container {
     width: 100%;
+
     display: flex;
     gap: 16px;
 }
@@ -125,30 +187,42 @@ button {
 .stat-card {
     flex: 1;
     min-width: 0;
+
     padding: 16px;
-    border: 1px solid var(--border);
+
+    border: 1px solid var(--BordePrincipal);
     border-radius: 12px;
-    background-color: var(--bg-card);
+
+    background-color: var(--FondoTarjeta);
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 12px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .stat-title {
     width: 100%;
+
     display: flex;
     align-items: center;
+
     white-space: nowrap;
 }
 
 .stat-title strong {
-    font-size: 22px;
+    font-size: var(--TamTitulo);
     font-weight: 700;
 }
 
 .stat-title span {
-    font-size: 18px;
+    font-size: var(--TamTexto);
     font-weight: 400;
 }
 
@@ -158,276 +232,465 @@ button {
 
 .operativos {
     display: inline-block;
+
     padding: 4px 12px;
-    border: 1px solid var(--green-border);
+
+    border: 1px solid var(--Verde);
     border-radius: 8px;
-    background-color: rgba(35, 134, 54, 0.1);
-    color: var(--green);
-    font-size: 12.7px;
+
+    background-color: color-mix(
+        in srgb,
+        var(--Verde) 10%,
+        transparent
+    );
+
+    color: var(--Verde);
+
+    font-size: var(--TamTexto);
     font-weight: 500;
 }
 
-/* ========================= TÍTULO ========================= */
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
 .section-title {
     width: 100%;
+
     padding-top: 4px;
-    font-size: 17.6px;
+
+    font-size: var(--TamTitulo);
     font-weight: 400;
+
+    color: var(--TextoPrincipal);
 }
 
-/* ========================= RESUMEN ========================= */
+
+/* =========================================================
+   RESUMEN
+========================================================= */
+
 .maintenance-summary {
     width: 100%;
+
     display: flex;
     gap: 12px;
 }
 
 .summary-card {
     flex: 1;
+
     padding: 12px;
+
     border-radius: 12px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 6px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .summary-card span {
-    font-size: 13px;
+    font-size: var(--TamTexto);
     font-weight: 500;
 }
 
 .summary-card strong {
-    font-size: 24px;
+    font-size: var(--TamTitulo);
     font-weight: 700;
 }
 
+
+/* =========================================================
+   ESTADOS DEL RESUMEN
+========================================================= */
+
 .summary-success {
-    border: 1px solid var(--green-border);
-    background-color: rgba(26, 77, 46, 0.4);
-    color: var(--green);
+    border: 1px solid var(--Verde);
+
+    background-color: color-mix(
+        in srgb,
+        var(--Verde) 18%,
+        transparent
+    );
+
+    color: var(--Verde);
 }
 
 .summary-warning {
-    border: 1px solid var(--orange-border);
-    background-color: rgba(180, 83, 9, 0.35);
-    color: var(--orange);
+    border: 1px solid var(--Naranja);
+
+    background-color: color-mix(
+        in srgb,
+        var(--Naranja) 18%,
+        transparent
+    );
+
+    color: var(--Naranja);
 }
 
 .summary-info {
-    border: 1px solid var(--blue-border);
-    background-color: rgba(30, 99, 160, 0.35);
-    color: var(--blue);
+    border: 1px solid #60a5fa;
+
+    background-color: rgba(96, 165, 250, 0.15);
+
+    color: #60a5fa;
 }
 
 .summary-danger {
-    border: 1px solid var(--red-border);
-    background-color: rgba(153, 27, 27, 0.35);
-    color: var(--red);
+    border: 1px solid #ef4444;
+
+    background-color: rgba(239, 68, 68, 0.15);
+
+    color: #ef4444;
 }
 
-/* ========================= FILTROS ========================= */
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
 .filters {
     width: 100%;
+
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+
     gap: 20px;
 }
 
 .filter-group {
     display: flex;
     align-items: center;
+
     gap: 8px;
 }
 
 .filter-group > span {
-    font-size: 15px;
+    font-size: var(--TamTexto);
+    color: var(--TextoPrincipal);
 }
 
-/* ========================= LISTA ========================= */
+
+/* =========================================================
+   LISTA
+========================================================= */
+
 .maintenance-list {
     width: 100%;
+
     padding: 16px;
-    border: 1px solid var(--border);
+
+    border: 1px solid var(--BordePrincipal);
     border-radius: 16px;
-    background-color: var(--bg-card);
+
+    background-color: var(--FondoTarjeta);
+
     display: flex;
     flex-direction: column;
+
     gap: 12px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
-/* ========================= TARJETA ========================= */
+
+/* =========================================================
+   TARJETA
+========================================================= */
+
 .maintenance-card {
     width: 100%;
+
     padding: 14px;
-    border: 1px solid var(--border);
+
+    border: 1px solid var(--BordePrincipal);
     border-radius: 12px;
-    background-color: var(--bg-secondary);
+
+    background-color: var(--FondoSecundario);
+
     display: flex;
     align-items: center;
+
     gap: 16px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
-/* ========================= IMAGEN ========================= */
+
+/* =========================================================
+   IMAGEN
+========================================================= */
+
 .maintenance-image {
     width: 100px;
     height: 70px;
+
     flex-shrink: 0;
+
     overflow: hidden;
     position: relative;
-    border: 1px solid var(--border);
+
+    border: 1px solid var(--BordePrincipal);
     border-radius: 6px;
-    background-color: var(--bg-image);
+
+    background-color: var(--FondoBoton);
 }
 
 .diagonal {
     position: absolute;
+
     width: 127.4%;
     height: 100%;
-    border-top: 1px solid var(--border-light);
+
+    border-top: 1px solid var(--BordeSuave);
+
     transform-origin: 0 0;
 }
 
 .diagonal-one {
     left: 1%;
     top: 1px;
+
     transform: rotate(35deg);
 }
 
 .diagonal-two {
     left: 24%;
     top: 74px;
+
     transform: rotate(-35deg);
 }
 
-/* ========================= INFORMACIÓN ========================= */
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
 .maintenance-info {
     flex: 1;
     min-width: 0;
+
     display: flex;
     flex-direction: column;
+
     gap: 6px;
 }
 
 .maintenance-header {
     width: 100%;
+
     display: flex;
     align-items: flex-start;
+
     gap: 24px;
 }
 
 .maintenance-header strong {
-    font-size: 15px;
+    font-size: var(--TamTexto);
     font-weight: 700;
+
+    color: var(--TextoPrincipal);
 }
 
 .maintenance-header span {
-    font-size: 15px;
+    font-size: var(--TamTexto);
     font-weight: 400;
+
+    color: var(--TextoPrincipal);
 }
 
 .maintenance-type {
-    font-size: 13.6px;
-    color: var(--text-secondary);
+    font-size: var(--TamTexto);
+
+    color: var(--TextoSecundario);
 }
 
-/* ========================= ACCIONES Y DIVERSIFICACIÓN POR ESTADO ========================= */
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
 .maintenance-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
     gap: 12px;
 }
 
 .status-badge {
     padding: 4px 12px;
+
     border-radius: 12px;
-    font-size: 13px;
+
+    font-size: var(--TamTexto);
     font-weight: 500;
+
     display: inline-block;
 }
 
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
 .status-realizado {
-    background-color: rgba(63, 185, 80, 0.15);
-    color: var(--green);
-    border: 1px solid var(--green-border);
+    background-color: color-mix(
+        in srgb,
+        var(--Verde) 15%,
+        transparent
+    );
+
+    color: var(--Verde);
+
+    border: 1px solid var(--Verde);
 }
 
 .status-pendiente {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: var(--orange);
-    border: 1px solid var(--orange-border);
+    background-color: color-mix(
+        in srgb,
+        var(--Naranja) 15%,
+        transparent
+    );
+
+    color: var(--Naranja);
+
+    border: 1px solid var(--Naranja);
 }
 
 .status-proximo {
     background-color: rgba(96, 165, 250, 0.15);
-    color: var(--blue);
-    border: 1px solid var(--blue-border);
+
+    color: #60a5fa;
+
+    border: 1px solid #2563eb;
 }
 
 .status-vencido {
-    background-color: rgba(248, 113, 113, 0.15);
-    color: var(--red);
-    border: 1px solid var(--red-border);
+    background-color: rgba(239, 68, 68, 0.15);
+
+    color: #ef4444;
+
+    border: 1px solid #dc2626;
 }
+
+
+/* =========================================================
+   BOTONES DE ESTADO
+========================================================= */
 
 .maintenance-button {
     padding: 6px 14px;
+
     background-color: transparent;
+
     border-radius: 8px;
-    font-size: 12.8px;
+
+    font-size: var(--TamTexto);
     font-weight: 500;
+
     cursor: pointer;
-    transition: all 0.2s ease;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
+
+
+/* ---------- REALIZADO ---------- */
 
 .button-realizado {
-    border: 1px solid var(--green);
-    color: var(--green);
+    border: 1px solid var(--Verde);
+    color: var(--Verde);
 }
+
 .button-realizado:hover {
-    background-color: rgba(63, 185, 80, 0.15);
+    background-color: color-mix(
+        in srgb,
+        var(--Verde) 15%,
+        transparent
+    );
 }
+
+
+/* ---------- PENDIENTE ---------- */
 
 .button-pendiente {
-    border: 1px solid var(--orange);
-    color: var(--orange);
-}
-.button-pendiente:hover {
-    background-color: rgba(245, 158, 11, 0.15);
+    border: 1px solid var(--Naranja);
+    color: var(--Naranja);
 }
 
-.button-proximo {
-    border: 1px solid var(--blue);
-    color: var(--blue);
+.button-pendiente:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--Naranja) 15%,
+        transparent
+    );
 }
+
+
+/* ---------- PRÓXIMO ---------- */
+
+.button-proximo {
+    border: 1px solid #60a5fa;
+    color: #60a5fa;
+}
+
 .button-proximo:hover {
     background-color: rgba(96, 165, 250, 0.15);
 }
 
+
+/* ---------- VENCIDO ---------- */
+
 .button-vencido {
-    border: 1px solid var(--red);
-    color: var(--red);
-}
-.button-vencido:hover {
-    background-color: rgba(248, 113, 113, 0.15);
+    border: 1px solid #ef4444;
+    color: #ef4444;
 }
 
-/* ========================= OVERLAY Y DRAWER ========================= */
+.button-vencido:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
 .drawer-overlay {
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
+
     background-color: rgba(0, 0, 0, 0.75);
+
     backdrop-filter: blur(4px);
+
     z-index: 998;
+
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    transition:
+        opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .drawer-overlay.active {
@@ -435,20 +698,35 @@ button {
     pointer-events: auto;
 }
 
-/* Panel Deslizable */
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
 .drawer-panel {
     position: fixed;
+
     top: 0;
     right: -440px;
+
     width: 420px;
     max-width: 90vw;
     height: 100vh;
-    background-color: var(--bg-card);
-    border-left: 1px solid var(--border);
+
+    background-color: var(--FondoTarjeta);
+
+    border-left: 1px solid var(--BordePrincipal);
+
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+
     z-index: 999;
-    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    font-family: "Roboto", system-ui, sans-serif;
+
+    transition:
+        right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+    font-family: "Inter", sans-serif;
+
+    color: var(--TextoPrincipal);
 }
 
 .drawer-panel.open {
@@ -458,185 +736,453 @@ button {
 .drawer-content {
     display: flex;
     flex-direction: column;
+
     height: 100%;
+
     padding: 28px;
 }
 
-/* Header del Menú Lateral */
+
+/* =========================================================
+   HEADER DEL DRAWER
+========================================================= */
+
 .drawer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
+
+    border-bottom: 1px solid var(--BordePrincipal);
 }
 
 .drawer-header h2 {
-    font-size: 19px;
+    font-size: var(--TamTitulo);
     font-weight: 700;
-    color: var(--text-primary);
+
+    color: var(--TextoPrincipal);
 }
+
+
+/* =========================================================
+   CERRAR DRAWER
+========================================================= */
 
 .close-drawer {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 32px;
     height: 32px;
-    font-size: 16px;
-    color: var(--text-secondary);
+
+    font-size: var(--TamTexto);
+
+    color: var(--TextoSecundario);
+
     border-radius: 8px;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border);
-    transition: all 0.2s ease;
+
+    background-color: var(--FondoBoton);
+
+    border: 1px solid var(--BordePrincipal);
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .close-drawer:hover {
-    color: var(--text-primary);
-    background-color: var(--border-light);
+    color: var(--TextoPrincipal);
+
+    background-color: var(--FondoSecundario);
+
+    border-color: var(--BordeSuave);
 }
 
-/* Cuerpo del Menú Lateral */
+
+/* =========================================================
+   CUERPO DEL DRAWER
+========================================================= */
+
 .drawer-body {
     display: flex;
     flex-direction: column;
+
     gap: 22px;
+
     padding-top: 24px;
+
     overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
 }
+
+
+/* =========================================================
+   SCROLLBAR DEL DRAWER
+========================================================= */
+
+.drawer-body::-webkit-scrollbar {
+    width: 7px;
+}
+
+.drawer-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.drawer-body::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 10px;
+}
+
+.drawer-body::-webkit-scrollbar-thumb:hover {
+    background-color: #222222;
+}
+
+
+/* =========================================================
+   SECCIONES DEL DRAWER
+========================================================= */
 
 .drawer-section {
     display: flex;
     flex-direction: column;
+
     gap: 6px;
 }
 
 .drawer-section h3 {
-    font-size: 12px;
+    font-size: var(--TamTexto);
     font-weight: 700;
+
     text-transform: uppercase;
-    color: var(--text-secondary);
+
+    color: var(--TextoSecundario);
+
     letter-spacing: 0.5px;
 }
 
 .drawer-section p {
-    font-size: 15px;
+    font-size: var(--TamTexto);
     font-weight: 400;
-    color: var(--text-primary);
+
+    color: var(--TextoPrincipal);
+
     line-height: 1.4;
 }
 
 .drawer-date {
     display: flex;
     align-items: center;
+
     gap: 6px;
-    font-size: 14.5px !important;
-    color: var(--text-primary);
+
+    font-size: var(--TamTexto) !important;
+
+    color: var(--TextoPrincipal);
+
     text-transform: capitalize;
 }
 
-/* Cuadro explicativo */
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
+
 .drawer-description {
-    background-color: var(--bg-secondary);
+    background-color: var(--FondoSecundario);
+
     padding: 16px;
+
     border-radius: 10px;
-    border: 1px solid var(--border);
-    font-size: 14px;
+
+    border: 1px solid var(--BordePrincipal);
+
+    font-size: var(--TamTexto);
     font-weight: 400;
+
     line-height: 1.6;
-    color: var(--text-primary);
+
+    color: var(--TextoPrincipal);
+
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
+
+
+/* =========================================================
+   SIN DATOS
+========================================================= */
 
 .no-data {
     text-align: center;
-    color: var(--text-secondary);
+
+    color: var(--TextoSecundario);
+
     padding: 24px;
-    font-size: 14px;
+
+    font-size: var(--TamTexto);
 }
 
-/* ========================= RESPONSIVE ========================= */
-@media (max-width: 900px) {
+
+/* ========================================================
+   RESPONSIVE
+========================================================= */
+
+
+/* =========================================================
+   TABLET GRANDE
+   993px - 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
     .historial-page {
-        padding: 24px 20px;
+        padding: 24px 24px;
     }
 
     .historial-container {
         max-width: 100%;
     }
 
-    .maintenance-summary {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 700px) {
-    .historial-page {
-        width: 100%;
-        margin-left: 0;
-        padding: 16px 12px;
-    }
-
-    .stats-container {
-        flex-direction: column;
-    }
-
     .maintenance-card {
-        flex-wrap: wrap;
+        gap: 12px;
     }
 
-    .maintenance-info {
-        min-width: calc(100% - 116px);
+    .maintenance-header {
+        gap: 14px;
     }
 
     .maintenance-actions {
-        width: 100%;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        flex-shrink: 0;
     }
 }
 
-@media (max-width: 480px) {
-    .drawer-panel {
-        width: 100vw;
-        max-width: 100vw;
+
+/* =========================================================
+   TABLET
+   700px - 992px
+========================================================= */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+    .historial-page {
+        padding: 20px 18px;
     }
 
+    .historial-container {
+        max-width: 100%;
+        gap: 18px;
+    }
+
+
+    /* ================= HEADER ================= */
+
     .history-header {
-        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .history-header > span {
+        font-size: var(--TamTitulo);
+    }
+
+    .date-select {
+        max-width: 230px;
+    }
+
+
+    /* ================= ESTADÍSTICAS ================= */
+
+    .stats-container {
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+
+    /* ================= RESUMEN ================= */
+
+    .maintenance-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .summary-card {
+        min-width: 0;
+        padding: 12px 10px;
+    }
+
+
+    /* ================= FILTROS ================= */
+
+    .filters {
+        gap: 14px;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .custom-select {
+        min-width: 0;
+    }
+
+
+    /* ================= LISTA ================= */
+
+    .maintenance-list {
+        padding: 12px;
+        gap: 10px;
+    }
+
+
+    /* ================= TARJETA ================= */
+
+    .maintenance-card {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .maintenance-image {
+        width: 85px;
+        height: 65px;
+    }
+
+    .maintenance-info {
+        min-width: 0;
+    }
+
+    .maintenance-header {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .maintenance-header strong,
+    .maintenance-header span,
+    .maintenance-type {
+        font-size: var(--TamTexto);
+    }
+
+    .maintenance-actions {
+        gap: 8px;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        text-align: center;
+    }
+
+    .maintenance-button {
+        padding: 6px 10px;
+        white-space: nowrap;
+    }
+}
+
+
+/* =========================================================
+   CELULAR GRANDE
+   500px - 699px
+========================================================= */
+
+@media (min-width: 500px) and (max-width: 699px) {
+
+    .historial-page {
+        width: 100%;
+        min-height: 100vh;
+
+        margin-left: 0;
+
+        padding: 18px 14px;
+    }
+
+    .historial-container {
+        gap: 16px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .history-header {
         flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
     }
 
     .date-select {
         width: 100%;
     }
 
-    .maintenance-summary {
-        grid-template-columns: 1fr 1fr;
+
+    /* ================= ESTADÍSTICAS ================= */
+
+    .stats-container {
+        flex-direction: column;
+        gap: 10px;
     }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+
+    /* ================= RESUMEN ================= */
+
+    .maintenance-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 10px;
+    }
+
+
+    /* ================= FILTROS ================= */
 
     .filters {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
     }
 
     .filter-group {
+        width: 100%;
         justify-content: space-between;
     }
 
     .custom-select {
         flex: 1;
-        width: 100%;
+        width: auto;
+        min-width: 0;
     }
+
+
+    /* ================= LISTA ================= */
 
     .maintenance-list {
         padding: 10px;
+        gap: 10px;
     }
 
+
+    /* ================= TARJETA ================= */
+
     .maintenance-card {
+        flex-wrap: wrap;
         padding: 10px;
+        gap: 10px;
     }
 
     .maintenance-image {
@@ -645,20 +1191,355 @@ button {
     }
 
     .maintenance-info {
-        min-width: calc(100% - 96px);
+        flex: 1;
+        min-width: calc(100% - 90px);
     }
 
     .maintenance-header {
         flex-direction: column;
-        gap: 4px;
+        align-items: flex-start;
+        gap: 3px;
     }
 
     .maintenance-actions {
+        width: 100%;
+
+        flex-direction: row;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+    }
+
+    .status-badge {
+        max-width: 60%;
+        text-align: center;
+    }
+
+    .maintenance-button {
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================================================
+   CELULAR
+   0px - 499px
+========================================================= */
+
+@media (max-width: 499px) {
+
+    .historial-page {
+        width: 100%;
+        min-height: 100vh;
+
+        margin-left: 0;
+
+        padding: 14px 10px;
+    }
+
+    .historial-container {
+        gap: 14px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .history-header {
+        width: 100%;
+
         flex-direction: column;
         align-items: stretch;
+
+        gap: 7px;
+    }
+
+    .history-header > span {
+        font-size: var(--TamTitulo);
+    }
+
+    .date-select {
+        width: 100%;
+        max-width: none;
+    }
+
+
+    /* ================= ESTADÍSTICAS ================= */
+
+    .stats-container {
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .stat-card {
+        width: 100%;
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .stat-title {
+        white-space: normal;
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+
+
+    /* ================= TÍTULO ================= */
+
+    .section-title {
+        padding-top: 2px;
+    }
+
+
+    /* ================= RESUMEN ================= */
+
+    .maintenance-summary {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+    }
+
+    .summary-card {
+        min-width: 0;
+
+        padding: 10px 6px;
+
+        gap: 4px;
+
+        text-align: center;
+    }
+
+
+    /* ================= FILTROS ================= */
+
+    .filters {
+        width: 100%;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 8px;
+    }
+
+    .filter-group {
+        width: 100%;
+
+        display: flex;
+
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 8px;
+    }
+
+    .filter-group > span {
+        flex-shrink: 0;
+    }
+
+    .custom-select {
+        flex: 1;
+
+        width: 100%;
+        min-width: 0;
+    }
+
+
+    /* ================= LISTA ================= */
+
+    .maintenance-list {
+        padding: 8px;
+
+        border-radius: 12px;
+
+        gap: 8px;
+    }
+
+
+    /* ================= TARJETA ================= */
+
+    .maintenance-card {
+        width: 100%;
+
+        padding: 9px;
+
+        display: grid;
+
+        grid-template-columns: 70px minmax(0, 1fr);
+
+        gap: 10px;
+
+        align-items: start;
+    }
+
+
+    /* ================= IMAGEN ================= */
+
+    .maintenance-image {
+        width: 70px;
+        height: 55px;
+
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+
+    /* ================= INFORMACIÓN ================= */
+
+    .maintenance-info {
+        width: 100%;
+        min-width: 0;
+
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .maintenance-header {
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 3px;
+    }
+
+    .maintenance-header strong,
+    .maintenance-header span,
+    .maintenance-type {
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    /* ================= ACCIONES ================= */
+
+    .maintenance-actions {
+        width: 100%;
+
+        grid-column: 1 / -1;
+        grid-row: 2;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 7px;
+    }
+
+    .status-badge {
+        width: 100%;
+
+        text-align: center;
+
+        padding: 5px 8px;
     }
 
     .maintenance-button {
         width: 100%;
+
+        padding: 7px 10px;
+    }
+
+
+    /* ================= DRAWER ================= */
+
+    .drawer-panel {
+        width: 100vw;
+        max-width: 100vw;
+    }
+
+    .drawer-content {
+        padding: 20px 16px;
+    }
+
+    .drawer-header {
+        gap: 10px;
+
+        padding-bottom: 16px;
+    }
+
+    .drawer-header h2 {
+        font-size: var(--TamTitulo);
+
+        line-height: 1.3;
+    }
+
+    .drawer-body {
+        gap: 18px;
+
+        padding-top: 18px;
+    }
+
+    .drawer-section h3 {
+        font-size: var(--TamTexto);
+    }
+
+    .drawer-description {
+        padding: 12px;
+
+        line-height: 1.5;
     }
 }
+
+
+/* =========================================================
+   CELULAR MUY PEQUEÑO
+   360px o menos
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .historial-page {
+        padding: 12px 8px;
+    }
+
+    .maintenance-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group > span {
+        width: 100%;
+    }
+
+    .custom-select {
+        width: 100%;
+    }
+
+    .maintenance-card {
+        grid-template-columns: 60px minmax(0, 1fr);
+
+        padding: 8px;
+    }
+
+    .maintenance-image {
+        width: 60px;
+        height: 50px;
+    }
+
+    .maintenance-list {
+        padding: 6px;
+    }
+
+    .drawer-content {
+        padding: 18px 12px;
+    }
+}
+
+
+

@@ -12,10 +12,6 @@ const Home = () => {
         {/* ================= BARRA SUPERIOR ================= */}
         <div id="botonesarribahome">
 
-          <button className="botonmas">
-            +
-          </button>
-
           <button className="notification-btn">
               <svg
                 width="20"

@@ -1,0 +1,125 @@
+{
+    "layout": {
+        "sidebar": {
+            "inicio": "Home",
+            "mis_maquinas": "My Machines",
+            "mantenimientos": "Maintenance",
+            "configuracion": "Settings",
+            "historial": "History",
+            "notificaciones": "Notifications",
+            "ayuda": "Help",
+            "cerrar_sesion": "Log Out"
+        }
+    },
+
+    "pages": {
+        "home": {
+            "bienvenidaH1": "Hello",
+            "bienvenidaP": "Welcome back"
+        },
+
+        "mis_maquinas": {
+            "headers": {
+                "mis maquinas": "My Machines",
+                "otros": "Others",
+
+                "active": {
+                    "mis maquinas": "Machines",
+                    "otros": "Items in Others"
+                }
+            }
+        },
+
+        "mantenimientos": {
+            "titulo": "Maintenance",
+            "descripcion": "Schedule and track the maintenance of your machines."
+        },
+
+        "configuracion": {
+            "title": "Customization",
+            "subtitle": "Customize and manage your workshop",
+
+            "configs": {
+                "plan": {
+                    "basico": {
+                        "name": "Basic",
+                        "description": "Ideal for growing workshops",
+                        "actualizar": "Upgrade to Pro"
+                    },
+                    "pro": {
+                        "name": "Pro",
+                        "description": "For workshops that seek the best"
+                    }
+                },
+
+                "modo": {
+                    "claro": "☀️ Light Mode",
+                    "oscuro": "🌙 Dark Mode"
+                },
+
+                "fuente": {
+                    "h2": "Font Size",
+                    "sizes": {
+                        "pequeño": "Small",
+                        "grande": "Large"
+                    }
+                },
+
+                "idioma": {
+                    "es": "Spanish",
+                    "en": "English",
+                    "de": "German"
+                },
+
+                "personal": {
+                    "h2": "Personnel Management",
+                    "p": "Manage the staff who have access to the workshop",
+                    "estado": "Status",
+                    "modificar": "Modify",
+                    "agregar": "Add Personnel"
+                },
+
+                "solicitudes": {
+                    "h2": "Pending Requests",
+                    "p": "Personnel who requested to join the workshop",
+
+                    "solicitud": {
+                        "span": "requests to join the workshop",
+                        "aceptar": "Accept",
+                        "rechazar": "Reject"
+                    }
+                },
+
+                "acciones": {
+                    "h2": "Actions on the workshop",
+                    "p": "Manage the general information of your workshop",
+
+                    "modificar": {
+                        "span": "Modify workshop",
+                        "descripcion": "Edit the general information, configuration, and details of your workshop",
+                        "action": "Go to settings"
+                    },
+
+                    "borrar":{
+                        "span": "Delete workshop",
+                        "descripcion": "Permanently delete your workshop and all its information",
+                        "action": "Delete workshop"
+                    }
+                }
+            }
+        },
+
+        "historial": {
+            "titulo": "History",
+            "descripcion": "Review the history of activities and events related to your machines."
+        },
+        "notificaciones": {
+            "titulo": "Notifications",
+            "descripcion": "Manage your notifications and important alerts."
+        },
+        "ayuda": {
+            "titulo": "Help",
+            "descripcion": "Find answers to your questions and contact support if you need it."
+        }
+    }
+}
