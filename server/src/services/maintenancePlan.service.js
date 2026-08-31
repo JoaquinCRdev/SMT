@@ -1,8 +1,10 @@
-import mongoose from "mongoose";
-import Machine from "../models/machine.model.js";
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import ApiError from "../utils/ApiError.js";
+import {
+  getAccessibleMachine,
+  isValidObjectId,
+} from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
 
 const FREQUENCY_DAYS = {
@@ -11,10 +13,6 @@ const FREQUENCY_DAYS = {
   monthly: 30,
   yearly: 365,
 };
-
-function isValidObjectId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
 
 function frequencyToDays(frequency, customDays) {
   if (frequency === "custom") return customDays;
@@ -26,20 +24,6 @@ function calculateNextDue(fromDate, frequency, customDays) {
   const date = new Date(fromDate);
   date.setDate(date.getDate() + days);
   return date;
-}
-
-async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId))
-    throw new ApiError(400, "Invalid machine id");
-
-  const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError(404, "Machine not found");
-
-  if (user?.role !== "admin" && String(machine.userId) !== String(user.id)) {
-    throw new ApiError(403, "Forbidden");
-  }
-
-  return machine;
 }
 
 async function getAccessiblePlan(planId, user) {

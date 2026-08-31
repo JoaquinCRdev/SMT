@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Machine from "../models/machine.model.js";
 import MachineDocument from "../models/machineDocument.model.js";
 import MachineImage from "../models/machineImage.model.js";
@@ -6,21 +5,25 @@ import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
+import {
+  getAccessibleMachine,
+  isValidObjectId,
+  requireWorkshop,
+} from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
-
-function isValidObjectId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
 
 function buildAccessFilter(user) {
   if (user?.role === "admin") return {};
-  return { userId: user.id };
+  return { workshopId: user.workshop };
 }
 
 export async function createMachine(payload, user) {
+  const workshopId = requireWorkshop(user);
+
   const machineData = {
     ...payload,
-    userId: user?.role === "admin" && payload.userId ? payload.userId : user.id,
+    workshopId,
+    userId: user.id,
   };
 
   const machine = await Machine.create(machineData);
@@ -50,6 +53,7 @@ export async function getMachines(user, query = {}) {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
+      .populate("workshopId", "name")
       .populate("userId", "name email role"),
     Machine.countDocuments(filter),
   ]);
@@ -66,36 +70,30 @@ export async function getMachines(user, query = {}) {
 }
 
 export async function getMachineById(id, user) {
-  if (!isValidObjectId(id)) {
-    throw new ApiError(400, "Invalid machine id");
-  }
+  const machine = await getAccessibleMachine(id, user);
 
-  const machine = await Machine.findById(id).populate(
-    "userId",
-    "name email role",
-  );
-  if (!machine) throw new ApiError(404, "Machine not found");
-
-  if (
-    user?.role !== "admin" &&
-    String(machine.userId?._id || machine.userId) !== String(user.id)
-  ) {
-    throw new ApiError(403, "Forbidden");
-  }
-
-  return machine;
+  return machine.populate([
+    { path: "workshopId", select: "name" },
+    { path: "userId", select: "name email role" },
+  ]);
 }
 
 export async function updateMachine(id, payload, user) {
-  const machine = await getMachineById(id, user);
+  const workshopId = requireWorkshop(user);
+  const machine = await getAccessibleMachine(id, user);
 
-  Object.assign(machine, payload);
+  if (payload.serialNumber !== undefined) machine.serialNumber = payload.serialNumber;
+  if (payload.name !== undefined) machine.name = payload.name;
+  if (payload.brand !== undefined) machine.brand = payload.brand;
+  if (payload.model !== undefined) machine.model = payload.model;
+  if (payload.description !== undefined) machine.description = payload.description;
+  if (payload.status !== undefined) machine.status = payload.status;
 
   try {
     await machine.save();
   } catch (error) {
     if (error?.code === 11000) {
-      throw new ApiError(409, "Serial number already exists");
+      throw new ApiError(409, "Serial number already exists in this workshop");
     }
     throw error;
   }
@@ -108,7 +106,7 @@ export async function changeMachineStatus(id, status, user) {
     throw new ApiError(400, "Invalid status");
   }
 
-  const machine = await getMachineById(id, user);
+  const machine = await getAccessibleMachine(id, user);
   machine.status = status;
   await machine.save();
 
@@ -116,7 +114,7 @@ export async function changeMachineStatus(id, status, user) {
 }
 
 export async function deleteMachine(id, user) {
-  const machine = await getMachineById(id, user);
+  const machine = await getAccessibleMachine(id, user);
 
   await Promise.all([
     MachineImage.deleteMany({ machineId: machine._id }),
@@ -128,8 +126,4 @@ export async function deleteMachine(id, user) {
   ]);
 
   return { message: "Machine deleted" };
-}
-
-export async function getMyMachines(user, query = {}) {
-  return getMachines(user, query);
 }
