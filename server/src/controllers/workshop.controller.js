@@ -49,6 +49,15 @@ export async function listRequests(req, res, next) {
   }
 }
 
+export async function getMembers(req, res, next) {
+  try {
+    const members = await workshopService.getMembers(req.user);
+    res.status(200).json(members);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function updateWorkshop(req, res, next) {
   try {
     const workshop = await workshopService.updateWorkshop(

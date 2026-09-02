@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
+import User from "../models/user.model.js";
 import Workshop from "../models/workshop.model.js";
 import WorkshopJoinRequest from "../models/workshopJoinRequest.model.js";
-import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 
 async function assertOwner(workshopId, userId) {
@@ -83,6 +83,14 @@ export async function listRequests(user) {
     .populate("user", "name email");
 }
 
+export async function getMembers(user) {
+  if (!user.workshop) throw new ApiError(404, "Workshop not found");
+  const workshop = await Workshop.findById(user.workshop);
+  if (!workshop) throw new ApiError(404, "Workshop not found");
+
+  return User.find({ workshop: workshop._id }).select("name email");
+}
+
 export async function updateWorkshop(id, user, payload) {
   const workshop = await assertOwner(id, user.id);
 
@@ -132,7 +140,8 @@ export async function deleteWorkshop(id, user) {
 }
 
 export async function leaveWorkshop(user) {
-  if (!user.workshop) throw new ApiError(400, "You do not belong to a workshop");
+  if (!user.workshop)
+    throw new ApiError(400, "You do not belong to a workshop");
 
   const workshop = await Workshop.findById(user.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");

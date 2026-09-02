@@ -1,13 +1,13 @@
 import { Router } from "express";
 import * as workshopController from "../controllers/workshop.controller.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
+import { validate } from "../middlewares/validators/validate.middleware.js";
 import {
   createWorkshopSchema,
   joinWorkshopSchema,
   requestActionSchema,
   updateWorkshopSchema,
 } from "../middlewares/validators/workshop.validator.js";
-import { validate } from "../middlewares/validators/validate.middleware.js";
 
 const router = Router();
 
@@ -19,6 +19,7 @@ router.post(
   workshopController.createWorkshop,
 );
 router.get("/mine", workshopController.getMyWorkshop);
+router.get("/mine/members", workshopController.getMembers);
 router.post(
   "/join",
   validate(joinWorkshopSchema),
