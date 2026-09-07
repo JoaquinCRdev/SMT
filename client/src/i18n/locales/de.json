@@ -1,0 +1,353 @@
+{
+    "layout": {
+        "sidebar": {
+            "inicio": "Startseite",
+            "mis_maquinas": "Meine Maschinen",
+            "mantenimientos": "Wartung",
+            "configuracion": "Einstellungen",
+            "historial": "Verlauf",
+            "notificaciones": "Benachrichtigungen",
+            "ayuda": "Hilfe",
+            "cerrar_sesion": "Abmelden"
+        }
+    },
+
+    "pages": {
+        "home": {
+            "bienvenidaH1": "Hallo",
+            "bienvenidaP": "Willkommen zurück"
+        },
+
+        "mis_maquinas": {
+            "headers": {
+                "mis maquinas": "Meine Maschinen",
+                "otros": "Andere",
+
+                "active": {
+                    "mis maquinas": "Maschinen",
+                    "otros": "Elemente in Andere"
+                }
+            }
+        },
+
+        "mantenimientos": {
+            "titulo": "Wartung",
+            "descripcion": "Planen und verfolgen Sie die Wartung Ihrer Maschinen."
+        },
+
+        "configuracion": {
+            "title": "Personalisierung",
+            "subtitle": "Personalisieren und verwalten Sie Ihre Werkstatt",
+
+            "configs": {
+                "plan": {
+                    "basico": {
+                        "name": "Basic",
+                        "description": "Ideal für wachsende Werkstätten",
+                        "actualizar": "Auf Pro upgraden"
+                    },
+                    "pro": {
+                        "name": "Pro",
+                        "description": "Für Werkstätten, die das Beste suchen"
+                    }
+                },
+
+                "modo": {
+                    "claro": "☀️ Heller Modus",
+                    "oscuro": "🌙 Dunkler Modus"
+                },
+
+                "fuente": {
+                    "h2": "Schriftgröße",
+                    "sizes": {
+                        "pequeño": "Klein",
+                        "grande": "Groß"
+                    }
+                },
+
+                "idioma": {
+                    "es": "Spanisch",
+                    "en": "Englisch",
+                    "de": "Deutsch"
+                },
+
+                "personal": {
+                    "h2": "Personalverwaltung",
+                    "p": "Verwalten Sie das Personal, das Zugriff auf die Werkstatt hat",
+                    "estado": "Status",
+                    "modificar": "Ändern",
+                    "agregar": "Personal hinzufügen"
+                },
+
+                "solicitudes": {
+                    "h2": "Ausstehende Anfragen",
+                    "p": "Mitarbeiter, die um Beitritt zur Werkstatt gebeten haben",
+
+                    "solicitud": {
+                        "span": "möchte der Werkstatt beitreten",
+                        "aceptar": "Akzeptieren",
+                        "rechazar": "Ablehnen"
+                    }
+                },
+
+                "acciones": {
+                    "h2": "Aktionen für die Werkstatt",
+                    "p": "Verwalten Sie die allgemeinen Informationen Ihrer Werkstatt",
+
+                    "modificar": {
+                        "span": "Werkstatt ändern",
+                        "descripcion": "Bearbeiten Sie die allgemeinen Informationen, Einstellungen und Details Ihrer Werkstatt",
+                        "action": "Zu den Einstellungen"
+                    },
+
+                    "borrar": {
+                        "span": "Werkstatt löschen",
+                        "descripcion": "Löschen Sie Ihre Werkstatt und alle zugehörigen Informationen dauerhaft",
+                        "action": "Werkstatt löschen"
+                    }
+                }
+            }
+        },
+
+        "planes": {
+            "titulo": "Tarife",
+            "accede": "Greifen Sie auf alle Funktionen zu",
+
+            "funcionalidades": {
+                "sin_anuncios": {
+                    "titulo": "Keine Werbung",
+                    "descripcion": "Keine Ablenkungen, mehr Fokus."
+                },
+
+                "maquinas_ilimitadas": {
+                    "titulo": "Unbegrenzte Maschinen",
+                    "descripcion": "Verbinden Sie so viele Maschinen, wie Sie benötigen."
+                },
+
+                "agregar_personal": {
+                    "titulo": "Personal hinzufügen",
+                    "descripcion": "Laden Sie 0 bis 10 Mitarbeiter zu Ihrem Konto ein."
+                },
+
+                "asistente_ia": {
+                    "titulo": "KI-Assistent",
+                    "descripcion": "Ein intelligenter Assistent, der Sie in Ihrer Werkstatt unterstützt."
+                },
+
+                "historial_eterno": {
+                    "titulo": "Unbegrenzter Verlauf",
+                    "descripcion": "Alles wird aufgezeichnet und niemals gelöscht."
+                },
+
+                "gestion_sin_limites": {
+                    "titulo": "Unbegrenzte Verwaltung",
+                    "descripcion": "Eine Plattform, die Sie bei Ihrem Wachstum unterstützt."
+                }
+            },
+
+            "tipos": {
+                "mensual": {
+                    "titulo": "Monatlich",
+                    "precio": "$9.99",
+                    "descripcion": "Monatliche Zahlung"
+                },
+
+                "anual": {
+                    "titulo": "Jährlich",
+                    "precio": "$59.99",
+                    "descripcion": "Jährliche Zahlung"
+                },
+
+                "permanente": {
+                    "titulo": "Dauerhaft",
+                    "precio": "$199.99",
+                    "descripcion": "Einmalige Zahlung"
+                }
+            },
+
+            "comprar": "Jetzt kaufen",
+            "alerta": "Sie haben den Tarif ausgewählt",
+            "pago": "Sichere und geschützte Zahlung"
+        },
+
+        "historial": {
+            "titulo": "Verlauf",
+            "descripcion": "Überprüfen Sie den Verlauf der Aktivitäten und Ereignisse im Zusammenhang mit Ihren Maschinen."
+        },
+
+        "notificaciones": {
+            "titulo": "Benachrichtigungen",
+            "descripcion": "Verwalten Sie Ihre Benachrichtigungen und wichtigen Warnungen."
+        },
+
+        "ayuda": {
+            "header": {
+                "titulo": "Wie können wir Ihnen helfen?",
+                "subtitulo": "Finden Sie schnell Informationen über die Funktionsweise des Systems.",
+                "buscar": "Nach einer Frage oder einem Thema suchen..."
+            },
+
+            "secciones": {
+                "categorias": "Kategorien",
+                "preguntas": "Häufig gestellte Fragen",
+                "estados": "Maschinenstatus"
+            },
+
+            "categorias": {
+                "mis_maquinas": {
+                    "id": "categoria-maquinas",
+                    "titulo": "Maschinen",
+                    "palabras_clave": [
+                        "maschinen",
+                        "maschine",
+                        "maschine hinzufügen",
+                        "maschine bearbeiten",
+                        "maschine löschen"
+                    ],
+                    "texto": "Erfahren Sie, wie Sie Ihre registrierten Maschinen hinzufügen, ändern und verwalten.",
+                    "detalle": "Im Bereich Meine Maschinen können Sie alle registrierten Maschinen anzeigen. Um eine neue Maschine hinzuzufügen, verwenden Sie die Schaltfläche zum Hinzufügen und geben Sie die angeforderten Daten wie Name, Marke, Seriennummer und Status ein. Sie können auch auf jede Maschine zugreifen, um ihre Daten zu ändern oder sie zu löschen."
+                },
+
+                "mantenimientos": {
+                    "id": "categoria-mantenimiento",
+                    "titulo": "Wartung",
+                    "palabras_clave": [
+                        "wartung",
+                        "wartungen",
+                        "wartungsaufgabe"
+                    ],
+                    "texto": "Erfahren Sie, wie Sie Wartungen registrieren, Informationen aktualisieren und Maschinenstatus überprüfen.",
+                    "detalle": "Im Bereich Wartung können Sie die Informationen einer Maschine anzeigen und die entsprechenden Daten für eine Wartungsaufgabe registrieren. Sie können das Datum, die Beschreibung und den Status der Maschine eingeben und anschließend die Änderungen speichern."
+                },
+
+                "historial": {
+                    "id": "categoria-historial",
+                    "titulo": "Verlauf",
+                    "palabras_clave": [
+                        "verlauf",
+                        "aktivitäten",
+                        "ereignisse",
+                        "wartungsverlauf"
+                    ],
+                    "texto": "Sehen Sie zuvor durchgeführte Änderungen und Wartungen ein.",
+                    "detalle": "Im Bereich Verlauf können Sie frühere Einträge anzeigen. Dort können Sie Informationsänderungen und Wartungen im Zusammenhang mit den Maschinen überprüfen, um zu sehen, welche Änderungen vorgenommen wurden."
+                },
+
+                "configuracion": {
+                    "id": "categoria-configuracion",
+                    "titulo": "Einstellungen",
+                    "palabras_clave": [
+                        "einstellungen",
+                        "konfiguration",
+                        "präferenzen",
+                        "werkstatt"
+                    ],
+                    "texto": "Ändern Sie die Optionen und Einstellungen des Systems.",
+                    "detalle": "Unter Einstellungen können Sie die allgemeinen Systemeinstellungen verwalten und die verfügbaren Optionen anpassen, um die Funktionsweise an die Bedürfnisse des Benutzers anzupassen."
+                }
+            },
+
+            "preguntas": {
+                "como_agregar_maquina": {
+                    "id": "pregunta-agregar",
+                    "pregunta": "Wie füge ich eine Maschine hinzu?",
+                    "palabras_clave": [
+                        "hinzufügen",
+                        "maschine hinzufügen",
+                        "neue maschine",
+                        "maschine"
+                    ],
+                    "respuesta": "Gehen Sie über das Seitenmenü zum Bereich Meine Maschinen und wählen Sie Maschine hinzufügen. Geben Sie Name, Typ, Marke, Seriennummer und Anfangsstatus ein. Speichern Sie anschließend die Änderungen."
+                },
+
+                "como_modificar_maquina": {
+                    "id": "pregunta-modificar",
+                    "pregunta": "Wie ändere ich die Daten einer Maschine?",
+                    "palabras_clave": [
+                        "ändern",
+                        "bearbeiten",
+                        "maschine",
+                        "daten ändern",
+                        "aktualisieren",
+                        "maschine ändern",
+                        "maschine bearbeiten"
+                    ],
+                    "respuesta": "Öffnen Sie die Maschine unter Meine Maschinen und wählen Sie die Option zum Bearbeiten ihrer Daten. Nachdem Sie die Änderungen vorgenommen haben, speichern Sie diese, um die Informationen zu aktualisieren."
+                },
+
+                "como_eliminar_maquina": {
+                    "id": "pregunta-eliminar",
+                    "pregunta": "Wie lösche ich eine Maschine?",
+                    "palabras_clave": [
+                        "löschen",
+                        "entfernen",
+                        "maschine",
+                        "maschine löschen",
+                        "maschine entfernen"
+                    ],
+                    "respuesta": "Wählen Sie unter Meine Maschinen die Maschine aus, die Sie löschen möchten, und wählen Sie die Option Löschen. Beachten Sie, dass diese Aktion nicht rückgängig gemacht werden kann."
+                },
+
+                "como_registrar_mantenimiento": {
+                    "id": "pregunta-mantenimiento",
+                    "pregunta": "Wie registriere ich eine Wartung?",
+                    "palabras_clave": [
+                        "wartung registrieren",
+                        "wartung",
+                        "wartungseintrag"
+                    ],
+                    "respuesta": "Gehen Sie über das Seitenmenü zum Bereich Wartung. Geben Sie die erforderlichen Informationen wie Datum, Beschreibung und Status ein und wählen Sie anschließend Aktualisieren, um die Informationen zu speichern."
+                },
+
+                "como_cambiar_estado": {
+                    "id": "pregunta-estado",
+                    "pregunta": "Wie ändere ich den Status einer Maschine?",
+                    "palabras_clave": [
+                        "status ändern",
+                        "maschinenstatus",
+                        "betriebsbereit",
+                        "nicht betriebsbereit",
+                        "in wartung"
+                    ],
+                    "respuesta": "Öffnen Sie die Maschine unter Meine Maschinen oder Wartung und wählen Sie den entsprechenden Status: Betriebsbereit, Nicht betriebsbereit oder In Wartung."
+                },
+
+                "donde_consultar_mantenimientos": {
+                    "id": "pregunta-historial",
+                    "pregunta": "Wo kann ich frühere Wartungseinträge einsehen?",
+                    "palabras_clave": [
+                        "frühere wartungen",
+                        "verlauf",
+                        "wartungsverlauf"
+                    ],
+                    "respuesta": "Gehen Sie zum Bereich Verlauf, um frühere Einträge anzuzeigen und die an den Maschinen vorgenommenen Änderungen und Wartungen zu überprüfen."
+                }
+            },
+
+            "estados": {
+                "operativo": {
+                    "nombre": "BETRIEBSBEREIT",
+                    "texto": "Die Maschine funktioniert ordnungsgemäß."
+                },
+
+                "no_operativo": {
+                    "nombre": "NICHT BETRIEBSBEREIT",
+                    "texto": "Die Maschine weist einen Fehler auf oder kann nicht verwendet werden."
+                },
+
+                "en_mantenimiento": {
+                    "nombre": "IN WARTUNG",
+                    "texto": "Die Maschine ist aufgrund von Wartungsarbeiten vorübergehend außer Betrieb."
+                }
+            },
+
+            "soporte": {
+                "titulo": "Benötigen Sie weitere Hilfe?",
+                "texto": "Wenn Sie die gesuchte Antwort nicht gefunden haben, wenden Sie sich an den Systemadministrator.",
+                "boton": "Support kontaktieren"
+            },
+
+            "sin_resultados": "Wir konnten keine Fragen finden für"
+        }
+    }
+}

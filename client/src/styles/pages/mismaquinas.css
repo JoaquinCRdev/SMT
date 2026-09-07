@@ -1,0 +1,1403 @@
+#containermismaquinas {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  background-color: var(--FondoPrincipal);
+  font-family: "inter";
+}
+
+
+
+#ladomismaquinas {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+
+  padding: 25px 35px;
+  box-sizing: border-box;
+
+  background-color: var(--FondoPrincipal);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: auto;
+}
+
+
+/* =========================================================
+   HEADER MOBILE
+========================================================= */
+
+#headermobile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  height: 48px;
+  margin-bottom: 25px;
+  padding: 4px;
+  box-sizing: border-box;
+
+  background-color: var(--FondoSecundario);
+  border: 1px solid var(--BordeSuave);
+  border-radius: 12px;
+
+  gap: 4px;
+}
+
+#headermobile button {
+  flex: 1;
+  height: 100%;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: transparent;
+  color: var(--TextoSecundario);
+
+  font-family: "inter", sans-serif;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+}
+
+#headermobile button:hover:not(.activo) {
+  color: var(--TextoPrincipal);
+
+  background-color: color-mix(
+    in srgb,
+    var(--TextoPrincipal) 3%,
+    transparent
+  );
+}
+
+#headermobile button.activo {
+  background-color: var(--Naranja);
+  color: var(--TextoPrincipal);
+
+  font-weight: 600;
+
+  border: 1px solid var(--BordePrincipal);
+
+  box-shadow: 0 2px 8px color-mix(
+    in srgb,
+    var(--FondoPrincipal) 35%,
+    transparent
+  );
+}
+
+
+/* =========================================================
+   PARTE SUPERIOR
+========================================================= */
+
+#primerdivmismaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 20px;
+}
+
+#primerdivmismaquinas p {
+  margin: 0;
+
+  font-size: var(--TamTitulo);
+  font-weight: bold;
+
+  color: var(--TextoPrincipal);
+}
+
+#primerdivmismaquinas input {
+  width: 250px;
+  height: 40px;
+
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 15px;
+
+  background-color: var(--FondoSecundario);
+
+  color: var(--TextoPrincipal);
+  font-family: "inter";
+
+  font-size: var(--TamTexto);
+
+  outline: none;
+}
+
+#primerdivmismaquinas input::placeholder {
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   BOTÓN +
+========================================================= */
+
+.botonmas {
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: 1px solid var(--BordeSuave);
+  border-radius: 10px;
+
+  background-color: var(--FondoSecundario);
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTitulo);
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.botonmas:hover {
+  background-color: var(--BordeSecundario);
+  border-color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   CANTIDAD
+========================================================= */
+
+#segundodivmismaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-top: 20px;
+}
+
+#segundodivmismaquinas p {
+  margin: 0;
+
+  color: var(--TextoSecundario);
+
+  font-size: var(--TamTexto);
+}
+
+
+/* =========================================================
+   LISTA
+========================================================= */
+
+#listamaquinas {
+  width: 100%;
+  max-width: 1100px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.tarjetamaquina {
+  width: 100%;
+  min-width: 0;
+  min-height: 145px;
+
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 25px;
+
+  background-color: var(--FondoSecundario) !important;
+
+  display: grid;
+
+  grid-template-columns:
+    120px
+    minmax(160px, 220px)
+    minmax(0, 1fr)
+    110px;
+
+  align-items: center;
+
+  column-gap: 18px;
+}
+
+
+/* =========================================================
+   IMAGEN
+========================================================= */
+
+.imagentarjeta {
+  position: relative;
+
+  width: 120px;
+  height: 120px;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--TextoSecundario);
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.imagentarjeta::after {
+  content: "";
+
+  position: absolute;
+
+  width: 170px;
+  height: 1px;
+
+  background-color: var(--TextoSecundario);
+
+  transform: rotate(-45deg);
+}
+
+.imagentarjeta span {
+  position: relative;
+  z-index: 1;
+
+  color: var(--TextoSecundario);
+
+  font-size: var(--TamTitulo);
+
+  font-family: "inter";
+
+  transform: rotate(-45deg);
+}
+
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
+.infomaquina {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.infomaquina h2 {
+  width: 100%;
+
+  margin: 0;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+  font-family: "inter";
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ETIQUETAS
+========================================================= */
+
+.etiquetas {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.etiquetas span {
+  padding: 3px 12px;
+
+  border: 1px solid var(--TextoSecundario);
+  border-radius: 10px;
+
+  color: var(--TextoPrincipal);
+
+  font-size: calc(var(--TamTexto) - 2px);
+
+  font-family: "inter";
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   FECHA
+========================================================= */
+
+.fecha {
+  margin: 0;
+
+  color: var(--TextoSecundario);
+
+  font-size: calc(var(--TamTexto) - 2px);
+
+  font-family: "inter";
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
+
+.descripcionmaquina {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+.descripcionmaquina h3 {
+  margin: 0 0 12px 0;
+
+  color: var(--TextoSecundario);
+
+  font-size: var(--TamTexto);
+
+  font-family: "inter";
+}
+
+.descripcionmaquina p {
+  width: 100%;
+
+  margin: 0;
+
+  color: var(--TextoSecundario);
+
+  font-size: var(--TamTexto);
+
+  line-height: 1.35;
+
+  font-family: "inter";
+
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.linea {
+  width: 90%;
+  height: 1px;
+
+  margin-bottom: 22px;
+
+  background-color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+.estado {
+  width: 110px;
+  height: 40px;
+
+  justify-self: end;
+
+  border: 1px solid var(--TextoSecundario);
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: var(--TextoPrincipal);
+
+  font-size: calc(var(--TamTexto) - 1px);
+
+  font-family: "inter";
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.estado:hover {
+  border-color: var(--TextoPrincipal);
+}
+
+
+/* =========================================================
+   TABLET
+   700px - 992px
+========================================================= */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+  #ladomismaquinas {
+    padding: 20px;
+  }
+
+
+  /* ---------- PARTE SUPERIOR ---------- */
+
+  #primerdivmismaquinas {
+    gap: 12px;
+  }
+
+  #primerdivmismaquinas p {
+    font-size: var(--TamTitulo);
+  }
+
+  #primerdivmismaquinas input {
+    width: 190px;
+    height: 36px;
+
+    font-size: var(--TamTexto);
+  }
+
+  .botonmas {
+    width: 28px;
+    height: 28px;
+
+    font-size: var(--TamTexto);
+  }
+
+
+  /* ---------- CANTIDAD ---------- */
+
+  #segundodivmismaquinas {
+    margin-top: 15px;
+  }
+
+  #segundodivmismaquinas p {
+    font-size: var(--TamTexto);
+  }
+
+
+  /* ---------- LISTA ---------- */
+
+  #listamaquinas {
+    gap: 14px;
+    margin-top: 15px;
+  }
+
+
+  /* ---------- TARJETA ---------- */
+
+  .tarjetamaquina {
+    min-height: 120px;
+
+    padding: 10px 12px;
+
+    border-radius: 20px;
+
+    grid-template-columns:
+      80px
+      minmax(125px, 150px)
+      minmax(0, 1fr)
+      75px;
+
+    column-gap: 12px;
+  }
+
+
+  /* ---------- IMAGEN ---------- */
+
+  .imagentarjeta {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 14px;
+  }
+
+  .imagentarjeta::after {
+    width: 115px;
+  }
+
+  .imagentarjeta span {
+    font-size: var(--TamTexto);
+  }
+
+
+  /* ---------- INFORMACIÓN ---------- */
+
+  .infomaquina {
+    gap: 7px;
+  }
+
+  .infomaquina h2 {
+    font-size: var(--TamTexto);
+  }
+
+  .etiquetas {
+    gap: 5px;
+  }
+
+  .etiquetas span {
+    padding: 3px 7px;
+
+    font-size: calc(var(--TamTexto) - 3px);
+
+    border-radius: 8px;
+  }
+
+  .fecha {
+    font-size: calc(var(--TamTexto) - 3px);
+  }
+
+
+  /* ---------- DESCRIPCIÓN ---------- */
+
+  .descripcionmaquina h3 {
+    margin-bottom: 7px;
+
+    font-size: var(--TamTexto);
+  }
+
+  .descripcionmaquina p {
+    font-size: calc(var(--TamTexto) - 3px);
+
+    line-height: 1.3;
+  }
+
+  .linea {
+    width: 90%;
+
+    margin-bottom: 10px;
+  }
+
+
+  /* ---------- ESTADO ---------- */
+
+  .estado {
+    width: 75px;
+    height: 32px;
+
+    font-size: calc(var(--TamTexto) - 2px);
+
+    border-radius: 8px;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+   0 - 699px
+========================================================= */
+
+@media (max-width: 699px) {
+
+  #containermismaquinas {
+    display: block;
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+  }
+
+  #headermobile {
+    display: none;
+  }
+
+  #ladomismaquinas {
+    width: 100%;
+    height: 100vh;
+
+    padding: 80px 15px 25px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+  }
+
+
+  #primerdivmismaquinas {
+    width: 100%;
+
+    display: flex;
+
+    gap: 8px;
+  }
+
+  #primerdivmismaquinas p {
+    display: none;
+  }
+
+  #primerdivmismaquinas input {
+    flex: 1;
+
+    width: auto;
+    height: 40px;
+
+    padding: 0 14px;
+
+    font-size: var(--TamTexto);
+
+    border-radius: 12px;
+  }
+
+  .botonmas {
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    font-size: var(--TamTitulo);
+  }
+
+
+  /* =====================================================
+     CANTIDAD
+  ===================================================== */
+
+  #segundodivmismaquinas {
+    margin-top: 15px;
+  }
+
+  #segundodivmismaquinas p {
+    font-size: var(--TamTexto);
+  }
+
+
+  /* =====================================================
+     LISTA
+  ===================================================== */
+
+  #listamaquinas {
+    width: 100%;
+
+    gap: 15px;
+
+    margin-top: 15px;
+  }
+
+
+  /* =====================================================
+     TARJETA CELULAR
+  ===================================================== */
+
+  .tarjetamaquina {
+    width: 100%;
+    min-height: 0;
+
+    padding: 14px;
+
+    border-radius: 20px;
+
+    display: grid;
+
+    grid-template-columns: 82px minmax(0, 1fr);
+
+    grid-template-rows: auto auto auto;
+
+    column-gap: 12px;
+    row-gap: 14px;
+
+    align-items: start;
+  }
+
+
+  /* =====================================================
+     IMAGEN
+  ===================================================== */
+
+  .imagentarjeta {
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 82px;
+    height: 82px;
+
+    border-radius: 13px;
+  }
+
+  .imagentarjeta::after {
+    width: 120px;
+  }
+
+  .imagentarjeta span {
+    font-size: var(--TamTexto);
+  }
+
+
+  /* =====================================================
+     INFORMACIÓN
+  ===================================================== */
+
+  .infomaquina {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 7px;
+  }
+
+  .infomaquina h2 {
+    width: 100%;
+
+    font-size: var(--TamTexto);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  /* =====================================================
+     ETIQUETAS
+  ===================================================== */
+
+  .etiquetas {
+    display: flex;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
+  }
+
+  .etiquetas span {
+    padding: 3px 8px;
+
+    font-size: calc(var(--TamTexto) - 3px);
+
+    border-radius: 8px;
+  }
+
+
+  /* =====================================================
+     FECHA
+  ===================================================== */
+
+  .fecha {
+    max-width: 100%;
+
+    font-size: calc(var(--TamTexto) - 3px);
+
+    white-space: nowrap;
+  }
+
+
+  /* =====================================================
+     DESCRIPCIÓN
+  ===================================================== */
+
+  /*
+  .descripcionmaquina {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+  }
+
+  .descripcionmaquina h3 {
+    margin: 0 0 8px 0;
+
+    font-size: var(--TamTexto);
+  }
+
+  .descripcionmaquina p {
+    width: 100%;
+
+    margin: 0;
+
+    font-size: calc(var(--TamTexto) - 1px);
+
+    line-height: 1.4;
+
+    overflow-wrap: break-word;
+  }
+
+  .linea {
+    width: 100%;
+
+    margin-bottom: 10px;
+  }
+  */
+
+
+  /* =====================================================
+     ESTADO
+  ===================================================== */
+
+  .estado {
+    grid-column: 1 / -1;
+    grid-row: 3;
+
+    width: 100%;
+    height: 36px;
+
+    justify-self: stretch;
+
+    margin: 0;
+
+    font-size: calc(var(--TamTexto) - 1px);
+
+    border-radius: 9px;
+  }
+}
+
+
+/* =========================================================
+   CELULARES MUY PEQUEÑOS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  #ladomismaquinas {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .tarjetamaquina {
+    grid-template-columns: 70px minmax(0, 1fr);
+
+    padding: 11px;
+
+    column-gap: 10px;
+  }
+
+  .imagentarjeta {
+    width: 70px;
+    height: 70px;
+  }
+
+  .imagentarjeta::after {
+    width: 105px;
+  }
+
+  .imagentarjeta span {
+    font-size: calc(var(--TamTexto) - 2px);
+  }
+
+  .infomaquina h2 {
+    font-size: var(--TamTexto);
+  }
+
+  .etiquetas span {
+    font-size: calc(var(--TamTexto) - 4px);
+
+    padding: 3px 7px;
+  }
+
+  .fecha {
+    font-size: calc(var(--TamTexto) - 4px);
+  }
+
+  .descripcionmaquina h3 {
+    font-size: var(--TamTexto);
+  }
+
+  .descripcionmaquina p {
+    font-size: calc(var(--TamTexto) - 1px);
+  }
+
+  .estado {
+    height: 34px;
+
+    font-size: calc(var(--TamTexto) - 2px);
+  }
+}
+
+
+/* =========================================================
+   MODAL YOVERLAY (Adaptado a las variables del tema)
+========================================================= */
+
+/* Overlay principal */
+.overlay-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: "inter", sans-serif;
+}
+
+/* Envoltorio del modal que fija el origen relativo para la X */
+.modal-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Tarjeta contenedora principal con el fondo de tu app */
+.contenido-modal {
+  background: var(--FondoPrincipal);
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 25px;
+  padding: 30px 32px;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  color: var(--TextoPrincipal);
+}
+
+/* Botón X posicionado arriba a la derecha integrado con la tarjeta */
+.boton-cerrar-x {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  background: var(--FondoPrincipal);
+  border: 1px solid var(--BordeSuave);
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--TextoSecundario);
+  cursor: pointer;
+  z-index: 1010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.boton-cerrar-x:hover {
+  background: var(--Naranja);
+  color: var(--TextoPrincipal);
+  border-color: var(--BordePrincipal);
+}
+
+/* Layout Interno */
+#contenidomantenimiento {
+  display: flex;
+  gap: 28px;
+  align-items: stretch;
+}
+
+#columnaformulario {
+  flex: 1;
+  min-width: 0;
+}
+
+#columnaformulario h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: var(--TamTitulo);
+  font-weight: bold;
+  color: var(--TextoPrincipal);
+}
+
+#filacampos {
+  display: flex;
+  gap: 16px;
+}
+
+.columnacampos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: calc(var(--TamTexto) - 1px);
+  font-weight: 500;
+  color: var(--TextoSecundario);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 12px;
+  background-color: var(--FondoPrincipal);
+  color: var(--TextoPrincipal);
+  font-family: "inter", sans-serif;
+  font-size: var(--TamTexto);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+  resize: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--TextoPrincipal);
+}
+
+/* Sección de Fotos */
+#seccionfotos {
+  margin-top: 18px;
+}
+
+#seccionfotos p {
+  margin: 0 0 8px 0;
+  font-size: calc(var(--TamTexto) - 1px);
+  font-weight: 500;
+  color: var(--TextoSecundario);
+}
+
+#filafotos {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fotomaquina {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--BordeSecundario);
+}
+
+.fotomaquina img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.botonquitarfoto {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid var(--BordeSuave);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.botonquitarfoto:hover {
+  background: rgba(220, 53, 69, 0.9);
+}
+
+.botonquitarfoto img {
+  width: 10px;
+  height: 10px;
+}
+
+#botonagregarfoto {
+  width: 68px;
+  height: 68px;
+  border: 1px dashed var(--BordeSecundario);
+  border-radius: 12px;
+  background: var(--FondoPrincipal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: calc(var(--TamTexto) - 3px);
+  color: var(--TextoSecundario);
+  padding: 4px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#botonagregarfoto:hover {
+  border-color: var(--TextoPrincipal);
+  color: var(--TextoPrincipal);
+}
+
+#botonagregarfoto img {
+  width: 18px;
+  height: 18px;
+  margin-bottom: 2px;
+}
+
+/* Columna Lateral (Resumen) */
+#resumenmaquina {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 24px;
+}
+
+#resumenmaquina h2 {
+  margin-top: 0;
+  font-size: var(--TamTitulo);
+  margin-bottom: 16px;
+  color: var(--TextoPrincipal);
+}
+
+#placamaquina {
+  background: var(--FondoPrincipal);
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+#etiquetaplaca {
+  margin: 0 0 6px 0;
+  font-size: calc(var(--TamTexto) - 3px);
+  color: var(--TextoSecundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#nombreplaca {
+  margin: 0 0 4px 0;
+  font-size: var(--TamTexto);
+  font-weight: 600;
+  color: var(--TextoPrincipal);
+}
+
+#tipoplaca {
+  margin: 0 0 10px 0;
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+}
+
+#serieplaca {
+  display: flex;
+  justify-content: space-between;
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+  border-top: 1px solid var(--BordeSuave);
+  padding-top: 8px;
+}
+
+#estadomaquina {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--TamTexto);
+  color: var(--TextoSecundario);
+}
+
+#estadomaquina .estado {
+  width: auto;
+  padding: 4px 12px;
+  height: auto;
+  font-size: calc(var(--TamTexto) - 2px);
+}
+
+#botonactualizar {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--Naranja);
+  color: var(--TextoPrincipal);
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: var(--TamTexto);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+#botonactualizar:hover {
+  opacity: 0.9;
+}
+
+/* Adaptación Responsive para el Modal */
+@media (max-width: 768px) {
+  #contenidomantenimiento {
+    flex-direction: column;
+  }
+
+  #resumenmaquina {
+    width: 100%;
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--BordeSuave);
+    padding-top: 20px;
+  }
+
+  #filacampos {
+    flex-direction: column;
+  }
+}
+
+/* Columna de Acciones dentro de la tarjeta */
+.acciones-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  justify-self: end;
+}
+
+.estado {
+  width: 110px;
+  height: 36px;
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--TextoPrincipal);
+  font-size: calc(var(--TamTexto) - 1px);
+  font-family: "inter", sans-serif;
+  cursor: default;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Colores dinámicos opcionales por estado */
+.estado.operativo {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.estado.mantenimiento {
+  border-color: var(--Naranja);
+  color: var(--Naranja);
+}
+
+.estado.baja {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+/* Botón Editar */
+.boton-editar {
+  width: 110px;
+  height: 32px;
+  border: 1px solid var(--BordeSuave);
+  border-radius: 8px;
+  background-color: var(--FondoSecundario);
+  color: var(--TextoSecundario);
+  font-family: "inter", sans-serif;
+  font-size: calc(var(--TamTexto) - 2px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.boton-editar:hover {
+  background-color: var(--BordeSecundario);
+  color: var(--TextoPrincipal);
+  border-color: var(--TextoPrincipal);
+}
+
+/* Adaptación Mobile de las acciones */
+@media (max-width: 699px) {
+  .acciones-tarjeta {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .acciones-tarjeta .estado,
+  .acciones-tarjeta .boton-editar {
+    flex: 1;
+    width: 100%;
+    height: 36px;
+  }
+}
+
+
+
+/* ========================= FILTROS ========================= */
+.filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-group {
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-input {
+    width: 100%;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 36px 6px 36px;
+    font-size: 14.5px;
+    font-weight: 400;
+    outline: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3e%3cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    background-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.search-input:focus,
+.search-input:hover {
+    border-color: #555566;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group > span {
+    font-size: 15px;
+}

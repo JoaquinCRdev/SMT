@@ -1,0 +1,498 @@
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+#sidebarhome {
+    width: 20%;
+    height: 100vh;
+
+    background-color: var(--FondoSidebar);
+
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 50px 0;
+    box-sizing: border-box;
+
+    transition: background-color 0.25s ease;
+}
+
+
+/* =========================================================
+   HEADER / LOGO
+========================================================= */
+
+#headerSidebar {
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#logohome {
+
+    width: 150px;
+    height: auto;
+}
+
+
+/* =========================================================
+   BOTÓN HAMBURGUESA
+========================================================= */
+
+#botonHamburguesa {
+
+    display: none;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    padding: 5px;
+}
+
+
+#botonHamburguesa span {
+
+    display: block;
+
+    width: 28px;
+    height: 3px;
+
+    margin: 5px 0;
+
+    background-color: var(--TextoPrincipal);
+
+    border-radius: 5px;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.3s ease;
+}
+
+
+/* =========================================================
+   BOTONES DEL SIDEBAR
+========================================================= */
+
+#botoneshome {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    font-family: "Inter", sans-serif;
+}
+
+
+.botonhome {
+
+    position: relative;
+
+    width: 250px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 0 4px 4px 0;
+
+    background-color: var(--FondoSidebarBoton);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-left: 15px;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    font-family: "Inter", sans-serif;
+
+    text-decoration: none;
+
+    color: var(--TextoSecundario);
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.25s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* =========================================================
+   BOTÓN ACTIVO
+========================================================= */
+
+.botonhome.active {
+
+    color: var(--NaranjaHover);
+
+    background: linear-gradient(
+        to right,
+        rgba(200, 93, 17, 0.25),
+        rgba(200, 93, 17, 0)
+    );
+}
+
+
+/* =========================================================
+   LÍNEA NARANJA ACTIVA
+========================================================= */
+
+.botonhome.active::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background-color: var(--NaranjaHover);
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.botonhome:hover {
+
+    color: var(--NaranjaHover);
+
+    background: linear-gradient(
+        to right,
+        rgba(200, 93, 17, 0.20),
+        rgba(200, 93, 17, 0)
+    );
+}
+
+
+.botonhome:hover::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background-color: var(--NaranjaHover);
+}
+
+
+/* =========================================================
+   ICONOS
+========================================================= */
+
+.imageniconoshome {
+
+    width: 28px;
+    height: 28px;
+}
+
+
+/* =========================================================
+   ICONO GRIS / NARANJA
+========================================================= */
+
+.icono-naranja {
+    display: none;
+}
+
+
+/* ---------- HOVER ---------- */
+
+.botonhome:hover .icono-gris {
+    display: none;
+}
+
+.botonhome:hover .icono-naranja {
+    display: block;
+}
+
+
+/* ---------- ACTIVO ---------- */
+
+.botonhome.active .icono-gris {
+    display: none;
+}
+
+.botonhome.active .icono-naranja {
+    display: block;
+}
+
+
+/* =========================================================
+   CERRAR SESIÓN
+========================================================= */
+
+#botoncerrarsesion {
+
+    width: 220px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background-color: var(--FondoBoton);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-left: 15px;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    font-family: "Inter", sans-serif;
+
+    text-decoration: none;
+
+    color: var(--TextoSecundario);
+
+    transition:
+        background-color 0.25s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+#botoncerrarsesion img {
+
+    width: 28px;
+    height: 28px;
+}
+
+
+/* =========================================================
+   ICONO CERRAR SESIÓN
+========================================================= */
+
+.icono-cerrar-naranja {
+    display: none;
+}
+
+
+/* =========================================================
+   HOVER CERRAR SESIÓN
+========================================================= */
+
+#botoncerrarsesion:hover {
+
+    color: var(--NaranjaHover);
+
+    background: linear-gradient(
+        to right,
+        rgba(200, 93, 17, 0.20),
+        rgba(200, 93, 17, 0)
+    );
+}
+
+
+#botoncerrarsesion:hover .icono-cerrar-gris {
+    display: none;
+}
+
+
+#botoncerrarsesion:hover .icono-cerrar-naranja {
+    display: block;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+    #sidebarhome {
+
+        width: 22%;
+
+        padding: 35px 0;
+    }
+
+
+    #logohome {
+
+        width: 120px;
+    }
+
+
+    #botoneshome {
+
+        gap: 7px;
+    }
+
+
+    .botonhome {
+
+        width: 190px;
+        height: 42px;
+
+        gap: 10px;
+
+        padding-left: 12px;
+
+        font-size: 15px;
+    }
+
+
+    .imageniconoshome {
+
+        width: 23px;
+        height: 23px;
+    }
+
+
+    #botoncerrarsesion {
+
+        width: 175px;
+        height: 42px;
+
+        gap: 10px;
+
+        padding-left: 12px;
+
+        font-size: 15px;
+    }
+
+
+    #botoncerrarsesion img {
+
+        width: 23px;
+        height: 23px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 699px) {
+
+    #sidebarhome {
+
+        position: relative;
+
+        width: 100%;
+        min-height: auto;
+
+        height: auto;
+
+        padding: 15px 20px;
+
+        display: block;
+
+        box-sizing: border-box;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    #headerSidebar {
+
+        width: 100%;
+
+        display: flex;
+
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    #logohome {
+
+        width: 110px;
+    }
+
+
+    /* ================= HAMBURGUESA ================= */
+
+    #botonHamburguesa {
+
+        display: block;
+    }
+
+
+    /* ================= MENÚ ================= */
+
+    #botoneshome {
+
+        display: none;
+
+        width: 100%;
+
+        margin-top: 20px;
+
+        gap: 5px;
+    }
+
+
+    /* Menú abierto */
+
+    #botoneshome.menu-abierto {
+
+        display: flex;
+    }
+
+
+    .botonhome {
+
+        width: 100%;
+
+        height: 45px;
+
+        font-size: 16px;
+
+        padding-left: 15px;
+
+        gap: 12px;
+    }
+
+
+    .imageniconoshome {
+
+        width: 24px;
+        height: 24px;
+    }
+
+
+    /* ================= CERRAR SESIÓN ================= */
+
+    #botoncerrarsesion {
+
+        display: none;
+    }
+}

@@ -1,0 +1,105 @@
+/* ===== Base ===== */
+#pageRegisterCase {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('/fondo.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#containerRegisterCase {
+  font-family: 'Nunito', sans-serif;
+  background: rgba(253, 245, 239, 0.92);
+  border-radius: 16px;
+  padding: 40px 48px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.iconCase {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 24px;
+  display: block;
+  object-fit: contain;
+}
+
+#containerRegisterCase h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  line-height: 1.45;
+  margin-bottom: 28px;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logoCase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoCase img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+/* ===== Tablet ===== */
+@media (min-width: 700px) and (max-width: 992px) {
+  #containerRegisterCase {
+    max-width: 400px;
+    padding: 36px 40px;
+  }
+
+  .iconCase {
+    width: 80px;
+    height: 80px;
+  }
+
+  #containerRegisterCase h1 {
+    font-size: 1.1rem;
+  }
+}
+
+/* ===== Celu ===== */
+@media (max-width: 700px) {
+  #pageRegisterCase {
+    background-image: url('/fondocelu.webp');
+    padding: 16px;
+    align-items: center;
+  }
+
+  #containerRegisterCase {
+    max-width: 100%;
+    padding: 28px 24px;
+    border-radius: 12px;
+  }
+
+  .iconCase {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 18px;
+  }
+
+  #containerRegisterCase h1 {
+    font-size: 1rem;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .logoCase img {
+    width: 36px;
+    height: 36px;
+  }
+}
