@@ -1,0 +1,125 @@
+{
+    "layout": {
+        "sidebar": {
+            "inicio": "Startseite",
+            "mis_maquinas": "Meine Maschinen",
+            "mantenimientos": "Wartung",
+            "configuracion": "Einstellungen",
+            "historial": "Verlauf",
+            "notificaciones": "Benachrichtigungen",
+            "ayuda": "Hilfe",
+            "cerrar_sesion": "Abmelden"
+        }
+    },
+
+    "pages": {
+        "home": {
+            "bienvenidaH1": "Hallo",
+            "bienvenidaP": "Willkommen zurück"
+        },
+
+        "mis_maquinas": {
+            "headers": {
+                "mis maquinas": "Meine Maschinen",
+                "otros": "Andere",
+
+                "active": {
+                    "mis maquinas": "Maschinen",
+                    "otros": "Artikel in anderen"
+                }
+            }
+        },
+
+        "mantenimientos": {
+            "titulo": "Wartung",
+            "descripcion": "Planen und verfolgen Sie die Wartung Ihrer Maschinen."
+        },
+
+        "configuracion": {
+            "title": "Anpassung",
+            "subtitle": "Passen Sie Ihre Werkstatt an und verwalten Sie sie",
+
+            "configs": {
+                "plan": {
+                    "basico": {
+                        "name": "Basic",
+                        "description": "Ideal für wachsende Workshops",
+                        "actualizar": "Upgraden auf Pro"
+                    },
+                    "pro": {
+                        "name": "Pro",
+                        "description": "Für Workshops, die das Beste suchen"
+                    }
+                },
+
+                "modo": {
+                    "claro": "☀️ Hellermodus",
+                    "oscuro": "🌙 Dunkelmodus"
+                },
+
+                "fuente": {
+                    "h2": "Schriftgröße",
+                    "sizes": {
+                        "pequeño": "Klein",
+                        "grande": "Groß"
+                    }
+                },
+
+                "idioma": {
+                    "es": "Spanisch",
+                    "en": "Englisch",
+                    "de": "Deutsch"
+                },
+
+                "personal": {
+                    "h2": "Personalverwaltung",
+                    "p": "Verwalten Sie das Personal, das Zugriff auf die Werkstatt hat",
+                    "estado": "Status",
+                    "modificar": "Ändern",
+                    "agregar": "Personal hinzufügen"
+                },
+
+                "solicitudes": {
+                    "h2": "Ausstehende Anfragen",
+                    "p": "Personal, das um die Teilnahme an der Werkstatt gebeten hat",
+
+                    "solicitud": {
+                        "span": "anfragen zur Teilnahme am Werkstatt",
+                        "aceptar": "Akzeptieren",
+                        "rechazar": "Ablehnen"
+                    }
+                },
+
+                "acciones": {
+                    "h2": "Aktionen zur Werkstatt",
+                    "p": "Verwalten Sie die allgemeinen Informationen Ihrer Werkstatt",
+
+                    "modificar": {
+                        "span": "Werkstatt ändern",
+                        "descripcion": "Bearbeiten Sie die allgemeinen Informationen, Konfiguration und Details Ihrer Werkstatt",
+                        "action": "Go to settings"
+                    },
+
+                    "borrar":{
+                        "span": "Werkstatt löschen",
+                        "descripcion": "Löschen Sie Ihre Werkstatt und alle ihre Informationen dauerhaft",
+                        "action": "Werkstatt löschen"
+                    }
+                }
+            }
+        },
+
+        "historial": {
+            "titulo": "History",
+            "descripcion": "Review the history of activities and events related to your machines."
+        },
+        "notificaciones": {
+            "titulo": "Notifications",
+            "descripcion": "Manage your notifications and important alerts."
+        },
+        "ayuda": {
+            "titulo": "Help",
+            "descripcion": "Find answers to your questions and contact support if you need it."
+        }
+    }
+}
