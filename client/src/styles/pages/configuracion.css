@@ -1,9 +1,10 @@
 /* =========================================================
    BODY
 ========================================================= */
-
 body {
-  height: 100%;
+    height: 100%;
+    margin-left: 20%;
+    width: 80%;
 }
 
 /* =========================================================
@@ -48,9 +49,10 @@ body {
 
   -webkit-font-smoothing: antialiased;
 
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+        height: fit-content;
 }
 
 .smt-page * {
@@ -789,6 +791,82 @@ body {
 }
 
 /* =========================================================
+   SELECT - IDIOMA
+========================================================= */
+
+#input-idioma {
+    width: 100%;
+    max-width: 300px;
+    height: 42px;
+
+    padding: 0 38px 0 14px;
+
+    background-color: var(--FondoBoton);
+    color: var(--TextoPrincipal);
+
+    border: 1px solid var(--BordePrincipal);
+    border-radius: 8px;
+
+    font-family: "Inter", sans-serif;
+    font-size: var(--TamTexto);
+    font-weight: 500;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+
+    /* Flecha personalizada */
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--TextoSecundario) 50%),
+        linear-gradient(135deg, var(--TextoSecundario) 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 17px) 17px,
+        calc(100% - 12px) 17px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+}
+
+
+/* Hover */
+
+#input-idioma:hover {
+    background-color: var(--FondoTarjeta);
+    border-color: var(--BordeSuave);
+}
+
+
+/* Cuando está seleccionado / enfocado */
+
+#input-idioma:focus {
+    border-color: var(--Naranja);
+
+    box-shadow:
+        0 0 0 2px rgba(242, 92, 5, 0.15);
+}
+
+
+/* Opciones */
+
+#input-idioma option {
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+
+    font-family: "Inter", sans-serif;
+    font-size: var(--TamTexto);
+}
+
+/* =========================================================
    HOVER
 ========================================================= */
 
@@ -833,6 +911,740 @@ body {
     background-color 0.25s ease,
     color 0.25s ease,
     border-color 0.25s ease;
+}
+
+/* =========================================================
+   MODAL AGREGAR PERSONAL
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  animation: modalOverlayIn 0.2s ease;
+}
+
+.modal-personal {
+  width: 100%;
+  max-width: 520px;
+
+  background-color: var(--FondoSecundario);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  color: var(--TextoPrincipal);
+
+  animation: modalPersonalIn 0.2s ease;
+}
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+
+.modal-personal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.modal-personal-title {
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--TextoPrincipal);
+
+  margin: 0;
+}
+
+.modal-personal-subtitle {
+  margin-top: 5px;
+
+  font-size: calc(var(--TamTexto) - 1px);
+
+  line-height: 1.4;
+
+  color: var(--TextoSecundario);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoSecundario);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: var(--FondoTarjeta);
+
+  color: var(--TextoPrincipal);
+
+  border-color: var(--BordeSuave);
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.modal-form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.modal-form-group label {
+  font-size: var(--TamTexto);
+
+  font-weight: 500;
+
+  color: var(--TextoPrincipal);
+}
+
+.modal-form-group input,
+.modal-form-group select {
+  width: 100%;
+  height: 42px;
+
+  padding: 0 12px;
+
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoPrincipal);
+
+  border: 1px solid var(--BordePrincipal);
+
+  border-radius: 7px;
+
+  outline: none;
+
+  font-size: var(--TamTexto);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-form-group input::placeholder {
+  color: var(--TextoSecundario);
+
+  opacity: 0.7;
+}
+
+.modal-form-group input:hover,
+.modal-form-group select:hover {
+  border-color: var(--BordeSuave);
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus {
+  border-color: var(--Naranja);
+
+  box-shadow:
+    0 0 0 2px rgba(242, 92, 5, 0.15);
+}
+
+.modal-form-group select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   BOTONES MODAL
+========================================================= */
+
+.modal-personal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+.btn-modal-cancel,
+.btn-modal-save {
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border-radius: 7px;
+
+  font-size: var(--TamTexto);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-modal-cancel {
+  background-color: transparent;
+
+  border: 1px solid var(--BordePrincipal);
+
+  color: var(--TextoSecundario);
+}
+
+.btn-modal-cancel:hover {
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoPrincipal);
+}
+
+.btn-modal-save {
+  background-color: var(--Naranja);
+
+  border: 1px solid var(--Naranja);
+
+  color: #ffffff;
+}
+
+.btn-modal-save:hover {
+  background-color: var(--NaranjaHover);
+
+  border-color: var(--NaranjaHover);
+}
+
+
+/* =========================================================
+   ANIMACIONES
+========================================================= */
+
+@keyframes modalOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPersonalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.modal-delete {
+  width: 100%;
+  max-width: 460px;
+
+  background-color: var(--FondoSecundario);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  color: var(--TextoPrincipal);
+
+  animation: modalDeleteIn 0.2s ease;
+}
+
+
+/* =========================================================
+   HEADER MODAL BORRAR
+========================================================= */
+
+.modal-delete-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.modal-delete-icon {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 8px;
+
+  background-color: rgba(239, 68, 68, 0.12);
+
+  border: 1px solid rgba(239, 68, 68, 0.25);
+
+  color: #ef4444;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.modal-delete-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.modal-delete-title {
+  font-size: 19px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  color: var(--TextoPrincipal);
+}
+
+.modal-delete-text {
+  font-size: var(--TamTexto);
+
+  line-height: 1.5;
+
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.modal-delete-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+.btn-modal-delete {
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border-radius: 7px;
+
+  background-color: #ef4444;
+
+  border: 1px solid #ef4444;
+
+  color: #ffffff;
+
+  font-size: var(--TamTexto);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-modal-delete:hover {
+  background-color: #dc2626;
+
+  border-color: #dc2626;
+}
+
+/* =========================================================
+   MODAL MODIFICAR TALLER
+========================================================= */
+
+.modal-taller {
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background-color: var(--FondoSecundario);
+  color: var(--TextoPrincipal);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.modal-taller-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid var(--BordePrincipal);
+}
+
+.modal-taller-header h2 {
+  margin: 0;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTitulo);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.modal-taller-form {
+  display: grid;
+
+  grid-template-columns: 1.25fr 0.85fr;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   PANELES
+========================================================= */
+
+.modal-taller-panel {
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 10px;
+
+  background-color: var(--FondoTarjeta);
+
+  box-sizing: border-box;
+
+  padding: 20px;
+}
+
+.modal-taller-panel h3 {
+  margin: 0 0 18px 0;
+
+  color: var(--TextoPrincipal);
+
+  font-size: calc(var(--TamTexto) + 4px);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.campo-modal-taller {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 15px;
+}
+
+.campo-modal-taller label {
+  margin-bottom: 6px;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+}
+
+.campo-modal-taller input,
+.campo-modal-taller textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  background-color: var(--FondoBoton);
+  color: var(--TextoPrincipal);
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--TamTexto);
+
+  padding: 9px 10px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.campo-modal-taller input {
+  height: 38px;
+}
+
+.campo-modal-taller textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+.campo-modal-taller input:focus,
+.campo-modal-taller textarea:focus {
+  border-color: var(--Naranja);
+}
+
+.campo-modal-taller input::placeholder,
+.campo-modal-taller textarea::placeholder {
+  color: var(--TextoTerciario);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.modal-taller-logo {
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid var(--BordePrincipal);
+
+  margin-bottom: 20px;
+}
+
+.modal-taller-logo h3 {
+  text-align: center;
+}
+
+.modal-logo-upload {
+  width: 175px;
+  height: 135px;
+
+  margin: auto;
+
+  border: 2px dashed var(--BordeSuave);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.modal-logo-upload:hover {
+  border-color: var(--Naranja);
+  background-color: var(--FondoBoton);
+}
+
+.modal-logo-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  color: var(--TextoSecundario);
+}
+
+.modal-logo-title {
+  max-width: 150px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  margin-bottom: 5px;
+}
+
+.modal-logo-info {
+  color: var(--TextoSecundario);
+
+  font-size: calc(var(--TamTexto) - 2px);
+}
+
+
+/* =========================================================
+   ADMINISTRADOR
+========================================================= */
+
+.modal-taller-administrador h3 {
+  text-align: left;
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.modal-taller-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 5px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .modal-taller {
+    width: 95%;
+    max-height: 92vh;
+
+    padding: 16px;
+  }
+
+  .modal-taller-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .modal-taller-panel {
+    padding: 16px;
+  }
+
+  .modal-taller-header h2 {
+    font-size: var(--TamTitulo);
+  }
+
+  .modal-logo-upload {
+    width: 155px;
+    height: 125px;
+  }
+
+  .modal-taller-actions {
+    display: flex;
+
+    flex-direction: column-reverse;
+
+    width: 100%;
+  }
+
+  .modal-taller-actions button {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN
+========================================================= */
+
+@keyframes modalDeleteIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* =========================================================
@@ -1381,6 +2193,8 @@ body {
   .btn-action-outline-red {
     display: none;
   }
+
+
 }
 
 

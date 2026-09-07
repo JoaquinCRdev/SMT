@@ -1090,6 +1090,20 @@ button {
 }
 
 
+
+@media (max-width: 699px) {
+
+    .historial-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .historial-page {
+        width: 100%;
+        min-height: auto; /* evita agregar un 100vh extra debajo del sidebar */
+    }
+}
 /* =========================================================
    CELULAR GRANDE
    500px - 699px

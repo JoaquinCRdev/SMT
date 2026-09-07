@@ -1,308 +1,167 @@
-import "../styles/pages/mantenimiento.css";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import  "../styles/pages/mantenimiento.css"
 import Sidebar from "../components/layout/sidebar";
 
-const Mantenimiento = () => {
-  const [form, setForm] = useState({
-    nombre: "Pinacho S-90",
-    tipo: "maquina",
-    marca: "Pinacho",
-    serie: "PS90-2024-005",
-    descripcion:
-      "Máquina convencional para operaciones de torneado, cilindrado y roscado.",
-    fecha: "2024-04-14",
-    estado: "operativo",
-  });
+const TAREAS_INICIALES = [
+  { id: 1, text: "Drenar acumulación de agua", done: false },
+  { id: 2, text: "Medir el desgaste de discos", done: false },
+  { id: 3, text: "Limpiar el tanque de taladrina", done: true },
+];
 
-  const [fotos, setFotos] = useState([]);
+const PROGRAMADOS = [
+  { id: 1, maquina: "Pinacho Mustang 225", tipo: "Mantenimiento Trimestral" },
+  { id: 2, maquina: "Pinacho Mustang 225", tipo: "Mantenimiento Anual" },
+  { id: 3, maquina: "Torno CNC HAAS", tipo: "Mantenimiento Mensual" },
+];
 
-  const inputFotoRef = useRef(null);
+const ACTIVOS = [
+  { id: 1, maquina: "Pinacho Mustang 225", tipo: "Mantenimiento Trimestral", pct: 63, vencido: true, dias: 3 },
+  { id: 2, maquina: "Fresadora Bridgeport", tipo: "Mantenimiento Semanal", pct: 25, vencido: false },
+  { id: 3, maquina: "Pinacho Mustang 225", tipo: "Lubricación", pct: 91, vencido: false },
+];
 
-  const cambiarCampo = (campo) => (e) => {
-    setForm({
-      ...form,
-      [campo]: e.target.value,
-    });
-  };
+export default function MantenimientoApp() {
+  const [vista, setVista] = useState("lista"); // lista | detalle
+  const [periodo, setPeriodo] = useState("Trimestral");
+  const [tareas, setTareas] = useState(TAREAS_INICIALES);
+  const [nuevaTarea, setNuevaTarea] = useState("");
+  const [asignados, setAsignados] = useState(["JD", "ML", "AR", "CP"]);
 
-  const abrirSelectorFotos = () => {
-    inputFotoRef.current.click();
-  };
-
-  const agregarFotos = (e) => {
-    const archivos = Array.from(e.target.files);
-
-    const nuevasFotos = archivos.map((archivo) =>
-      URL.createObjectURL(archivo)
-    );
-
-    setFotos((fotosActuales) => [
-      ...fotosActuales,
-      ...nuevasFotos,
-    ]);
-
-    e.target.value = "";
-  };
-
-  const quitarFoto = (indice) => {
-    setFotos((fotosActuales) =>
-      fotosActuales.filter((_, i) => i !== indice)
-    );
-  };
-
-  const actualizarDatos = () => {
-    console.log("Datos listos para actualizar:", form);
-  };
-
-  const eliminarDatos = () => {
-    setForm({
-      nombre: "",
-      tipo: "",
-      marca: "",
-      serie: "",
-      descripcion: "",
-      fecha: "",
-      estado: "",
-    });
-
-    setFotos([]);
+  const addTarea = () => {
+    if (!nuevaTarea.trim()) return;
+    setTareas([...tareas, { id: Date.now(), text: nuevaTarea, done: false }]);
+    setNuevaTarea("");
   };
 
   return (
-    <div id="containermantenimiento">
-      <Sidebar />
-
-      <div id="ladomantenimiento">
-
-        <div id="botonesarribamantenimiento">
-          <button className="botonvolver" type="button">
-            <img src="flechaatrasgris.png" alt="Volver" />
-          </button>
-
-          <h2 id="titulobarramantenimiento">
-            <span>/mantenimiento</span> (Registro)
-          </h2>
-
-          <button className="botonmas" type="button">
-            +
-          </button>
+      <div className="contenedor-principal">
+        
+      <Sidebar/>
+    <div className="app">
+      <div className="header">
+        <div className="tabs">
+          <button className="tab active">Máquinas</button>
+          <button className="tab">Otros</button>
         </div>
-
-        <div id="pasosregistro">
-          <div className="paso pasoactivo">
-            <span className="pasonumero">1</span>
-            <span className="pasotexto">Mantenimiento</span>
-          </div>
-        </div>
-
-        <div id="contenidomantenimiento">
-
-          <main id="columnaformulario">
-
-            <h3>Completa los datos del mantenimiento</h3>
-
-            <div id="filacampos">
-
-              <div className="columnacampos">
-
-                <div className="campo">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    value={form.nombre}
-                    onChange={cambiarCampo("nombre")}
-                  />
-                </div>
-
-                <div className="campo">
-                  <label>Tipo</label>
-                  <select
-                    value={form.tipo}
-                    onChange={cambiarCampo("tipo")}
-                  >
-                    <option value="">Seleccionar...</option>
-                    <option value="maquina">Máquina</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-
-                <div className="campo">
-                  <label>Marca</label>
-                  <input
-                    type="text"
-                    value={form.marca}
-                    onChange={cambiarCampo("marca")}
-                  />
-                </div>
-
-                <div className="campo">
-                  <label>N.° de serie</label>
-                  <input
-                    id="inputserie"
-                    type="text"
-                    value={form.serie}
-                    onChange={cambiarCampo("serie")}
-                  />
-                </div>
-
-              </div>
-
-              <div className="columnacampos">
-
-                <div className="campo">
-                  <label>Descripción</label>
-                  <textarea
-                    rows="4"
-                    value={form.descripcion}
-                    onChange={cambiarCampo("descripcion")}
-                  />
-                </div>
-
-                <div className="campo">
-                  <label>Fecha de mantenimiento</label>
-                  <input
-                    type="date"
-                    value={form.fecha}
-                    onChange={cambiarCampo("fecha")}
-                  />
-                </div>
-
-                <div className="campo">
-                  <label>Estado</label>
-                  <select
-                    value={form.estado}
-                    onChange={cambiarCampo("estado")}
-                  >
-                    <option value="">Seleccionar...</option>
-                    <option value="operativo">Operativo</option>
-                    <option value="mantenimiento">
-                      En mantenimiento
-                    </option>
-                    <option value="baja">De baja</option>
-                  </select>
-                </div>
-
-              </div>
-            </div>
-
-            <div id="seccionfotos">
-
-              <p>Fotos</p>
-
-              <div id="filafotos">
-
-                {fotos.map((foto, indice) => (
-                  <div className="fotomaquina" key={indice}>
-                    <img
-                      src={foto}
-                      alt={`Foto ${indice + 1}`}
-                    />
-
-                    <button
-                      className="botonquitarfoto"
-                      type="button"
-                      onClick={() => quitarFoto(indice)}
-                    >
-                      <img
-                        src="cerrargris.png"
-                        alt="Quitar"
-                      />
-                    </button>
-                  </div>
-                ))}
-
-                <input
-                  ref={inputFotoRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{ display: "none" }}
-                  onChange={agregarFotos}
-                />
-
-                <button
-                  id="botonagregarfoto"
-                  type="button"
-                  onClick={abrirSelectorFotos}
-                >
-                  <img
-                    src="camaragris.png"
-                    alt=""
-                  />
-
-                  <span>
-                    Agregar
-                    <br />
-                    foto
-                  </span>
-                </button>
-
-              </div>
-            </div>
-
-            <div className="espaciadorpie"></div>
-
-          </main>
-
-          <aside id="resumenmaquina">
-
-            <h2>Resumen</h2>
-
-            <div id="placamaquina">
-
-              <p id="etiquetaplaca">
-                Placa de identificación
-              </p>
-
-              <p id="nombreplaca">
-                {form.nombre}
-              </p>
-
-              <p id="tipoplaca">
-                {form.tipo === "maquina" && "Máquina"}
-                {form.tipo === "otro" && "Otro"}
-              </p>
-
-              <div id="serieplaca">
-                <span>N.° serie</span>
-                <span>{form.serie}</span>
-              </div>
-
-            </div>
-
-            <div id="estadomaquina">
-              <span>Estado:</span>
-
-              <b className={`estado ${form.estado}`}>
-                {form.estado === "operativo" && "Operativo"}
-                {form.estado === "mantenimiento" &&
-                  "En mantenimiento"}
-                {form.estado === "baja" && "De baja"}
-              </b>
-            </div>
-
-            <button
-              id="botonactualizar"
-              type="button"
-              onClick={actualizarDatos}
-            >
-              Actualizar
-            </button>
-
-            <button
-              id="botoneliminar"
-              type="button"
-              onClick={eliminarDatos}
-            >
-              Eliminar
-            </button>
-
-          </aside>
-
+        <div className="filter">
+          <span className="chip dd" onClick={() => vista === "detalle" && setVista("lista")}>
+            {vista === "lista" ? "General ∨" : "General ∧ / Mis mantenimientos ∧ / General ∧"}
+          </span>
         </div>
       </div>
+
+      {vista === "lista" ? (
+        <>
+          <div className="section">
+            <div className="section-head">
+              <div>
+                <div className="section-title">Programados</div>
+                <div className="section-sub">5 mantenimientos</div>
+              </div>
+              <button className="btn-ghost">General ∨</button>
+            </div>
+            <div className="grid">
+              {PROGRAMADOS.map((m) => (
+                <div key={m.id} className="card">
+                  <div className="card-top"><span className="badge">{m.maquina}</span></div>
+                  <div className="card-title">{m.tipo}</div>
+                  <div className="card-desc">Mantenimiento preventivo planificado</div>
+                  <button className="btn-detail" onClick={() => setVista("detalle")}>Ver detalle</button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="section">
+            <div className="section-head">
+              <button className="btn-black">+ Agregar mantenimiento</button>
+            </div>
+            <div className="section-head">
+              <div><div className="section-title">Activos</div></div>
+            </div>
+            <div className="grid">
+              {ACTIVOS.map((m) => (
+                <div key={m.id} className="card active">
+                  <div className="card-top"><span className="badge">{m.maquina}</span></div>
+                  <div className="card-title">{m.tipo}</div>
+                  <div className="progress-wrap">
+                    {m.vencido && <div className="alert">⚠ Venció hace {m.dias}d</div>}
+                    <div className="progress-meta"><span>{m.pct}%</span><span>avance</span></div>
+                    <div className="progress-bar"><div className="progress-fill" style={{ width: `${m.pct}%` }} /></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="detail-layout">
+          <div className="breadcrumb" onClick={() => setVista("lista")}>
+            <span>General ∧</span> / <b>Mis mantenimientos ∧</b> / <b>General ∧</b>
+          </div>
+
+          <div style={{ fontWeight: 800, fontSize: 22, marginBottom: 20 }}>Mantenimiento Trimestral</div>
+
+          <div className="detail-grid">
+            <div className="field">
+              <label>máquina:</label>
+              <span className="pill">Pinacho Mustang 225</span>
+            </div>
+            <div className="field">
+              <label>periodo:</label>
+              <select className="select" value={periodo} onChange={(e) => setPeriodo(e.target.value)}>
+                <option>Trimestral</option>
+                <option>Mensual</option>
+                <option>Semestral</option>
+                <option>Anual</option>
+              </select>
+            </div>
+            <div className="field">
+              <label>fecha de alta:</label>
+              <span className="pill">cada 29</span>
+            </div>
+            <div className="field">
+              <label>meses:</label>
+              <div className="pill-group">
+                <span className="pill">Enero</span><span className="pill">Abril</span><span className="pill">Julio</span><span className="pill">Octubre</span>
+              </div>
+              {periodo === "Trimestral" && <div className="note">que aparezca solo al seleccionar "trimestral"</div>}
+            </div>
+            <div className="field">
+              <label>tiempo de realización:</label>
+              <span className="pill">1 Semana</span>
+            </div>
+          </div>
+
+          <div className="tareas">
+            <div className="section-title" style={{ marginBottom: 12 }}>TAREAS</div>
+            {tareas.map((t) => (
+              <div key={t.id} className="task">
+                <input type="checkbox" checked={t.done} onChange={() => setTareas(tareas.map(x => x.id===t.id ? {...x, done:!x.done} : x))} />
+                <span style={{ textDecoration: t.done ? "line-through" : "none", color: t.done ? "#999" : "#111" }}>{t.text}</span>
+              </div>
+            ))}
+            <div className="task-new">
+              <input placeholder="Añade una tarea" value={nuevaTarea} onChange={(e) => setNuevaTarea(e.target.value)} onKeyDown={(e)=> e.key==='Enter' && addTarea()} />
+              <button className="btn-black" onClick={addTarea}>+ Añadir</button>
+            </div>
+          </div>
+
+          <div className="personal">
+            <div className="section-title">PERSONAL ASIGNADO</div>
+            <div className="avatars">
+              {asignados.map((a, i) => <div key={i} className="avatar">{a}</div>)}
+              <div className="avatar add" onClick={() => setAsignados([...asignados, "N" + (asignados.length+1)])}>+</div>
+            </div>
+          </div>
+
+          <div className="footer">
+            <button className="btn-ghost" onClick={() => setVista("lista")}>Cancelar</button>
+            <button className="btn-black" onClick={() => setVista("lista")}>Guardar Cambios</button>
+          </div>
+        </div>
+      )}
+    </div>
     </div>
   );
-};
-
-export default Mantenimiento;
+}

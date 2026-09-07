@@ -5,97 +5,173 @@ const RegistrarTaller = () => {
   return (
     <div id="RegistrarTaller">
 
-      <button id="botonvolver">
+      <button id="botonvolver" type="button">
         <NavLink to="/mismaquinas">← Volver</NavLink>
       </button>
 
       <div id="containerRegistrarTaller">
 
-        <h1>Completa los datos de la maquina</h1>
-
-        <div id="dropZone">
-          <img src="subirimagen.svg" alt="Subir imagen" />
-          <p>Drag and Drop</p>
-          <span>or browse</span>
-        </div>
-
         <form id="containerRegistrarTallerForm">
 
-          <div className="campo">
-            <label>Nombre</label>
-            <input type="text" />
-          </div>
+          {/* =========================
+              INFORMACIÓN DEL TALLER
+          ========================== */}
+          <div className="panel-taller informacion-taller">
 
-          <div className="fila">
+            <h1>Información de tu taller</h1>
 
-            <div className="campo mitad">
-              <label>Tipo</label>
-              <input type="text" />
+            <div className="campo">
+              <label htmlFor="nombreTaller">
+                Nombre del taller
+              </label>
+
+              <input
+                id="nombreTaller"
+                type="text"
+                placeholder="Ej: Taller Central"
+              />
             </div>
 
-            <div className="campo mitad">
-              <label>Año</label>
-              <input type="number" />
+            <div className="campo">
+              <label htmlFor="descripcionTaller">
+                Descripción
+              </label>
+
+              <textarea
+                id="descripcionTaller"
+                rows="4"
+                placeholder="Contá brevemente qué servicios realiza tu taller..."
+              ></textarea>
+            </div>
+
+            <div className="campo">
+              <label htmlFor="direccionTaller">
+                Dirección
+              </label>
+
+              <input
+                id="direccionTaller"
+                type="text"
+                placeholder="Ej: Av.libertad 123"
+              />
+            </div>
+
+            <div className="campo">
+              <label htmlFor="telefonoTaller">
+                Teléfono
+              </label>
+
+              <input
+                id="telefonoTaller"
+                type="tel"
+                placeholder="Ej: 11 1234-5678"
+              />
             </div>
 
           </div>
 
-          <div className="fila">
 
-            <div className="campo mitad">
-              <label>Marca</label>
-              <input type="text" />
+          {/* =========================
+              INFORMACIÓN DERECHA
+          ========================== */}
+          <div className="panel-taller panel-derecho">
+
+            {/* LOGO */}
+            <div className="seccion-logo">
+
+              <h2>Logo del taller</h2>
+
+              <label htmlFor="logoTaller" className="logo-upload">
+
+                <div className="logo-icon">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <rect
+                      x="3"
+                      y="3"
+                      width="18"
+                      height="18"
+                      rx="2"
+                    />
+
+                    <circle
+                      cx="8.5"
+                      cy="8.5"
+                      r="1.5"
+                    />
+
+                    <path d="M21 15l-5-5L5 21" />
+                  </svg>
+                </div>
+
+                <span className="logo-upload-title">
+                  Subir logo
+                </span>
+
+                <span className="logo-upload-info">
+                  .JPG, .PNG (Max 2MB)
+                </span>
+
+                <input
+                  id="logoTaller"
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  hidden
+                />
+
+              </label>
+
             </div>
 
-            <div className="campo mitad">
-              <label>N° serie</label>
-              <input type="text" />
+
+            {/* ADMINISTRADOR */}
+            <div className="seccion-administrador">
+
+              <h2>Administrador</h2>
+
+              <div className="campo">
+                <label htmlFor="nombreAdministrador">
+                  Nombre completo
+                </label>
+
+                <input
+                  id="nombreAdministrador"
+                  type="text"
+                  placeholder="Nombre y apellido"
+                />
+              </div>
+
+              <div className="campo">
+                <label htmlFor="gmailAdministrador">
+                  Gmail
+                </label>
+
+                <input
+                  id="gmailAdministrador"
+                  type="email"
+                  placeholder="ejemplo@gmail.com"
+                />
+              </div>
+
             </div>
 
           </div>
 
-          <div className="campo">
-            <label>Descripción</label>
-            <textarea rows="4"></textarea>
-          </div>
 
-          <div className="campo">
-            <label>Ficha técnica</label>
-
-            <label className="upload">
-              Upload file (.pdf)
-              <input type="file" accept=".pdf" hidden />
-            </label>
-          </div>
-
-          <div className="campo">
-            <label>
-              Plan de mantenimiento (puedes modificarlo luego)
-            </label>
-
-            <select defaultValue="">
-              <option value="" disabled>
-                ▼ Selecciona un plan
-              </option>
-
-              <option>Permanente</option>
-              <option>Mensual</option>
-              <option>Anual</option>
-            </select>
-
-            <a href="/">ver info sobre planes.</a>
-
-          </div>
-
-          <button id="botonRegistrarTaller">
-
-            <img
-              src="iconoagregarmaquina.svg"
-              alt="Agregar"
-            />
-
-            Agregar maquina
-
+          {/* =========================
+              BOTÓN
+          ========================== */}
+          <button
+            id="botonRegistrarTaller"
+            type="submit"
+          >
+            Registrar taller
           </button>
 
         </form>
