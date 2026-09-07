@@ -117,9 +117,66 @@
             "titulo": "Notificaciones",
             "descripcion": "Gestiona tus notificaciones y alertas importantes."
         },
+
         "ayuda": {
-            "titulo": "Ayuda",
-            "descripcion": "Encuentra respuestas a tus preguntas y contacta con soporte si lo necesitas."
+            "categorias": {
+                "mis_maquinas":{
+                    "id": "categoria-maquinas",
+                    "titulo": "Máquinas",
+                    "palabras_clave": ["maquinas", "máquinas", "maquina", "máquina"],
+                    "texto": "Consultá cómo agregar, modificar y administrar las máquinas registradas.",
+                    "detalle": "Desde la sección Mis máquinas podés consultar todas las máquinas registradas. Para agregar una nueva, utilizá el botón de agregar y completá los datos solicitados, como nombre, marca, número de serie y estado. También podés acceder a cada máquina para modificar sus datos o eliminarla."
+                },
+
+                "mantenimientos": {
+                    "id": "categoria-mantenimiento",
+                    "titulo": "Mantenimiento",
+                    "palabras_clave": ["mantenimiento", "mantenimientos"],
+                    "texto": "Aprendé a programar y realizar seguimientos de los mantenimientos de tus máquinas.",
+                    "detalle": "En la sección Mantenimientos podés programar y realizar seguimientos de los mantenimientos de tus máquinas. Para agregar un mantenimiento, seleccioná la máquina correspondiente y completá los datos requeridos, como fecha, tipo de mantenimiento y observaciones. También podés marcar los mantenimientos como completados o cancelarlos según sea necesario."
+                },
+
+                "historial": {
+                    "id": "categoria-historial",
+                    "titulo": "Historial",
+                    "palabras_clave": ["historial", "actividades", "eventos"],
+                    "texto": "Consultá los cambios y mantenimientos realizados anteriormente.",
+                    "detalle": "La sección Historial permite consultar los registros realizados anteriormente. Allí podés revisar los cambios de información y los mantenimientos asociados a las máquinas para conocer qué modificaciones se realizaron."
+                },
+
+                "configuracion": {
+                    "id": "categoria-configuracion",
+                    "titulo": "Configuración",
+                    "palabras_clave": ["configuración", "configuracion", "personalización", "personalizacion", "taller"],
+                    "texto": "Modifica las opciones y preferencias del sistema.",
+                    "detalle": "Desde Configuración podés administrar las preferencias generales del sistema y ajustar las opciones disponibles para adaptar su funcionamiento a las necesidades del usuario."
+                }
+            },
+
+            "preguntas": {
+                "como_agregar_maquina": {
+                    "id": "pregunta-agregar",
+                    "pregunta": "¿Cómo agrego una máquina?",
+                    "palabras_clave": ["agregar", "añadir", "maquina", "máquina", "agregar maquina", "añadir máquina", "nueva máquina"],
+                    "respuesta": "Ingresá a la sección Mis máquinas desde el menú lateral y presioná Agregar máquina. Completá el nombre, tipo, marca, número de serie y estado inicial. Finalmente, guardá los cambios."
+                },
+
+                "como_modificar_maquina": {
+                    "id": "pregunta-modificar",
+                    "pregunta": "¿Cómo modifico los datos de una máquina?",
+                    "palabras_clave": ["modificar", "editar", "maquina", "máquina", "cambiar datos", "actualizar", "modificar maquina", "editar máquina"],
+                    "respuesta": "Abrí la máquina desde Mis máquinas y seleccioná la opción para editar sus datos. Una vez realizados los cambios, guardalos para actualizar la información."
+                },
+
+                "como_eliminar_maquina": {
+                    "id": "pregunta-eliminar",
+                    "pregunta": "¿Cómo elimino una máquina?",
+                    "palabras_clave": ["eliminar", "borrar", "maquina", "máquina", "quitar", "remover", "eliminar maquina", "borrar máquina"],
+                    "respuesta":  "Desde Mis máquinas, seleccioná la máquina que querés eliminar y elegí la opción Eliminar. Tené en cuenta que esta acción no se puede deshacer."
+                }
+
+                
+            }
         }
     }
 }
