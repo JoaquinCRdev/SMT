@@ -1,25 +1,9 @@
-import mongoose from "mongoose";
-import Machine from "../models/machine.model.js";
 import MachineImage from "../models/machineImage.model.js";
 import ApiError from "../utils/ApiError.js";
-
-function isValidObjectId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
-
-async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId))
-    throw new ApiError(400, "Invalid machine id");
-
-  const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError(404, "Machine not found");
-
-  if (user?.role !== "admin" && String(machine.userId) !== String(user.id)) {
-    throw new ApiError(403, "Forbidden");
-  }
-
-  return machine;
-}
+import {
+  getAccessibleMachine,
+  isValidObjectId,
+} from "../utils/access.js";
 
 export async function addMachineImage(machineId, payload, user) {
   await getAccessibleMachine(machineId, user);

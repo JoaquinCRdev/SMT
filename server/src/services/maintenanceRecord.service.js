@@ -1,8 +1,12 @@
-import mongoose from "mongoose";
 import Machine from "../models/machine.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import MaintenanceRecord from "../models/maintenanceRecord.model.js";
 import ApiError from "../utils/ApiError.js";
+import {
+  getAccessibleMachine,
+  isValidObjectId,
+  requireWorkshop,
+} from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
 
 const FREQUENCY_DAYS = {
@@ -12,10 +16,6 @@ const FREQUENCY_DAYS = {
   yearly: 365,
 };
 
-function isValidObjectId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
-
 function calculateNextDue(fromDate, frequency, customDays) {
   const days = frequency === "custom" ? customDays : FREQUENCY_DAYS[frequency];
   const date = new Date(fromDate);
@@ -23,18 +23,9 @@ function calculateNextDue(fromDate, frequency, customDays) {
   return date;
 }
 
-async function getAccessibleMachine(machineId, user) {
-  if (!isValidObjectId(machineId))
-    throw new ApiError(400, "Invalid machine id");
-  const machine = await Machine.findById(machineId);
-  if (!machine) throw new ApiError(404, "Machine not found");
-  if (user?.role !== "admin" && String(machine.userId) !== String(user.id))
-    throw new ApiError(403, "Forbidden");
-  return machine;
-}
-
 export async function createRecord(payload, user) {
   const machine = await getAccessibleMachine(payload.machineId, user);
+  requireWorkshop(user);
 
   if (payload.planId) {
     if (!isValidObjectId(payload.planId))
@@ -78,7 +69,14 @@ export async function getRecords(user, query = {}) {
   const { page, limit, skip } = getPagination(query);
 
   const filter = {};
-  if (user?.role !== "admin") filter.userId = user.id;
+
+  if (user?.role !== "admin") {
+    const machines = await Machine.find({ workshopId: user.workshop }).select(
+      "_id",
+    );
+    const machineIds = machines.map((m) => m._id);
+    filter.machineId = { $in: machineIds };
+  }
   if (query.machineId) filter.machineId = query.machineId;
 
   const [items, total] = await Promise.all([

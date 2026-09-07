@@ -1,7 +1,8 @@
 import ApiError from "../utils/ApiError.js";
 import { verifyToken } from "../utils/token.js";
+import User from "../models/user.model.js";
 
-export const authenticate = (req, res, next) => {
+export const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
@@ -9,7 +10,13 @@ export const authenticate = (req, res, next) => {
     }
     const token = authHeader.split(" ")[1];
     const decoded = verifyToken(token, process.env.JWT_SECRET);
-    req.user = { id: decoded.id, role: decoded.role };
+
+    const user = await User.findById(decoded.id).select("workshop role");
+    req.user = {
+      id: decoded.id,
+      role: decoded.role,
+      workshop: user?.workshop ?? null,
+    };
     next();
   } catch (error) {
     if (error instanceof ApiError) return next(error);

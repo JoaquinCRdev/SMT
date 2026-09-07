@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { authenticate } from "../middlewares/auth.middleware.js";
-import { validate } from "../middlewares/validators/validate.middleware.js";
-import { createRecordSchema } from "../middlewares/validators/maintenanceRecord.validator.js";
 import * as maintenanceRecordController from "../controllers/maintenanceRecord.controller.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
+import { createRecordSchema } from "../middlewares/validators/maintenanceRecord.validator.js";
+import { validate } from "../middlewares/validators/validate.middleware.js";
 
 const router = Router({ mergeParams: true });
 

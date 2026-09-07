@@ -26,7 +26,6 @@ const machineSchema = new mongoose.Schema(
     serialNumber: {
         type: String,
         required: true,
-        unique: true,
         minlength: [5, "Serial Number must be at least 5 characters long"],
         maxlength: [50, "Serial Number must be at most 50 characters long"],
     },
@@ -47,6 +46,12 @@ const machineSchema = new mongoose.Schema(
         ref: 'User',
     },
 
+    workshopId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Workshop',
+        required: true,
+    },
+
     createdAt: {
         type: Date,
         default: Date.now,
@@ -61,6 +66,8 @@ const machineSchema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+machineSchema.index({ workshopId: 1, serialNumber: 1 }, { unique: true });
 
 const Machine = mongoose.model('Machine', machineSchema);
 export default Machine;
