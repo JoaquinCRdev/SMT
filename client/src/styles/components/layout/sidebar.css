@@ -5,18 +5,20 @@
 #sidebarhome {
 
     width: 20%;
-    min-height: 100vh;
+    height: 100vh;
 
     background-color: var(--FondoSidebar);
 
     display: flex;
     flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
 
     justify-content: space-between;
     align-items: center;
 
     padding: 50px 0;
-
     box-sizing: border-box;
 
     transition: background-color 0.25s ease;

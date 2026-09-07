@@ -57,7 +57,7 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
   const estadoClass = `status-badge status-${estadoSlug}`;
   const buttonClass = `maintenance-button button-${estadoSlug}`;
 
-  const fechaFormateada = new Date(mantenimiento.fecha).toLocaleDateString("es-ES", {
+  const fechaFormateada = new Date(`${mantenimiento.fecha}T00:00:00`).toLocaleDateString("es-ES", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -91,6 +91,7 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
 }
 
 export default function Historial() {
+  const [busqueda, setBusqueda] = useState("");
   const [rangoFecha, setRangoFecha] = useState("30");
   const [filtroEstado, setFiltroEstado] = useState("Todos");
   const [orden, setOrden] = useState("recientes");
@@ -98,10 +99,19 @@ export default function Historial() {
 
   // Lógica combinada de Filtrado y Ordenamiento
   const mantenimientosProcesados = useMemo(() => {
+    const terminoBusqueda = busqueda.toLowerCase().trim();
+
     return mantenimientosIniciales
       .filter((item) => {
+        if (!terminoBusqueda) return true;
+        return (
+          item.nombre.toLowerCase().includes(terminoBusqueda) ||
+          item.descripcion.toLowerCase().includes(terminoBusqueda)
+        );
+      })
+      .filter((item) => {
         if (rangoFecha === "todos") return true;
-        const fechaItem = new Date(item.fecha);
+        const fechaItem = new Date(`${item.fecha}T00:00:00`);
         const hoy = new Date();
         const diferenciaDias = (hoy - fechaItem) / (1000 * 60 * 60 * 24);
         return diferenciaDias <= parseInt(rangoFecha, 10);
@@ -111,11 +121,11 @@ export default function Historial() {
         return item.estado.toLowerCase() === filtroEstado.toLowerCase();
       })
       .sort((a, b) => {
-        const fechaA = new Date(a.fecha).getTime();
-        const fechaB = new Date(b.fecha).getTime();
+        const fechaA = new Date(`${a.fecha}T00:00:00`).getTime();
+        const fechaB = new Date(`${b.fecha}T00:00:00`).getTime();
         return orden === "recientes" ? fechaB - fechaA : fechaA - fechaB;
       });
-  }, [rangoFecha, filtroEstado, orden]);
+  }, [busqueda, rangoFecha, filtroEstado, orden]);
 
   return (
     <div className="historial-layout">
@@ -154,8 +164,18 @@ export default function Historial() {
             <div className="summary-card summary-danger"><span>Vencidos:</span><strong>1</strong></div>
           </div>
 
-          {/* FILTROS Y ORDENAMIENTO */}
+          {/* BÚSQUEDA, FILTROS Y ORDENAMIENTO */}
           <div className="filters">
+            <div className="search-group">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Buscar equipo o descripción..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+              />
+            </div>
+
             <div className="filter-group">
               <span>Estado:</span>
               <select 
@@ -225,7 +245,7 @@ export default function Historial() {
               <div className="drawer-section">
                 <h3>{itemSeleccionado.estado === "Realizado" ? "Fecha de realización" : "Fecha programada"}</h3>
                 <p className="drawer-date">
-                  📅 {new Date(itemSeleccionado.fecha).toLocaleDateString("es-ES", {
+                  📅 {new Date(`${itemSeleccionado.fecha}T00:00:00`).toLocaleDateString("es-ES", {
                     weekday: "long",
                     year: "numeric",
                     month: "long",

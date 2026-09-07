@@ -1,9 +1,10 @@
 body{
     background-color: #212629;
-    margin: 0%;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    height: 100%;
+    margin-left: 20%;
+    width: 80%;
+
 }
 
 #containerInicio{

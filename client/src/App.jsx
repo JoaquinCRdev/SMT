@@ -31,6 +31,8 @@ const App = () => {
           <Route path="/tarjetamaquina" element={<TarjetaMaquina />} />
           <Route path="/registrarTaller" element={<RegistrarTaller />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/mantenimiento" element={<Mantenimiento />} />
+          <Route path="/configuracion" element={<Configuracion />} />
         </Routes>
       </BrowserRouter>
     </div> 

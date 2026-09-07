@@ -1,9 +1,10 @@
 /* =========================================================
    BODY
 ========================================================= */
-
 body {
     height: 100%;
+    margin-left: 20%;
+    width: 80%;
 }
 
 
@@ -40,6 +41,7 @@ body {
     transition:
         background-color 0.25s ease,
         color 0.25s ease;
+        height: fit-content;
 }
 
 .smt-page * {
