@@ -48,7 +48,7 @@
                     },
                     "pro": {
                         "name": "Pro",
-                        "description": "For workshops that seek the best"
+                        "description": "For workshops looking for the best"
                     }
                 },
 
@@ -81,7 +81,7 @@
 
                 "solicitudes": {
                     "h2": "Pending Requests",
-                    "p": "Personnel who requested to join the workshop",
+                    "p": "Staff members who requested to join the workshop",
 
                     "solicitud": {
                         "span": "requests to join the workshop",
@@ -91,35 +91,263 @@
                 },
 
                 "acciones": {
-                    "h2": "Actions on the workshop",
+                    "h2": "Workshop Actions",
                     "p": "Manage the general information of your workshop",
 
                     "modificar": {
-                        "span": "Modify workshop",
+                        "span": "Modify Workshop",
                         "descripcion": "Edit the general information, configuration, and details of your workshop",
-                        "action": "Go to settings"
+                        "action": "Go to Settings"
                     },
 
-                    "borrar":{
-                        "span": "Delete workshop",
+                    "borrar": {
+                        "span": "Delete Workshop",
                         "descripcion": "Permanently delete your workshop and all its information",
-                        "action": "Delete workshop"
+                        "action": "Delete Workshop"
                     }
                 }
             }
+        },
+
+        "planes": {
+            "titulo": "Plans",
+            "accede": "Access all features",
+
+            "funcionalidades": {
+                "sin_anuncios": {
+                    "titulo": "No Ads",
+                    "descripcion": "Zero distractions, more focus."
+                },
+
+                "maquinas_ilimitadas": {
+                    "titulo": "Unlimited Machines",
+                    "descripcion": "Connect as many machines as you need."
+                },
+
+                "agregar_personal": {
+                    "titulo": "Add Personnel",
+                    "descripcion": "Invite 0 to 10 collaborators to your account."
+                },
+
+                "asistente_ia": {
+                    "titulo": "AI Assistant",
+                    "descripcion": "An intelligent assistant that supports you in your workshop."
+                },
+
+                "historial_eterno": {
+                    "titulo": "Permanent History",
+                    "descripcion": "Everything is recorded and will never be deleted."
+                },
+
+                "gestion_sin_limites": {
+                    "titulo": "Unlimited Management",
+                    "descripcion": "A platform designed to support your growth."
+                }
+            },
+
+            "tipos": {
+                "mensual": {
+                    "titulo": "Monthly",
+                    "precio": "$9.99",
+                    "descripcion": "Monthly payment"
+                },
+
+                "anual": {
+                    "titulo": "Annual",
+                    "precio": "$59.99",
+                    "descripcion": "Annual payment"
+                },
+
+                "permanente": {
+                    "titulo": "Lifetime",
+                    "precio": "$199.99",
+                    "descripcion": "One-time payment"
+                }
+            },
+
+            "comprar": "Buy Now",
+            "alerta": "You selected the plan",
+            "pago": "Secure and protected payment"
         },
 
         "historial": {
             "titulo": "History",
             "descripcion": "Review the history of activities and events related to your machines."
         },
+
         "notificaciones": {
             "titulo": "Notifications",
             "descripcion": "Manage your notifications and important alerts."
         },
+
         "ayuda": {
-            "titulo": "Help",
-            "descripcion": "Find answers to your questions and contact support if you need it."
+            "header": {
+                "titulo": "How can we help you?",
+                "subtitulo": "Quickly find information about how the system works.",
+                "buscar": "Search for a question or topic..."
+            },
+
+            "secciones": {
+                "categorias": "Categories",
+                "preguntas": "Frequently Asked Questions",
+                "estados": "Machine Status"
+            },
+
+            "categorias": {
+                "mis_maquinas": {
+                    "id": "categoria-maquinas",
+                    "titulo": "Machines",
+                    "palabras_clave": [
+                        "machines",
+                        "machine",
+                        "add machine",
+                        "edit machine",
+                        "delete machine"
+                    ],
+                    "texto": "Learn how to add, modify, and manage your registered machines.",
+                    "detalle": "From the My Machines section, you can view all registered machines. To add a new one, use the add button and complete the requested information, such as name, brand, serial number, and status. You can also access each machine to modify its information or delete it."
+                },
+
+                "mantenimientos": {
+                    "id": "categoria-mantenimiento",
+                    "titulo": "Maintenance",
+                    "palabras_clave": [
+                        "maintenance",
+                        "maintenances",
+                        "maintenance task"
+                    ],
+                    "texto": "Learn how to register maintenance, update information, and check machine status.",
+                    "detalle": "In the Maintenance section, you can view machine information and register the corresponding data for a maintenance task. You can enter the date, description, and machine status, and then save the changes."
+                },
+
+                "historial": {
+                    "id": "categoria-historial",
+                    "titulo": "History",
+                    "palabras_clave": [
+                        "history",
+                        "activities",
+                        "events",
+                        "maintenance history"
+                    ],
+                    "texto": "View previously completed changes and maintenance tasks.",
+                    "detalle": "The History section allows you to view previous records. There you can review information changes and maintenance associated with the machines to see what modifications were made."
+                },
+
+                "configuracion": {
+                    "id": "categoria-configuracion",
+                    "titulo": "Settings",
+                    "palabras_clave": [
+                        "settings",
+                        "configuration",
+                        "preferences",
+                        "workshop"
+                    ],
+                    "texto": "Modify the system options and preferences.",
+                    "detalle": "From Settings, you can manage the general system preferences and adjust the available options to adapt its operation to the user's needs."
+                }
+            },
+
+            "preguntas": {
+                "como_agregar_maquina": {
+                    "id": "pregunta-agregar",
+                    "pregunta": "How do I add a machine?",
+                    "palabras_clave": [
+                        "add",
+                        "add machine",
+                        "new machine",
+                        "machine"
+                    ],
+                    "respuesta": "Go to the My Machines section from the side menu and select Add Machine. Complete the name, type, brand, serial number, and initial status. Finally, save the changes."
+                },
+
+                "como_modificar_maquina": {
+                    "id": "pregunta-modificar",
+                    "pregunta": "How do I modify the information of a machine?",
+                    "palabras_clave": [
+                        "modify",
+                        "edit",
+                        "machine",
+                        "change information",
+                        "update",
+                        "modify machine",
+                        "edit machine"
+                    ],
+                    "respuesta": "Open the machine from My Machines and select the option to edit its information. Once you have made the changes, save them to update the information."
+                },
+
+                "como_eliminar_maquina": {
+                    "id": "pregunta-eliminar",
+                    "pregunta": "How do I delete a machine?",
+                    "palabras_clave": [
+                        "delete",
+                        "remove",
+                        "machine",
+                        "delete machine",
+                        "remove machine"
+                    ],
+                    "respuesta": "From My Machines, select the machine you want to delete and choose the Delete option. Keep in mind that this action cannot be undone."
+                },
+
+                "como_registrar_mantenimiento": {
+                    "id": "pregunta-mantenimiento",
+                    "pregunta": "How do I register maintenance?",
+                    "palabras_clave": [
+                        "register maintenance",
+                        "maintenance",
+                        "maintenance record"
+                    ],
+                    "respuesta": "Go to the Maintenance section from the side menu. Complete the required information, such as date, description, and status, and then select Update to save the information."
+                },
+
+                "como_cambiar_estado": {
+                    "id": "pregunta-estado",
+                    "pregunta": "How do I change the status of a machine?",
+                    "palabras_clave": [
+                        "change status",
+                        "machine status",
+                        "operational",
+                        "not operational",
+                        "under maintenance"
+                    ],
+                    "respuesta": "Open the machine from My Machines or Maintenance and select the appropriate status: Operational, Not Operational, or Under Maintenance."
+                },
+
+                "donde_consultar_mantenimientos": {
+                    "id": "pregunta-historial",
+                    "pregunta": "Where can I view previous maintenance records?",
+                    "palabras_clave": [
+                        "previous maintenance",
+                        "history",
+                        "maintenance history"
+                    ],
+                    "respuesta": "Go to the History section to view previous records and review the changes and maintenance performed on the machines."
+                }
+            },
+
+            "estados": {
+                "operativo": {
+                    "nombre": "OPERATIONAL",
+                    "texto": "The machine is working correctly."
+                },
+
+                "no_operativo": {
+                    "nombre": "NOT OPERATIONAL",
+                    "texto": "The machine has a fault or cannot be used."
+                },
+
+                "en_mantenimiento": {
+                    "nombre": "UNDER MAINTENANCE",
+                    "texto": "The machine is temporarily out of service due to maintenance work."
+                }
+            },
+
+            "soporte": {
+                "titulo": "Need more help?",
+                "texto": "If you did not find the answer you were looking for, contact the system administrator.",
+                "boton": "Contact Support"
+            },
+
+            "sin_resultados": "We couldn't find any questions for"
         }
     }
 }
