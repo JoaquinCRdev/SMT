@@ -20,6 +20,56 @@ const Configuracion = () => {
   // =========================
   // MODO OSCURO
   // =========================
+const [mostrarModalModificarTaller, setMostrarModalModificarTaller] =
+  useState(false);
+
+const [taller, setTaller] = useState({
+  nombre: "Taller Central",
+  descripcion: "Taller mecánico especializado en mantenimiento general.",
+  direccion: "Av. Libertad 123",
+  telefono: "11 1234-5678",
+  logo: null,
+  administrador: "Juan Pérez",
+  gmail: "juan@taller.com",
+});
+
+const abrirModalModificarTaller = () => {
+  setMostrarModalModificarTaller(true);
+};
+
+const cerrarModalModificarTaller = () => {
+  setMostrarModalModificarTaller(false);
+};
+
+const handleTallerChange = (e) => {
+  const { name, value } = e.target;
+
+  setTaller((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+const handleLogoChange = (e) => {
+  const archivo = e.target.files[0];
+
+  if (archivo) {
+    setTaller((prev) => ({
+      ...prev,
+      logo: archivo,
+    }));
+  }
+};
+
+const guardarCambiosTaller = (e) => {
+  e.preventDefault();
+
+  console.log("Datos del taller:", taller);
+
+  // Acá después conectamos el PUT/PATCH del backend.
+
+  cerrarModalModificarTaller();
+};
 
   const [modoOscuro, setModoOscuro] = useState(() => {
     const saved = localStorage.getItem("mode");
@@ -70,7 +120,7 @@ const Configuracion = () => {
   // PERSONAL
   // =========================
 
-  const personal = [
+  const [personal, setPersonal] = useState([
     {
       name: "Juan Pérez",
       role: "Mecánico",
@@ -111,8 +161,92 @@ const Configuracion = () => {
       role: "Mecánico",
       active: true,
     },
-  ];
+  ]);
 
+  // =========================
+  // MODAL AGREGAR PERSONAL
+  // =========================
+
+  const [mostrarModalPersonal, setMostrarModalPersonal] = useState(false);
+
+  const [nuevoPersonal, setNuevoPersonal] = useState({
+    nombre: "",
+    apellido: "",
+    rol: "Colaborador",
+    estado: "Activo",
+  });
+
+  const abrirModalPersonal = () => {
+    setNuevoPersonal({
+      nombre: "",
+      apellido: "",
+      rol: "Colaborador",
+      estado: "Activo",
+    });
+
+    setMostrarModalPersonal(true);
+  };
+
+  const cerrarModalPersonal = () => {
+    setMostrarModalPersonal(false);
+  };
+
+  // =========================
+// MODAL BORRAR TALLER
+// =========================
+
+const [mostrarModalBorrarTaller, setMostrarModalBorrarTaller] =
+  useState(false);
+
+const abrirModalBorrarTaller = () => {
+  setMostrarModalBorrarTaller(true);
+};
+
+const cerrarModalBorrarTaller = () => {
+  setMostrarModalBorrarTaller(false);
+};
+
+const borrarTaller = () => {
+  // Por ahora no hacemos nada con el backend.
+  // Acá después iría la petición DELETE.
+  
+  console.log("Taller eliminado");
+
+  cerrarModalBorrarTaller();
+};
+
+
+
+  const handleNuevoPersonal = (e) => {
+    const { name, value } = e.target;
+
+    setNuevoPersonal((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const agregarPersonal = (e) => {
+    e.preventDefault();
+
+    if (
+      !nuevoPersonal.nombre.trim() ||
+      !nuevoPersonal.apellido.trim()
+    ) {
+      return;
+    }
+
+    const persona = {
+      name: `${nuevoPersonal.nombre.trim()} ${nuevoPersonal.apellido.trim()}`,
+      role: nuevoPersonal.rol,
+      active: nuevoPersonal.estado === "Activo",
+    };
+
+    setPersonal((prev) => [...prev, persona]);
+
+    cerrarModalPersonal();
+  };
+  
   // =========================
   // SOLICITUDES
   // =========================
@@ -365,21 +499,7 @@ const Configuracion = () => {
               <div className="select-box">
 
                 <div className="select-content">
-
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="2" y1="12" x2="22" y2="12" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg>
-
-                  <select
+                  <select id="input-idioma"
                     value={i18n.language?.substring(0, 2)}
                     onChange={cambiarIdioma}
                   >
@@ -403,18 +523,6 @@ const Configuracion = () => {
                   </select>
 
                 </div>
-
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-
               </div>
 
             </div>
@@ -560,7 +668,10 @@ const Configuracion = () => {
 
           </div>
 
-          <button className="btn-add-staff">
+          <button 
+          className="btn-add-staff"
+          type="button"
+          onClick={abrirModalPersonal}>
 
             <svg
               width="16"
@@ -818,11 +929,15 @@ const Configuracion = () => {
 
               <div className="action-card-btn-container">
 
-                <button className="btn-action-outline-orange">
-                  {i18n.t(
-                    "pages.configuracion.configs.acciones.modificar.action"
-                  )}
-                </button>
+                <button
+  className="btn-action-outline-orange"
+  type="button"
+  onClick={abrirModalModificarTaller}
+>
+  {i18n.t(
+    "pages.configuracion.configs.acciones.modificar.action"
+  )}
+</button>
 
               </div>
 
@@ -870,11 +985,15 @@ const Configuracion = () => {
 
               <div className="action-card-btn-container">
 
-                <button className="btn-action-outline-red">
-                  {i18n.t(
-                    "pages.configuracion.configs.acciones.borrar.action"
-                  )}
-                </button>
+               <button
+  className="btn-action-outline-red"
+  type="button"
+  onClick={abrirModalBorrarTaller}
+>
+  {i18n.t(
+    "pages.configuracion.configs.acciones.borrar.action"
+  )}
+</button>
 
               </div>
 
@@ -884,6 +1003,514 @@ const Configuracion = () => {
 
         </section>
 
+        {/* =========================
+            MODAL AGREGAR PERSONAL
+        ========================= */}
+
+        {mostrarModalPersonal && (
+          <div
+            className="modal-overlay"
+            onClick={cerrarModalPersonal}
+          >
+            <div
+              className="modal-personal"
+              onClick={(e) => e.stopPropagation()}
+            >
+
+              <div className="modal-personal-header">
+
+                <div>
+                  <h2 className="modal-personal-title">
+                    Agregar personal
+                  </h2>
+
+                  <p className="modal-personal-subtitle">
+                    Completá los datos del nuevo miembro del personal.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  className="modal-close"
+                  onClick={cerrarModalPersonal}
+                  aria-label="Cerrar"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+
+              </div>
+
+              <form onSubmit={agregarPersonal}>
+
+                <div className="modal-form-grid">
+
+                  {/* NOMBRE */}
+
+                  <div className="modal-form-group">
+
+                    <label htmlFor="nombre">
+                      Nombre
+                    </label>
+
+                    <input
+                      id="nombre"
+                      name="nombre"
+                      type="text"
+                      placeholder="Ej. Juan"
+                      value={nuevoPersonal.nombre}
+                      onChange={handleNuevoPersonal}
+                      autoComplete="off"
+                    />
+
+                  </div>
+
+                  {/* APELLIDO */}
+
+                  <div className="modal-form-group">
+
+                    <label htmlFor="apellido">
+                      Apellido
+                    </label>
+
+                    <input
+                      id="apellido"
+                      name="apellido"
+                      type="text"
+                      placeholder="Ej. Pérez"
+                      value={nuevoPersonal.apellido}
+                      onChange={handleNuevoPersonal}
+                      autoComplete="off"
+                    />
+
+                  </div>
+
+                  {/* ROL */}
+
+                  <div className="modal-form-group">
+
+                    <label htmlFor="rol">
+                      Rol
+                    </label>
+
+                    <select
+                      id="rol"
+                      name="rol"
+                      value={nuevoPersonal.rol}
+                      onChange={handleNuevoPersonal}
+                    >
+                      <option value="Administrador">
+                        Administrador
+                      </option>
+
+                      <option value="Colaborador">
+                        Colaborador
+                      </option>
+                    </select>
+
+                  </div>
+
+                  {/* ESTADO */}
+
+                  <div className="modal-form-group">
+
+                    <label htmlFor="estado">
+                      Estado
+                    </label>
+
+                    <select
+                      id="estado"
+                      name="estado"
+                      value={nuevoPersonal.estado}
+                      onChange={handleNuevoPersonal}
+                    >
+                      <option value="Activo">
+                        Activo
+                      </option>
+
+                      <option value="Inactivo">
+                        Inactivo
+                      </option>
+                    </select>
+
+                  </div>
+
+                </div>
+
+                {/* BOTONES */}
+
+                <div className="modal-personal-actions">
+
+                  <button
+                    type="button"
+                    className="btn-modal-cancel"
+                    onClick={cerrarModalPersonal}
+                  >
+                    Cancelar
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="btn-modal-save"
+                  >
+                    Agregar personal
+                  </button>
+
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        )}
+
+        {mostrarModalModificarTaller && (
+  <div
+    className="modal-overlay"
+    onClick={cerrarModalModificarTaller}
+  >
+    <div
+      className="modal-taller"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      {/* =========================
+          HEADER
+      ========================== */}
+
+      <div className="modal-taller-header">
+
+        <h2>Modificar taller</h2>
+
+        <button
+          type="button"
+          className="modal-close"
+          onClick={cerrarModalModificarTaller}
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      {/* =========================
+          FORMULARIO
+      ========================== */}
+
+      <form
+        className="modal-taller-form"
+        onSubmit={guardarCambiosTaller}
+      >
+
+        {/* =========================
+            INFORMACIÓN DEL TALLER
+        ========================== */}
+
+        <div className="modal-taller-panel">
+
+          <h3>Información de tu taller</h3>
+
+          <div className="campo-modal-taller">
+            <label htmlFor="nombreTallerModal">
+              Nombre del taller
+            </label>
+
+            <input
+              id="nombreTallerModal"
+              name="nombre"
+              type="text"
+              value={taller.nombre}
+              onChange={handleTallerChange}
+            />
+          </div>
+
+
+          <div className="campo-modal-taller">
+            <label htmlFor="descripcionTallerModal">
+              Descripción
+            </label>
+
+            <textarea
+              id="descripcionTallerModal"
+              name="descripcion"
+              rows="4"
+              value={taller.descripcion}
+              onChange={handleTallerChange}
+            />
+          </div>
+
+
+          <div className="campo-modal-taller">
+            <label htmlFor="direccionTallerModal">
+              Dirección
+            </label>
+
+            <input
+              id="direccionTallerModal"
+              name="direccion"
+              type="text"
+              value={taller.direccion}
+              onChange={handleTallerChange}
+            />
+          </div>
+
+
+          <div className="campo-modal-taller">
+            <label htmlFor="telefonoTallerModal">
+              Teléfono
+            </label>
+
+            <input
+              id="telefonoTallerModal"
+              name="telefono"
+              type="tel"
+              value={taller.telefono}
+              onChange={handleTallerChange}
+            />
+          </div>
+
+        </div>
+
+
+        {/* =========================
+            PANEL DERECHO
+        ========================== */}
+
+        <div className="modal-taller-panel panel-taller-derecho">
+
+          {/* LOGO */}
+
+          <div className="modal-taller-logo">
+
+            <h3>Logo del taller</h3>
+
+            <label
+              htmlFor="logoTallerModal"
+              className="modal-logo-upload"
+            >
+
+              <div className="modal-logo-icon">
+
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="2"
+                  />
+
+                  <circle
+                    cx="8.5"
+                    cy="8.5"
+                    r="1.5"
+                  />
+
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+
+              </div>
+
+              <span className="modal-logo-title">
+                {taller.logo
+                  ? taller.logo.name
+                  : "Subir logo"}
+              </span>
+
+              <span className="modal-logo-info">
+                .JPG, .PNG (Max 2MB)
+              </span>
+
+              <input
+                id="logoTallerModal"
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                hidden
+                onChange={handleLogoChange}
+              />
+
+            </label>
+
+          </div>
+
+
+          {/* ADMINISTRADOR */}
+
+          <div className="modal-taller-administrador">
+
+            <h3>Administrador</h3>
+
+            <div className="campo-modal-taller">
+
+              <label htmlFor="nombreAdministradorModal">
+                Nombre completo
+              </label>
+
+              <input
+                id="nombreAdministradorModal"
+                name="administrador"
+                type="text"
+                value={taller.administrador}
+                onChange={handleTallerChange}
+              />
+
+            </div>
+
+
+            <div className="campo-modal-taller">
+
+              <label htmlFor="gmailAdministradorModal">
+                Gmail
+              </label>
+
+              <input
+                id="gmailAdministradorModal"
+                name="gmail"
+                type="email"
+                value={taller.gmail}
+                onChange={handleTallerChange}
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* =========================
+            BOTONES
+        ========================== */}
+
+        <div className="modal-taller-actions">
+
+          <button
+            type="button"
+            className="btn-modal-cancel"
+            onClick={cerrarModalModificarTaller}
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            className="btn-modal-save"
+          >
+            Guardar cambios
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+)}
+
+        {/* =========================
+    MODAL BORRAR TALLER
+========================= */}
+
+{mostrarModalBorrarTaller && (
+  <div
+    className="modal-overlay"
+    onClick={cerrarModalBorrarTaller}
+  >
+    <div
+      className="modal-delete"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      <div className="modal-delete-header">
+
+        <div className="modal-delete-icon">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
+        </div>
+
+        <button
+          type="button"
+          className="modal-close"
+          onClick={cerrarModalBorrarTaller}
+          aria-label="Cerrar"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+      </div>
+
+      <div className="modal-delete-content">
+
+        <h2 className="modal-delete-title">
+          ¿Querés borrar definitivamente el taller?
+        </h2>
+
+        <p className="modal-delete-text">
+          Esta acción es permanente y no se podrá deshacer.
+          Todos los datos asociados al taller podrían perderse.
+        </p>
+
+      </div>
+
+      <div className="modal-delete-actions">
+
+        <button
+          type="button"
+          className="btn-modal-cancel"
+          onClick={cerrarModalBorrarTaller}
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          className="btn-modal-delete"
+          onClick={borrarTaller}
+        >
+          Borrar definitivamente
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
       </div>
     </div>
   );

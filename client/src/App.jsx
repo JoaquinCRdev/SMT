@@ -13,6 +13,7 @@ import Mantenimiento from "./pages/mantenimiento";
 import Configuracion from "./pages/configuracion"
 import Historial from "./pages/historial"
 import Ayuda from "./pages/ayuda"
+import Notificaciones from "./pages/notificaciones";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/mantenimiento" element={<Mantenimiento />} />
           <Route path="/configuracion" element={<Configuracion />} />
           <Route path="/ayuda" element={<Ayuda />} />
+          <Route path="/notificaciones" element={<Notificaciones />} />
         </Routes>
       </BrowserRouter>
     </div> 
