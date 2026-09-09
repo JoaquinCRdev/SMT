@@ -1,8 +1,44 @@
-import React from 'react'
+import {BrowserRouter, Route, Routes} from "react-router-dom"
+import Inicio from "./pages/inicio"
+import RegisterAdmin from "./components/layout/auth/registerAdmin"
+import AsociarseTaller from "./components/layout/asociarseTaller"
+import Login from "./components/layout/auth/login"
+import RegisterTallerCodigo from "./pages/registroTallerCodigo"
+import Planes from "./pages/planes"
+import Mismaquinas from "./pages/mismaquinas"
+import TarjetaMaquina from "./components/tarjetamismaquinas"
+import RegistrarTaller from "./pages/registrarTaller"
+import Home from "./pages/home"
+import Mantenimiento from "./pages/mantenimiento";
+import Configuracion from "./pages/configuracion"
+import Historial from "./pages/historial"
+import Ayuda from "./pages/ayuda"
+import Notificaciones from "./pages/notificaciones";
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/historial" element={<Historial/>} />
+          {/* <Route path="/inicio" element={<Inicio />} /> */}
+          <Route path="/crearTaller" element={<RegisterAdmin />} />
+           {/* <Route path="/registerPersonal" element={<Register />} />*/}
+          <Route path="/asociarseTaller" element={<AsociarseTaller />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registerTallerCodigo" element={<RegisterTallerCodigo />} />
+          <Route path="/planes" element={<Planes />} />
+          <Route path="/mismaquinas" element={<Mismaquinas />} />
+          <Route path="/tarjetamaquina" element={<TarjetaMaquina />} />
+          <Route path="/registrarTaller" element={<RegistrarTaller />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/mantenimiento" element={<Mantenimiento />} />
+          <Route path="/configuracion" element={<Configuracion />} />
+          <Route path="/ayuda" element={<Ayuda />} />
+          <Route path="/notificaciones" element={<Notificaciones />} />
+        </Routes>
+      </BrowserRouter>
+    </div> 
   )
 }
 

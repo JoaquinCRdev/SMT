@@ -4,6 +4,10 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      auto: true,
+    },
     name: {
       type: String,
       required: true,
@@ -31,6 +35,11 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    workshop: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workshop",
+      default: null,
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -53,6 +62,8 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+userSchema.index({ workshop: 1 });
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;

@@ -1,0 +1,2270 @@
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+    height: 100%;
+}
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.containerConfig {
+  display: flex;
+}
+
+.smt-page {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+
+  height: 100vh;
+  overflow-y: auto;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  background-color: var(--FondoPrincipal);
+  color: var(--TextoPrincipal);
+
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  -webkit-font-smoothing: antialiased;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+        height: fit-content;
+}
+
+.smt-page * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
+
+.smt-page::-webkit-scrollbar {
+    width: 8px;
+}
+
+.smt-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.smt-page::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 10px;
+}
+
+.smt-page::-webkit-scrollbar-thumb:hover {
+    background-color: #222222;
+}
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.mobile-brand {
+  display: none;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+.top-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.notification-btn {
+  position: relative;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  color: var(--TextoSecundario);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-badge {
+  position: absolute;
+
+  top: -2px;
+  right: -2px;
+
+  background-color: var(--Naranja);
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background-color: var(--FondoBoton);
+  color: var(--TextoSecundario);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-role {
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.page-title {
+  font-size: var(--TamTitulo);
+  font-weight: 700;
+
+  color: var(--TextoPrincipal);
+}
+
+.page-subtitle {
+  font-size: var(--TamTexto);
+  color: var(--TextoSecundario);
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-card {
+  background-color: var(--FondoSecundario);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.section-title {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+}
+
+.section-subtitle {
+  font-size: var(--TamTexto);
+  color: var(--TextoSecundario);
+}
+
+/* =========================================================
+   PERSONALIZACIÓN
+========================================================= */
+
+.personalizacion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.sub-card {
+  background-color: var(--FondoBoton);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 8px;
+
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.sub-card-title {
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  color: var(--TextoSecundario);
+}
+
+/* =========================================================
+   PLAN
+========================================================= */
+
+.plan-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.plan-info {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.plan-icon {
+  width: 32px;
+  height: 32px;
+
+  background-color: color-mix(in srgb, var(--Naranja) 15%, transparent);
+
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--Naranja);
+}
+
+.plan-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-name {
+  font-size: var(--TamTexto);
+  font-weight: 700;
+
+  color: var(--TextoPrincipal);
+}
+
+.plan-desc {
+  font-size: calc(var(--TamTexto) - 1px);
+  color: var(--TextoSecundario);
+}
+
+.btn-outline-orange {
+  background: transparent;
+  text-decoration: none;
+
+  border: 1px solid var(--Naranja);
+  color: var(--Naranja);
+
+  padding: 8px 12px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   BOTONES DE CONFIGURACIÓN
+========================================================= */
+
+.toggle-mode {
+  width: 100%;
+
+  background-color: var(--FondoBoton);
+
+  border: 1px solid var(--Naranja);
+  color: var(--Naranja);
+
+  border-radius: 8px;
+
+  padding: 10px 16px;
+
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* =========================================================
+   PERSONAL
+========================================================= */
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+.staff-card {
+  background-color: var(--FondoBoton);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 8px;
+
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.staff-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.staff-avatar {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background-color: var(--FondoSecundario);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--TextoSecundario);
+
+  flex-shrink: 0;
+}
+
+.staff-meta {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.staff-name {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.staff-role {
+  font-size: calc(var(--TamTexto) - 1px);
+  color: var(--Naranja);
+}
+
+.staff-status {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.status-label {
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  font-size: calc(var(--TamTexto) - 1px);
+  color: var(--TextoPrincipal);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+.dot.active {
+  background-color: var(--Verde);
+}
+
+.dot.inactive {
+  background-color: var(--Naranja);
+}
+
+/* =========================================================
+   BOTONES PERSONAL
+========================================================= */
+
+.btn-modify {
+  width: 100%;
+
+  background: transparent;
+
+  border: 1px solid var(--Naranja);
+  color: var(--Naranja);
+
+  padding: 6px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn-modify-icon-only {
+  display: none;
+}
+
+.btn-add-staff {
+  width: 100%;
+
+  background-color: var(--Naranja);
+  border: none;
+
+  color: #ffffff;
+
+  padding: 10px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  cursor: pointer;
+
+  transition: background-color 0.25s ease;
+}
+
+/* =========================================================
+   SOLICITUDES
+========================================================= */
+
+.requests-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.request-item {
+  background-color: var(--FondoBoton);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 8px;
+
+  padding: 10px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.request-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  flex: 1;
+}
+
+.request-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.request-name {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+}
+
+.request-action-text {
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+}
+
+.request-date {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  font-size: calc(var(--TamTexto) - 1px);
+  color: var(--TextoSecundario);
+}
+
+.request-buttons {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+/* =========================================================
+   ACEPTAR / RECHAZAR
+========================================================= */
+
+.btn-accept {
+  background-color: transparent;
+
+  border: 1px solid var(--Verde);
+  color: var(--Verde);
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  cursor: pointer;
+}
+
+.btn-reject {
+  background-color: transparent;
+
+  border: 1px solid #ef4444;
+  color: #ef4444;
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.acciones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.action-card {
+  background-color: var(--FondoBoton);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 8px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.action-card-header {
+  display: flex;
+  gap: 12px;
+}
+
+.action-icon-box {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.action-icon-box.orange {
+  background-color: color-mix(in srgb, var(--Naranja) 15%, transparent);
+
+  color: var(--Naranja);
+
+  border: 1px solid color-mix(in srgb, var(--Naranja) 30%, transparent);
+}
+
+.action-icon-box.red {
+  background-color: rgba(239, 68, 68, 0.15);
+
+  color: #ef4444;
+
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.action-card-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.action-card-title {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+}
+
+.action-card-desc {
+  font-size: calc(var(--TamTexto) - 1px);
+  color: var(--TextoSecundario);
+
+  line-height: 1.4;
+}
+
+.action-card-btn-container {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 4px;
+}
+
+.btn-action-outline-orange {
+  background: transparent;
+
+  border: 1px solid var(--Naranja);
+  color: var(--Naranja);
+
+  padding: 6px 16px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.btn-action-outline-red {
+  background: transparent;
+
+  border: 1px solid #ef4444;
+  color: #ef4444;
+
+  padding: 6px 16px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   SELECT - IDIOMA
+========================================================= */
+
+#input-idioma {
+    width: 100%;
+    max-width: 300px;
+    height: 42px;
+
+    padding: 0 38px 0 14px;
+
+    background-color: var(--FondoBoton);
+    color: var(--TextoPrincipal);
+
+    border: 1px solid var(--BordePrincipal);
+    border-radius: 8px;
+
+    font-family: "Inter", sans-serif;
+    font-size: var(--TamTexto);
+    font-weight: 500;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+
+    /* Flecha personalizada */
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--TextoSecundario) 50%),
+        linear-gradient(135deg, var(--TextoSecundario) 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 17px) 17px,
+        calc(100% - 12px) 17px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+}
+
+
+/* Hover */
+
+#input-idioma:hover {
+    background-color: var(--FondoTarjeta);
+    border-color: var(--BordeSuave);
+}
+
+
+/* Cuando está seleccionado / enfocado */
+
+#input-idioma:focus {
+    border-color: var(--Naranja);
+
+    box-shadow:
+        0 0 0 2px rgba(242, 92, 5, 0.15);
+}
+
+
+/* Opciones */
+
+#input-idioma option {
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+
+    font-family: "Inter", sans-serif;
+    font-size: var(--TamTexto);
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.btn-outline-orange:hover,
+.btn-modify:hover,
+.btn-action-outline-orange:hover {
+  background-color: color-mix(in srgb, var(--Naranja) 10%, transparent);
+}
+
+.btn-add-staff:hover {
+  background-color: var(--NaranjaHover);
+}
+
+.btn-accept:hover {
+  background-color: color-mix(in srgb, var(--Verde) 10%, transparent);
+}
+
+.btn-reject:hover,
+.btn-action-outline-red:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.toggle-mode:hover {
+  background-color: color-mix(in srgb, var(--Naranja) 10%, transparent);
+}
+
+/* =========================================================
+   TRANSICIONES
+========================================================= */
+
+.smt-page,
+.section-card,
+.sub-card,
+.staff-card,
+.request-item,
+.action-card,
+.toggle-mode,
+.btn-outline-orange,
+.btn-modify,
+.btn-add-staff {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* =========================================================
+   MODAL AGREGAR PERSONAL
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  animation: modalOverlayIn 0.2s ease;
+}
+
+.modal-personal {
+  width: 100%;
+  max-width: 520px;
+
+  background-color: var(--FondoSecundario);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  color: var(--TextoPrincipal);
+
+  animation: modalPersonalIn 0.2s ease;
+}
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+
+.modal-personal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.modal-personal-title {
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--TextoPrincipal);
+
+  margin: 0;
+}
+
+.modal-personal-subtitle {
+  margin-top: 5px;
+
+  font-size: calc(var(--TamTexto) - 1px);
+
+  line-height: 1.4;
+
+  color: var(--TextoSecundario);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoSecundario);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: var(--FondoTarjeta);
+
+  color: var(--TextoPrincipal);
+
+  border-color: var(--BordeSuave);
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.modal-form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.modal-form-group label {
+  font-size: var(--TamTexto);
+
+  font-weight: 500;
+
+  color: var(--TextoPrincipal);
+}
+
+.modal-form-group input,
+.modal-form-group select {
+  width: 100%;
+  height: 42px;
+
+  padding: 0 12px;
+
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoPrincipal);
+
+  border: 1px solid var(--BordePrincipal);
+
+  border-radius: 7px;
+
+  outline: none;
+
+  font-size: var(--TamTexto);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-form-group input::placeholder {
+  color: var(--TextoSecundario);
+
+  opacity: 0.7;
+}
+
+.modal-form-group input:hover,
+.modal-form-group select:hover {
+  border-color: var(--BordeSuave);
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus {
+  border-color: var(--Naranja);
+
+  box-shadow:
+    0 0 0 2px rgba(242, 92, 5, 0.15);
+}
+
+.modal-form-group select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   BOTONES MODAL
+========================================================= */
+
+.modal-personal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+.btn-modal-cancel,
+.btn-modal-save {
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border-radius: 7px;
+
+  font-size: var(--TamTexto);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-modal-cancel {
+  background-color: transparent;
+
+  border: 1px solid var(--BordePrincipal);
+
+  color: var(--TextoSecundario);
+}
+
+.btn-modal-cancel:hover {
+  background-color: var(--FondoBoton);
+
+  color: var(--TextoPrincipal);
+}
+
+.btn-modal-save {
+  background-color: var(--Naranja);
+
+  border: 1px solid var(--Naranja);
+
+  color: #ffffff;
+}
+
+.btn-modal-save:hover {
+  background-color: var(--NaranjaHover);
+
+  border-color: var(--NaranjaHover);
+}
+
+
+/* =========================================================
+   ANIMACIONES
+========================================================= */
+
+@keyframes modalOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPersonalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.modal-delete {
+  width: 100%;
+  max-width: 460px;
+
+  background-color: var(--FondoSecundario);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  color: var(--TextoPrincipal);
+
+  animation: modalDeleteIn 0.2s ease;
+}
+
+
+/* =========================================================
+   HEADER MODAL BORRAR
+========================================================= */
+
+.modal-delete-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.modal-delete-icon {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 8px;
+
+  background-color: rgba(239, 68, 68, 0.12);
+
+  border: 1px solid rgba(239, 68, 68, 0.25);
+
+  color: #ef4444;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.modal-delete-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.modal-delete-title {
+  font-size: 19px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  color: var(--TextoPrincipal);
+}
+
+.modal-delete-text {
+  font-size: var(--TamTexto);
+
+  line-height: 1.5;
+
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.modal-delete-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+.btn-modal-delete {
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border-radius: 7px;
+
+  background-color: #ef4444;
+
+  border: 1px solid #ef4444;
+
+  color: #ffffff;
+
+  font-size: var(--TamTexto);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-modal-delete:hover {
+  background-color: #dc2626;
+
+  border-color: #dc2626;
+}
+
+/* =========================================================
+   MODAL MODIFICAR TALLER
+========================================================= */
+
+.modal-taller {
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background-color: var(--FondoSecundario);
+  color: var(--TextoPrincipal);
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  padding: 22px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.modal-taller-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid var(--BordePrincipal);
+}
+
+.modal-taller-header h2 {
+  margin: 0;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTitulo);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+.modal-taller-form {
+  display: grid;
+
+  grid-template-columns: 1.25fr 0.85fr;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   PANELES
+========================================================= */
+
+.modal-taller-panel {
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 10px;
+
+  background-color: var(--FondoTarjeta);
+
+  box-sizing: border-box;
+
+  padding: 20px;
+}
+
+.modal-taller-panel h3 {
+  margin: 0 0 18px 0;
+
+  color: var(--TextoPrincipal);
+
+  font-size: calc(var(--TamTexto) + 4px);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.campo-modal-taller {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 15px;
+}
+
+.campo-modal-taller label {
+  margin-bottom: 6px;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+}
+
+.campo-modal-taller input,
+.campo-modal-taller textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  background-color: var(--FondoBoton);
+  color: var(--TextoPrincipal);
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--TamTexto);
+
+  padding: 9px 10px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.campo-modal-taller input {
+  height: 38px;
+}
+
+.campo-modal-taller textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+.campo-modal-taller input:focus,
+.campo-modal-taller textarea:focus {
+  border-color: var(--Naranja);
+}
+
+.campo-modal-taller input::placeholder,
+.campo-modal-taller textarea::placeholder {
+  color: var(--TextoTerciario);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.modal-taller-logo {
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid var(--BordePrincipal);
+
+  margin-bottom: 20px;
+}
+
+.modal-taller-logo h3 {
+  text-align: center;
+}
+
+.modal-logo-upload {
+  width: 175px;
+  height: 135px;
+
+  margin: auto;
+
+  border: 2px dashed var(--BordeSuave);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.modal-logo-upload:hover {
+  border-color: var(--Naranja);
+  background-color: var(--FondoBoton);
+}
+
+.modal-logo-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  color: var(--TextoSecundario);
+}
+
+.modal-logo-title {
+  max-width: 150px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--TextoPrincipal);
+
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  margin-bottom: 5px;
+}
+
+.modal-logo-info {
+  color: var(--TextoSecundario);
+
+  font-size: calc(var(--TamTexto) - 2px);
+}
+
+
+/* =========================================================
+   ADMINISTRADOR
+========================================================= */
+
+.modal-taller-administrador h3 {
+  text-align: left;
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.modal-taller-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 5px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid var(--BordePrincipal);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .modal-taller {
+    width: 95%;
+    max-height: 92vh;
+
+    padding: 16px;
+  }
+
+  .modal-taller-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .modal-taller-panel {
+    padding: 16px;
+  }
+
+  .modal-taller-header h2 {
+    font-size: var(--TamTitulo);
+  }
+
+  .modal-logo-upload {
+    width: 155px;
+    height: 125px;
+  }
+
+  .modal-taller-actions {
+    display: flex;
+
+    flex-direction: column-reverse;
+
+    width: 100%;
+  }
+
+  .modal-taller-actions button {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN
+========================================================= */
+
+@keyframes modalDeleteIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 700px) and (max-width: 1100px) {
+
+  .smt-page {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  /* HEADER */
+
+  .top-header {
+    padding-bottom: 4px;
+  }
+
+  /* PERSONALIZACIÓN */
+
+  .personalizacion-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .plan-box {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .btn-outline-orange {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* PERSONAL */
+
+  .staff-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ACCIONES */
+
+  .acciones-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* SOLICITUDES */
+
+  .request-item {
+    flex-wrap: wrap;
+  }
+
+  .request-buttons {
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 699px) {
+
+  /* =====================================================
+     CONTENEDOR
+  ===================================================== */
+
+  .containerConfig {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  /* =====================================================
+     CONTENIDO PRINCIPAL
+  ===================================================== */
+
+  .smt-page {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh - 66px);
+
+    padding: 16px 12px;
+
+    gap: 16px;
+
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+
+
+  /* =====================================================
+     HEADER
+  ===================================================== */
+
+  .top-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    padding: 0;
+  }
+
+
+  /*
+     El menú hamburguesa real pertenece al Sidebar.
+     Estos elementos pertenecen al header de Configuración.
+  */
+
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  .mobile-brand {
+    display: none;
+  }
+
+
+  .top-header-right {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+  }
+
+
+  .notification-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .user-profile {
+    display: none;
+  }
+
+
+  /* =====================================================
+     TITULO
+  ===================================================== */
+
+  .page-header {
+    gap: 3px;
+  }
+
+
+  .page-title {
+    font-size: var(--TamTitulo);
+    line-height: 1.2;
+  }
+
+
+  .page-subtitle {
+    font-size: var(--TamTexto);
+    line-height: 1.4;
+  }
+
+
+  /* =====================================================
+     SECCIONES
+  ===================================================== */
+
+  .section-card {
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    gap: 14px;
+  }
+
+
+  .section-title {
+    font-size: var(--TamTexto);
+  }
+
+
+  .section-subtitle {
+    font-size: var(--TamTexto);
+
+    line-height: 1.4;
+  }
+
+
+  /* =====================================================
+     PERSONALIZACIÓN
+  ===================================================== */
+
+  .personalizacion-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+
+  .sub-card {
+    width: 100%;
+
+    padding: 12px;
+
+    gap: 10px;
+  }
+
+
+  /* =====================================================
+     PLAN
+  ===================================================== */
+
+  .plan-box {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+
+  .plan-info {
+    width: 100%;
+  }
+
+
+  .plan-details {
+    min-width: 0;
+  }
+
+
+  .plan-name {
+    font-size: var(--TamTexto);
+  }
+
+
+  .plan-desc {
+    font-size: calc(var(--TamTexto) - 1px);
+
+    line-height: 1.4;
+  }
+
+
+  .btn-outline-orange {
+    width: 100%;
+
+    text-align: center;
+
+    padding: 9px 12px;
+  }
+
+
+  /* =====================================================
+     BOTONES DE MODO / FUENTE
+  ===================================================== */
+
+  .toggle-mode {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    font-size: var(--TamTexto);
+  }
+
+
+  /* =====================================================
+     PERSONAL
+  ===================================================== */
+
+  .staff-grid {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+
+  .staff-card {
+    width: 100%;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    padding: 9px 10px;
+  }
+
+
+  .staff-header {
+    flex: 1;
+
+    min-width: 0;
+
+    gap: 8px;
+  }
+
+
+  .staff-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .staff-meta {
+    min-width: 0;
+  }
+
+
+  .staff-name {
+    font-size: var(--TamTexto);
+  }
+
+
+  .staff-role {
+    font-size: calc(var(--TamTexto) - 1px);
+  }
+
+
+  /* Ocultamos estado en celular */
+
+  .staff-status {
+    display: none;
+  }
+
+
+  /* Botón completo */
+
+  .btn-modify {
+    display: none;
+  }
+
+
+  /* Botón solamente icono */
+
+  .btn-modify-icon-only {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid var(--Naranja);
+    border-radius: 6px;
+
+    background-color: transparent;
+    color: var(--Naranja);
+
+    cursor: pointer;
+  }
+
+
+  .btn-add-staff {
+    width: 100%;
+
+    padding: 10px;
+
+    font-size: var(--TamTexto);
+  }
+
+
+  /* =====================================================
+     SOLICITUDES
+  ===================================================== */
+
+  .requests-list {
+    width: 100%;
+
+    gap: 8px;
+  }
+
+
+  .request-item {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    grid-template-areas:
+      "user date"
+      "buttons buttons";
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+  }
+
+
+  .request-user {
+    grid-area: user;
+
+    min-width: 0;
+  }
+
+
+  .request-text {
+    min-width: 0;
+  }
+
+
+  .request-name {
+    font-size: var(--TamTexto);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  .request-action-text {
+    font-size: calc(var(--TamTexto) - 2px);
+
+    line-height: 1.3;
+  }
+
+
+  .request-date {
+    grid-area: date;
+
+    width: auto;
+
+    justify-content: flex-end;
+
+    font-size: calc(var(--TamTexto) - 2px);
+
+    white-space: nowrap;
+  }
+
+
+  .request-buttons {
+    grid-area: buttons;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: stretch;
+
+    gap: 8px;
+  }
+
+
+  .btn-accept,
+  .btn-reject {
+    flex: 1;
+
+    justify-content: center;
+
+    padding: 8px;
+
+    font-size: var(--TamTexto);
+  }
+
+
+  /* =====================================================
+     ACCIONES SOBRE EL TALLER
+  ===================================================== */
+
+  .acciones-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+
+  .action-card {
+    width: 100%;
+
+    padding: 12px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+  }
+
+
+  .action-card-header {
+    min-width: 0;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+
+  .action-icon-box {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+  }
+
+
+  .action-card-info {
+    min-width: 0;
+  }
+
+
+  .action-card-title {
+    font-size: var(--TamTexto);
+  }
+
+
+  .action-card-desc {
+    display: none;
+  }
+
+
+  .action-card-btn-container {
+    margin-top: 0;
+
+    flex-shrink: 0;
+  }
+
+
+  /*
+     En celular ocultamos el botón de texto,
+     igual que en tu diseño actual.
+  */
+
+  .btn-action-outline-orange,
+  .btn-action-outline-red {
+    display: none;
+  }
+
+
+}
+
+
+/* =========================================================
+   CELULAR PEQUEÑO
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .smt-page {
+    padding: 12px 10px;
+
+    gap: 14px;
+  }
+
+
+  .section-card {
+    padding: 12px;
+  }
+
+
+  .page-title {
+    font-size: var(--TamTitulo);
+  }
+
+
+  .personalizacion-grid {
+    gap: 8px;
+  }
+
+
+  .sub-card {
+    padding: 10px;
+  }
+
+
+  .plan-info {
+    gap: 8px;
+  }
+
+
+  .plan-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+
+  .staff-card {
+    padding: 8px;
+  }
+
+
+  .staff-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+
+  .request-item {
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "user"
+      "date"
+      "buttons";
+  }
+
+
+  .request-date {
+    justify-content: flex-start;
+  }
+
+
+  .action-card {
+    padding: 10px;
+  }
+}

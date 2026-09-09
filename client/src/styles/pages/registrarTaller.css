@@ -1,0 +1,479 @@
+/* =========================================================
+   REGISTRAR TALLER
+========================================================= */
+
+#RegistrarTaller {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+
+  background-color: var(--FondoPrincipal);
+  color: var(--TextoPrincipal);
+
+  font-family: "Inter", sans-serif;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+
+/* =========================================================
+   BOTÓN VOLVER
+========================================================= */
+
+#botonvolver {
+  border: 1px solid var(--BordePrincipal);
+  background-color: var(--FondoBoton);
+  color: var(--TextoPrincipal);
+
+  border-radius: 8px;
+  padding: 6px 14px;
+
+  cursor: pointer;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--TamTexto);
+
+  margin-bottom: 15px;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+#botonvolver:hover {
+  background-color: var(--FondoSecundario);
+}
+
+#botonvolver a {
+  text-decoration: none;
+  color: var(--TextoPrincipal);
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+#containerRegistrarTaller {
+  width: 88%;
+  max-width: 1000px;
+  margin: auto;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+#containerRegistrarTallerForm {
+  display: grid;
+
+  grid-template-columns: 1.25fr 0.85fr;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   PANELES
+========================================================= */
+
+.panel-taller {
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+
+  background-color: var(--FondoSecundario);
+  color: var(--TextoPrincipal);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+/* =========================================================
+   INFORMACIÓN DEL TALLER
+========================================================= */
+
+.informacion-taller {
+  padding: 22px;
+}
+
+.informacion-taller h1 {
+  font-size: var(--TamTitulo);
+  font-weight: 600;
+
+  margin: 0 0 22px 0;
+
+  color: var(--TextoPrincipal);
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font-size: var(--TamTexto);
+
+  margin-bottom: 6px;
+
+  color: var(--TextoPrincipal);
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  background-color: var(--FondoBoton);
+  color: var(--TextoPrincipal);
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--TamTexto);
+
+  padding: 9px 10px;
+
+  outline: none;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.campo input {
+  height: 38px;
+}
+
+.campo textarea {
+  min-height: 80px;
+
+  resize: none;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: var(--TextoTerciario);
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: var(--Naranja);
+}
+
+
+/* =========================================================
+   PANEL DERECHO
+========================================================= */
+
+.panel-derecho {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.seccion-logo {
+  padding: 22px;
+
+  border-bottom: 1px solid var(--BordePrincipal);
+}
+
+.seccion-logo h2,
+.seccion-administrador h2 {
+  margin: 0 0 14px 0;
+
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  text-align: center;
+
+  color: var(--TextoPrincipal);
+}
+
+
+/* =========================================================
+   INPUT LOGO
+========================================================= */
+
+.logo-upload {
+  width: 175px;
+  height: 145px;
+
+  margin: auto;
+
+  border: 2px dashed var(--BordeSuave);
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.logo-upload:hover {
+  border-color: var(--Naranja);
+  background-color: var(--FondoBoton);
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  color: var(--TextoSecundario);
+}
+
+.logo-upload-title {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  color: var(--TextoPrincipal);
+
+  margin-bottom: 5px;
+}
+
+.logo-upload-info {
+  font-size: calc(var(--TamTexto) - 2px);
+
+  color: var(--TextoSecundario);
+}
+
+
+/* =========================================================
+   ADMINISTRADOR
+========================================================= */
+
+.seccion-administrador {
+  padding: 22px;
+}
+
+.seccion-administrador h2 {
+  text-align: left;
+
+  margin-bottom: 16px;
+}
+
+.seccion-administrador .campo {
+  margin-bottom: 14px;
+}
+
+.seccion-administrador .campo:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   BOTÓN REGISTRAR
+========================================================= */
+
+#botonRegistrarTaller {
+  grid-column: 1 / -1;
+
+  width: 210px;
+  height: 44px;
+
+  margin: 5px 0 0 auto;
+
+  border: 1px solid var(--Naranja);
+  border-radius: 7px;
+
+  background-color: var(--Naranja);
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+  font-size: var(--TamTexto);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.1s ease;
+}
+
+#botonRegistrarTaller:hover {
+  background-color: var(--NaranjaHover);
+  border-color: var(--NaranjaHover);
+}
+
+#botonRegistrarTaller:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 700px) and (max-width: 992px) {
+
+  #RegistrarTaller {
+    padding: 15px;
+  }
+
+  #containerRegistrarTaller {
+    width: 95%;
+  }
+
+  #containerRegistrarTallerForm {
+    grid-template-columns: 1.15fr 0.85fr;
+
+    gap: 12px;
+  }
+
+  .informacion-taller,
+  .seccion-logo,
+  .seccion-administrador {
+    padding: 18px;
+  }
+
+  .logo-upload {
+    width: 155px;
+    height: 135px;
+  }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 700px) {
+
+  #RegistrarTaller {
+    min-height: 100vh;
+
+    padding: 12px;
+
+    overflow-y: auto;
+  }
+
+  #botonvolver {
+    margin-bottom: 12px;
+  }
+
+  #containerRegistrarTaller {
+    width: 100%;
+  }
+
+  #containerRegistrarTallerForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .informacion-taller {
+    padding: 18px;
+  }
+
+  .informacion-taller h1 {
+    font-size: var(--TamTitulo);
+
+    margin-bottom: 18px;
+  }
+
+  .panel-derecho {
+    width: 100%;
+  }
+
+  .seccion-logo,
+  .seccion-administrador {
+    padding: 18px;
+  }
+
+  .logo-upload {
+    width: 160px;
+    height: 135px;
+  }
+
+  .seccion-administrador h2 {
+    font-size: var(--TamTexto);
+  }
+
+  .campo input,
+  .campo textarea {
+    font-size: var(--TamTexto);
+  }
+
+  #botonRegistrarTaller {
+    width: 100%;
+    max-width: 320px;
+
+    margin: 5px auto 10px;
+  }
+
+}
+
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+========================================================= */
+
+@media (max-width: 400px) {
+
+  #RegistrarTaller {
+    padding: 10px;
+  }
+
+  .informacion-taller,
+  .seccion-logo,
+  .seccion-administrador {
+    padding: 15px;
+  }
+
+  .informacion-taller h1 {
+    font-size: var(--TamTitulo);
+  }
+
+  .logo-upload {
+    width: 145px;
+    height: 125px;
+  }
+
+  #botonRegistrarTaller {
+    font-size: var(--TamTexto);
+  }
+
+}
