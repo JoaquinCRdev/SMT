@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as userController from "../controllers/user.controller.js";
-import { authenticate, authorize } from "../middlewares/auth.middleware.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
+import { authorize } from "../middlewares/user.middleware.js";
 import {
   forgotPasswordSchema,
   loginSchema,

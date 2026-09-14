@@ -1,6 +1,6 @@
+import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import { verifyToken } from "../utils/token.js";
-import User from "../models/user.model.js";
 
 export const authenticate = async (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ export const authenticate = async (req, res, next) => {
     const user = await User.findById(decoded.id).select("workshop role");
     req.user = {
       id: decoded.id,
-      role: decoded.role,
+      role: user?.role ?? "user",
       workshop: user?.workshop ?? null,
     };
     next();
@@ -23,12 +23,3 @@ export const authenticate = async (req, res, next) => {
     next(new ApiError(401, "Invalid or expired token"));
   }
 };
-
-export function authorize(...allowedRoles) {
-  return (req, res, next) => {
-    if (!allowedRoles.includes(req.user.role)) {
-      return next(new ApiError(403, "Unauthorized"));
-    }
-    next();
-  };
-}
