@@ -2,7 +2,7 @@
   --bg:#212629;
   --bg-soft:#181a1d;
   --bg-deep:#111315;
-  --card:#181a1d;
+  --card:#151618;
   --card-hover:#1f2225;
   --border:#2d3336;
   --border-light:#3a4145;
@@ -29,18 +29,12 @@ html, body{margin:0;padding:0;height:100%;font-family:Inter,system-ui,sans-serif
 }
 .contenedor-principal > aside,
 .contenedor-principal .sidebar{
-  width: var(--sidebar-w) !important;
-  min-width: 305px !important;
-  flex-shrink: 0;
-  background: var(--bg-deep) !important;
-  border-right: 1px solid var(--border);
 }
 
 .app{
   flex:1;
-  max-width: 1100px;
   padding: 24px 32px;
-  background: var(--bg);
+  background: var(--bg-deep);
   min-height: 100vh;
   overflow-y: auto;
 }
