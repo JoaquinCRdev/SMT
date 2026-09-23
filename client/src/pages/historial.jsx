@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Sidebar from "../components/layout/sidebar";
-import "../styles/components/layout/auth/historial.css";
+import "../styles/pages/historial.css";
 
 // Muestra de datos con formato de fecha YYYY-MM-DD
 const mantenimientosIniciales = [

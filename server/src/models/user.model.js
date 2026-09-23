@@ -69,7 +69,7 @@ userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(
     this.password,
-    process.env.SALT_ROUNDS || 10,
+    Number(process.env.SALT_ROUNDS) || 10,
   );
 });
 

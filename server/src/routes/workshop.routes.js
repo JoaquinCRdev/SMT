@@ -8,6 +8,7 @@ import {
   joinWorkshopSchema,
   requestActionSchema,
   updateWorkshopSchema,
+  verifyJoinCodeSchema,
 } from "../middlewares/validators/workshop.validator.js";
 
 const router = Router();
@@ -52,5 +53,6 @@ router.post(
 );
 router.delete("/:id", authorize("admin"), workshopController.deleteWorkshop);
 router.post("/leave", workshopController.leaveWorkshop);
+router.post("/verify-code", validate(verifyJoinCodeSchema), workshopController.verifyJoinCode)
 
 export default router;

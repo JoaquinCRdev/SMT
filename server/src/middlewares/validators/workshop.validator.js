@@ -18,3 +18,14 @@ export const joinWorkshopSchema = z.object({
 export const requestActionSchema = z.object({
   status: z.enum(["approved", "rejected"]),
 });
+
+export const verifyJoinCodeSchema = z.object({
+  code: z
+    .string()
+    .transform((v) => v.trim().toUpperCase())
+    .pipe(
+      z
+        .string()
+        .regex(/^[A-HJ-NP-Z2-9]{6}$/, "Invalid code format"),
+    ),
+});
