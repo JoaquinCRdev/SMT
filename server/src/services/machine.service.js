@@ -17,6 +17,16 @@ function buildAccessFilter(user) {
   return { workshopId: user.workshop };
 }
 
+const STATUS_MAP = {
+  operativo: "active",
+  mantenimiento: "maintenance",
+  baja: "inactive",
+};
+
+function normalizeStatus(status) {
+  return STATUS_MAP[status] ?? status;
+}
+
 export async function createMachine(payload, user) {
   const workshopId = requireWorkshop(user);
 
@@ -25,6 +35,8 @@ export async function createMachine(payload, user) {
     workshopId,
     userId: user.id,
   };
+
+  if (machineData.status) machineData.status = normalizeStatus(machineData.status);
 
   const machine = await Machine.create(machineData);
   return machine;
@@ -36,7 +48,7 @@ export async function getMachines(user, query = {}) {
   const filter = buildAccessFilter(user);
 
   if (query.status) {
-    filter.status = query.status;
+    filter.status = normalizeStatus(query.status);
   }
 
   if (query.q) {
@@ -87,7 +99,7 @@ export async function updateMachine(id, payload, user) {
   if (payload.brand !== undefined) machine.brand = payload.brand;
   if (payload.model !== undefined) machine.model = payload.model;
   if (payload.description !== undefined) machine.description = payload.description;
-  if (payload.status !== undefined) machine.status = payload.status;
+  if (payload.status !== undefined) machine.status = normalizeStatus(payload.status);
 
   try {
     await machine.save();
@@ -102,12 +114,13 @@ export async function updateMachine(id, payload, user) {
 }
 
 export async function changeMachineStatus(id, status, user) {
-  if (!["active", "inactive", "maintenance"].includes(status)) {
+  const normalized = normalizeStatus(status);
+  if (!["active", "inactive", "maintenance"].includes(normalized)) {
     throw new ApiError(400, "Invalid status");
   }
 
   const machine = await getAccessibleMachine(id, user);
-  machine.status = status;
+  machine.status = normalized;
   await machine.save();
 
   return machine;

@@ -6,5 +6,7 @@ export const machineSchema = z.object({
   model: z.string(),
   serialNumber: z.string(),
   description: z.string().optional(),
-  status: z.enum(["active", "inactive", "maintenance"]).optional(),
+  status: z
+    .enum(["active", "inactive", "maintenance", "operativo", "baja", "mantenimiento"])
+    .optional(),
 });
