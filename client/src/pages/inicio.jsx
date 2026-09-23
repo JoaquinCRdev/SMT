@@ -27,14 +27,11 @@ const Inicio = () => {
           </div>
         </div>
 
-
-
         <div id="divisor">
           <div id="linea1"></div>
           <h2 id="o">O</h2>
           <div id="linea2"></div>
         </div>
-
 
         <div id="contenedorIniciarSesion">
           <h1 id="tituloIniciarSesion">¿Tienes una cuenta?</h1>

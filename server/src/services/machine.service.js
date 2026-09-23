@@ -39,6 +39,10 @@ export async function getMachines(user, query = {}) {
     filter.status = query.status;
   }
 
+  if (query.tipo) {
+  filter.tipo = query.tipo;
+  }
+
   if (query.q) {
     filter.$or = [
       { name: { $regex: query.q, $options: "i" } },
@@ -79,22 +83,46 @@ export async function getMachineById(id, user) {
 }
 
 export async function updateMachine(id, payload, user) {
-  const workshopId = requireWorkshop(user);
   const machine = await getAccessibleMachine(id, user);
+  if (payload.serialNumber !== undefined) {
+    machine.serialNumber = payload.serialNumber;
+  }
 
-  if (payload.serialNumber !== undefined) machine.serialNumber = payload.serialNumber;
-  if (payload.name !== undefined) machine.name = payload.name;
-  if (payload.brand !== undefined) machine.brand = payload.brand;
-  if (payload.model !== undefined) machine.model = payload.model;
-  if (payload.description !== undefined) machine.description = payload.description;
-  if (payload.status !== undefined) machine.status = payload.status;
+  if (payload.name !== undefined) {
+    machine.name = payload.name;
+  }
+
+  if (payload.tipo !== undefined) {
+    machine.tipo = payload.tipo;
+  }
+
+  if (payload.brand !== undefined) {
+    machine.brand = payload.brand;
+  }
+
+  if (payload.model !== undefined) {
+    machine.model = payload.model;
+  }
+
+  if (payload.description !== undefined) {
+    machine.description = payload.description;
+  }
+
+  if (payload.status !== undefined) {
+    machine.status = payload.status;
+  }
 
   try {
     await machine.save();
-  } catch (error) {
+  } 
+  catch (error) {
     if (error?.code === 11000) {
-      throw new ApiError(409, "Serial number already exists in this workshop");
+      throw new ApiError(
+        409,
+        "Serial number already exists in this workshop"
+      );
     }
+
     throw error;
   }
 

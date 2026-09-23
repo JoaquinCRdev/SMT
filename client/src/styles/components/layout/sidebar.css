@@ -17,7 +17,7 @@
     justify-content: space-between;
     align-items: center;
 
-    padding: 50px 0;
+    padding: 30px 0;
     box-sizing: border-box;
 
     transition: background-color 0.25s ease;
@@ -91,9 +91,10 @@
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 20px;
 
     font-family: "Inter", sans-serif;
+
 }
 
 
@@ -118,7 +119,7 @@
 
     padding-left: 15px;
 
-    font-size: 18px;
+    font-size: 22px;
 
     cursor: pointer;
 

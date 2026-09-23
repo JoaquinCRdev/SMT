@@ -11,14 +11,13 @@ const TAREAS_BASE = [
 const MESES_ALL = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 export default function MantenimientoApp() {
-  // Navegación y filtros
   const [vista, setVista] = useState("lista");
   const [tabActivo, setTabActivo] = useState("Maquinas");
   const [filtroGeneral, setFiltroGeneral] = useState("General");
   const [showFiltro, setShowFiltro] = useState(false);
   const [mantenimientoSeleccionado, setMantenimientoSeleccionado] = useState(null);
 
-  // Datos
+
   const [programados, setProgramados] = useState([
     { id: 1, maquina: "Pinacho Mustang 225", tipo: "Mantenimiento Trimestral", categoria: "Maquinas" },
     { id: 2, maquina: "Pinacho Mustang 225", tipo: "Mantenimiento Anual", categoria: "Maquinas" },
@@ -31,7 +30,6 @@ export default function MantenimientoApp() {
     { id: 3, maquina: "Pinacho Mustang 225", tipo: "Lubricación", pct: 91, vencido: false },
   ]);
 
-  // Form detalle
   const [periodo, setPeriodo] = useState("Trimestral");
   const [maquina, setMaquina] = useState("Pinacho Mustang 225");
   const [fechaAlta, setFechaAlta] = useState("29");
@@ -43,7 +41,6 @@ export default function MantenimientoApp() {
   const [nuevoAsignado, setNuevoAsignado] = useState("");
   const [showAddAsignado, setShowAddAsignado] = useState(false);
 
-  // Modal agregar
   const [showModal, setShowModal] = useState(false);
   const [nuevoMant, setNuevoMant] = useState({ maquina: "Pinacho Mustang 225", tipo: "" });
 
@@ -67,7 +64,6 @@ export default function MantenimientoApp() {
   };
 
   const handleGuardar = () => {
-    // Aquí iría tu API
     console.log("Guardado", { maquina, periodo, fechaAlta, tiempo, mesesSel, tareas, asignados });
     setVista("lista");
   };

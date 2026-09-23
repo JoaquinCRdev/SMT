@@ -230,10 +230,6 @@ const Mismaquinas = () => {
                 </div>
               </div>
 
-              <div className="descripcionmaquina">
-                <p>{item.descripcion}</p>
-              </div>
-
               <div className="acciones-tarjeta">
                 <button className={`estado ${item.estado}`}>
                   {formatearEstado(item.estado)}

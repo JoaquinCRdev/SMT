@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import i18n from "../i18n/i18n";
 
 const Configuracion = () => {
-  // Esto hace que el componente se vuelva a renderizar
-  // cuando cambiamos el idioma.
+
   const [, setIdioma] = useState(i18n.language);
 
   const cambiarIdioma = async (e) => {
@@ -16,10 +15,6 @@ const Configuracion = () => {
 
     setIdioma(nuevoIdioma);
   };
-
-  // =========================
-  // MODO OSCURO
-  // =========================
 const [mostrarModalModificarTaller, setMostrarModalModificarTaller] =
   useState(false);
 
@@ -93,10 +88,6 @@ const guardarCambiosTaller = (e) => {
     setModoOscuro((v) => !v);
   };
 
-  // =========================
-  // TAMAÑO DE FUENTE
-  // =========================
-
   const [tamanoGrande, setTamanoGrande] = useState(() => {
     const saved = localStorage.getItem("fontSize");
 
@@ -115,10 +106,6 @@ const guardarCambiosTaller = (e) => {
   const toggleTamano = () => {
     setTamanoGrande((v) => !v);
   };
-
-  // =========================
-  // PERSONAL
-  // =========================
 
   const [personal, setPersonal] = useState([
     {
@@ -163,10 +150,6 @@ const guardarCambiosTaller = (e) => {
     },
   ]);
 
-  // =========================
-  // MODAL AGREGAR PERSONAL
-  // =========================
-
   const [mostrarModalPersonal, setMostrarModalPersonal] = useState(false);
 
   const [nuevoPersonal, setNuevoPersonal] = useState({
@@ -190,10 +173,6 @@ const guardarCambiosTaller = (e) => {
   const cerrarModalPersonal = () => {
     setMostrarModalPersonal(false);
   };
-
-  // =========================
-// MODAL BORRAR TALLER
-// =========================
 
 const [mostrarModalBorrarTaller, setMostrarModalBorrarTaller] =
   useState(false);
@@ -247,10 +226,6 @@ const borrarTaller = () => {
     cerrarModalPersonal();
   };
   
-  // =========================
-  // SOLICITUDES
-  // =========================
-
   const solicitudes = [
     {
       name: "Andrés Castillo",
@@ -271,11 +246,6 @@ const borrarTaller = () => {
       <Sidebar />
 
       <div className="smt-page">
-
-        {/* =========================
-            HEADER
-        ========================= */}
-
         <header className="top-header">
 
           <button className="mobile-menu-btn">
