@@ -1,10 +1,13 @@
 import "../../../styles/components/layout/auth/register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../../api/axios";
+import { useAuth } from "../../../context/AuthContext";
+import { getRedirectPath } from "../../../utils/redirectByUser";
 
-const Register = () => {
+const Register = ({ onToggle }) => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -16,11 +19,13 @@ const Register = () => {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: files ? files[0] : value,
+      [name]: value,
     });
   };
 
@@ -32,35 +37,34 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
-    if (!formData.nombre.trim()) {
-      setError("Ingrese un nombre completo");
+    if (formData.nombre.trim().length < 3) {
+      setError("El nombre debe tener al menos 3 caracteres");
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      setError("Ingrese un correo electrónico válido");
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
 
     setSubmitting(true);
 
     try {
-      console.log("import.meta.env.VITE_API_URL:", import.meta.env.VITE_API_URL);
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/register`,
-        {
-          name: formData.nombre,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        },
-        { withCredentials: true } // necesario para que viaje la cookie del refreshToken
-      );
+      const { data } = await api.post("/register", {
+        name: formData.nombre,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+      });
 
-      // Guardamos el accessToken donde lo estés manejando por ahora
-      // (por ejemplo localStorage, hasta que se arme un manejo en memoria)
       localStorage.setItem("accessToken", data.accessToken);
-
-      if (data.user.role === "admin") {
-        navigate("/crearTaller");
-      } else {
-        navigate("/asociarseTaller");
-      }
+      setUser(data.user);
+      navigate(getRedirectPath(data.user));
     } catch (err) {
       setError(err.response?.data?.message || "Error al crear la cuenta");
     } finally {
@@ -123,7 +127,17 @@ const Register = () => {
           {submitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
         <p>
-          ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
+          ¿Ya tienes una cuenta?{" "}
+          
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              onToggle();
+            }}
+          >
+            Inicia sesión
+          </a>
         </p>
       </div>
 

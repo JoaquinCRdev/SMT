@@ -1,183 +1,114 @@
 import "../styles/pages/registrarTaller.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 const RegistrarTaller = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+
+  const [formData, setFormData] = useState({
+    nombre: "",
+    direccion: "",
+    telefono: "",
+  });
+
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (formData.nombre.trim().length < 3) {
+      setError("El nombre del taller debe tener al menos 3 caracteres");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      await api.post("/workshops", {
+        name: formData.nombre,
+        address: formData.direccion || undefined,
+        phone: formData.telefono || undefined,
+      });
+
+      // El usuario ahora tiene workshop asignado; refrescamos el contexto
+      // pidiendo el perfil actualizado para que ProtectedRoute lo detecte.
+      const { data: profile } = await api.get("/profile");
+      setUser(profile);
+
+      navigate("/home");
+    } catch (err) {
+      setError(err.response?.data?.message || "Error al registrar el taller");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div id="RegistrarTaller">
-
       <button id="botonvolver" type="button">
         <NavLink to="/mismaquinas">← Volver</NavLink>
       </button>
 
       <div id="containerRegistrarTaller">
+        {error && <p id="errorRegistrarTaller">{error}</p>}
 
-        <form id="containerRegistrarTallerForm">
-
-          {/* =========================
-              INFORMACIÓN DEL TALLER
-          ========================== */}
+        <form id="containerRegistrarTallerForm" onSubmit={handleSubmit}>
           <div className="panel-taller informacion-taller">
-
             <h1>Información de tu taller</h1>
 
             <div className="campo">
-              <label htmlFor="nombreTaller">
-                Nombre del taller
-              </label>
-
+              <label htmlFor="nombreTaller">Nombre del taller</label>
               <input
                 id="nombreTaller"
+                name="nombre"
                 type="text"
                 placeholder="Ej: Taller Central"
+                value={formData.nombre}
+                onChange={handleChange}
+                required
               />
             </div>
 
             <div className="campo">
-              <label htmlFor="descripcionTaller">
-                Descripción
-              </label>
-
-              <textarea
-                id="descripcionTaller"
-                rows="4"
-                placeholder="Contá brevemente qué servicios realiza tu taller..."
-              ></textarea>
-            </div>
-
-            <div className="campo">
-              <label htmlFor="direccionTaller">
-                Dirección
-              </label>
-
+              <label htmlFor="direccionTaller">Dirección</label>
               <input
                 id="direccionTaller"
+                name="direccion"
                 type="text"
                 placeholder="Ej: Av.libertad 123"
+                value={formData.direccion}
+                onChange={handleChange}
               />
             </div>
 
             <div className="campo">
-              <label htmlFor="telefonoTaller">
-                Teléfono
-              </label>
-
+              <label htmlFor="telefonoTaller">Teléfono</label>
               <input
                 id="telefonoTaller"
+                name="telefono"
                 type="tel"
                 placeholder="Ej: 11 1234-5678"
+                value={formData.telefono}
+                onChange={handleChange}
               />
             </div>
-
           </div>
 
-
-          {/* =========================
-              INFORMACIÓN DERECHA
-          ========================== */}
-          <div className="panel-taller panel-derecho">
-
-            {/* LOGO */}
-            <div className="seccion-logo">
-
-              <h2>Logo del taller</h2>
-
-              <label htmlFor="logoTaller" className="logo-upload">
-
-                <div className="logo-icon">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <rect
-                      x="3"
-                      y="3"
-                      width="18"
-                      height="18"
-                      rx="2"
-                    />
-
-                    <circle
-                      cx="8.5"
-                      cy="8.5"
-                      r="1.5"
-                    />
-
-                    <path d="M21 15l-5-5L5 21" />
-                  </svg>
-                </div>
-
-                <span className="logo-upload-title">
-                  Subir logo
-                </span>
-
-                <span className="logo-upload-info">
-                  .JPG, .PNG (Max 2MB)
-                </span>
-
-                <input
-                  id="logoTaller"
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg"
-                  hidden
-                />
-
-              </label>
-
-            </div>
-
-
-            {/* ADMINISTRADOR */}
-            <div className="seccion-administrador">
-
-              <h2>Administrador</h2>
-
-              <div className="campo">
-                <label htmlFor="nombreAdministrador">
-                  Nombre completo
-                </label>
-
-                <input
-                  id="nombreAdministrador"
-                  type="text"
-                  placeholder="Nombre y apellido"
-                />
-              </div>
-
-              <div className="campo">
-                <label htmlFor="gmailAdministrador">
-                  Gmail
-                </label>
-
-                <input
-                  id="gmailAdministrador"
-                  type="email"
-                  placeholder="ejemplo@gmail.com"
-                />
-              </div>
-
-            </div>
-
-          </div>
-
-
-          {/* =========================
-              BOTÓN
-          ========================== */}
-          <button
-            id="botonRegistrarTaller"
-            type="submit"
-          >
-            Registrar taller
+          <button id="botonRegistrarTaller" type="submit" disabled={submitting}>
+            {submitting ? "Registrando..." : "Registrar taller"}
           </button>
-
         </form>
-
       </div>
-
     </div>
   );
 };

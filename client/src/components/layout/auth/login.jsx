@@ -1,14 +1,21 @@
 import "../../../styles/components/layout/auth/login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import api from "../../../api/axios";
+import { useAuth } from "../../../context/AuthContext";
+import { getRedirectPath } from "../../../utils/redirectByUser";
 
-const Login = () => {
+const Login = ({ onToggle }) => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -19,27 +26,41 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!emailRegex.test(formData.email)) {
-      alert("Ingrese un correo electrónico válido.");
+      setError("Ingrese un correo electrónico válido.");
       return;
     }
 
     if (formData.password.trim() === "") {
-      alert("Ingrese la contraseña.");
+      setError("Ingrese la contraseña.");
       return;
     }
 
-    // Si todo está correcto, recién ahí cambia de página
-    navigate("/home"); // Cambiá "/home" por la ruta que corresponda
+    setSubmitting(true);
+
+    try {
+      const { data } = await api.post("/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      localStorage.setItem("accessToken", data.accessToken);
+      setUser(data.user);
+      navigate(getRedirectPath(data.user));
+    } catch (err) {
+      setError(err.response?.data?.message || "Error al iniciar sesión");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div id="containerLogin">
       <div id="ladoIzquierdoLogin">
-
         <img
           className="logoMobileLogin"
           src="/logoblanco.png"
@@ -50,6 +71,7 @@ const Login = () => {
 
         <div className="form-containerLogin">
           <div className="form-gridLogin">
+            {error && <p id="errorLogin">{error}</p>}
 
             <div className="input-groupLogin">
               <label>Correo Electrónico</label>
@@ -70,21 +92,30 @@ const Login = () => {
                 onChange={handleChange}
               />
             </div>
-
           </div>
         </div>
 
         <button
           id="loginIniciarSesion"
           onClick={handleSubmit}
+          disabled={submitting}
         >
-          Iniciar Sesión
+          {submitting ? "Iniciando sesión..." : "Iniciar Sesión"}
         </button>
 
         <p>
-          ¿No tienes una cuenta? <Link to="/inicio">Registrate</Link>
+          ¿No tienes una cuenta?{" "}
+          
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              onToggle();
+            }}
+          >
+            Registrate
+          </a>
         </p>
-
       </div>
 
       <div id="ladoDerechoLogin">

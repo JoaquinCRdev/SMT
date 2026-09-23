@@ -4,6 +4,29 @@ import Workshop from "../models/workshop.model.js";
 import WorkshopJoinRequest from "../models/workshopJoinRequest.model.js";
 import ApiError from "../utils/ApiError.js";
 
+const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sin O/0/I/1 para evitar confusión visual
+
+function generateJoinCode() {
+  let code = "";
+  const bytes = crypto.randomBytes(6);
+  for (let i = 0; i < 6; i++) {
+    code += CODE_CHARS[bytes[i] % CODE_CHARS.length];
+  }
+  return code;
+}
+
+async function generateUniqueJoinCode() {
+  for (let attempts = 0; attempts < 5; attempts++) {
+    const code = generateJoinCode();
+    const exists = await WorkshopJoinRequest.exists({
+      code,
+      status: "approved",
+    });
+    if (!exists) return code;
+  }
+  throw new ApiError(500, "Could not generate a unique join code, try again");
+}
+
 async function assertOwner(workshopId, userId) {
   const workshop = await Workshop.findById(workshopId);
   if (!workshop) throw new ApiError(404, "Workshop not found");
@@ -57,11 +80,40 @@ export async function resolveRequest(requestId, user, status) {
   }
 
   request.status = status;
-  await request.save();
+
   if (status === "approved") {
-    await User.findByIdAndUpdate(requester._id, { workshop: workshop._id });
+    request.code = await generateUniqueJoinCode();
   }
+
+  await request.save();
   return request;
+}
+
+export async function verifyJoinCode(user, code) {
+  if (user.workshop) {
+    throw new ApiError(409, "You already belong to a workshop");
+  }
+
+  const request = await WorkshopJoinRequest.findOne({
+    user: user.id,
+    status: "approved",
+    code,
+  });
+
+  if (!request) {
+    throw new ApiError(404, "Invalid or expired code");
+  }
+
+  const workshop = await Workshop.findById(request.workshop);
+  if (!workshop) throw new ApiError(404, "Workshop not found");
+
+  await User.findByIdAndUpdate(user.id, { workshop: workshop._id });
+
+  request.status = "completed";
+  request.code = null;
+  await request.save();
+
+  return workshop;
 }
 
 export async function getMyWorkshop(user) {

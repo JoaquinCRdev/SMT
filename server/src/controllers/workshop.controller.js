@@ -22,6 +22,18 @@ export async function resolveRequest(req, res, next) {
   }
 }
 
+export async function verifyJoinCode(req, res, next) {
+  try {
+    const workshop = await workshopService.verifyJoinCode(
+      req.user,
+      req.body.code,
+    );
+    res.status(200).json(workshop);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function getMyWorkshop(req, res, next) {
   try {
     const workshop = await workshopService.getMyWorkshop(req.user);
