@@ -24,7 +24,7 @@ router.use("/machine/:machineId/tasklogs", taskLogRoutes);
 router.use("/machine/:id/records", maintenanceRecordRoutes);
 router.use("/machine/:machineId/plans", maintenancePlanRoutes);
 router.get("/machine", authenticate, getMachines);
-router.post("/machine", validate(machineSchema), authenticate, createMachine);
+router.post("/machine",authenticate,validate(machineSchema),createMachine);
 router.get("/machine/:id", authenticate, getMachineById);
 router.put("/machine/:id", authenticate, updateMachine);
 router.delete("/machine/:id", authenticate, deleteMachine);
