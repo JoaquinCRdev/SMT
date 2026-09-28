@@ -1,80 +1,97 @@
 import "../styles/pages/mismaquinas.css";
 import Sidebar from "../components/layout/sidebar.jsx";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import api from "../api/axios.js"
 
 const Mismaquinas = () => {
   const [activo, setActivo] = useState("maquinas");
   const [modalAbierto, setModalAbierto] = useState(false);
   const [modoEdicion, setModoEdicion] = useState("crear"); // "crear" | "editar"
   const [itemEditandoId, setItemEditandoId] = useState(null);
+  const [maquinas, setMaquinas] = useState([]);
+  const [otros, setOtros] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [guardando, setGuardando] = useState(false);
+  
+  const obtenerMaquinas = async () => {
+  try {
+    setLoading(true);
+    setError("");
 
-  // Listas de datos en estado local para permitir edición dinámica
-  const [maquinas, setMaquinas] = useState([
-    {
-      id: 1,
-      nombre: "Pinacho S-40",
-      tipo: "maquina",
-      marca: "Pinacho",
-      nroSerie: "SN-2018-9941",
-      descripcion: "Torno convencional para operaciones de torneado, cilindrado, refrentado y roscado.",
-      estado: "operativo",
-      imagen: "https://via.placeholder.com/120"
-    },
-    {
-      id: 2,
-      nombre: "Fresadora Universal",
-      tipo: "maquina",
-      marca: "Bridgeport",
-      nroSerie: "SN-2020-3312",
-      descripcion: "Fresadora para mecanizado de piezas de alta precisión y corte vertical.",
-      estado: "mantenimiento",
-      imagen: "https://via.placeholder.com/120"
-    }
-  ]);
+    const response = await api.get("/machine");
 
-  const [otros, setOtros] = useState([
-    {
-      id: 1,
-      nombre: "Foco LED High Bay",
-      tipo: "otro",
-      marca: "Philips",
-      nroSerie: "FL-8832-X",
-      descripcion: "Campana LED industrial de 200W para iluminación de alto galpón.",
-      estado: "operativo",
-      imagen: "https://via.placeholder.com/120"
-    },
-    {
-      id: 2,
-      nombre: "Panel Solar 450W",
-      tipo: "otro",
-      marca: "Canadian Solar",
-      nroSerie: "PS-450-9921",
-      descripcion: "Módulo fotovoltaico monocristalino de alta eficiencia.",
-      estado: "operativo",
-      imagen: "https://via.placeholder.com/120"
-    },
-    {
-      id: 3,
-      nombre: "Canaleta Industrial",
-      tipo: "otro",
-      marca: "Tigre",
-      nroSerie: "CN-1020-A",
-      descripcion: "Canaleta metálica galvanizada para bajada de desagües del techo principal.",
-      estado: "baja",
-      imagen: "https://via.placeholder.com/120"
-    }
-  ]);
+    const items = response.data.items || [];
+
+    const maquinasBackend = items.filter(
+      (item) => item.tipo === "maquina"
+    );
+
+    const otrosBackend = items.filter(
+      (item) => item.tipo === "otro"
+    );
+
+    setMaquinas(maquinasBackend);
+    setOtros(otrosBackend);
+  } catch (error) {
+    console.error("Error al obtener máquinas:", error);
+
+    setError(
+      error.response?.data?.message ||
+        "No se pudieron cargar los equipos."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  obtenerMaquinas();
+}, []);
+
+const convertirDesdeBackend = (item) => ({
+  id: item._id,
+  nombre: item.name,
+  tipo: item.tipo,
+  marca: item.brand,
+  modelo: item.model,
+  nroSerie: item.serialNumber,
+  descripcion: item.description || "",
+  estado: convertirEstadoFrontend(item.status),
+});
+
+const convertirEstadoFrontend = (status) => {
+  const equivalencias = {
+    active: "operativo",
+    maintenance: "mantenimiento",
+    inactive: "baja",
+  };
+
+  return equivalencias[status] || "operativo";
+};
+
+const convertirEstadoBackend = (estado) => {
+  const equivalencias = {
+    operativo: "active",
+    mantenimiento: "maintenance",
+    baja: "inactive",
+  };
+
+  return equivalencias[estado] || "active";
+};
 
   // Formulario y fotos
-  const [form, setForm] = useState({
-    nombre: "",
-    tipo: "",
-    marca: "",
-    serie: "",
-    descripcion: "",
-    fecha: "",
-    estado: "",
-  });
+const [form, setForm] = useState({
+  nombre: "",
+  tipo: "",
+  marca: "",
+  modelo: "",
+  serie: "",
+  descripcion: "",
+  fecha: "",
+  estado: "",
+});
+
   const [fotos, setFotos] = useState([]);
   const inputFotoRef = useRef(null);
 
@@ -82,35 +99,38 @@ const Mismaquinas = () => {
   const abrirModalCrear = () => {
     setModoEdicion("crear");
     setItemEditandoId(null);
-    setForm({
-      nombre: "",
-      tipo: activo === "maquinas" ? "maquina" : "otro",
-      marca: "",
-      serie: "",
-      descripcion: "",
-      fecha: "",
-      estado: "operativo",
-    });
+setForm({
+  nombre: "",
+  tipo: activo === "maquinas" ? "maquina" : "otro",
+  marca: "",
+  modelo: "",
+  serie: "",
+  descripcion: "",
+  fecha: "",
+  estado: "operativo",
+});
     setFotos([]);
     setModalAbierto(true);
   };
 
   // Abrir Modal para editar una tarjeta
-  const abrirModalEditar = (item) => {
-    setModoEdicion("editar");
-    setItemEditandoId(item.id);
-    setForm({
-      nombre: item.nombre || "",
-      tipo: item.tipo || (activo === "maquinas" ? "maquina" : "otro"),
-      marca: item.marca || "",
-      serie: item.nroSerie || "",
-      descripcion: item.descripcion || "",
-      fecha: item.fecha || "",
-      estado: item.estado || "operativo",
-    });
-    setFotos(item.imagen ? [item.imagen] : []);
-    setModalAbierto(true);
-  };
+const abrirModalEditar = (item) => {
+  setModoEdicion("editar");
+  setItemEditandoId(item.id);
+
+  setForm({
+    nombre: item.nombre || "",
+    tipo: item.tipo || "",
+    marca: item.marca || "",
+    modelo: item.modelo || "",
+    serie: item.nroSerie || "",
+    descripcion: item.descripcion || "",
+    fecha: item.fecha || "",
+    estado: item.estado || "operativo",
+  });
+
+  setModalAbierto(true);
+};
 
   const cambiarCampo = (campo) => (e) => {
     setForm({ ...form, [campo]: e.target.value });
@@ -133,40 +153,72 @@ const Mismaquinas = () => {
   const cerrarModal = () => setModalAbierto(false);
 
   // Guardar o Actualizar
-  const actualizarDatos = () => {
-    const nuevoElemento = {
-      id: modoEdicion === "editar" ? itemEditandoId : Date.now(),
-      nombre: form.nombre,
-      tipo: form.tipo,
-      marca: form.marca,
-      nroSerie: form.serie,
-      descripcion: form.descripcion,
-      fecha: form.fecha,
-      estado: form.estado,
-      imagen: fotos[0] || "",
-    };
+const guardarEquipo = async () => {
+  try {
+    setGuardando(true);
+    setError("");
+   
+    const payload = {
+  name: form.nombre,
+  tipo: form.tipo,
+  brand: form.marca,
+  model: form.modelo,
+  serialNumber: form.serie,
+  description: form.descripcion,
+  status: convertirEstadoBackend(form.estado),
+};
 
-    const actualizarLista = (lista) => {
-      if (modoEdicion === "editar") {
-        return lista.map((item) => (item.id === itemEditandoId ? nuevoElemento : item));
-      }
-      return [...lista, nuevoElemento];
-    };
+    let response;
 
-    if (form.tipo === "maquina") {
-      setMaquinas(actualizarLista(maquinas));
-      if (modoEdicion === "editar" && activo === "otros") {
-        setOtros(otros.filter((item) => item.id !== itemEditandoId));
-      }
+    if (modoEdicion === "crear") {
+      response = await api.post("/machine", payload);
     } else {
-      setOtros(actualizarLista(otros));
-      if (modoEdicion === "editar" && activo === "maquinas") {
-        setMaquinas(maquinas.filter((item) => item.id !== itemEditandoId));
-      }
+      response = await api.put(
+        `/machine/${itemEditandoId}`,
+        payload
+      );
     }
 
-    cerrarModal();
-  };
+    console.log("Equipo guardado:", response.data);
+
+    setModalAbierto(false);
+    setItemEditandoId(null);
+
+    await obtenerMaquinas();
+  } catch (error) {
+    console.error("Error al guardar equipo:", error);
+
+    setError(
+      error.response?.data?.message ||
+        "No se pudo guardar el equipo."
+    );
+  } finally {
+    setGuardando(false);
+  }
+};
+
+const eliminarEquipo = async (id) => {
+  const confirmar = window.confirm(
+    "¿Seguro que querés eliminar este equipo?"
+  );
+
+  if (!confirmar) return;
+
+  try {
+    setError("");
+
+    await api.delete(`/machine/${id}`);
+
+    await obtenerMaquinas();
+  } catch (error) {
+    console.error("Error al eliminar equipo:", error);
+
+    setError(
+      error.response?.data?.message ||
+        "No se pudo eliminar el equipo."
+    );
+  }
+};
 
   const itemsAMostrar = activo === "maquinas" ? maquinas : otros;
 
@@ -241,6 +293,11 @@ const Mismaquinas = () => {
                 >
                   Editar
                 </button>
+
+                <button onClick={() => eliminarEquipo(item.id)}>
+  Eliminar
+</button>
+
               </div>
             </div>
           ))}
@@ -295,6 +352,19 @@ const Mismaquinas = () => {
                           onChange={cambiarCampo("marca")}
                         />
                       </div>
+
+                      <div className="campo">
+  <label>Modelo</label>
+
+  <input
+    type="text"
+    name="modelo"
+    value={form.modelo}
+    onChange={cambiarCampo}
+    placeholder="Ingresá el modelo"
+    required
+  />
+</div>
 
                       <div className="campo">
                         <label>N.° de serie</label>
@@ -413,12 +483,16 @@ const Mismaquinas = () => {
                   </div>
 
                   <button
-                    id="botonactualizar"
-                    type="button"
-                    onClick={actualizarDatos}
-                  >
-                    {modoEdicion === "editar" ? "Guardar cambios" : "Actualizar"}
-                  </button>
+  type="button"
+  onClick={guardarEquipo}
+  disabled={guardando}
+>
+  {guardando
+    ? "Guardando..."
+    : modoEdicion === "crear"
+    ? "Guardar"
+    : "Actualizar"}
+</button>
                 </aside>
               </div>
             </div>
