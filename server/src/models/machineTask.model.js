@@ -49,5 +49,7 @@ const machineTaskSchema = new mongoose.Schema(
   }
 );
 
+machineTaskSchema.index({ machineId: 1, status: 1 });
+
 const MachineTask = mongoose.model('MachineTask', machineTaskSchema);
 export default MachineTask;

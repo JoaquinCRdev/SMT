@@ -41,6 +41,76 @@
 
 
 /* =========================================================
+   CABECERA (cuenta + salida)
+   Esta página no lleva el sidebar de la app, pero antes no tenía
+   ninguna forma de ver la cuenta abierta ni de cerrarla.
+========================================================= */
+
+#headerPlanes {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+.cuentaPlanes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+}
+
+.cuentaPlanes-nombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--TextoPrincipal);
+
+  max-width: 260px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cuentaPlanes-rol {
+  font-size: 13px;
+  color: var(--Naranja);
+}
+
+#volverPlanes,
+#logoutPlanes {
+  padding: 8px 12px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  color: var(--TextoSecundario);
+
+  background-color: var(--FondoBoton);
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#volverPlanes:hover,
+#logoutPlanes:hover {
+  color: var(--Naranja);
+  border-color: var(--Naranja);
+}
+
+
+/* =========================================================
    LOGO
 ========================================================= */
 

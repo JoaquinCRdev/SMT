@@ -30,7 +30,7 @@ export async function getTaskLogsByTask(taskId, user) {
 }
 
 export async function getTaskLogsByUser(userId, user) {
-  if (user?.role !== "admin" && String(user.id) !== String(userId)) {
+  if (String(user.id) !== String(userId)) {
     throw new ApiError(403, "Forbidden");
   }
 

@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as maintenancePlanController from "../controllers/maintenancePlan.controller.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
 import {
+  changePlanStatusSchema,
   createPlanSchema,
   markPerformedSchema,
   updatePlanSchema,
@@ -25,6 +26,11 @@ router.put(
   maintenancePlanController.updatePlan,
 );
 router.delete("/:planId", maintenancePlanController.deletePlan);
+router.patch(
+  "/:planId/status",
+  validate(changePlanStatusSchema),
+  maintenancePlanController.changePlanStatus,
+);
 router.patch(
   "/:planId/performed",
   validate(markPerformedSchema),

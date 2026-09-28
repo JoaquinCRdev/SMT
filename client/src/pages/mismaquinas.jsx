@@ -1,7 +1,76 @@
 import "../styles/pages/mismaquinas.css";
 import Sidebar from "../components/layout/sidebar.jsx";
-import { useEffect, useRef, useState } from "react";
-import api from "../api/axios.js"
+import { useEffect, useState } from "react";
+import api from "../api/axios.js";
+
+const ESTADOS_FRONTEND = {
+  active: "operativo",
+  maintenance: "mantenimiento",
+  inactive: "baja",
+};
+
+const ESTADOS_BACKEND = {
+  operativo: "active",
+  mantenimiento: "maintenance",
+  baja: "inactive",
+};
+
+const TIPOS = [
+  { value: "maquina", label: "Máquina" },
+  { value: "otro", label: "Otro" },
+];
+
+const ETIQUETA_ESTADO = {
+  operativo: "Operativo",
+  mantenimiento: "En Mantenimiento",
+  baja: "De baja",
+};
+
+// Espejo de las restricciones de machine.validator.js, para no mandar al
+// servidor requests que van a rebotar con un 400.
+const REGLAS = {
+  nombre: { min: 15, max: 100, label: "El nombre" },
+  marca: { min: 2, max: 50, label: "La marca" },
+  modelo: { min: 2, max: 50, label: "El modelo" },
+  serie: { min: 5, max: 50, label: "El número de serie" },
+};
+
+const formVacio = (tipo) => ({
+  nombre: "",
+  tipo,
+  marca: "",
+  modelo: "",
+  serie: "",
+  descripcion: "",
+  estado: "operativo",
+});
+
+const convertirDesdeBackend = (item) => ({
+  id: item._id,
+  nombre: item.name,
+  tipo: item.tipo,
+  marca: item.brand,
+  modelo: item.model,
+  serie: item.serialNumber,
+  descripcion: item.description || "",
+  estado: ESTADOS_FRONTEND[item.status] || "operativo",
+});
+
+const validarForm = (form) => {
+  for (const [campo, regla] of Object.entries(REGLAS)) {
+    const largo = form[campo].trim().length;
+    if (largo < regla.min) {
+      return `${regla.label} debe tener al menos ${regla.min} caracteres`;
+    }
+    if (largo > regla.max) {
+      return `${regla.label} no puede superar ${regla.max} caracteres`;
+    }
+  }
+  if (form.descripcion.length > 500) {
+    return "La descripción no puede superar 500 caracteres";
+  }
+  return "";
+};
 
 const Mismaquinas = () => {
   const [activo, setActivo] = useState("maquinas");
@@ -10,224 +79,136 @@ const Mismaquinas = () => {
   const [itemEditandoId, setItemEditandoId] = useState(null);
   const [maquinas, setMaquinas] = useState([]);
   const [otros, setOtros] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
-  
-  const obtenerMaquinas = async () => {
-  try {
-    setLoading(true);
-    setError("");
+  const [form, setForm] = useState(() => formVacio("maquina"));
 
-    const response = await api.get("/machine");
+  const listar = () => api.get("/machine", { params: { limit: 100 } });
 
-    const items = response.data.items || [];
-
-    const maquinasBackend = items.filter(
-      (item) => item.tipo === "maquina"
+  const distribuir = (items) => {
+    setMaquinas(
+      items.filter((i) => i.tipo === "maquina").map(convertirDesdeBackend),
     );
-
-    const otrosBackend = items.filter(
-      (item) => item.tipo === "otro"
+    setOtros(
+      items.filter((i) => i.tipo === "otro").map(convertirDesdeBackend),
     );
-
-    setMaquinas(maquinasBackend);
-    setOtros(otrosBackend);
-  } catch (error) {
-    console.error("Error al obtener máquinas:", error);
-
-    setError(
-      error.response?.data?.message ||
-        "No se pudieron cargar los equipos."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  obtenerMaquinas();
-}, []);
-
-const convertirDesdeBackend = (item) => ({
-  id: item._id,
-  nombre: item.name,
-  tipo: item.tipo,
-  marca: item.brand,
-  modelo: item.model,
-  nroSerie: item.serialNumber,
-  descripcion: item.description || "",
-  estado: convertirEstadoFrontend(item.status),
-});
-
-const convertirEstadoFrontend = (status) => {
-  const equivalencias = {
-    active: "operativo",
-    maintenance: "mantenimiento",
-    inactive: "baja",
   };
 
-  return equivalencias[status] || "operativo";
-};
+  const mensajeError = (err, porDefecto) =>
+    err.response?.data?.message || porDefecto;
 
-const convertirEstadoBackend = (estado) => {
-  const equivalencias = {
-    operativo: "active",
-    mantenimiento: "maintenance",
-    baja: "inactive",
+  useEffect(() => {
+    let cancelado = false;
+
+    (async () => {
+      try {
+        const { data } = await listar();
+        if (cancelado) return;
+        distribuir(data.items ?? []);
+      } catch (err) {
+        if (cancelado) return;
+        setError(mensajeError(err, "No se pudieron cargar los equipos."));
+      } finally {
+        if (!cancelado) setCargando(false);
+      }
+    })();
+
+    return () => {
+      cancelado = true;
+    };
+  }, []);
+
+  // Recarga posterior a guardar o eliminar, sin volver a mostrar el spinner.
+  const recargar = async () => {
+    try {
+      const { data } = await listar();
+      distribuir(data.items ?? []);
+    } catch (err) {
+      setError(mensajeError(err, "No se pudieron cargar los equipos."));
+    }
   };
 
-  return equivalencias[estado] || "active";
-};
+  const cambiarCampo = (campo) => (e) => {
+    setForm((prev) => ({ ...prev, [campo]: e.target.value }));
+  };
 
-  // Formulario y fotos
-const [form, setForm] = useState({
-  nombre: "",
-  tipo: "",
-  marca: "",
-  modelo: "",
-  serie: "",
-  descripcion: "",
-  fecha: "",
-  estado: "",
-});
-
-  const [fotos, setFotos] = useState([]);
-  const inputFotoRef = useRef(null);
-
-  // Abrir Modal para crear
   const abrirModalCrear = () => {
     setModoEdicion("crear");
     setItemEditandoId(null);
-setForm({
-  nombre: "",
-  tipo: activo === "maquinas" ? "maquina" : "otro",
-  marca: "",
-  modelo: "",
-  serie: "",
-  descripcion: "",
-  fecha: "",
-  estado: "operativo",
-});
-    setFotos([]);
+    setForm(formVacio(activo === "maquinas" ? "maquina" : "otro"));
+    setError("");
     setModalAbierto(true);
   };
 
-  // Abrir Modal para editar una tarjeta
-const abrirModalEditar = (item) => {
-  setModoEdicion("editar");
-  setItemEditandoId(item.id);
-
-  setForm({
-    nombre: item.nombre || "",
-    tipo: item.tipo || "",
-    marca: item.marca || "",
-    modelo: item.modelo || "",
-    serie: item.nroSerie || "",
-    descripcion: item.descripcion || "",
-    fecha: item.fecha || "",
-    estado: item.estado || "operativo",
-  });
-
-  setModalAbierto(true);
-};
-
-  const cambiarCampo = (campo) => (e) => {
-    setForm({ ...form, [campo]: e.target.value });
-  };
-
-  const abrirSelectorFotos = () => {
-    if (inputFotoRef.current) inputFotoRef.current.click();
-  };
-
-  const agregarFotos = (e) => {
-    const archivos = Array.from(e.target.files);
-    const urls = archivos.map((archivo) => URL.createObjectURL(archivo));
-    setFotos((prev) => [...prev, ...urls]);
-  };
-
-  const quitarFoto = (indice) => {
-    setFotos((prev) => prev.filter((_, i) => i !== indice));
+  const abrirModalEditar = (item) => {
+    setModoEdicion("editar");
+    setItemEditandoId(item.id);
+    setForm({
+      nombre: item.nombre || "",
+      tipo: item.tipo || "maquina",
+      marca: item.marca || "",
+      modelo: item.modelo || "",
+      serie: item.serie || "",
+      descripcion: item.descripcion || "",
+      estado: item.estado || "operativo",
+    });
+    setError("");
+    setModalAbierto(true);
   };
 
   const cerrarModal = () => setModalAbierto(false);
 
-  // Guardar o Actualizar
-const guardarEquipo = async () => {
-  try {
-    setGuardando(true);
-    setError("");
-   
-    const payload = {
-  name: form.nombre,
-  tipo: form.tipo,
-  brand: form.marca,
-  model: form.modelo,
-  serialNumber: form.serie,
-  description: form.descripcion,
-  status: convertirEstadoBackend(form.estado),
-};
-
-    let response;
-
-    if (modoEdicion === "crear") {
-      response = await api.post("/machine", payload);
-    } else {
-      response = await api.put(
-        `/machine/${itemEditandoId}`,
-        payload
-      );
+  const guardarEquipo = async () => {
+    const problema = validarForm(form);
+    if (problema) {
+      setError(problema);
+      return;
     }
 
-    console.log("Equipo guardado:", response.data);
+    const payload = {
+      name: form.nombre.trim(),
+      tipo: form.tipo,
+      brand: form.marca.trim(),
+      model: form.modelo.trim(),
+      serialNumber: form.serie.trim(),
+      description: form.descripcion.trim(),
+      status: ESTADOS_BACKEND[form.estado] || "active",
+    };
 
-    setModalAbierto(false);
-    setItemEditandoId(null);
+    try {
+      setGuardando(true);
+      setError("");
 
-    await obtenerMaquinas();
-  } catch (error) {
-    console.error("Error al guardar equipo:", error);
+      if (modoEdicion === "crear") {
+        await api.post("/machine", payload);
+      } else {
+        await api.put(`/machine/${itemEditandoId}`, payload);
+      }
 
-    setError(
-      error.response?.data?.message ||
-        "No se pudo guardar el equipo."
-    );
-  } finally {
-    setGuardando(false);
-  }
-};
+      setModalAbierto(false);
+      setItemEditandoId(null);
+      await recargar();
+    } catch (err) {
+      setError(mensajeError(err, "No se pudo guardar el equipo."));
+    } finally {
+      setGuardando(false);
+    }
+  };
 
-const eliminarEquipo = async (id) => {
-  const confirmar = window.confirm(
-    "¿Seguro que querés eliminar este equipo?"
-  );
+  const eliminarEquipo = async (id) => {
+    if (!window.confirm("¿Seguro que querés eliminar este equipo?")) return;
 
-  if (!confirmar) return;
-
-  try {
-    setError("");
-
-    await api.delete(`/machine/${id}`);
-
-    await obtenerMaquinas();
-  } catch (error) {
-    console.error("Error al eliminar equipo:", error);
-
-    setError(
-      error.response?.data?.message ||
-        "No se pudo eliminar el equipo."
-    );
-  }
-};
+    try {
+      setError("");
+      await api.delete(`/machine/${id}`);
+      await recargar();
+    } catch (err) {
+      setError(mensajeError(err, "No se pudo eliminar el equipo."));
+    }
+  };
 
   const itemsAMostrar = activo === "maquinas" ? maquinas : otros;
-
-  const formatearEstado = (est) => {
-    if (est === "operativo") return "Operativo";
-    if (est === "mantenimiento") return "En Mantenimiento";
-    if (est === "baja") return "De baja";
-    return est;
-  };
 
   return (
     <div id="containermismaquinas">
@@ -263,29 +244,37 @@ const eliminarEquipo = async (id) => {
           </p>
         </div>
 
+        {error && <p id="errormismaquinas">{error}</p>}
+
         <div id="listamaquinas">
+          {cargando && <p id="cargandomismaquinas">Cargando equipos...</p>}
+
+          {!cargando && itemsAMostrar.length === 0 && (
+            <p id="vaciomismaquinas">
+              {activo === "maquinas"
+                ? "Todavía no cargaste máquinas."
+                : "Todavía no cargaste elementos en Otros."}
+            </p>
+          )}
+
           {itemsAMostrar.map((item) => (
             <div className="tarjetamaquina" key={item.id}>
               <div className="imagentarjeta">
-                {item.imagen ? (
-                  <img src={item.imagen} alt={item.nombre} />
-                ) : (
-                  <span>Img</span>
-                )}
+                <span>Img</span>
               </div>
 
               <div className="infomaquina">
                 <h2>{item.nombre}</h2>
                 <div className="etiquetas">
                   <span>Marca: {item.marca}</span>
-                  <span>S/N: {item.nroSerie}</span>
+                  <span>S/N: {item.serie}</span>
                 </div>
               </div>
 
               <div className="acciones-tarjeta">
-                <button className={`estado ${item.estado}`}>
-                  {formatearEstado(item.estado)}
-                </button>
+                <span className={`estado ${item.estado}`}>
+                  {ETIQUETA_ESTADO[item.estado] || item.estado}
+                </span>
                 <button
                   className="boton-editar"
                   type="button"
@@ -294,32 +283,42 @@ const eliminarEquipo = async (id) => {
                   Editar
                 </button>
 
-                <button onClick={() => eliminarEquipo(item.id)}>
-  Eliminar
-</button>
-
+                <button
+                  type="button"
+                  onClick={() => eliminarEquipo(item.id)}
+                >
+                  Eliminar
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* MODAL */}
       {modalAbierto && (
         <div className="overlay-modal" onClick={cerrarModal}>
           <div className="modal-wrapper">
-            <button className="boton-cerrar-x" onClick={cerrarModal} type="button">
+            <button
+              className="boton-cerrar-x"
+              onClick={cerrarModal}
+              type="button"
+            >
               ✕
             </button>
 
-            <div className="contenido-modal" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="contenido-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div id="contenidomantenimiento">
                 <main id="columnaformulario">
                   <h3>
                     {modoEdicion === "editar"
                       ? "Editar datos del equipo"
-                      : "Completa los datos del mantenimiento"}
+                      : "Cargá los datos del equipo"}
                   </h3>
+
+                  {error && <p id="errormodalmismaquinas">{error}</p>}
 
                   <div id="filacampos">
                     <div className="columnacampos">
@@ -329,6 +328,9 @@ const eliminarEquipo = async (id) => {
                           type="text"
                           value={form.nombre}
                           onChange={cambiarCampo("nombre")}
+                          minLength={REGLAS.nombre.min}
+                          maxLength={REGLAS.nombre.max}
+                          placeholder="Mínimo 15 caracteres"
                         />
                       </div>
 
@@ -338,9 +340,11 @@ const eliminarEquipo = async (id) => {
                           value={form.tipo}
                           onChange={cambiarCampo("tipo")}
                         >
-                          <option value="">Seleccionar...</option>
-                          <option value="maquina">Máquina</option>
-                          <option value="otro">Otro</option>
+                          {TIPOS.map((tipo) => (
+                            <option key={tipo.value} value={tipo.value}>
+                              {tipo.label}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
@@ -350,21 +354,21 @@ const eliminarEquipo = async (id) => {
                           type="text"
                           value={form.marca}
                           onChange={cambiarCampo("marca")}
+                          minLength={REGLAS.marca.min}
+                          maxLength={REGLAS.marca.max}
                         />
                       </div>
 
                       <div className="campo">
-  <label>Modelo</label>
-
-  <input
-    type="text"
-    name="modelo"
-    value={form.modelo}
-    onChange={cambiarCampo}
-    placeholder="Ingresá el modelo"
-    required
-  />
-</div>
+                        <label>Modelo</label>
+                        <input
+                          type="text"
+                          value={form.modelo}
+                          onChange={cambiarCampo("modelo")}
+                          minLength={REGLAS.modelo.min}
+                          maxLength={REGLAS.modelo.max}
+                        />
+                      </div>
 
                       <div className="campo">
                         <label>N.° de serie</label>
@@ -373,6 +377,8 @@ const eliminarEquipo = async (id) => {
                           type="text"
                           value={form.serie}
                           onChange={cambiarCampo("serie")}
+                          minLength={REGLAS.serie.min}
+                          maxLength={REGLAS.serie.max}
                         />
                       </div>
                     </div>
@@ -381,18 +387,10 @@ const eliminarEquipo = async (id) => {
                       <div className="campo">
                         <label>Descripción</label>
                         <textarea
-                          rows="2"
+                          rows={2}
                           value={form.descripcion}
+                          maxLength={500}
                           onChange={cambiarCampo("descripcion")}
-                        />
-                      </div>
-
-                      <div className="campo">
-                        <label>Fecha de mantenimiento</label>
-                        <input
-                          type="date"
-                          value={form.fecha}
-                          onChange={cambiarCampo("fecha")}
                         />
                       </div>
 
@@ -402,7 +400,6 @@ const eliminarEquipo = async (id) => {
                           value={form.estado}
                           onChange={cambiarCampo("estado")}
                         >
-                          <option value="">Seleccionar...</option>
                           <option value="operativo">Operativo</option>
                           <option value="mantenimiento">
                             En mantenimiento
@@ -410,48 +407,6 @@ const eliminarEquipo = async (id) => {
                           <option value="baja">De baja</option>
                         </select>
                       </div>
-                    </div>
-                  </div>
-
-                  <div id="seccionfotos">
-                    <p>Fotos</p>
-
-                    <div id="filafotos">
-                      {fotos.map((foto, indice) => (
-                        <div className="fotomaquina" key={indice}>
-                          <img src={foto} alt={`Foto ${indice + 1}`} />
-
-                          <button
-                            className="botonquitarfoto"
-                            type="button"
-                            onClick={() => quitarFoto(indice)}
-                          >
-                            <img src="cerrargris.png" alt="Quitar" />
-                          </button>
-                        </div>
-                      ))}
-
-                      <input
-                        ref={inputFotoRef}
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        style={{ display: "none" }}
-                        onChange={agregarFotos}
-                      />
-
-                      <button
-                        id="botonagregarfoto"
-                        type="button"
-                        onClick={abrirSelectorFotos}
-                      >
-                        <img src="camaragris.png" alt="" />
-                        <span>
-                          Agregar
-                          <br />
-                          foto
-                        </span>
-                      </button>
                     </div>
                   </div>
                 </main>
@@ -464,8 +419,7 @@ const eliminarEquipo = async (id) => {
                       <p id="etiquetaplaca">Placa de identificación</p>
                       <p id="nombreplaca">{form.nombre || "—"}</p>
                       <p id="tipoplaca">
-                        {form.tipo === "maquina" && "Máquina"}
-                        {form.tipo === "otro" && "Otro"}
+                        {TIPOS.find((t) => t.value === form.tipo)?.label}
                       </p>
 
                       <div id="serieplaca">
@@ -477,22 +431,23 @@ const eliminarEquipo = async (id) => {
                     <div id="estadomaquina">
                       <span>Estado:</span>
                       <b className={`estado ${form.estado}`}>
-                        {formatearEstado(form.estado) || "—"}
+                        {ETIQUETA_ESTADO[form.estado] || "—"}
                       </b>
                     </div>
                   </div>
 
                   <button
-  type="button"
-  onClick={guardarEquipo}
-  disabled={guardando}
->
-  {guardando
-    ? "Guardando..."
-    : modoEdicion === "crear"
-    ? "Guardar"
-    : "Actualizar"}
-</button>
+                    id="botonactualizar"
+                    type="button"
+                    onClick={guardarEquipo}
+                    disabled={guardando}
+                  >
+                    {guardando
+                      ? "Guardando..."
+                      : modoEdicion === "crear"
+                        ? "Guardar"
+                        : "Actualizar"}
+                  </button>
                 </aside>
               </div>
             </div>

@@ -13,22 +13,36 @@ export const AuthProvider = ({ children }) => {
     if (!token) {
       setUser(null);
       setLoading(false);
-      return;
+      return null;
     }
 
     try {
       const { data } = await api.get("/profile");
       setUser(data);
+      return data;
     } catch {
       localStorage.removeItem("accessToken");
       setUser(null);
+      return null;
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProfile();
+    // La carga del perfil se dispara dentro de una IIFE asíncrona: llamarla
+    // directo en el cuerpo del effect dispara el error de
+    // setState síncrono dentro de un effect (cascada de renders).
+    let cancelado = false;
+
+    (async () => {
+      await fetchProfile();
+      if (cancelado) return;
+    })();
+
+    return () => {
+      cancelado = true;
+    };
   }, []);
 
   const logout = async () => {

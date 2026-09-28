@@ -382,6 +382,42 @@
   gap: 12px;
 }
 
+/* Estado de carga / lista vacía dentro de la grilla */
+
+.config-cargando {
+  grid-column: 1 / -1;
+
+  margin: 0;
+  padding: 12px 0;
+
+  font-size: var(--TamTexto);
+  color: var(--TextoSecundario);
+}
+
+/* Errores de la página y de los modales */
+
+.config-error {
+  margin: 0;
+  padding: 10px 12px;
+
+  font-size: calc(var(--TamTexto) - 1px);
+  color: #ef4444;
+
+  background-color: rgba(239, 68, 68, 0.08);
+
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 7px;
+}
+
+.staff-email {
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .staff-card {
   background-color: var(--FondoBoton);
 
@@ -1088,6 +1124,31 @@
   cursor: pointer;
 }
 
+.modal-form-hint {
+  font-size: calc(var(--TamTexto) - 2px);
+  color: var(--TextoSecundario);
+}
+
+.modal-form-error {
+  margin-top: 16px;
+}
+
+/* Código del taller en el modal de modificación */
+
+.modal-taller-codigo {
+  margin: 4px 0 6px;
+
+  font-size: calc(var(--TamTitulo) - 4px);
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: var(--Naranja);
+}
+
+.light-mode .modal-taller-codigo {
+  color: var(--NaranjaHover);
+}
+
 
 /* =========================================================
    BOTONES MODAL
@@ -1447,6 +1508,16 @@
   height: 38px;
 }
 
+/* Datos del administrador: son los del usuario, no se editan acá */
+
+.campo-modal-taller input:disabled {
+  color: var(--TextoSecundario);
+  background-color: var(--FondoSecundario);
+
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .campo-modal-taller textarea {
   min-height: 80px;
   resize: none;
@@ -1460,84 +1531,6 @@
 .campo-modal-taller input::placeholder,
 .campo-modal-taller textarea::placeholder {
   color: var(--TextoTerciario);
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-.modal-taller-logo {
-  padding-bottom: 20px;
-
-  border-bottom: 1px solid var(--BordePrincipal);
-
-  margin-bottom: 20px;
-}
-
-.modal-taller-logo h3 {
-  text-align: center;
-}
-
-.modal-logo-upload {
-  width: 175px;
-  height: 135px;
-
-  margin: auto;
-
-  border: 2px dashed var(--BordeSuave);
-  border-radius: 8px;
-
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-
-  box-sizing: border-box;
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.modal-logo-upload:hover {
-  border-color: var(--Naranja);
-  background-color: var(--FondoBoton);
-}
-
-.modal-logo-icon {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 8px;
-
-  color: var(--TextoSecundario);
-}
-
-.modal-logo-title {
-  max-width: 150px;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  color: var(--TextoPrincipal);
-
-  font-size: var(--TamTexto);
-  font-weight: 600;
-
-  margin-bottom: 5px;
-}
-
-.modal-logo-info {
-  color: var(--TextoSecundario);
-
-  font-size: calc(var(--TamTexto) - 2px);
 }
 
 
@@ -1598,11 +1591,6 @@
 
   .modal-taller-header h2 {
     font-size: var(--TamTitulo);
-  }
-
-  .modal-logo-upload {
-    width: 155px;
-    height: 125px;
   }
 
   .modal-taller-actions {

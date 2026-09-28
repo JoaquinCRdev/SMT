@@ -1,42 +1,24 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/layout/sidebar";
+import api from "../api/axios";
 import "../styles/pages/historial.css";
 
-// Muestra de datos con formato de fecha YYYY-MM-DD
-const mantenimientosIniciales = [
-  {
-    id: 1,
-    nombre: "Compresor A",
-    fecha: "2026-03-15",
-    tipo: "Preventivo",
-    estado: "Realizado",
-    descripcion: "Se realizó cambio de aceite, sustitución de filtros de aire y revisión de presiones.",
-  },
-  {
-    id: 2,
-    nombre: "Torno CNC",
-    fecha: "2026-03-20",
-    tipo: "Correctivo",
-    estado: "Pendiente",
-    descripcion: "Se requiere calibración del eje Z y reemplazo de banda de transmisión gastada.",
-  },
-  {
-    id: 3,
-    nombre: "Generador B",
-    fecha: "2026-02-10",
-    tipo: "Predictivo",
-    estado: "Vencido",
-    descripcion: "Análisis de vibración programado no ejecutado a tiempo. Urge inspección.",
-  },
-  {
-    id: 4,
-    nombre: "Bomba de Agua",
-    fecha: "2026-03-28",
-    tipo: "Preventivo",
-    estado: "Proximo",
-    descripcion: "Mantenimiento rutinario de lubrificación de rodamientos y verificación de sellos.",
-  },
-];
+const numero = (valor) => new Intl.NumberFormat("es-AR").format(valor ?? 0);
+
+const fechaCorta = (iso) =>
+  new Date(iso).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+const fechaLarga = (iso) =>
+  new Date(iso).toLocaleDateString("es-ES", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
 function StatCard({ number, text, status }) {
   return (
@@ -53,15 +35,9 @@ function StatCard({ number, text, status }) {
 }
 
 function MaintenanceCard({ mantenimiento, onVerDetalles }) {
-  const estadoSlug = mantenimiento.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const estadoClass = `status-badge status-${estadoSlug}`;
-  const buttonClass = `maintenance-button button-${estadoSlug}`;
-
-  const fechaFormateada = new Date(`${mantenimiento.fecha}T00:00:00`).toLocaleDateString("es-ES", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // Un registro es por definición un mantenimiento ya realizado: el estado no
+  // viene del backend, así que se usa la variante "realizado" del badge.
+  const maquina = mantenimiento.maquina;
 
   return (
     <div className="maintenance-card">
@@ -72,17 +48,22 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
 
       <div className="maintenance-info">
         <div className="maintenance-header">
-          <strong>{mantenimiento.nombre}</strong>
-          <span>{fechaFormateada}</span>
+          <strong>{mantenimiento.titulo}</strong>
+          <span>{fechaCorta(mantenimiento.fecha)}</span>
         </div>
-        <span className="maintenance-type">{mantenimiento.tipo}</span>
+        <span className="maintenance-type">
+          {maquina?.nombre || "Equipo eliminado"}
+        </span>
       </div>
 
       <div className="maintenance-actions">
-        <span className={estadoClass}>
-          {mantenimiento.estado} - {mantenimiento.tipo}
+        <span className="status-badge status-realizado">
+          Realizado - {maquina?.marca || "sin marca"}
         </span>
-        <button className={buttonClass} onClick={() => onVerDetalles(mantenimiento)}>
+        <button
+          className="maintenance-button button-realizado"
+          onClick={() => onVerDetalles(mantenimiento)}
+        >
           Ver mantenimiento
         </button>
       </div>
@@ -91,41 +72,118 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
 }
 
 export default function Historial() {
+  const [registros, setRegistros] = useState([]);
+  const [maquinas, setMaquinas] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
+  // Referencia temporal fija: leer Date.now() durante el render no es puro.
+  const [ahora, setAhora] = useState(0);
+
   const [busqueda, setBusqueda] = useState("");
-  const [rangoFecha, setRangoFecha] = useState("30");
-  const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [rangoFecha, setRangoFecha] = useState("todos");
   const [orden, setOrden] = useState("recientes");
   const [itemSeleccionado, setItemSeleccionado] = useState(null);
+  useEffect(() => {
+    let cancelado = false;
 
-  // Lógica combinada de Filtrado y Ordenamiento
+    (async () => {
+      try {
+        const [registrosRes, maquinasRes] = await Promise.all([
+          api.get("/records", { params: { limit: 200 } }),
+          api.get("/machine", { params: { limit: 200 } }),
+        ]);
+        if (cancelado) return;
+
+        setAhora(Date.now());
+        setRegistros(
+          (registrosRes.data.items ?? []).map((item) => ({
+            id: item._id,
+            titulo: item.title,
+            descripcion: item.description || "",
+            fecha: item.performedAt,
+            maquina: item.machineId || null,
+            plan: item.planId || null,
+            tecnico: item.technician || "",
+            duracion: item.duration,
+            costo: item.cost,
+            repuestos: item.partsUsed || "",
+            resultados: item.results || "",
+            notas: item.notes || "",
+          })),
+        );
+        setMaquinas(maquinasRes.data.items ?? []);
+      } catch (err) {
+        if (cancelado) return;
+        setError(
+          err.response?.data?.message || "No se pudo cargar el historial",
+        );
+      } finally {
+        if (!cancelado) setCargando(false);
+      }
+    })();
+
+    return () => {
+      cancelado = true;
+    };
+  }, []);
+
+  const resumen = useMemo(() => {
+    const porTipo = (tipo) => maquinas.filter((m) => m.tipo === tipo);
+    const operativos = (lista) =>
+      lista.filter((m) => m.status === "active").length;
+
+    const costoTotal = registros.reduce(
+      (total, r) => total + (r.costo ?? 0),
+      0,
+    );
+    const conDuracion = registros.filter((r) => r.duracion != null);
+    const duracionPromedio = conDuracion.length
+      ? conDuracion.reduce((t, r) => t + r.duracion, 0) / conDuracion.length
+      : 0;
+
+    const inicioMes = new Date(ahora);
+    inicioMes.setDate(1);
+    inicioMes.setHours(0, 0, 0, 0);
+    const esteMes = registros.filter(
+      (r) => new Date(r.fecha) >= inicioMes,
+    ).length;
+
+    return {
+      maquinas: porTipo("maquina"),
+      otros: porTipo("otro"),
+      operativosMaquinas: operativos(porTipo("maquina")),
+      operativosOtros: operativos(porTipo("otro")),
+      costoTotal,
+      duracionPromedio,
+      esteMes,
+    };
+  }, [registros, maquinas, ahora]);
+
   const mantenimientosProcesados = useMemo(() => {
     const terminoBusqueda = busqueda.toLowerCase().trim();
 
-    return mantenimientosIniciales
+    return registros
       .filter((item) => {
         if (!terminoBusqueda) return true;
         return (
-          item.nombre.toLowerCase().includes(terminoBusqueda) ||
-          item.descripcion.toLowerCase().includes(terminoBusqueda)
+          item.titulo.toLowerCase().includes(terminoBusqueda) ||
+          item.descripcion.toLowerCase().includes(terminoBusqueda) ||
+          (item.maquina?.nombre || "")
+            .toLowerCase()
+            .includes(terminoBusqueda)
         );
       })
       .filter((item) => {
         if (rangoFecha === "todos") return true;
-        const fechaItem = new Date(`${item.fecha}T00:00:00`);
-        const hoy = new Date();
-        const diferenciaDias = (hoy - fechaItem) / (1000 * 60 * 60 * 24);
-        return diferenciaDias <= parseInt(rangoFecha, 10);
+        const dias = (ahora - new Date(item.fecha).getTime()) / 86400000;
+        return dias <= parseInt(rangoFecha, 10);
       })
-      .filter((item) => {
-        if (filtroEstado === "Todos") return true;
-        return item.estado.toLowerCase() === filtroEstado.toLowerCase();
-      })
-      .sort((a, b) => {
-        const fechaA = new Date(`${a.fecha}T00:00:00`).getTime();
-        const fechaB = new Date(`${b.fecha}T00:00:00`).getTime();
-        return orden === "recientes" ? fechaB - fechaA : fechaA - fechaB;
-      });
-  }, [busqueda, rangoFecha, filtroEstado, orden]);
+      .sort((a, b) =>
+        orden === "recientes"
+          ? new Date(b.fecha) - new Date(a.fecha)
+          : new Date(a.fecha) - new Date(b.fecha),
+      );
+  }, [registros, busqueda, rangoFecha, orden, ahora]);
 
   return (
     <div className="historial-layout">
@@ -133,13 +191,11 @@ export default function Historial() {
 
       <main className="historial-page">
         <div className="historial-container">
-          
-          {/* HEADER CON FILTRO DE FECHAS */}
           <div className="history-header">
             <span>Historial de:</span>
-            <select 
+            <select
               className="date-select"
-              value={rangoFecha} 
+              value={rangoFecha}
               onChange={(e) => setRangoFecha(e.target.value)}
             >
               <option value="7">Últ. 7 días</option>
@@ -150,50 +206,60 @@ export default function Historial() {
             </select>
           </div>
 
+          {error && <p className="historial-error">{error}</p>}
+
           <div className="stats-container">
-            <StatCard number="5" text=" máquinas registradas" status="4/5 operativos" />
-            <StatCard number="11" text=" otros registrados" status="6/11 operativos" />
+            <StatCard
+              number={numero(resumen.maquinas.length)}
+              text=" máquinas registradas"
+              status={`${resumen.operativosMaquinas}/${resumen.maquinas.length} operativos`}
+            />
+            <StatCard
+              number={numero(resumen.otros.length)}
+              text=" otros registrados"
+              status={`${resumen.operativosOtros}/${resumen.otros.length} operativos`}
+            />
           </div>
 
           <div className="section-title">Mantenimientos</div>
 
           <div className="maintenance-summary">
-            <div className="summary-card summary-success"><span>Realizados:</span><strong>32</strong></div>
-            <div className="summary-card summary-warning"><span>Pendientes:</span><strong>10</strong></div>
-            <div className="summary-card summary-info"><span>Próximos:</span><strong>5</strong></div>
-            <div className="summary-card summary-danger"><span>Vencidos:</span><strong>1</strong></div>
+            <div className="summary-card summary-success">
+              <span>Registrados:</span>
+              <strong>{numero(registros.length)}</strong>
+            </div>
+            <div className="summary-card summary-info">
+              <span>Este mes:</span>
+              <strong>{numero(resumen.esteMes)}</strong>
+            </div>
+            <div className="summary-card summary-warning">
+              <span>Costo total:</span>
+              <strong>{numero(Math.round(resumen.costoTotal))}</strong>
+            </div>
+            <div className="summary-card summary-danger">
+              <span>Duración prom. (h):</span>
+              <strong>
+                {resumen.duracionPromedio
+                  ? numero(Number(resumen.duracionPromedio.toFixed(1)))
+                  : "—"}
+              </strong>
+            </div>
           </div>
 
-          {/* BÚSQUEDA, FILTROS Y ORDENAMIENTO */}
           <div className="filters">
             <div className="search-group">
               <input
                 type="text"
                 className="search-input"
-                placeholder="Buscar equipo o descripción..."
+                placeholder="Buscar equipo, título o descripción..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
               />
             </div>
 
             <div className="filter-group">
-              <span>Estado:</span>
-              <select 
-                className="custom-select"
-                value={filtroEstado}
-                onChange={(e) => setFiltroEstado(e.target.value)}
-              >
-                <option value="Todos">Todos</option>
-                <option value="Realizado">Realizados</option>
-                <option value="Pendiente">Pendientes</option>
-                <option value="Proximo">Próximos</option>
-                <option value="Vencido">Vencidos</option>
-              </select>
-            </div>
-
-            <div className="filter-group">
               <span>Ordenar por:</span>
-              <select 
+              <select
                 className="custom-select"
                 value={orden}
                 onChange={(e) => setOrden(e.target.value)}
@@ -204,26 +270,33 @@ export default function Historial() {
             </div>
           </div>
 
-          {/* LISTA */}
           <div className="maintenance-list">
-            {mantenimientosProcesados.length > 0 ? (
+            {cargando && <p className="no-data">Cargando historial...</p>}
+
+            {!cargando && error && (
+              <p className="no-data">No se pudo cargar el historial.</p>
+            )}
+
+            {!cargando && !error && mantenimientosProcesados.length === 0 && (
+              <p className="no-data">
+                No hay mantenimientos en este rango de selección.
+              </p>
+            )}
+
+            {!cargando &&
+              !error &&
               mantenimientosProcesados.map((mantenimiento) => (
                 <MaintenanceCard
                   key={mantenimiento.id}
                   mantenimiento={mantenimiento}
                   onVerDetalles={setItemSeleccionado}
                 />
-              ))
-            ) : (
-              <p className="no-data">No hay mantenimientos en este rango de selección.</p>
-            )}
+              ))}
           </div>
-
         </div>
       </main>
 
-      {/* OVERLAY Y PANEL LATERAL */}
-      <div 
+      <div
         className={`drawer-overlay ${itemSeleccionado ? "active" : ""}`}
         onClick={() => setItemSeleccionado(null)}
       />
@@ -233,40 +306,100 @@ export default function Historial() {
           <div className="drawer-content">
             <div className="drawer-header">
               <h2>Detalle del Mantenimiento</h2>
-              <button className="close-drawer" onClick={() => setItemSeleccionado(null)}>✕</button>
+              <button
+                className="close-drawer"
+                onClick={() => setItemSeleccionado(null)}
+              >
+                ✕
+              </button>
             </div>
 
             <div className="drawer-body">
               <div className="drawer-section">
                 <h3>Equipo</h3>
-                <p>{itemSeleccionado.nombre} ({itemSeleccionado.tipo})</p>
+                <p>
+                  {itemSeleccionado.maquina?.nombre || "Equipo eliminado"}
+                  {itemSeleccionado.maquina?.serialNumber
+                    ? ` (S/N ${itemSeleccionado.maquina.serialNumber})`
+                    : ""}
+                </p>
               </div>
 
               <div className="drawer-section">
-                <h3>{itemSeleccionado.estado === "Realizado" ? "Fecha de realización" : "Fecha programada"}</h3>
+                <h3>Fecha de realización</h3>
                 <p className="drawer-date">
-                  📅 {new Date(`${itemSeleccionado.fecha}T00:00:00`).toLocaleDateString("es-ES", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  📅 {fechaLarga(itemSeleccionado.fecha)}
                 </p>
               </div>
 
               <div className="drawer-section">
                 <h3>Estado actual</h3>
-                <span className={`status-badge status-${itemSeleccionado.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>
-                  {itemSeleccionado.estado === "Realizado" ? "✔ Hecho" : "⌛ " + itemSeleccionado.estado}
+                <span className="status-badge status-realizado">
+                  ✔ Hecho
                 </span>
               </div>
 
-              <div className="drawer-section">
-                <h3>{itemSeleccionado.estado === "Realizado" ? "¿Qué se hizo?" : "¿Qué se tiene que hacer?"}</h3>
-                <div className="drawer-description">
-                  {itemSeleccionado.descripcion}
+              {itemSeleccionado.plan && (
+                <div className="drawer-section">
+                  <h3>Plan</h3>
+                  <p>{itemSeleccionado.plan.title}</p>
                 </div>
-              </div>
+              )}
+
+              {itemSeleccionado.tecnico && (
+                <div className="drawer-section">
+                  <h3>Técnico</h3>
+                  <p>{itemSeleccionado.tecnico}</p>
+                </div>
+              )}
+
+              {itemSeleccionado.duracion != null && (
+                <div className="drawer-section">
+                  <h3>Duración</h3>
+                  <p>{itemSeleccionado.duracion} h</p>
+                </div>
+              )}
+
+              {itemSeleccionado.costo != null && (
+                <div className="drawer-section">
+                  <h3>Costo</h3>
+                  <p>{numero(itemSeleccionado.costo)}</p>
+                </div>
+              )}
+
+              {itemSeleccionado.repuestos && (
+                <div className="drawer-section">
+                  <h3>Repuestos</h3>
+                  <p>{itemSeleccionado.repuestos}</p>
+                </div>
+              )}
+
+              {itemSeleccionado.resultados && (
+                <div className="drawer-section">
+                  <h3>¿Qué se hizo?</h3>
+                  <div className="drawer-description">
+                    {itemSeleccionado.resultados}
+                  </div>
+                </div>
+              )}
+
+              {itemSeleccionado.descripcion && (
+                <div className="drawer-section">
+                  <h3>Descripción</h3>
+                  <div className="drawer-description">
+                    {itemSeleccionado.descripcion}
+                  </div>
+                </div>
+              )}
+
+              {itemSeleccionado.notas && (
+                <div className="drawer-section">
+                  <h3>Notas</h3>
+                  <div className="drawer-description">
+                    {itemSeleccionado.notas}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

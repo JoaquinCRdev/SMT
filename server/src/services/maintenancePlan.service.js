@@ -1,9 +1,13 @@
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
+import { createRecord } from "./maintenanceRecord.service.js";
 import ApiError from "../utils/ApiError.js";
 import {
+  assertAssignableUser,
   getAccessibleMachine,
+  getWorkshopMachineIds,
   isValidObjectId,
+  requireWorkshop,
 } from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
 
@@ -46,6 +50,14 @@ export async function createMaintenancePlan(machineId, payload, user) {
     throw new ApiError(400, "customDays is required when frequency is custom");
   }
 
+  const assignees = [
+    ...(payload.assignedTo ?? []),
+    ...(payload.tasks ?? []).map((t) => t.assignedTo).filter(Boolean),
+  ];
+  for (const assignee of assignees) {
+    await assertAssignableUser(assignee, user);
+  }
+
   let taskIds = [];
   if (payload.tasks?.length) {
     const taskDocs = payload.tasks.map((t) => ({
@@ -67,6 +79,7 @@ export async function createMaintenancePlan(machineId, payload, user) {
     frequency: payload.frequency,
     customDays: payload.customDays,
     tasks: taskIds,
+    assignedTo: payload.assignedTo ?? [],
     startDate,
     endDate: payload.endDate ? new Date(payload.endDate) : undefined,
     nextDue: calculateNextDue(startDate, payload.frequency, payload.customDays),
@@ -74,7 +87,7 @@ export async function createMaintenancePlan(machineId, payload, user) {
     userId: user.id,
   });
 
-  return plan.populate(["tasks", "userId"]);
+  return plan.populate(["tasks", "assignedTo", "userId"]);
 }
 
 export async function getPlansByMachine(machineId, user, query = {}) {
@@ -93,6 +106,47 @@ export async function getPlansByMachine(machineId, user, query = {}) {
       .skip(skip)
       .limit(limit)
       .populate("tasks")
+      .populate("assignedTo", "name email role")
+      .populate("userId", "name email"),
+    MaintenancePlan.countDocuments(filter),
+  ]);
+
+  return {
+    items,
+    meta: { total, page, limit, pages: Math.ceil(total / limit) },
+  };
+}
+
+export async function getAllPlans(user, query = {}) {
+  const { page, limit, skip } = getPagination(query);
+
+  const workshopId = requireWorkshop(user);
+  const workshopMachines = await getWorkshopMachineIds(workshopId);
+  const filter = { machineId: { $in: workshopMachines } };
+
+  if (query.machineId) {
+    const isOwnMachine = workshopMachines.some(
+      (m) => String(m) === String(query.machineId),
+    );
+
+    if (!isOwnMachine) {
+      return { items: [], meta: { total: 0, page, limit, pages: 0 } };
+    }
+
+    filter.machineId = query.machineId;
+  }
+
+  if (query.status) filter.status = query.status;
+  if (query.frequency) filter.frequency = query.frequency;
+
+  const [items, total] = await Promise.all([
+    MaintenancePlan.find(filter)
+      .sort({ nextDue: 1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("machineId", "name brand model serialNumber tipo status")
+      .populate("tasks")
+      .populate("assignedTo", "name email role")
       .populate("userId", "name email"),
     MaintenancePlan.countDocuments(filter),
   ]);
@@ -107,7 +161,7 @@ export async function getPlanById(machineId, planId, user) {
   await getAccessibleMachine(machineId, user);
   const plan = await getAccessiblePlan(planId, user);
 
-  return plan.populate(["tasks", "userId"]);
+  return plan.populate(["tasks", "assignedTo", "userId"]);
 }
 
 export async function updatePlan(machineId, planId, payload, user) {
@@ -122,7 +176,19 @@ export async function updatePlan(machineId, planId, payload, user) {
     throw new ApiError(400, "customDays is required when frequency is custom");
   }
 
+  if (payload.assignedTo) {
+    for (const assignee of payload.assignedTo) {
+      await assertAssignableUser(assignee, user);
+    }
+    plan.assignedTo = payload.assignedTo;
+  }
+
   if (payload.tasks) {
+    const taskAssignees = payload.tasks.map((t) => t.assignedTo).filter(Boolean);
+    for (const assignee of taskAssignees) {
+      await assertAssignableUser(assignee, user);
+    }
+
     const taskDocs = payload.tasks.map((t) => ({
       machineId: plan.machineId,
       title: t.title,
@@ -157,7 +223,21 @@ export async function updatePlan(machineId, planId, payload, user) {
   }
 
   await plan.save();
-  return plan.populate(["tasks", "userId"]);
+  return plan.populate(["tasks", "assignedTo", "userId"]);
+}
+
+export async function changePlanStatus(machineId, planId, status, user) {
+  await getAccessibleMachine(machineId, user);
+  const plan = await getAccessiblePlan(planId, user);
+
+  if (status !== "active" && status !== "inactive") {
+    throw new ApiError(400, "Invalid status");
+  }
+
+  plan.status = status;
+  await plan.save();
+
+  return plan.populate(["tasks", "assignedTo", "userId"]);
 }
 
 export async function deletePlan(machineId, planId, user) {
@@ -191,5 +271,32 @@ export async function markPlanPerformed(machineId, planId, user, payload = {}) {
   }
 
   await plan.save();
-  return plan.populate(["tasks", "userId"]);
+
+  // Dar por realizado el plan cierra sus tareas pendientes: si el usuario
+  // marca el mantenimiento como hecho, el plan no puede quedar con trabajo
+  // sin terminar colgando.
+  const planConTareas = await plan.populate("tasks");
+  const pendientes = planConTareas.tasks.filter((t) => t.status !== "done");
+
+  if (pendientes.length) {
+    await MachineTask.updateMany(
+      { _id: { $in: pendientes.map((t) => t._id) } },
+      { $set: { status: "done", updatedAt: new Date() } },
+    );
+  }
+
+  // Y deja el rastro en el historial: antes marcar un plan como realizado no
+  // generaba ningún MaintenanceRecord, así que /historial nunca lo mostraba.
+  await createRecord(
+    {
+      machineId: plan.machineId,
+      planId: plan._id,
+      title: plan.title,
+      performedAt,
+      notes: payload.notes,
+    },
+    user,
+  );
+
+  return plan.populate(["tasks", "assignedTo", "userId"]);
 }

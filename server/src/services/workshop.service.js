@@ -43,7 +43,10 @@ export async function createWorkshop(user, payload) {
     throw new ApiError(409, "You already belong to a workshop");
 
   const workshop = await Workshop.create({ ...payload, owner: user.id });
-  await User.findByIdAndUpdate(user.id, { workshop: workshop._id });
+  await User.findByIdAndUpdate(user.id, {
+    workshop: workshop._id,
+    role: "admin",
+  });
   return workshop;
 }
 
@@ -67,10 +70,12 @@ export async function requestToJoin(user, code) {
 }
 
 export async function resolveRequest(requestId, user, status) {
-  const request = await WorkshopJoinRequest.findById(requestId);
+  const request = await WorkshopJoinRequest.findById(requestId).select(
+    "+code",
+  );
   if (!request) throw new ApiError(404, "Request not found");
 
-  const workshop = await assertOwner(request.workshop, user.id);
+  await assertOwner(request.workshop, user.id);
   if (request.status !== "pending")
     throw new ApiError(400, "Request already resolved");
 
@@ -80,10 +85,7 @@ export async function resolveRequest(requestId, user, status) {
   }
 
   request.status = status;
-
-  if (status === "approved") {
-    request.code = await generateUniqueJoinCode();
-  }
+  request.code = status === "approved" ? await generateUniqueJoinCode() : null;
 
   await request.save();
   return request;
@@ -98,7 +100,7 @@ export async function verifyJoinCode(user, code) {
     user: user.id,
     status: "approved",
     code,
-  });
+  }).select("+code");
 
   if (!request) {
     throw new ApiError(404, "Invalid or expired code");
@@ -160,7 +162,9 @@ export async function addMember(user, payload) {
     workshop: workshop._id,
   });
 
-  return newUser;
+  // User.create devuelve el documento completo, con el hash incluido.
+  const { password, ...safeUser } = newUser.toObject();
+  return safeUser;
 }
 
 export async function updateMember(user, targetUserId, payload) {
@@ -181,7 +185,10 @@ export async function updateMember(user, targetUserId, payload) {
   if (payload.password !== undefined) member.password = payload.password; // el pre("save") lo hashea
 
   await member.save();
-  return member;
+
+  // El select("+password") existe sólo para poder rehashear: nunca se devuelve.
+  const { password, ...safeMember } = member.toObject();
+  return safeMember;
 }
 
 export async function updateWorkshop(id, user, payload) {

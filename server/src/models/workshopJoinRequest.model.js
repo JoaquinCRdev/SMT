@@ -14,8 +14,14 @@ const joinRequestSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
+      enum: ["pending", "approved", "rejected", "completed"],
       default: "pending",
+    },
+    // Código temporal que el solicitante usa para confirmar su incorporación
+    code: {
+      type: String,
+      default: null,
+      select: false,
     },
   },
   { timestamps: true },

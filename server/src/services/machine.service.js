@@ -3,6 +3,7 @@ import MachineDocument from "../models/machineDocument.model.js";
 import MachineImage from "../models/machineImage.model.js";
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
+import MaintenanceRecord from "../models/maintenanceRecord.model.js";
 import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
 import {
@@ -11,20 +12,13 @@ import {
   requireWorkshop,
 } from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
+import {
+  normalizeAndValidateStatus,
+  normalizeStatus,
+} from "../utils/status.js";
 
 function buildAccessFilter(user) {
-  if (user?.role === "admin") return {};
-  return { workshopId: user.workshop };
-}
-
-const STATUS_MAP = {
-  operativo: "active",
-  mantenimiento: "maintenance",
-  baja: "inactive",
-};
-
-function normalizeStatus(status) {
-  return STATUS_MAP[status] ?? status;
+  return { workshopId: requireWorkshop(user) };
 }
 
 export async function createMachine(payload, user) {
@@ -36,7 +30,8 @@ export async function createMachine(payload, user) {
     userId: user.id,
   };
 
-  if (machineData.status) machineData.status = normalizeStatus(machineData.status);
+  if (machineData.status)
+    machineData.status = normalizeAndValidateStatus(machineData.status);
 
   const machine = await Machine.create(machineData);
   return machine;
@@ -48,7 +43,7 @@ export async function getMachines(user, query = {}) {
   const filter = buildAccessFilter(user);
 
   if (query.status) {
-    filter.status = query.status;
+    filter.status = normalizeStatus(query.status);
   }
 
   if (query.tipo) {
@@ -121,7 +116,7 @@ export async function updateMachine(id, payload, user) {
   }
 
   if (payload.status !== undefined) {
-    machine.status = payload.status;
+    machine.status = normalizeAndValidateStatus(payload.status);
   }
 
   try {
@@ -142,10 +137,7 @@ export async function updateMachine(id, payload, user) {
 }
 
 export async function changeMachineStatus(id, status, user) {
-  const normalized = normalizeStatus(status);
-  if (!["active", "inactive", "maintenance"].includes(normalized)) {
-    throw new ApiError(400, "Invalid status");
-  }
+  const normalized = normalizeAndValidateStatus(status);
 
   const machine = await getAccessibleMachine(id, user);
   machine.status = normalized;
@@ -163,6 +155,7 @@ export async function deleteMachine(id, user) {
     MachineTask.deleteMany({ machineId: machine._id }),
     TaskLog.deleteMany({ machineId: machine._id }),
     MaintenancePlan.deleteMany({ machineId: machine._id }),
+    MaintenanceRecord.deleteMany({ machineId: machine._id }),
     Machine.findByIdAndDelete(machine._id),
   ]);
 

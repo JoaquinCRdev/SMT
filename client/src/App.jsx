@@ -1,21 +1,20 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { WorkshopProvider } from "./context/WorkshopContext";
-import ProtectedRoute from "./components/ProtectedRoute";
-
-import Auth from "./pages/Auth";
-import RegistrarTaller from "./pages/RegistrarTaller";
 import AsociarseTaller from "./pages/AsociarseTaller";
-import VerificarCodigoTaller from "./pages/VerificarCodigoTaller";
-
-import Planes from "./pages/planes";
-import Mismaquinas from "./pages/mismaquinas";
+import Auth from "./pages/Auth";
+import Ayuda from "./pages/ayuda";
+import Configuracion from "./pages/configuracion";
+import ElegirTaller from "./pages/ElegirTaller";
+import Historial from "./pages/historial";
 import Home from "./pages/home";
 import Mantenimiento from "./pages/mantenimiento";
-import Configuracion from "./pages/configuracion";
-import Historial from "./pages/historial";
-import Ayuda from "./pages/ayuda";
+import Mismaquinas from "./pages/mismaquinas";
 import Notificaciones from "./pages/notificaciones";
+import Planes from "./pages/planes";
+import RegistrarTaller from "./pages/registrarTaller";
+import VerificarCodigoTaller from "./pages/VerificarCodigoTaller";
 
 const App = () => {
   return (
@@ -27,6 +26,14 @@ const App = () => {
             <Route path="/auth" element={<Auth />} />
 
             {/* Protegidas, sin exigir workshop (son para el que todavía no tiene) */}
+            <Route
+              path="/elegirTaller"
+              element={
+                <ProtectedRoute requireWorkshop={false}>
+                  <ElegirTaller />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/crearTaller"
               element={

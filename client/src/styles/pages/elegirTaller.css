@@ -1,0 +1,86 @@
+#contenedorElegirTaller {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111315;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#cardElegirTaller {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  max-width: 100%;
+  padding: 50px 40px;
+  box-sizing: border-box;
+}
+
+#cardElegirTaller h1 {
+  color: #f5f5f5;
+  font-family: "inter";
+  font-size: 36px;
+  text-align: center;
+}
+
+#subtituloElegirTaller {
+  color: #b4b4b4;
+  font-family: "inter";
+  font-size: 15px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+#opcionesElegirTaller {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 40px;
+}
+
+.opcionElegirTaller {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 25px;
+  background-color: #222428;
+  border: 2px solid #2d3135;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.opcionElegirTaller:hover {
+  border-color: #f97316;
+}
+
+.opcionElegirTaller h2 {
+  color: #f5f5f5;
+  font-family: "inter";
+  font-size: 20px;
+}
+
+.opcionElegirTaller p {
+  color: #b4b4b4;
+  font-family: "inter";
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.opcionElegirTaller span {
+  color: #f97316;
+  font-family: "inter";
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  #cardElegirTaller {
+    padding: 35px 20px;
+  }
+
+  #cardElegirTaller h1 {
+    font-size: 28px;
+  }
+}

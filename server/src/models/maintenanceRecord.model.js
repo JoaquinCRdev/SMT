@@ -58,6 +58,8 @@ const maintenanceRecordSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+maintenanceRecordSchema.index({ machineId: 1, performedAt: -1 });
+
 const MaintenanceRecord = mongoose.model(
   "MaintenanceRecord",
   maintenanceRecordSchema,

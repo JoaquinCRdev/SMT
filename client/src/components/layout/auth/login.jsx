@@ -1,6 +1,6 @@
 import "../../../styles/components/layout/auth/login.css";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
 import { useAuth } from "../../../context/AuthContext";
 import { getRedirectPath } from "../../../utils/redirectByUser";
@@ -61,11 +61,7 @@ const Login = ({ onToggle }) => {
   return (
     <div id="containerLogin">
       <div id="ladoIzquierdoLogin">
-        <img
-          className="logoMobileLogin"
-          src="/logoblanco.png"
-          alt="Logo SMT"
-        />
+        <img className="logoMobileLogin" src="/logoblanco.png" alt="Logo SMT" />
 
         <h1>Iniciar sesion</h1>
 
@@ -105,7 +101,6 @@ const Login = ({ onToggle }) => {
 
         <p>
           ¿No tienes una cuenta?{" "}
-          
           <a
             href="#"
             onClick={(e) => {

@@ -1,8 +1,16 @@
 import "../styles/pages/home.css";
-import { Link, NavLink } from "react-router-dom";
 import Sidebar from "../components/layout/sidebar";
+import { useAuth } from "../context/AuthContext";
+import { etiquetaRol } from "../utils/roles";
 
 const Home = () => {
+  const { user } = useAuth();
+
+  // Antes el saludo y el bloque de usuario eran texto fijo ("¡Hola,
+  // Administrador!"), por eso la app parecía siempre la misma cuenta.
+  const nombre = user?.name || user?.email || "";
+  const primerNombre = nombre.split(" ")[0] || "";
+
   return (
     <div id="containerhome">
       <Sidebar />
@@ -45,10 +53,12 @@ const Home = () => {
 
               <div className="user-info">
                 <span className="user-name">
-                  Administrador
+                  {nombre || "—"}
                 </span>
 
-                <span className="user-role">Admin</span>
+                <span className="user-role">
+                  {etiquetaRol(user?.role)}
+                </span>
               </div>
             </div>
 
@@ -72,7 +82,7 @@ const Home = () => {
               </div>
 
               <div>
-                <h1>¡Hola, Administrador!</h1>
+                <h1>¡Hola, {primerNombre}!</h1>
                 <p>Bienvenido de nuevo</p>
               </div>
 
