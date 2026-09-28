@@ -32,6 +32,18 @@ router.patch(
   validate(requestActionSchema),
   workshopController.resolveRequest,
 );
+router.post(
+  "/mine/members",
+  authorize("admin"),
+  validate(addMemberSchema),
+  workshopController.addMember,
+);
+router.patch(
+  "/mine/members/:userId",
+  authorize("admin"),
+  validate(updateMemberSchema),
+  workshopController.updateMember,
+);
 router.patch(
   "/:id",
   validate(updateWorkshopSchema),

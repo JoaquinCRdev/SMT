@@ -107,7 +107,10 @@ export async function verifyJoinCode(user, code) {
   const workshop = await Workshop.findById(request.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");
 
-  await User.findByIdAndUpdate(user.id, { workshop: workshop._id });
+  await User.findByIdAndUpdate(user.id, {
+    workshop: workshop._id,
+    role: "user", // siempre entra como colaborador, sin importar el rol con el que se registró
+  });
 
   request.status = "completed";
   request.code = null;
@@ -140,7 +143,45 @@ export async function getMembers(user) {
   const workshop = await Workshop.findById(user.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");
 
-  return User.find({ workshop: workshop._id }).select("name email");
+  return User.find({ workshop: workshop._id }).select("name email role isActive");
+}
+
+export async function addMember(user, payload) {
+  const workshop = await assertOwner(user.workshop, user.id);
+
+  const existing = await User.findOne({ email: payload.email });
+  if (existing) throw new ApiError(409, "Email already exists");
+
+  const newUser = await User.create({
+    name: payload.name,
+    email: payload.email,
+    password: payload.password,
+    role: payload.role || "user",
+    workshop: workshop._id,
+  });
+
+  return newUser;
+}
+
+export async function updateMember(user, targetUserId, payload) {
+  const workshop = await assertOwner(user.workshop, user.id);
+
+  if (String(workshop.owner) === String(targetUserId)) {
+    throw new ApiError(400, "Cannot modify the workshop owner");
+  }
+
+  const member = await User.findById(targetUserId).select("+password");
+  if (!member || String(member.workshop) !== String(workshop._id)) {
+    throw new ApiError(404, "User is not a member of this workshop");
+  }
+
+  if (payload.name !== undefined) member.name = payload.name;
+  if (payload.role !== undefined) member.role = payload.role;
+  if (payload.isActive !== undefined) member.isActive = payload.isActive;
+  if (payload.password !== undefined) member.password = payload.password; // el pre("save") lo hashea
+
+  await member.save();
+  return member;
 }
 
 export async function updateWorkshop(id, user, payload) {
