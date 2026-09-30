@@ -38,8 +38,14 @@ export async function createMachine(payload, user) {
 
   if (machineData.status) machineData.status = normalizeStatus(machineData.status);
 
-  const machine = await Machine.create(machineData);
-  return machine;
+  try {
+    return await Machine.create(machineData);
+  } catch (error) {
+    if (error?.code === 11000) {
+      throw new ApiError(409, "Serial number already exists in this workshop");
+    }
+    throw error;
+  }
 }
 
 export async function getMachines(user, query = {}) {

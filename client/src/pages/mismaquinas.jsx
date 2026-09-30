@@ -13,41 +13,24 @@ const Mismaquinas = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
-  
-  const obtenerMaquinas = async () => {
-  try {
-    setLoading(true);
-    setError("");
 
-    const response = await api.get("/machine");
-
-    const items = response.data.items || [];
-
-    const maquinasBackend = items.filter(
-      (item) => item.tipo === "maquina"
-    );
-
-    const otrosBackend = items.filter(
-      (item) => item.tipo === "otro"
-    );
-
-    setMaquinas(maquinasBackend);
-    setOtros(otrosBackend);
-  } catch (error) {
-    console.error("Error al obtener máquinas:", error);
-
-    setError(
-      error.response?.data?.message ||
-        "No se pudieron cargar los equipos."
-    );
-  } finally {
-    setLoading(false);
-  }
+  const convertirEstadoFrontend = (status) => {
+  const equivalencias = {
+    active: "operativo",
+    maintenance: "mantenimiento",
+    inactive: "baja",
+  };
+  return equivalencias[status] || "operativo";
 };
 
-useEffect(() => {
-  obtenerMaquinas();
-}, []);
+const convertirEstadoBackend = (estado) => {
+  const equivalencias = {
+    operativo: "active",
+    mantenimiento: "maintenance",
+    baja: "inactive",
+  };
+  return equivalencias[estado] || "active";
+};
 
 const convertirDesdeBackend = (item) => ({
   id: item._id,
@@ -59,26 +42,30 @@ const convertirDesdeBackend = (item) => ({
   descripcion: item.description || "",
   estado: convertirEstadoFrontend(item.status),
 });
+  
+  const obtenerMaquinas = async () => {
+  try {
+    setLoading(true);
+    setError("");
 
-const convertirEstadoFrontend = (status) => {
-  const equivalencias = {
-    active: "operativo",
-    maintenance: "mantenimiento",
-    inactive: "baja",
-  };
+    const response = await api.get("/machine");
+    const items = (response.data.items || []).map(convertirDesdeBackend);
 
-  return equivalencias[status] || "operativo";
+    setMaquinas(items.filter((item) => item.tipo === "maquina"));
+    setOtros(items.filter((item) => item.tipo === "otro"));
+  } catch (error) {
+    console.error("Error al obtener máquinas:", error);
+    setError(
+      error.response?.data?.message || "No se pudieron cargar los equipos."
+    );
+  } finally {
+    setLoading(false);
+  }
 };
 
-const convertirEstadoBackend = (estado) => {
-  const equivalencias = {
-    operativo: "active",
-    mantenimiento: "maintenance",
-    baja: "inactive",
-  };
-
-  return equivalencias[estado] || "active";
-};
+useEffect(() => {
+  obtenerMaquinas();
+}, []);
 
   // Formulario y fotos
 const [form, setForm] = useState({
@@ -99,6 +86,7 @@ const [form, setForm] = useState({
   const abrirModalCrear = () => {
     setModoEdicion("crear");
     setItemEditandoId(null);
+    setError("");
 setForm({
   nombre: "",
   tipo: activo === "maquinas" ? "maquina" : "otro",
@@ -117,7 +105,7 @@ setForm({
 const abrirModalEditar = (item) => {
   setModoEdicion("editar");
   setItemEditandoId(item.id);
-
+  setError("");
   setForm({
     nombre: item.nombre || "",
     tipo: item.tipo || "",
@@ -125,10 +113,10 @@ const abrirModalEditar = (item) => {
     modelo: item.modelo || "",
     serie: item.nroSerie || "",
     descripcion: item.descripcion || "",
-    fecha: item.fecha || "",
+    fecha: "",
     estado: item.estado || "operativo",
   });
-
+  setFotos([]);
   setModalAbierto(true);
 };
 
@@ -154,29 +142,33 @@ const abrirModalEditar = (item) => {
 
   // Guardar o Actualizar
 const guardarEquipo = async () => {
+  // Validación en el frontend
+  if (form.nombre.trim().length < 3) return setError("El nombre debe tener al menos 3 caracteres.");
+  if (!form.tipo) return setError("Seleccioná un tipo.");
+  if (form.marca.trim().length < 2) return setError("La marca debe tener al menos 2 caracteres.");
+  if (form.modelo.trim().length < 2) return setError("El modelo debe tener al menos 2 caracteres.");
+  if (form.serie.trim().length < 5) return setError("El N.° de serie debe tener al menos 5 caracteres.");
+
   try {
     setGuardando(true);
     setError("");
-   
+
     const payload = {
-  name: form.nombre,
-  tipo: form.tipo,
-  brand: form.marca,
-  model: form.modelo,
-  serialNumber: form.serie,
-  description: form.descripcion,
-  status: convertirEstadoBackend(form.estado),
-};
+      name: form.nombre,
+      tipo: form.tipo,
+      brand: form.marca,
+      model: form.modelo,
+      serialNumber: form.serie,
+      description: form.descripcion,
+      status: convertirEstadoBackend(form.estado),
+    };
 
     let response;
 
     if (modoEdicion === "crear") {
       response = await api.post("/machine", payload);
     } else {
-      response = await api.put(
-        `/machine/${itemEditandoId}`,
-        payload
-      );
+      response = await api.put(`/machine/${itemEditandoId}`, payload);
     }
 
     console.log("Equipo guardado:", response.data);
@@ -186,14 +178,14 @@ const guardarEquipo = async () => {
 
     await obtenerMaquinas();
   } catch (error) {
-    console.error("Error al guardar equipo:", error);
-
+    console.error("Error al guardar equipo:", error.response?.data);
     setError(
       error.response?.data?.message ||
+        error.response?.data?.errors?.[0]?.message ||
         "No se pudo guardar el equipo."
     );
   } finally {
-    setGuardando(false);
+    setGuardando(false); // <- esto era lo que faltaba
   }
 };
 
@@ -220,14 +212,14 @@ const eliminarEquipo = async (id) => {
   }
 };
 
-  const itemsAMostrar = activo === "maquinas" ? maquinas : otros;
-
   const formatearEstado = (est) => {
     if (est === "operativo") return "Operativo";
     if (est === "mantenimiento") return "En Mantenimiento";
     if (est === "baja") return "De baja";
     return est;
   };
+
+  const itemsAMostrar = activo === "maquinas" ? maquinas : otros;
 
   return (
     <div id="containermismaquinas">
@@ -257,6 +249,8 @@ const eliminarEquipo = async (id) => {
         </div>
 
         <div id="segundodivmismaquinas">
+          {error && <p style={{ color: "#dc3545", margin: "10px 0" }}>{error}</p>}
+{loading && <p>Cargando...</p>}
           <p>
             {itemsAMostrar.length}{" "}
             {activo === "maquinas" ? "Máquinas" : "Elementos en Otros"}
@@ -355,14 +349,11 @@ const eliminarEquipo = async (id) => {
 
                       <div className="campo">
   <label>Modelo</label>
-
   <input
     type="text"
-    name="modelo"
     value={form.modelo}
-    onChange={cambiarCampo}
+    onChange={cambiarCampo("modelo")}
     placeholder="Ingresá el modelo"
-    required
   />
 </div>
 
@@ -481,7 +472,11 @@ const eliminarEquipo = async (id) => {
                       </b>
                     </div>
                   </div>
-
+{error && (
+  <p style={{ color: "#dc3545", fontSize: "14px", margin: "0 0 10px" }}>
+    {error}
+  </p>
+)}
                   <button
   type="button"
   onClick={guardarEquipo}
