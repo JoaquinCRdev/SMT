@@ -46,10 +46,17 @@ const Configuracion = () => {
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  // El backend (assertOwner) sólo deja administrar el taller al dueño, así que
-  // la UI tiene que ocultarle esas acciones a los demás administradores.
+  // El backend (assertOwner) sólo deja administrar el taller al dueño, así que la UI tiene que ocultarle esas acciones a los demás administradores.
   const idDueño = taller.owner?._id ?? taller.owner;
   const esDueño = Boolean(user?._id) && String(idDueño) === String(user._id);
+
+  // El endpoint trae pending + approved + completed: las acciones sólo existen sobre las pending, porque resolver una ya resuelta responde 400.
+  const solicitudesPendientes = solicitudes.filter(
+    (r) => r.status === "pending",
+  );
+  const solicitudesResueltas = solicitudes.filter(
+    (r) => r.status !== "pending",
+  );
 
   const mensajeError = (err, porDefecto) =>
     err.response?.data?.message || porDefecto;
@@ -381,8 +388,7 @@ const Configuracion = () => {
     };
   }, []);
 
-  // Las solicitudes sólo las puede resolver el dueño del taller (assertOwner en
-  // el backend), así que ni se piden ni se muestran para el resto.
+  // Las solicitudes sólo las puede resolver el dueño del taller (assertOwner en el backend), así que ni se piden ni se muestran para el resto.
   useEffect(() => {
     if (!esDueño) return;
 
@@ -475,17 +481,15 @@ const Configuracion = () => {
                   </svg>
                 </span>
 
-                <span className="user-role">
-                  {etiquetaRol(user?.role)}
-                </span>
+                <span className="user-role">{etiquetaRol(user?.role)}</span>
               </div>
             </div>
           </div>
         </header>
 
-        {/* =========================
+        {/*
             TITULO
-        ========================= */}
+       */}
 
         <div className="page-header">
           <h1 className="page-title">{i18n.t("pages.configuracion.title")}</h1>
@@ -495,9 +499,9 @@ const Configuracion = () => {
           </p>
         </div>
 
-        {/* =========================
+        {/*
             PERSONALIZACIÓN
-        ========================= */}
+       */}
 
         <section className="section-card">
           <div className="personalizacion-grid">
@@ -609,9 +613,9 @@ const Configuracion = () => {
           </div>
         </section>
 
-        {/* =========================
+        {/*
             GESTIÓN DE PERSONAL
-        ========================= */}
+       */}
 
         <section className="section-card">
           <div className="section-header">
@@ -664,7 +668,8 @@ const Configuracion = () => {
                       <span className="staff-role">
                         {esElDueño
                           ? "Administrador del taller"
-                          : ETIQUETA_ROL[staff.role] || "Colaborador"}                      </span>
+                          : ETIQUETA_ROL[staff.role] || "Colaborador"}{" "}
+                      </span>
 
                       <span className="staff-email">{staff.email}</span>
                     </div>
@@ -763,9 +768,9 @@ const Configuracion = () => {
           )}
         </section>
 
-        {/* =========================
+        {/*
             SOLICITUDES
-        ========================= */}
+       */}
 
         {esDueño && (
           <section className="section-card">
@@ -786,111 +791,203 @@ const Configuracion = () => {
                 </p>
               )}
 
-              {solicitudes.map((req) => (
-                <div key={req._id} className="request-item">
-                  <div className="request-user">
-                    <div className="staff-avatar">
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                      </svg>
-                    </div>
+              {solicitudesPendientes.length > 0 && (
+                <>
+                  <h3 className="requests-subtitulo">
+                    {i18n.t(
+                      "pages.configuracion.configs.solicitudes.pendientes",
+                    )}
+                  </h3>
 
-                    <div className="request-text">
-                      <span className="request-name">
-                        {req.user?.name || "Usuario desconocido"}
-                      </span>
+                  {solicitudesPendientes.map((req) => (
+                    <div key={req._id} className="request-item">
+                      <div className="request-user">
+                        <div className="staff-avatar">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                          </svg>
+                        </div>
 
-                      <span className="request-action-text">
-                        {i18n.t(
-                          "pages.configuracion.configs.solicitudes.solicitud.span",
-                        )}
-                      </span>
-                    </div>
-                  </div>
+                        <div className="request-text">
+                          <span className="request-name">
+                            {req.user?.name || "Usuario desconocido"}
+                          </span>
 
-                  <div className="request-date">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                      <line x1="16" y1="2" x2="16" y2="6" />
-                      <line x1="8" y1="2" x2="8" y2="6" />
-                      <line x1="3" y1="10" x2="21" y2="10" />
-                    </svg>
+                          <span className="request-action-text">
+                            {i18n.t(
+                              "pages.configuracion.configs.solicitudes.solicitud.span",
+                            )}
+                          </span>
+                        </div>
+                      </div>
 
-                    {fechaSolicitud(req.createdAt)}
-                  </div>
-
-                  {esDueño && (
-                    <div className="request-buttons">
-                      <button
-                        className="btn-accept"
-                        type="button"
-                        onClick={() => resolverSolicitud(req, "approved")}
-                      >
+                      <div className="request-date">
                         <svg
-                          width="12"
-                          height="12"
+                          width="14"
+                          height="14"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
                         >
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="9 11 12 14 22 4" />
+                          <rect
+                            x="3"
+                            y="4"
+                            width="18"
+                            height="18"
+                            rx="2"
+                            ry="2"
+                          />
+                          <line x1="16" y1="2" x2="16" y2="6" />
+                          <line x1="8" y1="2" x2="8" y2="6" />
+                          <line x1="3" y1="10" x2="21" y2="10" />
                         </svg>
 
-                        {i18n.t(
-                          "pages.configuracion.configs.solicitudes.solicitud.aceptar",
-                        )}
-                      </button>
+                        {fechaSolicitud(req.createdAt)}
+                      </div>
 
-                      <button
-                        className="btn-reject"
-                        type="button"
-                        onClick={() => resolverSolicitud(req, "rejected")}
-                      >
+                      <div className="request-buttons">
+                        <button
+                          className="btn-accept"
+                          type="button"
+                          onClick={() => resolverSolicitud(req, "approved")}
+                        >
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="9 11 12 14 22 4" />
+                          </svg>
+
+                          {i18n.t(
+                            "pages.configuracion.configs.solicitudes.solicitud.aceptar",
+                          )}
+                        </button>
+
+                        <button
+                          className="btn-reject"
+                          type="button"
+                          onClick={() => resolverSolicitud(req, "rejected")}
+                        >
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                          </svg>
+
+                          {i18n.t(
+                            "pages.configuracion.configs.solicitudes.solicitud.rechazar",
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {solicitudesResueltas.length > 0 && (
+                <>
+                  <h3 className="requests-subtitulo">
+                    {i18n.t(
+                      "pages.configuracion.configs.solicitudes.resueltas",
+                    )}
+                  </h3>
+
+                  {solicitudesResueltas.map((req) => (
+                    <div key={req._id} className="request-item">
+                      <div className="request-user">
+                        <div className="staff-avatar">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                          </svg>
+                        </div>
+
+                        <div className="request-text">
+                          <span className="request-name">
+                            {req.user?.name || "Usuario desconocido"}
+                          </span>
+
+                          <span className="request-action-text">
+                            {i18n.t(
+                              "pages.configuracion.configs.solicitudes.solicitud.resuelta",
+                            )}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="request-date">
                         <svg
-                          width="12"
-                          height="12"
+                          width="14"
+                          height="14"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
                         >
-                          <circle cx="12" cy="12" r="10" />
-                          <line x1="15" y1="9" x2="9" y2="15" />
-                          <line x1="9" y1="9" x2="15" y2="15" />
+                          <rect
+                            x="3"
+                            y="4"
+                            width="18"
+                            height="18"
+                            rx="2"
+                            ry="2"
+                          />
+                          <line x1="16" y1="2" x2="16" y2="6" />
+                          <line x1="8" y1="2" x2="8" y2="6" />
+                          <line x1="3" y1="10" x2="21" y2="10" />
                         </svg>
 
+                        {fechaSolicitud(req.createdAt)}
+                      </div>
+
+                      <span
+                        className={`request-estado ${
+                          req.status === "completed" ? "completada" : "aprobada"
+                        }`}
+                      >
                         {i18n.t(
-                          "pages.configuracion.configs.solicitudes.solicitud.rechazar",
+                          `pages.configuracion.configs.solicitudes.estado.${req.status}`,
                         )}
-                      </button>
+                      </span>
                     </div>
-                  )}
-                </div>
-              ))}
+                  ))}
+                </>
+              )}
             </div>
           </section>
         )}
 
-        {/* =========================
+        {/*
             ACCIONES
-        ========================= */}
+       */}
 
         {esDueño && (
           <section className="section-card">
@@ -1004,9 +1101,9 @@ const Configuracion = () => {
           </section>
         )}
 
-        {/* =========================
+        {/*
             MODAL AGREGAR PERSONAL
-        ========================= */}
+       */}
 
         {mostrarModalPersonal && (
           <div className="modal-overlay" onClick={cerrarModalPersonal}>
@@ -1143,9 +1240,9 @@ const Configuracion = () => {
           </div>
         )}
 
-        {/* =========================
+        {/*
             MODAL EDITAR MIEMBRO
-        ========================== */}
+      = */}
 
         {mostrarModalEditar && miembroEditando && (
           <div className="modal-overlay" onClick={cerrarModalEditarMiembro}>
@@ -1280,9 +1377,8 @@ const Configuracion = () => {
         {mostrarModalModificarTaller && (
           <div className="modal-overlay" onClick={cerrarModalModificarTaller}>
             <div className="modal-taller" onClick={(e) => e.stopPropagation()}>
-              {/* =========================
-          HEADER
-      ========================== */}
+              {/*
+          HEADER */}
 
               <div className="modal-taller-header">
                 <h2>Modificar taller</h2>
@@ -1297,17 +1393,15 @@ const Configuracion = () => {
                 </button>
               </div>
 
-              {/* =========================
-          FORMULARIO
-      ========================== */}
+              {/*
+          FORMULARIO */}
 
               <form
                 className="modal-taller-form"
                 onSubmit={guardarCambiosTaller}
               >
-                {/* =========================
-            INFORMACIÓN DEL TALLER
-        ========================== */}
+                {/*
+            INFORMACIÓN DEL TALLER */}
 
                 <div className="modal-taller-panel">
                   <h3>Información de tu taller</h3>
@@ -1349,9 +1443,9 @@ const Configuracion = () => {
                   </div>
                 </div>
 
-                {/* =========================
+                {/*
             PANEL DERECHO
-        ========================== */}
+      = */}
 
                 <div className="modal-taller-panel panel-taller-derecho">
                   {/* CÓDIGO DEL TALLER */}
@@ -1406,9 +1500,9 @@ const Configuracion = () => {
                   <p className="config-error modal-form-error">{error}</p>
                 )}
 
-                {/* =========================
+                {/*
             BOTONES
-        ========================== */}
+      = */}
 
                 <div className="modal-taller-actions">
                   <button
@@ -1432,9 +1526,8 @@ const Configuracion = () => {
           </div>
         )}
 
-        {/* =========================
-    MODAL BORRAR TALLER
-========================= */}
+        {/*
+    MODAL BORRAR TALLER */}
 
         {mostrarModalBorrarTaller && (
           <div className="modal-overlay" onClick={cerrarModalBorrarTaller}>

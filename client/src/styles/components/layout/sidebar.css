@@ -218,6 +218,46 @@
 
 
 /* =========================================================
+   CONTADOR DE NOTIFICACIONES
+========================================================= */
+
+.botonhome-icono {
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.botonhome-badge {
+
+    position: absolute;
+
+    top: -6px;
+    left: 18px;
+
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--Naranja);
+    color: #fff;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+
+    box-shadow: 0 0 0 2px var(--FondoSidebarBoton);
+}
+
+
+/* =========================================================
    ICONO GRIS / NARANJA
 ========================================================= */
 

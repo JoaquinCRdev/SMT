@@ -5,6 +5,7 @@ import errorHandler from "./middlewares/error.middleware.js";
 import machineRoutes from "./routes/machine.routes.js";
 import maintenancePlanAllRoutes from "./routes/maintenancePlanAll.routes.js";
 import maintenanceRecordAllRoutes from "./routes/maintenanceRecordAll.routes.js";
+import notificationRoutes from "./routes/notification.routes.js";
 import taskLogUserRoutes from "./routes/taskLogUser.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import workshopRoutes from "./routes/workshop.routes.js";
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api", userRoutes);
 app.use("/api", machineRoutes);
+app.use("/api/notifications", notificationRoutes);
 app.use("/api/records", maintenanceRecordAllRoutes);
 app.use("/api/plans", maintenancePlanAllRoutes);
 app.use("/api/workshops", workshopRoutes);

@@ -1,6 +1,5 @@
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
-import { createRecord } from "./maintenanceRecord.service.js";
 import ApiError from "../utils/ApiError.js";
 import {
   assertAssignableUser,
@@ -10,6 +9,7 @@ import {
   requireWorkshop,
 } from "../utils/access.js";
 import { getPagination } from "../utils/pagination.js";
+import { createRecord } from "./maintenanceRecord.service.js";
 
 const FREQUENCY_DAYS = {
   daily: 1,
@@ -184,7 +184,9 @@ export async function updatePlan(machineId, planId, payload, user) {
   }
 
   if (payload.tasks) {
-    const taskAssignees = payload.tasks.map((t) => t.assignedTo).filter(Boolean);
+    const taskAssignees = payload.tasks
+      .map((t) => t.assignedTo)
+      .filter(Boolean);
     for (const assignee of taskAssignees) {
       await assertAssignableUser(assignee, user);
     }
@@ -204,6 +206,10 @@ export async function updatePlan(machineId, planId, payload, user) {
   if (payload.title !== undefined) plan.title = payload.title;
   if (payload.description !== undefined) plan.description = payload.description;
   if (payload.frequency !== undefined) plan.frequency = payload.frequency;
+  // Al pasar de un plan `custom` a una frecuencia nativa hay que borrar el `customDays` viejo: si queda, el plan queda con "daily" y `customDays: 45` al mismo tiempo, que no significa nada y ensucia cualquier consulta por ese campo (incluida la migración de planes rotos).
+  if (payload.frequency !== undefined && payload.frequency !== "custom") {
+    plan.customDays = undefined;
+  }
   if (payload.customDays !== undefined) plan.customDays = payload.customDays;
   if (payload.startDate !== undefined)
     plan.startDate = new Date(payload.startDate);
@@ -272,9 +278,7 @@ export async function markPlanPerformed(machineId, planId, user, payload = {}) {
 
   await plan.save();
 
-  // Dar por realizado el plan cierra sus tareas pendientes: si el usuario
-  // marca el mantenimiento como hecho, el plan no puede quedar con trabajo
-  // sin terminar colgando.
+  // Dar por realizado el plan cierra sus tareas pendientes: si el usuario marca el mantenimiento como hecho, el plan no puede quedar con trabajo sin terminar colgando.
   const planConTareas = await plan.populate("tasks");
   const pendientes = planConTareas.tasks.filter((t) => t.status !== "done");
 
@@ -285,8 +289,7 @@ export async function markPlanPerformed(machineId, planId, user, payload = {}) {
     );
   }
 
-  // Y deja el rastro en el historial: antes marcar un plan como realizado no
-  // generaba ningún MaintenanceRecord, así que /historial nunca lo mostraba.
+  // Y deja el rastro en el historial: antes marcar un plan como realizado no generaba ningún MaintenanceRecord, así que /historial nunca lo mostraba.
   await createRecord(
     {
       machineId: plan.machineId,

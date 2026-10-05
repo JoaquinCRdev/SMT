@@ -1,3 +1,8 @@
 node_modules
 .env
 dist
+
+# Archivos de trabajo del asistente (planes, notas), no son parte del proyecto.
+# OJO: el patrón ".env" de arriba matchea el nombre exacto, así que .env.example
+# NO queda ignorado y sí se commitea, que es lo que se busca.
+.opencode

@@ -80,11 +80,20 @@
                 },
 
                 "solicitudes": {
-                    "h2": "Ausstehende Anfragen",
+                    "h2": "Anfragen",
                     "p": "Mitarbeiter, die um Beitritt zur Werkstatt gebeten haben",
+
+                    "pendientes": "Ausstehend",
+                    "resueltas": "Erledigt",
+
+                    "estado": {
+                        "approved": "Genehmigt",
+                        "completed": "Beigetreten"
+                    },
 
                     "solicitud": {
                         "span": "möchte der Werkstatt beitreten",
+                        "resuelta": "bereits erledigte Anfrage",
                         "aceptar": "Akzeptieren",
                         "rechazar": "Ablehnen"
                     }

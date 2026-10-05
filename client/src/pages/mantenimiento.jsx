@@ -3,34 +3,60 @@ import api from "../api/axios";
 import "../styles/pages/mantenimiento.css";
 import Sidebar from "../components/layout/sidebar";
 
+// `value` es lo que se guarda en el estado y lo que decide la frecuencia; `dias` es lo que se manda como customDays cuando el preset no existe en el backend (trimestral/semestral). Antes `value` era "custom" para Trimestral y Semestral y el resto del código comparaba contra el label, así que "cada N días" se pisaba siempre y todo terminaba en customDays: 90.
 const PERIODOS = [
-  { value: "daily", label: "Diario" },
-  { value: "weekly", label: "Semanal" },
-  { value: "monthly", label: "Mensual" },
-  { value: "custom", label: "Trimestral" },
-  { value: "custom", label: "Semestral" },
-  { value: "yearly", label: "Anual" },
+  { value: "daily", label: "Diario", dias: 1 },
+  { value: "weekly", label: "Semanal", dias: 7 },
+  { value: "monthly", label: "Mensual", dias: 30 },
+  { value: "trimestral", label: "Trimestral", dias: 90 },
+  { value: "semestral", label: "Semestral", dias: 180 },
+  { value: "yearly", label: "Anual", dias: 365 },
+  { value: "custom", label: "Personalizado", dias: null },
 ];
 
-const PERIODO_DIAS = {
-  Trimestral: 90,
-  Semestral: 180,
-};
+const PERIODO_POR_VALUE = Object.fromEntries(PERIODOS.map((p) => [p.value, p]));
+
+// El backend solo conoce daily/weekly/monthly/yearly/custom, así que trimestral y semestral viajan como custom con su cantidad de días fija.
+// Lo importante: los presets que el backend SÍ conoce tienen que guardar su frecuencia nativa y no mandar customDays. Si también ellos salían como custom, cada plan quedaba atado a la ventana de `custom` y la periodicidad elegida se perdía.
+function buildFrecuencia(periodo, diasInput) {
+  const preset = PERIODO_POR_VALUE[periodo];
+
+  if (!preset) return null;
+
+  if (periodo === "custom") {
+    const dias = Number(diasInput);
+    if (!Number.isInteger(dias) || dias < 1) return null;
+    return { frequency: "custom", customDays: dias };
+  }
+
+  // 90 y 180 días no existen como frecuencia nativa.
+  if (periodo === "trimestral" || periodo === "semestral") {
+    return { frequency: "custom", customDays: preset.dias };
+  }
+
+  return { frequency: periodo };
+}
+
+// El backend solo acepta estos valores; los presets de 90/180 días llegan como "custom". Sirve para mostrar la periodicidad con un label legible.
+function etiquetaPeriodo(plan) {
+  if (plan.frequency !== "custom") return plan.frequency;
+
+  // Solo 90 y 180 se reinterpretan como Trimestral/Semestral. Cualquier otro customDays (por ejemplo 45, o un 90 que en realidad era diario) queda como "custom" y conserva su número.
+  if (plan.customDays === 90) return "trimestral";
+  if (plan.customDays === 180) return "semestral";
+
+  return "custom";
+}
+
+function etiquetaLegible(periodo) {
+  return PERIODO_POR_VALUE[periodo]?.label ?? periodo;
+}
 
 const TASK_STATUS_LABEL = {
   pending: "Pendiente",
   in_progress: "En curso",
   done: "Completada",
 };
-
-function buildFrecuencia(periodo, diasInput) {
-  const dias = Number(diasInput);
-  if (periodo === "Trimestral" || periodo === "Semestral") {
-    return { frequency: "custom", customDays: PERIODO_DIAS[periodo] };
-  }
-  if (!Number.isInteger(dias) || dias < 1) return { frequency: periodo };
-  return { frequency: "custom", customDays: dias };
-}
 
 function calcularProgreso(tasks = []) {
   if (!tasks.length) return 0;
@@ -48,6 +74,11 @@ function nombreMaquina(machine) {
   if (!machine) return "Sin máquina";
   if (typeof machine === "string") return machine;
   return machine.name || "Sin máquina";
+}
+
+// Qué tab muestra este equipo. `tipo` se agregó después de que existieran máquinas, así que hay documentos sin el campo; se tratan como "maquina" para que ningún equipo se pierda. Solo "otro" va a la tab Otros.
+function tipoDe(machine) {
+  return machine?.tipo === "otro" ? "otro" : "maquina";
 }
 
 function iniciales(user) {
@@ -86,8 +117,8 @@ export default function MantenimientoApp() {
   const [seleccionado, setSeleccionado] = useState(null);
   const [form, setForm] = useState({
     machineId: "",
-    periodo: "Trimestral",
-    dias: 90,
+    periodo: "daily",
+    dias: 1,
     startDate: new Date().toISOString().slice(0, 10),
     tareas: [],
     nuevaTarea: "",
@@ -151,20 +182,38 @@ export default function MantenimientoApp() {
     }
   }, []);
 
-  const activos = planes.filter((p) => p.status === "active");
-  const programados = planes.filter((p) => p.status !== "active");
+  // Cada tab muestra solo lo suyo. Antes `tabActivo` no se leía para renderizar nada, así que "Otros" era un botón que solo movía el resaltado y mostraba la misma lista que "Máquinas".
+  const tipoActivo = tabActivo === "Otros" ? "otro" : "maquina";
 
+  const maquinasVisibles = useMemo(
+    () => maquinas.filter((m) => tipoDe(m) === tipoActivo),
+    [maquinas, tipoActivo],
+  );
+
+  // La tab vacía casi siempre es porque el taller no cargó equipos de ese tipo, no porque no tenga mantenimientos. El mensaje dice cuál de las dos es.
+  const sinEquiposEnEstaTab = maquinasVisibles.length === 0;
+
+  // `getAllPlans` ya hace populate de `machineId.tipo`, así que el tipo del plan se puede leer sin pedir nada extra al backend.
+  const planesVisibles = useMemo(
+    () => planes.filter((p) => tipoDe(p.machineId) === tipoActivo),
+    [planes, tipoActivo],
+  );
+
+  const activos = planesVisibles.filter((p) => p.status === "active");
+  const programados = planesVisibles.filter((p) => p.status !== "active");
+
+  // Filtraba por `p.title.includes(filtroGeneral)`, o sea que "Trimestral" solo alcanzaba a los planes que tuvieran esa palabra en el título. Ahora compara contra la frecuencia real.
   const filtrados = useMemo(() => {
     if (filtroGeneral === "General") return programados;
-    return programados.filter((p) => p.title.includes(filtroGeneral));
+    return programados.filter((p) => etiquetaPeriodo(p) === filtroGeneral);
   }, [programados, filtroGeneral]);
 
   const abrirDetalle = (plan) => {
     setSeleccionado(plan);
     setForm({
       machineId: plan.machineId?._id ?? plan.machineId ?? "",
-      periodo: plan.frequency === "custom" ? "Trimestral" : plan.frequency,
-      dias: plan.customDays ?? 90,
+      periodo: etiquetaPeriodo(plan),
+      dias: plan.customDays ?? 1,
       startDate: plan.startDate
         ? new Date(plan.startDate).toISOString().slice(0, 10)
         : new Date().toISOString().slice(0, 10),
@@ -180,9 +229,10 @@ export default function MantenimientoApp() {
   const abrirNuevo = () => {
     setSeleccionado(null);
     setForm({
-      machineId: maquinas[0]?._id ?? "",
-      periodo: "Trimestral",
-      dias: 90,
+      // Solo equipos de la tab activa: si se eligiera el primero de `maquinas` sin filtrar, desde "Otros" se abriría el formulario con una máquina.
+      machineId: maquinasVisibles[0]?._id ?? "",
+      periodo: "daily",
+      dias: 1,
       startDate: new Date().toISOString().slice(0, 10),
       tareas: [],
       nuevaTarea: "",
@@ -230,19 +280,14 @@ export default function MantenimientoApp() {
       setForm((f) => ({
         ...f,
         tareas: f.tareas.map((t) =>
-          t._id === tarea._id
-            ? { ...t, ...res.data, _id: tarea._id }
-            : t,
+          t._id === tarea._id ? { ...t, ...res.data, _id: tarea._id } : t,
         ),
       }));
 
-      // El progreso de la lista se calculaba sobre `planes`, que no se
-      // tocaba: la barra quedaba en 0% hasta recargar la página entera.
+      // El progreso de la lista se calculaba sobre `planes`, que no se tocaba: la barra quedaba en 0% hasta recargar la página entera.
       sincronizarTareaEnPlanes(tarea._id, res.data);
     } catch (err) {
-      setError(
-        err.response?.data?.message || "No se pudo actualizar la tarea",
-      );
+      setError(err.response?.data?.message || "No se pudo actualizar la tarea");
     } finally {
       setTareaPendiente(null);
     }
@@ -282,10 +327,14 @@ export default function MantenimientoApp() {
     setGuardando(true);
     setError("");
     try {
-      const { frequency, customDays } = buildFrecuencia(
-        form.periodo,
-        form.dias,
-      );
+      const frecuencia = buildFrecuencia(form.periodo, form.dias);
+
+      if (!frecuencia) {
+        setError("Los días deben ser un número entero mayor a 0");
+        return;
+      }
+
+      const { frequency, customDays } = frecuencia;
       const tareasNuevas = form.tareas
         .filter((t) => !t._id)
         .map((t) => ({ title: t.title }));
@@ -306,7 +355,9 @@ export default function MantenimientoApp() {
       } else {
         await api.post(`/machine/${form.machineId}/plans`, {
           ...payload,
-          title: nuevo.title.trim() || `Mantenimiento ${form.periodo}`,
+          title:
+            nuevo.title.trim() ||
+            `Mantenimiento ${etiquetaLegible(form.periodo)}`,
         });
       }
       setShowModal(false);
@@ -360,8 +411,7 @@ export default function MantenimientoApp() {
         status,
       });
 
-      // `planes` se recarga, pero `seleccionado` es estado aparte: sin esto la
-      // vista de detalle seguía mostrando el plan como activo.
+      // `planes` se recarga, pero `seleccionado` es estado aparte: sin esto la vista de detalle seguía mostrando el plan como activo.
       setSeleccionado((prev) =>
         prev && prev._id === plan._id ? { ...prev, status } : prev,
       );
@@ -379,8 +429,7 @@ export default function MantenimientoApp() {
   const marcarRealizado = async () => {
     setGuardando(true);
     try {
-      // El backend cierra las tareas pendientes y deja el registro en el
-      // historial, así que marcar el plan como hecho sí genera historial.
+      // El backend cierra las tareas pendientes y deja el registro en el historial, así que marcar el plan como hecho sí genera historial.
       await api.patch(
         `/machine/${form.machineId || seleccionado.machineId?._id}/plans/${seleccionado._id}/performed`,
         { performedAt: new Date().toISOString().slice(0, 10) },
@@ -430,25 +479,31 @@ export default function MantenimientoApp() {
           </div>
           <div className="filter">
             <div className="dropdown">
-              <span className="chip dd" onClick={() => setShowFiltro(!showFiltro)}>
+              <span
+                className="chip dd"
+                onClick={() => setShowFiltro(!showFiltro)}
+              >
                 {filtroGeneral} ∨
               </span>
               {showFiltro && (
                 <div className="dropdown-menu">
-                  {["General", "Trimestral", "Mensual", "Anual", "Semanal"].map(
-                    (op) => (
-                      <div
-                        key={op}
-                        className={`dropdown-item ${filtroGeneral === op ? "active" : ""}`}
-                        onClick={() => {
-                          setFiltroGeneral(op);
-                          setShowFiltro(false);
-                        }}
-                      >
-                        {op}
-                      </div>
+                  {[
+                    "General",
+                    ...PERIODOS.filter((p) => p.value !== "custom").map(
+                      (p) => p.value,
                     ),
-                  )}
+                  ].map((op) => (
+                    <div
+                      key={op}
+                      className={`dropdown-item ${filtroGeneral === op ? "active" : ""}`}
+                      onClick={() => {
+                        setFiltroGeneral(op);
+                        setShowFiltro(false);
+                      }}
+                    >
+                      {op === "General" ? op : etiquetaLegible(op)}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -468,7 +523,9 @@ export default function MantenimientoApp() {
               <div className="section-head">
                 <div>
                   <div className="section-title">Activos</div>
-                  <div className="section-sub">{activos.length} mantenimientos</div>
+                  <div className="section-sub">
+                    {activos.length} mantenimientos
+                  </div>
                 </div>
               </div>
               <div className="grid">
@@ -517,7 +574,11 @@ export default function MantenimientoApp() {
                   );
                 })}
                 {!activos.length && (
-                  <div className="section">No hay mantenimientos activos</div>
+                  <div className="section">
+                    {sinEquiposEnEstaTab
+                      ? "No hay equipos en esta pestaña. Agregalos desde Mis Máquinas."
+                      : "No hay mantenimientos activos"}
+                  </div>
                 )}
               </div>
             </div>
@@ -535,7 +596,9 @@ export default function MantenimientoApp() {
                 {filtrados.map((p) => (
                   <div key={p._id} className="card">
                     <div className="card-top">
-                      <span className="badge">{nombreMaquina(p.machineId)}</span>
+                      <span className="badge">
+                        {nombreMaquina(p.machineId)}
+                      </span>
                     </div>
                     <div className="card-title">{p.title}</div>
                     <div className="card-desc">
@@ -559,13 +622,20 @@ export default function MantenimientoApp() {
                   </div>
                 ))}
                 {!filtrados.length && (
-                  <div className="section">No hay mantenimientos pausados</div>
+                  <div className="section">
+                    {sinEquiposEnEstaTab
+                      ? "No hay equipos en esta pestaña. Agregalos desde Mis Máquinas."
+                      : "No hay mantenimientos pausados"}
+                  </div>
                 )}
               </div>
             </div>
 
             {showModal && (
-              <div className="modal-overlay" onClick={() => setShowModal(false)}>
+              <div
+                className="modal-overlay"
+                onClick={() => setShowModal(false)}
+              >
                 <div className="modal" onClick={(e) => e.stopPropagation()}>
                   <h3>Nuevo mantenimiento</h3>
                   <div className="modal-grid">
@@ -580,7 +650,7 @@ export default function MantenimientoApp() {
                         autoFocus
                       >
                         <option value="">Seleccioná una máquina</option>
-                        {maquinas.map((m) => (
+                        {maquinasVisibles.map((m) => (
                           <option key={m._id} value={m._id}>
                             {m.name}
                           </option>
@@ -609,7 +679,10 @@ export default function MantenimientoApp() {
                         className="btn-black"
                         disabled={guardando || !nuevo.machineId}
                         onClick={() => {
-                          setForm((f) => ({ ...f, machineId: nuevo.machineId }));
+                          setForm((f) => ({
+                            ...f,
+                            machineId: nuevo.machineId,
+                          }));
                           setShowModal(false);
                           setVista("detalle");
                         }}
@@ -628,9 +701,7 @@ export default function MantenimientoApp() {
               <span>General ∧</span> / <b>Mis mantenimientos ∧</b>
             </div>
 
-            <div
-              style={{ fontWeight: 800, fontSize: 22, marginBottom: 20 }}
-            >
+            <div style={{ fontWeight: 800, fontSize: 22, marginBottom: 20 }}>
               {seleccionado?.title || nuevo.title || "Nuevo mantenimiento"}
             </div>
 
@@ -645,7 +716,7 @@ export default function MantenimientoApp() {
                   }
                 >
                   <option value="">Seleccioná una máquina</option>
-                  {maquinas.map((m) => (
+                  {maquinasVisibles.map((m) => (
                     <option key={m._id} value={m._id}>
                       {m.name}
                     </option>
@@ -657,10 +728,12 @@ export default function MantenimientoApp() {
                 <select
                   className="select"
                   value={form.periodo}
-                  onChange={(e) => setForm({ ...form, periodo: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, periodo: e.target.value })
+                  }
                 >
                   {PERIODOS.map((p) => (
-                    <option key={p.label} value={p.value}>
+                    <option key={p.value} value={p.value}>
                       {p.label}
                     </option>
                   ))}
@@ -668,11 +741,20 @@ export default function MantenimientoApp() {
               </div>
               <div className="field">
                 <label>cada</label>
+                {/* El campo solo manda cuando la periodicidad es
+                    Personalizada. Con un preset el número es fijo: editable
+                    pero ignorado, para no repetir el bug en el que "cada 1 día"
+                    se guardaba como 90. */}
                 <input
                   className="input"
                   type="number"
                   min="1"
-                  value={form.dias}
+                  readOnly={form.periodo !== "custom"}
+                  value={
+                    form.periodo === "custom"
+                      ? form.dias
+                      : (PERIODO_POR_VALUE[form.periodo]?.dias ?? "")
+                  }
                   onChange={(e) => setForm({ ...form, dias: e.target.value })}
                 />
                 <span>días</span>
@@ -705,7 +787,8 @@ export default function MantenimientoApp() {
                   <span
                     className="task-text"
                     style={{
-                      textDecoration: t.status === "done" ? "line-through" : "none",
+                      textDecoration:
+                        t.status === "done" ? "line-through" : "none",
                       color: t.status === "done" ? "#999" : "#111",
                     }}
                   >
@@ -750,7 +833,10 @@ export default function MantenimientoApp() {
                 <div
                   className="avatar add"
                   onClick={() =>
-                    setForm((f) => ({ ...f, mostrarAsignado: !f.mostrarAsignado }))
+                    setForm((f) => ({
+                      ...f,
+                      mostrarAsignado: !f.mostrarAsignado,
+                    }))
                   }
                 >
                   +
@@ -792,13 +878,13 @@ export default function MantenimientoApp() {
                     onClick={() =>
                       cambiarEstadoPlan(
                         seleccionado,
-                        seleccionado.status === "inactive" ? "active" : "inactive",
+                        seleccionado.status === "inactive"
+                          ? "active"
+                          : "inactive",
                       )
                     }
                   >
-                    {seleccionado.status === "inactive"
-                      ? "Reanudar"
-                      : "Pausar"}
+                    {seleccionado.status === "inactive" ? "Reanudar" : "Pausar"}
                   </button>
                   <button
                     className="btn-ghost"

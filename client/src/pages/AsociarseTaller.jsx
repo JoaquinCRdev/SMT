@@ -75,8 +75,8 @@ const AsociarseTaller = () => {
 
               <p id="mensajeAsociarseTaller">
                 Tu solicitud está siendo revisada por el administrador del
-                taller. Cuando la apruebe, te va a compartir un código de 6
-                caracteres para completar tu ingreso.
+                taller. Cuando la apruebe vas a poder entrar con el código que
+                aparece en la pantalla siguiente.
               </p>
 
               <Link to="/verificarCodigoTaller" id="linkVerificarCodigo">

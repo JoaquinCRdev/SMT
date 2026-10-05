@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import NotificationProvider from "./components/layout/NotificationProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { WorkshopProvider } from "./context/WorkshopContext";
@@ -20,114 +21,116 @@ const App = () => {
   return (
     <AuthProvider>
       <WorkshopProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Pública */}
-            <Route path="/auth" element={<Auth />} />
+        <NotificationProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Pública */}
+              <Route path="/auth" element={<Auth />} />
 
-            {/* Protegidas, sin exigir workshop (son para el que todavía no tiene) */}
-            <Route
-              path="/elegirTaller"
-              element={
-                <ProtectedRoute requireWorkshop={false}>
-                  <ElegirTaller />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/crearTaller"
-              element={
-                <ProtectedRoute requireWorkshop={false}>
-                  <RegistrarTaller />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/asociarseTaller"
-              element={
-                <ProtectedRoute requireWorkshop={false}>
-                  <AsociarseTaller />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/verificarCodigoTaller"
-              element={
-                <ProtectedRoute requireWorkshop={false}>
-                  <VerificarCodigoTaller />
-                </ProtectedRoute>
-              }
-            />
+              {/* Protegidas, sin exigir workshop (son para el que todavía no tiene) */}
+              <Route
+                path="/elegirTaller"
+                element={
+                  <ProtectedRoute requireWorkshop={false}>
+                    <ElegirTaller />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/crearTaller"
+                element={
+                  <ProtectedRoute requireWorkshop={false}>
+                    <RegistrarTaller />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/asociarseTaller"
+                element={
+                  <ProtectedRoute requireWorkshop={false}>
+                    <AsociarseTaller />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/verificarCodigoTaller"
+                element={
+                  <ProtectedRoute requireWorkshop={false}>
+                    <VerificarCodigoTaller />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Protegidas, requieren workshop asignado */}
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/mismaquinas"
-              element={
-                <ProtectedRoute>
-                  <Mismaquinas />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/mantenimiento"
-              element={
-                <ProtectedRoute>
-                  <Mantenimiento />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/configuracion"
-              element={
-                <ProtectedRoute>
-                  <Configuracion />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/historial"
-              element={
-                <ProtectedRoute>
-                  <Historial />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/ayuda"
-              element={
-                <ProtectedRoute>
-                  <Ayuda />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/notificaciones"
-              element={
-                <ProtectedRoute>
-                  <Notificaciones />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/planes"
-              element={
-                <ProtectedRoute>
-                  <Planes />
-                </ProtectedRoute>
-              }
-            />
+              {/* Protegidas, requieren workshop asignado */}
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/mismaquinas"
+                element={
+                  <ProtectedRoute>
+                    <Mismaquinas />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/mantenimiento"
+                element={
+                  <ProtectedRoute>
+                    <Mantenimiento />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/configuracion"
+                element={
+                  <ProtectedRoute>
+                    <Configuracion />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/historial"
+                element={
+                  <ProtectedRoute>
+                    <Historial />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/ayuda"
+                element={
+                  <ProtectedRoute>
+                    <Ayuda />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/notificaciones"
+                element={
+                  <ProtectedRoute requireWorkshop={false}>
+                    <Notificaciones />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/planes"
+                element={
+                  <ProtectedRoute>
+                    <Planes />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="*" element={<Navigate to="/home" replace />} />
-          </Routes>
-        </BrowserRouter>
+              <Route path="*" element={<Navigate to="/home" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </NotificationProvider>
       </WorkshopProvider>
     </AuthProvider>
   );

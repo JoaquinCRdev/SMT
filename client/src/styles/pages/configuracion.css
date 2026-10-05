@@ -651,6 +651,42 @@
 }
 
 /* =========================================================
+   ESTADO DE LA SOLICITUD (resueltas)
+   Mismo lenguaje visual que .btn-accept / .btn-reject.
+========================================================= */
+
+.request-estado {
+  background-color: transparent;
+
+  border: 1px solid currentColor;
+  color: var(--Verde);
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  font-size: var(--TamTexto);
+  font-weight: 500;
+
+  white-space: nowrap;
+  align-self: center;
+}
+
+.request-estado.completada {
+  color: var(--TextoSecundario);
+}
+
+.requests-subtitulo {
+  font-size: var(--TamTexto);
+  font-weight: 600;
+  color: var(--TextoSecundario);
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  margin: 4px 0 8px;
+}
+
+/* =========================================================
    ACEPTAR / RECHAZAR
 ========================================================= */
 

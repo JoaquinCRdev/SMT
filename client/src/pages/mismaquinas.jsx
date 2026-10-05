@@ -1,7 +1,7 @@
 import "../styles/pages/mismaquinas.css";
-import Sidebar from "../components/layout/sidebar.jsx";
 import { useEffect, useState } from "react";
 import api from "../api/axios.js";
+import Sidebar from "../components/layout/sidebar.jsx";
 
 const ESTADOS_FRONTEND = {
   active: "operativo",
@@ -26,8 +26,7 @@ const ETIQUETA_ESTADO = {
   baja: "De baja",
 };
 
-// Espejo de las restricciones de machine.validator.js, para no mandar al
-// servidor requests que van a rebotar con un 400.
+// Espejo de las restricciones de machine.validator.js, para no mandar al servidor requests que van a rebotar con un 400.
 const REGLAS = {
   nombre: { min: 15, max: 100, label: "El nombre" },
   marca: { min: 2, max: 50, label: "La marca" },
@@ -87,12 +86,14 @@ const Mismaquinas = () => {
   const listar = () => api.get("/machine", { params: { limit: 100 } });
 
   const distribuir = (items) => {
+    // Con dos `filter` de igualdad estricta, una máquina sin `tipo` (las
+    // anteriores al commit cefa0e2) no entraba en ninguno de los dos buckets y
+    // desaparecía de la pantalla. Solo "otro" va a la pestaña de Otros; todo lo
+    // demás, incluido `undefined`, es una máquina.
     setMaquinas(
-      items.filter((i) => i.tipo === "maquina").map(convertirDesdeBackend),
+      items.filter((i) => i.tipo !== "otro").map(convertirDesdeBackend),
     );
-    setOtros(
-      items.filter((i) => i.tipo === "otro").map(convertirDesdeBackend),
-    );
+    setOtros(items.filter((i) => i.tipo === "otro").map(convertirDesdeBackend));
   };
 
   const mensajeError = (err, porDefecto) =>
@@ -283,10 +284,7 @@ const Mismaquinas = () => {
                   Editar
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => eliminarEquipo(item.id)}
-                >
+                <button type="button" onClick={() => eliminarEquipo(item.id)}>
                   Eliminar
                 </button>
               </div>

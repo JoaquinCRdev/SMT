@@ -1,26 +1,25 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../styles/components/layout/sidebar.css";
-import i18n from "../../i18n/i18n";
 import { useAuth } from "../../context/AuthContext";
+import { useNotificationBadge } from "../../context/notificationContext";
 import { useWorkshop } from "../../context/WorkshopContext";
+import i18n from "../../i18n/i18n";
 import { etiquetaRol } from "../../utils/roles";
 
 const Sidebar = () => {
   const [, setIdioma] = useState(i18n.language);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const { user, logout } = useAuth();
-  // El workshop ya lo carga WorkshopProvider para toda la app, así que el
-  // nombre del taller sale de ahí sin pedir /workshops/mine en cada página.
+  // El workshop ya lo carga WorkshopProvider para toda la app, así que el nombre del taller sale de ahí sin pedir /workshops/mine en cada página.
   const { workshop } = useWorkshop();
+  const { unread } = useNotificationBadge();
 
   const cerrarMenu = () => {
     setMenuAbierto(false);
   };
 
-  // Antes esto era un <Link to=""> que no hacía nada: el botón de cerrar
-  // sesión existía pero nunca llamaba a logout(), por eso no se podía
-  // cambiar de cuenta.
+  // Antes esto era un <Link to=""> que no hacía nada: el botón de cerrar sesión existía pero nunca llamaba a logout(), por eso no se podía cambiar de cuenta.
   const handleLogout = async () => {
     cerrarMenu();
     await logout();
@@ -33,15 +32,9 @@ const Sidebar = () => {
 
   return (
     <aside id="sidebarhome">
-
       {/* ================= LOGO ================= */}
       <div id="headerSidebar">
-
-        <img
-          src="/logoblanco.png"
-          alt="Logo"
-          id="logohome"
-        />
+        <img src="/logoblanco.png" alt="Logo" id="logohome" />
 
         {/* HAMBURGUESA */}
         <button
@@ -53,23 +46,12 @@ const Sidebar = () => {
           <span></span>
           <span></span>
         </button>
-
       </div>
 
-
       {/* ================= MENÚ ================= */}
-      <div
-        id="botoneshome"
-        className={menuAbierto ? "menu-abierto" : ""}
-      >
-
+      <div id="botoneshome" className={menuAbierto ? "menu-abierto" : ""}>
         {/* INICIO */}
-        <NavLink
-          to="/home"
-          end
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/home" end className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/homegris.png"
@@ -85,13 +67,8 @@ const Sidebar = () => {
           {i18n.t("layout.sidebar.inicio")}
         </NavLink>
 
-
         {/* MIS MAQUINAS */}
-        <NavLink
-          to="/mismaquinas"
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/mismaquinas" className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/mismaquinasgris.png"
@@ -107,13 +84,8 @@ const Sidebar = () => {
           {i18n.t("layout.sidebar.mis_maquinas")}
         </NavLink>
 
-
         {/* MANTENIMIENTO */}
-        <NavLink
-          to="/mantenimiento"
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/mantenimiento" className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/mantenimientosgris.png"
@@ -129,13 +101,8 @@ const Sidebar = () => {
           {i18n.t("layout.sidebar.mantenimientos")}
         </NavLink>
 
-
         {/* CONFIGURACION */}
-        <NavLink
-          to="/configuracion"
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/configuracion" className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/configuraciongris.png"
@@ -151,13 +118,8 @@ const Sidebar = () => {
           {i18n.t("layout.sidebar.configuracion")}
         </NavLink>
 
-
         {/* HISTORIAL */}
-        <NavLink
-          to="/historial"
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/historial" className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/historialgris.png"
@@ -173,35 +135,37 @@ const Sidebar = () => {
           {i18n.t("layout.sidebar.historial")}
         </NavLink>
 
-
         {/* NOTIFICACIONES */}
         <NavLink
           to="/notificaciones"
           className="botonhome"
           onClick={cerrarMenu}
         >
-          <img
-            className="imageniconoshome icono-gris"
-            src="/notificacionesgris.png"
-            alt=""
-          />
+          <span className="botonhome-icono">
+            <img
+              className="imageniconoshome icono-gris"
+              src="/notificacionesgris.png"
+              alt=""
+            />
 
-          <img
-            className="imageniconoshome icono-naranja"
-            src="/notificacionesnaranja.png"
-            alt=""
-          />
+            <img
+              className="imageniconoshome icono-naranja"
+              src="/notificacionesnaranja.png"
+              alt=""
+            />
+
+            {unread > 0 && (
+              <span className="botonhome-badge">
+                {unread > 99 ? "99+" : unread}
+              </span>
+            )}
+          </span>
 
           {i18n.t("layout.sidebar.notificaciones")}
         </NavLink>
 
-
         {/* AYUDA */}
-        <NavLink
-          to="/ayuda"
-          className="botonhome"
-          onClick={cerrarMenu}
-        >
+        <NavLink to="/ayuda" className="botonhome" onClick={cerrarMenu}>
           <img
             className="imageniconoshome icono-gris"
             src="/ayudagris.png"
@@ -216,14 +180,11 @@ const Sidebar = () => {
 
           {i18n.t("layout.sidebar.ayuda")}
         </NavLink>
-
       </div>
-
 
       {/* ================= CUENTA ================= */}
       {user && (
         <div id="cuentaSidebar">
-
           <div className="avatar-circle-sidebar">
             <svg
               width="18"
@@ -251,22 +212,12 @@ const Sidebar = () => {
               </span>
             )}
           </div>
-
         </div>
       )}
 
-
       {/* ================= CERRAR SESIÓN ================= */}
-      <button
-        type="button"
-        id="botoncerrarsesion"
-        onClick={handleLogout}
-      >
-        <img
-          className="icono-cerrar-gris"
-          src="/cerrarsesiongris.png"
-          alt=""
-        />
+      <button type="button" id="botoncerrarsesion" onClick={handleLogout}>
+        <img className="icono-cerrar-gris" src="/cerrarsesiongris.png" alt="" />
 
         <img
           className="icono-cerrar-naranja"
@@ -276,7 +227,6 @@ const Sidebar = () => {
 
         {i18n.t("layout.sidebar.cerrar_sesion")}
       </button>
-
     </aside>
   );
 };
