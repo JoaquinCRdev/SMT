@@ -74,6 +74,11 @@ router.post(
   authorize("admin"),
   workshopController.regenerateCode,
 );
+router.patch(
+  "/requests/:requestId/cancel",
+  authorize("admin"),
+  workshopController.cancelApprovedRequest,
+);
 router.delete("/:id", authorize("admin"), workshopController.deleteWorkshop);
 
 export default router;

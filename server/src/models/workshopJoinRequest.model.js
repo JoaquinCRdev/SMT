@@ -14,8 +14,12 @@ const joinRequestSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
+      enum: ["pending", "approved", "rejected", "completed"],
       default: "pending",
+    },
+    code: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true },
@@ -25,6 +29,12 @@ const joinRequestSchema = new mongoose.Schema(
 joinRequestSchema.index(
   { user: 1, status: 1 },
   { unique: true, partialFilterExpression: { status: "pending" } },
+);
+
+// El código solo existe (y debe ser único) mientras la solicitud está aprobada
+joinRequestSchema.index(
+  { code: 1 },
+  { unique: true, partialFilterExpression: { status: "approved" } },
 );
 
 export default mongoose.model("WorkshopJoinRequest", joinRequestSchema);
