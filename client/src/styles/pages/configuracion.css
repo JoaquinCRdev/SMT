@@ -2261,3 +2261,132 @@
     padding: 10px;
   }
 }
+
+#workshopCodeBox,
+#requestCodeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--FondoBoton);
+  border: 1px solid var(--BordePrincipal);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+#workshopCodeValue {
+  font-family: "Inter", monospace;
+  font-size: calc(var(--TamTitulo) - 2px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--Naranja);
+}
+
+#requestCodeBox {
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+#requestCodeValue {
+  font-family: "Inter", monospace;
+  font-size: var(--TamTexto);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--Naranja);
+}
+
+#workshopCodeCopyBtn,
+#requestCodeCopyBtn {
+  background-color: var(--Naranja);
+  border: none;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: calc(var(--TamTexto) - 1px);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+#workshopCodeCopyBtn:hover,
+#requestCodeCopyBtn:hover {
+  background-color: var(--NaranjaHover);
+}
+
+#errorPersonal,
+#errorModalPersonal,
+#sinSolicitudes {
+  color: var(--TextoSecundario);
+  font-size: var(--TamTexto);
+  text-align: center;
+}
+
+#errorModalPersonal {
+  color: #ef4444;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 699px) {
+  #workshopCodeBox {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  #requestCodeBox {
+    flex-direction: row;
+  }
+}
+
+#requestApprovedActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 699px) {
+  #requestApprovedActions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+}
+
+#solicitudesHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#btnRefreshSolicitudes {
+  background-color: var(--FondoBoton);
+  border: 1px solid var(--BordePrincipal);
+  color: var(--TextoSecundario);
+
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+#btnRefreshSolicitudes:hover {
+  background-color: var(--FondoTarjeta);
+  color: var(--Naranja);
+}
+
+#btnRefreshSolicitudes:active {
+  transform: rotate(180deg);
+}
+
+#btnRefreshSolicitudes:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

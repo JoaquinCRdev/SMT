@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
+import { useWorkshop } from "../context/WorkshopContext";
 import "../styles/pages/verificarCodigoTaller.css";
 
 const CODE_LENGTH = 6;
@@ -8,6 +10,9 @@ const VALID_CHAR = /^[A-HJ-NP-Z2-9]$/;
 
 const VerificarCodigoTaller = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const { refetchWorkshop } = useWorkshop();
+
   const [codigo, setCodigo] = useState(Array(CODE_LENGTH).fill(""));
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -83,6 +88,14 @@ const VerificarCodigoTaller = () => {
 
     try {
       await api.post("/workshops/verify-code", { code: codeString });
+
+      // El backend ya asoció al usuario al taller; hay que refrescar
+      // el AuthContext y el WorkshopContext para que ProtectedRoute
+      // deje de mandarlo de vuelta a /asociarseTaller.
+      const { data: profile } = await api.get("/profile");
+      setUser(profile);
+      await refetchWorkshop();
+
       navigate("/home");
     } catch (err) {
       setError(err.response?.data?.message || "Código inválido o expirado");
