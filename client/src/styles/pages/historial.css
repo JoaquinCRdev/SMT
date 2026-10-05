@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 
@@ -38,6 +37,8 @@ button {
     background-color: var(--FondoPrincipal);
     color: var(--TextoPrincipal);
 
+    overflow: hidden;
+
     transition:
         background-color 0.25s ease,
         color 0.25s ease;
@@ -51,9 +52,9 @@ button {
 .historial-page {
     flex: 1;
     min-width: 0;
-    min-height: 100vh;
+    height: 100%;
 
-    padding: 24px 32px;
+    padding: 28px 20px;
 
     background-color: var(--FondoPrincipal);
     color: var(--TextoPrincipal);
@@ -91,7 +92,7 @@ button {
 }
 
 .historial-page::-webkit-scrollbar-thumb:hover {
-    background-color: #222222;
+    background-color: #1a1a1a;
 }
 
 
@@ -101,12 +102,12 @@ button {
 
 .historial-container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
 }
 
 
@@ -123,8 +124,8 @@ button {
 }
 
 .history-header > span {
-    font-size: var(--TamTitulo);
-    font-weight: 500;
+    font-size: calc(var(--TamTitulo) + 2px);
+    font-weight: 600;
     color: var(--TextoPrincipal);
 }
 
@@ -132,13 +133,13 @@ button {
 .date-select {
     width: fit-content;
 
-    background-color: var(--FondoTarjeta);
+    background-color: transparent;
     color: var(--TextoPrincipal);
 
     border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
 
-    padding: 6px 32px 6px 14px;
+    padding: 7px 32px 7px 14px;
 
     font-size: var(--TamTexto);
     font-weight: 500;
@@ -163,7 +164,7 @@ button {
 
 .custom-select:hover,
 .date-select:hover {
-    border-color: var(--BordeSuave);
+    border-color: var(--Naranja);
 }
 
 .custom-select option,
@@ -174,32 +175,31 @@ button {
 
 
 /* =========================================================
-   ESTADÍSTICAS
+   ESTADÍSTICAS (máquinas / otros)
 ========================================================= */
 
 .stats-container {
     width: 100%;
 
     display: flex;
-    gap: 16px;
+    gap: 20px;
 }
 
 .stat-card {
     flex: 1;
     min-width: 0;
 
-    padding: 16px;
+    padding: 18px 20px;
 
     border: 1px solid var(--BordePrincipal);
-    border-radius: 12px;
+    border-left: 3px solid var(--Naranja);
+    border-radius: 10px;
 
     background-color: var(--FondoTarjeta);
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-
-    gap: 12px;
+    gap: 4px;
 
     transition:
         background-color 0.25s ease,
@@ -207,47 +207,42 @@ button {
         color 0.25s ease;
 }
 
-.stat-title {
-    width: 100%;
+.stat-number {
+    font-size: calc(var(--TamTitulo) + 10px);
+    font-weight: 700;
+
+    line-height: 1;
+
+    color: var(--TextoPrincipal);
+}
+
+.stat-text {
+    font-size: var(--TamTexto);
+    color: var(--TextoSecundario);
+}
+
+.stat-status {
+    margin-top: 6px;
 
     display: flex;
     align-items: center;
+    gap: 6px;
 
-    white-space: nowrap;
-}
-
-.stat-title strong {
-    font-size: var(--TamTitulo);
-    font-weight: 700;
-}
-
-.stat-title span {
-    font-size: var(--TamTexto);
-    font-weight: 400;
-}
-
-.stat-content {
-    width: 100%;
-}
-
-.operativos {
-    display: inline-block;
-
-    padding: 4px 12px;
-
-    border: 1px solid var(--Verde);
-    border-radius: 8px;
-
-    background-color: color-mix(
-        in srgb,
-        var(--Verde) 10%,
-        transparent
-    );
+    font-size: calc(var(--TamTexto) - 1px);
+    font-weight: 500;
 
     color: var(--Verde);
+}
 
-    font-size: var(--TamTexto);
-    font-weight: 500;
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: var(--Verde);
+
+    flex-shrink: 0;
 }
 
 
@@ -258,100 +253,66 @@ button {
 .section-title {
     width: 100%;
 
-    padding-top: 4px;
+    padding-top: 30px;
 
-    font-size: var(--TamTitulo);
-    font-weight: 400;
+    font-size: calc(var(--TamTitulo) + 2px);
+    font-weight: 600;
 
     color: var(--TextoPrincipal);
 }
 
 
 /* =========================================================
-   RESUMEN
+   RESUMEN DE MANTENIMIENTOS
+   (franja liviana, no cajas: para no competir con
+   las tarjetas de arriba)
 ========================================================= */
 
-.maintenance-summary {
+.summary-row {
     width: 100%;
 
     display: flex;
-    gap: 12px;
+
+    border: 1px solid var(--BordePrincipal);
+    border-radius: 10px;
+
+    background-color: var(--FondoTarjeta);
+
+    overflow: hidden;
 }
 
-.summary-card {
+.summary-item {
     flex: 1;
 
-    padding: 12px;
-
-    border-radius: 12px;
+    padding: 14px 16px;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 2px;
 
-    gap: 6px;
-
-    transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease,
-        color 0.25s ease;
+    border-right: 1px solid var(--BordePrincipal);
 }
 
-.summary-card span {
-    font-size: var(--TamTexto);
-    font-weight: 500;
+.summary-item:last-child {
+    border-right: none;
 }
 
-.summary-card strong {
-    font-size: var(--TamTitulo);
+.summary-number {
+    font-size: calc(var(--TamTitulo) + 2px);
     font-weight: 700;
+
+    line-height: 1.1;
 }
 
-
-/* =========================================================
-   ESTADOS DEL RESUMEN
-========================================================= */
-
-.summary-success {
-    border: 1px solid var(--Verde);
-
-    background-color: color-mix(
-        in srgb,
-        var(--Verde) 18%,
-        transparent
-    );
-
-    color: var(--Verde);
+.summary-label {
+    font-size: calc(var(--TamTexto) - 1px);
+    color: var(--TextoSecundario);
 }
 
-.summary-warning {
-    border: 1px solid var(--Naranja);
-
-    background-color: color-mix(
-        in srgb,
-        var(--Naranja) 18%,
-        transparent
-    );
-
-    color: var(--Naranja);
-}
-
-.summary-info {
-    border: 1px solid #60a5fa;
-
-    background-color: rgba(96, 165, 250, 0.15);
-
-    color: #60a5fa;
-}
-
-.summary-danger {
-    border: 1px solid #ef4444;
-
-    background-color: rgba(239, 68, 68, 0.15);
-
-    color: #ef4444;
-}
+.summary-realizado { color: var(--Verde); }
+.summary-pendiente { color: var(--Naranja); }
+.summary-proximo { color: #60a5fa; }
+.summary-vencido { color: #ef4444; }
 
 
 /* =========================================================
@@ -365,7 +326,55 @@ button {
     flex-wrap: wrap;
     align-items: center;
 
-    gap: 20px;
+    gap: 16px;
+}
+
+.search-group {
+    position: relative;
+
+    flex: 1;
+    min-width: 220px;
+}
+
+.search-icon {
+    position: absolute;
+
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+
+    color: var(--TextoSecundario);
+
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+
+    padding: 10px 14px 10px 36px;
+
+    border: 1px solid var(--BordePrincipal);
+    border-radius: 8px;
+
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+
+    font-size: var(--TamTexto);
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.search-input::placeholder {
+    color: var(--TextoSecundario);
+}
+
+.search-input:focus {
+    border-color: var(--Naranja);
 }
 
 .filter-group {
@@ -377,7 +386,7 @@ button {
 
 .filter-group > span {
     font-size: var(--TamTexto);
-    color: var(--TextoPrincipal);
+    color: var(--TextoSecundario);
 }
 
 
@@ -388,92 +397,76 @@ button {
 .maintenance-list {
     width: 100%;
 
-    padding: 16px;
-
-    border: 1px solid var(--BordePrincipal);
-    border-radius: 16px;
-
-    background-color: var(--FondoTarjeta);
-
     display: flex;
     flex-direction: column;
 
-    gap: 12px;
-
-    transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease;
+    gap: 10px;
 }
 
 
 /* =========================================================
-   TARJETA
+   FILA DE MANTENIMIENTO
+   El color de estado vive en el borde izquierdo y en el
+   texto del estado, no se repite en cuatro lugares distintos.
 ========================================================= */
 
 .maintenance-card {
     width: 100%;
 
-    padding: 14px;
+    padding: 14px 16px;
 
     border: 1px solid var(--BordePrincipal);
-    border-radius: 12px;
+    border-left: 3px solid var(--BordePrincipal);
+    border-radius: 10px;
 
-    background-color: var(--FondoSecundario);
+    background-color: var(--FondoTarjeta);
 
     display: flex;
     align-items: center;
 
-    gap: 16px;
+    gap: 14px;
 
     transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease;
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
+
+.maintenance-card:hover {
+    background-color: var(--FondoSecundario);
+}
+
+.accent-realizado { border-left-color: var(--Verde); }
+.accent-pendiente { border-left-color: var(--Naranja); }
+.accent-proximo { border-left-color: #60a5fa; }
+.accent-vencido { border-left-color: #ef4444; }
 
 
 /* =========================================================
-   IMAGEN
+   MARCA DE IDENTIDAD DEL EQUIPO
 ========================================================= */
 
-.maintenance-image {
-    width: 100px;
-    height: 70px;
+.maintenance-marker {
+    width: 42px;
+    height: 42px;
 
     flex-shrink: 0;
 
-    overflow: hidden;
-    position: relative;
+    border-radius: 8px;
 
-    border: 1px solid var(--BordePrincipal);
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background-color: var(--FondoBoton);
+    font-size: var(--TamTexto);
+    font-weight: 700;
+
+    color: #ffffff;
 }
 
-.diagonal {
-    position: absolute;
-
-    width: 127.4%;
-    height: 100%;
-
-    border-top: 1px solid var(--BordeSuave);
-
-    transform-origin: 0 0;
-}
-
-.diagonal-one {
-    left: 1%;
-    top: 1px;
-
-    transform: rotate(35deg);
-}
-
-.diagonal-two {
-    left: 24%;
-    top: 74px;
-
-    transform: rotate(-35deg);
-}
+.marker-realizado { background-color: var(--Verde); }
+.marker-pendiente { background-color: var(--Naranja); }
+.marker-proximo { background-color: #60a5fa; }
+.marker-vencido { background-color: #ef4444; }
 
 
 /* =========================================================
@@ -487,16 +480,16 @@ button {
     display: flex;
     flex-direction: column;
 
-    gap: 6px;
+    gap: 4px;
 }
 
 .maintenance-header {
     width: 100%;
 
     display: flex;
-    align-items: flex-start;
+    align-items: baseline;
 
-    gap: 24px;
+    gap: 10px;
 }
 
 .maintenance-header strong {
@@ -504,19 +497,24 @@ button {
     font-weight: 700;
 
     color: var(--TextoPrincipal);
-}
 
-.maintenance-header span {
-    font-size: var(--TamTexto);
-    font-weight: 400;
-
-    color: var(--TextoPrincipal);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .maintenance-type {
-    font-size: var(--TamTexto);
+    font-size: calc(var(--TamTexto) - 1px);
 
     color: var(--TextoSecundario);
+
+    white-space: nowrap;
+}
+
+.maintenance-date {
+    font-size: calc(var(--TamTexto) - 1px);
+
+    color: var(--TextoTerciario);
 }
 
 
@@ -525,145 +523,42 @@ button {
 ========================================================= */
 
 .maintenance-actions {
+    flex-shrink: 0;
+
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 
-    gap: 12px;
+    gap: 16px;
 }
 
-.status-badge {
-    padding: 4px 12px;
+.status-label {
+    font-size: var(--TamTexto);
+    font-weight: 600;
 
-    border-radius: 12px;
+    white-space: nowrap;
+}
 
+.status-realizado { color: var(--Verde); }
+.status-pendiente { color: var(--Naranja); }
+.status-proximo { color: #60a5fa; }
+.status-vencido { color: #ef4444; }
+
+.maintenance-link {
     font-size: var(--TamTexto);
     font-weight: 500;
 
-    display: inline-block;
+    color: var(--TextoSecundario);
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
 }
 
-
-/* =========================================================
-   ESTADOS
-========================================================= */
-
-.status-realizado {
-    background-color: color-mix(
-        in srgb,
-        var(--Verde) 15%,
-        transparent
-    );
-
-    color: var(--Verde);
-
-    border: 1px solid var(--Verde);
-}
-
-.status-pendiente {
-    background-color: color-mix(
-        in srgb,
-        var(--Naranja) 15%,
-        transparent
-    );
-
+.maintenance-link:hover {
     color: var(--Naranja);
-
-    border: 1px solid var(--Naranja);
-}
-
-.status-proximo {
-    background-color: rgba(96, 165, 250, 0.15);
-
-    color: #60a5fa;
-
-    border: 1px solid #2563eb;
-}
-
-.status-vencido {
-    background-color: rgba(239, 68, 68, 0.15);
-
-    color: #ef4444;
-
-    border: 1px solid #dc2626;
-}
-
-
-/* =========================================================
-   BOTONES DE ESTADO
-========================================================= */
-
-.maintenance-button {
-    padding: 6px 14px;
-
-    background-color: transparent;
-
-    border-radius: 8px;
-
-    font-size: var(--TamTexto);
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-}
-
-
-/* ---------- REALIZADO ---------- */
-
-.button-realizado {
-    border: 1px solid var(--Verde);
-    color: var(--Verde);
-}
-
-.button-realizado:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--Verde) 15%,
-        transparent
-    );
-}
-
-
-/* ---------- PENDIENTE ---------- */
-
-.button-pendiente {
-    border: 1px solid var(--Naranja);
-    color: var(--Naranja);
-}
-
-.button-pendiente:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--Naranja) 15%,
-        transparent
-    );
-}
-
-
-/* ---------- PRÓXIMO ---------- */
-
-.button-proximo {
-    border: 1px solid #60a5fa;
-    color: #60a5fa;
-}
-
-.button-proximo:hover {
-    background-color: rgba(96, 165, 250, 0.15);
-}
-
-
-/* ---------- VENCIDO ---------- */
-
-.button-vencido {
-    border: 1px solid #ef4444;
-    color: #ef4444;
-}
-
-.button-vencido:hover {
-    background-color: rgba(239, 68, 68, 0.15);
 }
 
 
@@ -680,9 +575,9 @@ button {
     width: 100vw;
     height: 100vh;
 
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.6);
 
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(3px);
 
     z-index: 998;
 
@@ -758,7 +653,7 @@ button {
 }
 
 .drawer-header h2 {
-    font-size: var(--TamTitulo);
+    font-size: calc(var(--TamTitulo) + 2px);
     font-weight: 700;
 
     color: var(--TextoPrincipal);
@@ -798,7 +693,7 @@ button {
 
     background-color: var(--FondoSecundario);
 
-    border-color: var(--BordeSuave);
+    border-color: var(--Naranja);
 }
 
 
@@ -839,7 +734,7 @@ button {
 }
 
 .drawer-body::-webkit-scrollbar-thumb:hover {
-    background-color: #222222;
+    background-color: #1a1a1a;
 }
 
 
@@ -855,14 +750,10 @@ button {
 }
 
 .drawer-section h3 {
-    font-size: var(--TamTexto);
-    font-weight: 700;
-
-    text-transform: uppercase;
+    font-size: calc(var(--TamTexto) - 1px);
+    font-weight: 600;
 
     color: var(--TextoSecundario);
-
-    letter-spacing: 0.5px;
 }
 
 .drawer-section p {
@@ -908,8 +799,6 @@ button {
 
     color: var(--TextoPrincipal);
 
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-
     transition:
         background-color 0.25s ease,
         border-color 0.25s ease,
@@ -951,18 +840,6 @@ button {
     .historial-container {
         max-width: 100%;
     }
-
-    .maintenance-card {
-        gap: 12px;
-    }
-
-    .maintenance-header {
-        gap: 14px;
-    }
-
-    .maintenance-actions {
-        flex-shrink: 0;
-    }
 }
 
 
@@ -985,12 +862,8 @@ button {
 
     /* ================= HEADER ================= */
 
-    .history-header {
-        gap: 10px;
-    }
-
     .history-header > span {
-        font-size: var(--TamTitulo);
+        font-size: calc(var(--TamTitulo) + 1px);
     }
 
     .date-select {
@@ -1001,32 +874,43 @@ button {
     /* ================= ESTADÍSTICAS ================= */
 
     .stats-container {
-        gap: 12px;
+        gap: 10px;
     }
 
     .stat-card {
-        padding: 14px;
+        padding: 14px 16px;
+    }
+
+    .stat-number {
+        font-size: calc(var(--TamTitulo) + 6px);
     }
 
 
     /* ================= RESUMEN ================= */
 
-    .maintenance-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+    .summary-row {
+        flex-wrap: wrap;
     }
 
-    .summary-card {
-        min-width: 0;
-        padding: 12px 10px;
+    .summary-item {
+        min-width: 50%;
+        border-bottom: 1px solid var(--BordePrincipal);
+    }
+
+    .summary-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .summary-item:nth-child(3),
+    .summary-item:nth-child(4) {
+        border-bottom: none;
     }
 
 
     /* ================= FILTROS ================= */
 
     .filters {
-        gap: 14px;
+        gap: 12px;
     }
 
     .filter-group {
@@ -1039,53 +923,20 @@ button {
     }
 
 
-    /* ================= LISTA ================= */
-
-    .maintenance-list {
-        padding: 12px;
-        gap: 10px;
-    }
-
-
     /* ================= TARJETA ================= */
 
     .maintenance-card {
-        padding: 12px;
+        padding: 12px 14px;
         gap: 12px;
     }
 
-    .maintenance-image {
-        width: 85px;
-        height: 65px;
-    }
-
-    .maintenance-info {
-        min-width: 0;
-    }
-
-    .maintenance-header {
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .maintenance-header strong,
-    .maintenance-header span,
-    .maintenance-type {
-        font-size: var(--TamTexto);
+    .maintenance-marker {
+        width: 38px;
+        height: 38px;
     }
 
     .maintenance-actions {
-        gap: 8px;
-    }
-
-    .status-badge {
-        padding: 4px 8px;
-        text-align: center;
-    }
-
-    .maintenance-button {
-        padding: 6px 10px;
-        white-space: nowrap;
+        gap: 12px;
     }
 }
 
@@ -1095,13 +946,12 @@ button {
 
     .historial-layout {
         flex-direction: column;
-        height: auto;
-        min-height: 100vh;
+        height: 100vh;
     }
 
     .historial-page {
         width: 100%;
-        min-height: auto; /* evita agregar un 100vh extra debajo del sidebar */
+        height: 100%;
     }
 }
 /* =========================================================
@@ -1113,7 +963,6 @@ button {
 
     .historial-page {
         width: 100%;
-        min-height: 100vh;
 
         margin-left: 0;
 
@@ -1145,21 +994,26 @@ button {
         gap: 10px;
     }
 
-    .stat-card {
-        padding: 14px;
-    }
-
 
     /* ================= RESUMEN ================= */
 
-    .maintenance-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+    .summary-row {
+        flex-wrap: wrap;
     }
 
-    .summary-card {
-        padding: 10px;
+    .summary-item {
+        min-width: 50%;
+        border-bottom: 1px solid var(--BordePrincipal);
+        padding: 12px;
+    }
+
+    .summary-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .summary-item:nth-child(3),
+    .summary-item:nth-child(4) {
+        border-bottom: none;
     }
 
 
@@ -1183,56 +1037,32 @@ button {
     }
 
 
-    /* ================= LISTA ================= */
-
-    .maintenance-list {
-        padding: 10px;
-        gap: 10px;
-    }
-
-
     /* ================= TARJETA ================= */
 
     .maintenance-card {
         flex-wrap: wrap;
-        padding: 10px;
+        padding: 12px;
         gap: 10px;
     }
 
-    .maintenance-image {
-        width: 80px;
-        height: 60px;
-    }
-
     .maintenance-info {
-        flex: 1;
-        min-width: calc(100% - 90px);
+        min-width: calc(100% - 56px);
     }
 
     .maintenance-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 3px;
+        gap: 2px;
     }
 
     .maintenance-actions {
         width: 100%;
 
-        flex-direction: row;
-
-        align-items: center;
         justify-content: space-between;
 
-        gap: 8px;
-    }
+        padding-top: 8px;
 
-    .status-badge {
-        max-width: 60%;
-        text-align: center;
-    }
-
-    .maintenance-button {
-        flex-shrink: 0;
+        border-top: 1px solid var(--BordePrincipal);
     }
 }
 
@@ -1246,7 +1076,6 @@ button {
 
     .historial-page {
         width: 100%;
-        min-height: 100vh;
 
         margin-left: 0;
 
@@ -1270,7 +1099,7 @@ button {
     }
 
     .history-header > span {
-        font-size: var(--TamTitulo);
+        font-size: calc(var(--TamTitulo) + 1px);
     }
 
     .date-select {
@@ -1291,14 +1120,7 @@ button {
 
     .stat-card {
         width: 100%;
-        padding: 12px;
-        gap: 8px;
-    }
-
-    .stat-title {
-        white-space: normal;
-        flex-wrap: wrap;
-        gap: 3px;
+        padding: 14px;
     }
 
 
@@ -1311,24 +1133,31 @@ button {
 
     /* ================= RESUMEN ================= */
 
-    .maintenance-summary {
+    .summary-row {
         width: 100%;
 
-        display: grid;
-
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 8px;
+        flex-wrap: wrap;
     }
 
-    .summary-card {
-        min-width: 0;
+    .summary-item {
+        min-width: 50%;
 
-        padding: 10px 6px;
+        padding: 10px;
 
-        gap: 4px;
+        border-bottom: 1px solid var(--BordePrincipal);
+    }
 
-        text-align: center;
+    .summary-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .summary-item:nth-child(3),
+    .summary-item:nth-child(4) {
+        border-bottom: none;
+    }
+
+    .summary-number {
+        font-size: var(--TamTitulo);
     }
 
 
@@ -1369,10 +1198,6 @@ button {
     /* ================= LISTA ================= */
 
     .maintenance-list {
-        padding: 8px;
-
-        border-radius: 12px;
-
         gap: 8px;
     }
 
@@ -1382,37 +1207,21 @@ button {
     .maintenance-card {
         width: 100%;
 
-        padding: 9px;
+        padding: 10px;
 
-        display: grid;
-
-        grid-template-columns: 70px minmax(0, 1fr);
+        display: flex;
+        flex-wrap: wrap;
 
         gap: 10px;
-
-        align-items: start;
     }
 
-
-    /* ================= IMAGEN ================= */
-
-    .maintenance-image {
-        width: 70px;
-        height: 55px;
-
-        grid-column: 1;
-        grid-row: 1;
+    .maintenance-marker {
+        width: 36px;
+        height: 36px;
     }
-
-
-    /* ================= INFORMACIÓN ================= */
 
     .maintenance-info {
-        width: 100%;
-        min-width: 0;
-
-        grid-column: 2;
-        grid-row: 1;
+        min-width: calc(100% - 50px);
     }
 
     .maintenance-header {
@@ -1422,15 +1231,15 @@ button {
 
         align-items: flex-start;
 
-        gap: 3px;
+        gap: 2px;
     }
 
     .maintenance-header strong,
-    .maintenance-header span,
     .maintenance-type {
         max-width: 100%;
 
         overflow-wrap: anywhere;
+        white-space: normal;
     }
 
 
@@ -1439,30 +1248,11 @@ button {
     .maintenance-actions {
         width: 100%;
 
-        grid-column: 1 / -1;
-        grid-row: 2;
+        justify-content: space-between;
 
-        display: flex;
+        padding-top: 8px;
 
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 7px;
-    }
-
-    .status-badge {
-        width: 100%;
-
-        text-align: center;
-
-        padding: 5px 8px;
-    }
-
-    .maintenance-button {
-        width: 100%;
-
-        padding: 7px 10px;
+        border-top: 1px solid var(--BordePrincipal);
     }
 
 
@@ -1495,10 +1285,6 @@ button {
         padding-top: 18px;
     }
 
-    .drawer-section h3 {
-        font-size: var(--TamTexto);
-    }
-
     .drawer-description {
         padding: 12px;
 
@@ -1518,10 +1304,6 @@ button {
         padding: 12px 8px;
     }
 
-    .maintenance-summary {
-        grid-template-columns: 1fr;
-    }
-
     .filter-group {
         flex-direction: column;
         align-items: stretch;
@@ -1536,24 +1318,10 @@ button {
     }
 
     .maintenance-card {
-        grid-template-columns: 60px minmax(0, 1fr);
-
-        padding: 8px;
-    }
-
-    .maintenance-image {
-        width: 60px;
-        height: 50px;
-    }
-
-    .maintenance-list {
-        padding: 6px;
+        padding: 10px;
     }
 
     .drawer-content {
         padding: 18px 12px;
     }
 }
-
-
-

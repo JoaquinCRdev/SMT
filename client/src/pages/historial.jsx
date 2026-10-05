@@ -38,24 +38,49 @@ const mantenimientosIniciales = [
   },
 ];
 
+function normalizarEstado(estado) {
+  return estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function StatCard({ number, text, status }) {
   return (
     <div className="stat-card">
-      <div className="stat-title">
-        <strong>{number}</strong>
-        <span>{text}</span>
+      <div className="stat-number">{number}</div>
+      <div className="stat-text">{text}</div>
+      <div className="stat-status">
+        <span className="status-dot" />
+        {status}
       </div>
-      <div className="stat-content">
-        <span className="operativos">{status}</span>
+    </div>
+  );
+}
+
+function ResumenMantenimientos({ realizados, pendientes, proximos, vencidos }) {
+  return (
+    <div className="summary-row">
+      <div className="summary-item">
+        <span className="summary-number summary-realizado">{realizados}</span>
+        <span className="summary-label">Realizados</span>
+      </div>
+      <div className="summary-item">
+        <span className="summary-number summary-pendiente">{pendientes}</span>
+        <span className="summary-label">Pendientes</span>
+      </div>
+      <div className="summary-item">
+        <span className="summary-number summary-proximo">{proximos}</span>
+        <span className="summary-label">Próximos</span>
+      </div>
+      <div className="summary-item">
+        <span className="summary-number summary-vencido">{vencidos}</span>
+        <span className="summary-label">Vencidos</span>
       </div>
     </div>
   );
 }
 
 function MaintenanceCard({ mantenimiento, onVerDetalles }) {
-  const estadoSlug = mantenimiento.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const estadoClass = `status-badge status-${estadoSlug}`;
-  const buttonClass = `maintenance-button button-${estadoSlug}`;
+  const estadoSlug = normalizarEstado(mantenimiento.estado);
+  const inicial = mantenimiento.nombre.trim().charAt(0).toUpperCase();
 
   const fechaFormateada = new Date(`${mantenimiento.fecha}T00:00:00`).toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -64,26 +89,21 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
   });
 
   return (
-    <div className="maintenance-card">
-      <div className="maintenance-image">
-        <div className="diagonal diagonal-one"></div>
-        <div className="diagonal diagonal-two"></div>
-      </div>
+    <div className={`maintenance-card accent-${estadoSlug}`}>
+      <div className={`maintenance-marker marker-${estadoSlug}`}>{inicial}</div>
 
       <div className="maintenance-info">
         <div className="maintenance-header">
           <strong>{mantenimiento.nombre}</strong>
-          <span>{fechaFormateada}</span>
+          <span className="maintenance-type">{mantenimiento.tipo}</span>
         </div>
-        <span className="maintenance-type">{mantenimiento.tipo}</span>
+        <span className="maintenance-date">{fechaFormateada}</span>
       </div>
 
       <div className="maintenance-actions">
-        <span className={estadoClass}>
-          {mantenimiento.estado} - {mantenimiento.tipo}
-        </span>
-        <button className={buttonClass} onClick={() => onVerDetalles(mantenimiento)}>
-          Ver mantenimiento
+        <span className={`status-label status-${estadoSlug}`}>{mantenimiento.estado}</span>
+        <button className="maintenance-link" onClick={() => onVerDetalles(mantenimiento)}>
+          Ver detalle
         </button>
       </div>
     </div>
@@ -133,13 +153,13 @@ export default function Historial() {
 
       <main className="historial-page">
         <div className="historial-container">
-          
+
           {/* HEADER CON FILTRO DE FECHAS */}
           <div className="history-header">
             <span>Historial de:</span>
-            <select 
+            <select
               className="date-select"
-              value={rangoFecha} 
+              value={rangoFecha}
               onChange={(e) => setRangoFecha(e.target.value)}
             >
               <option value="7">Últ. 7 días</option>
@@ -151,22 +171,21 @@ export default function Historial() {
           </div>
 
           <div className="stats-container">
-            <StatCard number="5" text=" máquinas registradas" status="4/5 operativos" />
-            <StatCard number="11" text=" otros registrados" status="6/11 operativos" />
+            <StatCard number="5" text="máquinas registradas" status="4/5 operativos" />
+            <StatCard number="11" text="otros registrados" status="6/11 operativos" />
           </div>
 
           <div className="section-title">Mantenimientos</div>
 
-          <div className="maintenance-summary">
-            <div className="summary-card summary-success"><span>Realizados:</span><strong>32</strong></div>
-            <div className="summary-card summary-warning"><span>Pendientes:</span><strong>10</strong></div>
-            <div className="summary-card summary-info"><span>Próximos:</span><strong>5</strong></div>
-            <div className="summary-card summary-danger"><span>Vencidos:</span><strong>1</strong></div>
-          </div>
+          <ResumenMantenimientos realizados={32} pendientes={10} proximos={5} vencidos={1} />
 
           {/* BÚSQUEDA, FILTROS Y ORDENAMIENTO */}
           <div className="filters">
             <div className="search-group">
+              <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
               <input
                 type="text"
                 className="search-input"
@@ -178,7 +197,7 @@ export default function Historial() {
 
             <div className="filter-group">
               <span>Estado:</span>
-              <select 
+              <select
                 className="custom-select"
                 value={filtroEstado}
                 onChange={(e) => setFiltroEstado(e.target.value)}
@@ -193,7 +212,7 @@ export default function Historial() {
 
             <div className="filter-group">
               <span>Ordenar por:</span>
-              <select 
+              <select
                 className="custom-select"
                 value={orden}
                 onChange={(e) => setOrden(e.target.value)}
@@ -223,7 +242,7 @@ export default function Historial() {
       </main>
 
       {/* OVERLAY Y PANEL LATERAL */}
-      <div 
+      <div
         className={`drawer-overlay ${itemSeleccionado ? "active" : ""}`}
         onClick={() => setItemSeleccionado(null)}
       />
@@ -232,7 +251,7 @@ export default function Historial() {
         {itemSeleccionado && (
           <div className="drawer-content">
             <div className="drawer-header">
-              <h2>Detalle del Mantenimiento</h2>
+              <h2>Detalle del mantenimiento</h2>
               <button className="close-drawer" onClick={() => setItemSeleccionado(null)}>✕</button>
             </div>
 
@@ -256,7 +275,7 @@ export default function Historial() {
 
               <div className="drawer-section">
                 <h3>Estado actual</h3>
-                <span className={`status-badge status-${itemSeleccionado.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}>
+                <span className={`status-label status-${normalizarEstado(itemSeleccionado.estado)}`}>
                   {itemSeleccionado.estado === "Realizado" ? "✔ Hecho" : "⌛ " + itemSeleccionado.estado}
                 </span>
               </div>
