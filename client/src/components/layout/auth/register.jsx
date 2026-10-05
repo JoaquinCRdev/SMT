@@ -1,6 +1,7 @@
 import "../../../styles/components/layout/auth/register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import api from "../../../api/axios";
 import { useAuth } from "../../../context/AuthContext";
 import { getRedirectPath } from "../../../utils/redirectByUser";
@@ -8,6 +9,7 @@ import { getRedirectPath } from "../../../utils/redirectByUser";
 const Register = ({ onToggle }) => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -38,17 +40,17 @@ const Register = ({ onToggle }) => {
     setError("");
 
     if (formData.nombre.trim().length < 3) {
-      setError("El nombre debe tener al menos 3 caracteres");
+      setError(t("pages.auth.register.error_nombre_corto"));
       return;
     }
 
     if (!emailRegex.test(formData.email)) {
-      setError("Ingrese un correo electrónico válido");
+      setError(t("pages.auth.register.error_email_invalido"));
       return;
     }
 
     if (formData.password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres");
+      setError(t("pages.auth.register.error_password_corta"));
       return;
     }
 
@@ -66,7 +68,7 @@ const Register = ({ onToggle }) => {
       setUser(data.user);
       navigate(getRedirectPath(data.user));
     } catch (err) {
-      setError(err.response?.data?.message || "Error al crear la cuenta");
+      setError(err.response?.data?.message || t("pages.auth.register.error_generico"));
     } finally {
       setSubmitting(false);
     }
@@ -75,14 +77,14 @@ const Register = ({ onToggle }) => {
   return (
     <div id="contenedorRegisterPersonal">
       <div id="ladoIzquierdoRegisterPersonal">
-        <h1>Crea tu cuenta para comenzar</h1>
+        <h1>{t("pages.auth.register.titulo")}</h1>
         <div id="inputsRegisterPersonal">
           {error && <p id="errorRegisterPersonal">{error}</p>}
 
           <input
             type="text"
             name="nombre"
-            placeholder="Nombre completo"
+            placeholder={t("pages.auth.register.placeholder_nombre")}
             value={formData.nombre}
             onChange={handleChange}
             pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ]{3,50}$"
@@ -91,7 +93,7 @@ const Register = ({ onToggle }) => {
           <input
             type="email"
             name="email"
-            placeholder="Correo electrónico"
+            placeholder={t("pages.auth.register.placeholder_email")}
             value={formData.email}
             onChange={handleChange}
             required
@@ -99,7 +101,7 @@ const Register = ({ onToggle }) => {
           <input
             type="password"
             name="password"
-            placeholder="Contraseña (mínimo 8 caracteres)"
+            placeholder={t("pages.auth.register.placeholder_password")}
             value={formData.password}
             onChange={handleChange}
             minLength={8}
@@ -112,23 +114,24 @@ const Register = ({ onToggle }) => {
               className={formData.role === "user" ? "rolActivo" : ""}
               onClick={() => handleRoleSelect("user")}
             >
-              Personal
+              {t("pages.auth.register.rol_personal")}
             </button>
             <button
               type="button"
               className={formData.role === "admin" ? "rolActivo" : ""}
               onClick={() => handleRoleSelect("admin")}
             >
-              Admin
+              {t("pages.auth.register.rol_admin")}
             </button>
           </div>
         </div>
         <button onClick={handleSubmit} disabled={submitting}>
-          {submitting ? "Creando cuenta..." : "Crear cuenta"}
+          {submitting
+            ? t("pages.auth.register.boton_cargando")
+            : t("pages.auth.register.boton")}
         </button>
         <p>
-          ¿Ya tienes una cuenta?{" "}
-          
+          {t("pages.auth.register.ya_cuenta")}{" "}
           <a
             href="#"
             onClick={(e) => {
@@ -136,48 +139,54 @@ const Register = ({ onToggle }) => {
               onToggle();
             }}
           >
-            Inicia sesión
+            {t("pages.auth.register.link_login")}
           </a>
         </p>
       </div>
 
       <div id="ladoDerechoRegisterPersonal">
         <h2>
-          Unete a la red
+          {t("pages.auth.register.lado_derecho_titulo_1")}
           <br />
-          de talleres que
+          {t("pages.auth.register.lado_derecho_titulo_2")}
           <br />
-          crecen con SMT
+          {t("pages.auth.register.lado_derecho_titulo_3")}
         </h2>
         <div id="beneficiosRegisterPersonal">
           <div>
-            <img src="registrartaller.png" alt="Registra tu taller"></img>
+            <img
+              src="registrartaller.png"
+              alt={t("pages.auth.register.alt_registrar")}
+            ></img>
             <p>
-              Accede desde
+              {t("pages.auth.register.beneficio_dispositivo_1")}
               <br />
-              cualquier dispositivo
+              {t("pages.auth.register.beneficio_dispositivo_2")}
             </p>
           </div>
           <div>
             <img
               src="administratusmaquinas.png"
-              alt="Administra tus maquinas"
+              alt={t("pages.auth.register.alt_administrar")}
             ></img>
             <p>
-              Informacion segura
+              {t("pages.auth.register.beneficio_informacion_1")}
               <br />
-              y confiable
+              {t("pages.auth.register.beneficio_informacion_2")}
             </p>
           </div>
           <div>
-            <img src="contactanos.png" alt="Contacto"></img>
-            <p>Soporte tecnico</p>
+            <img
+              src="contactanos.png"
+              alt={t("pages.auth.register.alt_contacto")}
+            ></img>
+            <p>{t("pages.auth.register.beneficio_soporte")}</p>
           </div>
         </div>
 
         <div id="contactoRegisterPersonal">
           <div id="textoContactoRegisterPersonal">
-            <p>© 2026 SMT. Todos los derechos reservados.</p>
+            <p>{t("pages.auth.register.footer")}</p>
           </div>
         </div>
       </div>

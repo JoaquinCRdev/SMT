@@ -13,6 +13,51 @@
 },
 
 "pages": {
+    "auth": {
+        "login": {
+            "titulo": "Inicia sesión para continuar",
+            "label_email": "Correo electrónico",
+            "label_password": "Contraseña",
+            "boton": "Iniciar sesión",
+            "boton_cargando": "Iniciando sesión...",
+            "sin_cuenta": "¿No tienes una cuenta?",
+            "link_registro": "Regístrate",
+            "error_email_invalido": "Ingrese un correo electrónico válido.",
+            "error_password_vacia": "Ingrese la contraseña.",
+            "error_generico": "Error al iniciar sesión",
+            "alt_logo": "Logo SMT",
+            "alt_imagen": "Imagen decorativa"
+        },
+        "register": {
+            "titulo": "Crea tu cuenta para comenzar",
+            "placeholder_nombre": "Nombre completo",
+            "placeholder_email": "Correo electrónico",
+            "placeholder_password": "Contraseña (mínimo 8 caracteres)",
+            "rol_personal": "Personal",
+            "rol_admin": "Admin",
+            "boton": "Crear cuenta",
+            "boton_cargando": "Creando cuenta...",
+            "ya_cuenta": "¿Ya tienes una cuenta?",
+            "link_login": "Inicia sesión",
+            "error_nombre_corto": "El nombre debe tener al menos 3 caracteres",
+            "error_email_invalido": "Ingrese un correo electrónico válido",
+            "error_password_corta": "La contraseña debe tener al menos 8 caracteres",
+            "error_generico": "Error al crear la cuenta",
+            "lado_derecho_titulo_1": "Unete a la red",
+            "lado_derecho_titulo_2": "de talleres que",
+            "lado_derecho_titulo_3": "crecen con SMT",
+            "beneficio_dispositivo_1": "Accede desde",
+            "beneficio_dispositivo_2": "cualquier dispositivo",
+            "beneficio_informacion_1": "Informacion segura",
+            "beneficio_informacion_2": "y confiable",
+            "beneficio_soporte": "Soporte tecnico",
+            "alt_registrar": "Registra tu taller",
+            "alt_administrar": "Administra tus maquinas",
+            "alt_contacto": "Contacto",
+            "footer": "© 2026 SMT. Todos los derechos reservados."
+        }
+    },
+
     "home": {
         "bienvenidaH1": "Hola",
         "bienvenidaP": "Bienvenido de nuevo"

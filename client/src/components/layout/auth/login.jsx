@@ -1,6 +1,7 @@
 import "../../../styles/components/layout/auth/login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import api from "../../../api/axios";
 import { useAuth } from "../../../context/AuthContext";
 import { getRedirectPath } from "../../../utils/redirectByUser";
@@ -8,6 +9,7 @@ import { getRedirectPath } from "../../../utils/redirectByUser";
 const Login = ({ onToggle }) => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -31,12 +33,12 @@ const Login = ({ onToggle }) => {
     setError("");
 
     if (!emailRegex.test(formData.email)) {
-      setError("Ingrese un correo electrónico válido.");
+      setError(t("pages.auth.login.error_email_invalido"));
       return;
     }
 
     if (formData.password.trim() === "") {
-      setError("Ingrese la contraseña.");
+      setError(t("pages.auth.login.error_password_vacia"));
       return;
     }
 
@@ -52,7 +54,7 @@ const Login = ({ onToggle }) => {
       setUser(data.user);
       navigate(getRedirectPath(data.user));
     } catch (err) {
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+      setError(err.response?.data?.message || t("pages.auth.login.error_generico"));
     } finally {
       setSubmitting(false);
     }
@@ -64,17 +66,17 @@ const Login = ({ onToggle }) => {
         <img
           className="logoMobileLogin"
           src="/logoblanco.png"
-          alt="Logo SMT"
+          alt={t("pages.auth.login.alt_logo")}
         />
 
-        <h1>Iniciar sesion</h1>
+        <h1>{t("pages.auth.login.titulo")}</h1>
 
         <div className="form-containerLogin">
           <div className="form-gridLogin">
             {error && <p id="errorLogin">{error}</p>}
 
             <div className="input-groupLogin">
-              <label>Correo Electrónico</label>
+              <label>{t("pages.auth.login.label_email")}</label>
               <input
                 type="email"
                 name="email"
@@ -84,7 +86,7 @@ const Login = ({ onToggle }) => {
             </div>
 
             <div className="input-groupLogin">
-              <label>Contraseña</label>
+              <label>{t("pages.auth.login.label_password")}</label>
               <input
                 type="password"
                 name="password"
@@ -100,12 +102,13 @@ const Login = ({ onToggle }) => {
           onClick={handleSubmit}
           disabled={submitting}
         >
-          {submitting ? "Iniciando sesión..." : "Iniciar Sesión"}
+          {submitting
+            ? t("pages.auth.login.boton_cargando")
+            : t("pages.auth.login.boton")}
         </button>
 
         <p>
-          ¿No tienes una cuenta?{" "}
-          
+          {t("pages.auth.login.sin_cuenta")}{" "}
           <a
             href="#"
             onClick={(e) => {
@@ -113,13 +116,13 @@ const Login = ({ onToggle }) => {
               onToggle();
             }}
           >
-            Registrate
+            {t("pages.auth.login.link_registro")}
           </a>
         </p>
       </div>
 
       <div id="ladoDerechoLogin">
-        <img src="/logoblanco.png" alt="Imagen decorativa" />
+        <img src="/logoblanco.png" alt={t("pages.auth.login.alt_imagen")} />
       </div>
     </div>
   );
