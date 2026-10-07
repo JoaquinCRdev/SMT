@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import errorHandler from "./middlewares/error.middleware.js";
+import historyRoutes from "./routes/history.routes.js";
 import machineRoutes from "./routes/machine.routes.js";
 import maintenancePlanAllRoutes from "./routes/maintenancePlanAll.routes.js";
 import maintenanceRecordAllRoutes from "./routes/maintenanceRecordAll.routes.js";
@@ -22,6 +23,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/records", maintenanceRecordAllRoutes);
 app.use("/api/plans", maintenancePlanAllRoutes);
 app.use("/api/workshops", workshopRoutes);
+app.use("/api/history", historyRoutes);
 app.use("/api/tasklogs", taskLogUserRoutes);
 
 app.use(errorHandler);

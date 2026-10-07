@@ -1,6 +1,10 @@
 import cron from "node-cron";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
 import Notification from "../models/notification.model.js";
+import {
+  NOTIFICATION_TIMEZONE,
+  startOfToday,
+} from "../utils/dates.js";
 
 // Ventana por defecto, usada por los planes `custom` (y por cualquier
 // frecuencia sin entrada en el mapa de abajo).
@@ -38,33 +42,11 @@ const MAX_LOOKAHEAD_DAYS = Math.max(
 // cualquier zona UTC+ el cron dispara antes de medianoche UTC: un plan que
 // vencía "hoy" se veía como "vence en 1 día". Con un contenedor en UTC el
 // problema era el inverso: el aviso salía a las 05:00 para el usuario.
-const NOTIFICATION_TIMEZONE =
-  process.env.NOTIFICATION_TIMEZONE || "America/Buenos_Aires";
 
 // 08:00 por defecto: el taller ya está abierto y el aviso es accionable.
 // Ojo: node-cron interpreta la expresión en la zona del proceso salvo que se le
 // pase `timezone`, así que abajo se la pasamos explícita.
 const CRON_EXPRESSION = process.env.NOTIFICATION_CRON || "0 8 * * *";
-
-// La medianoche del "hoy" del taller, expresada como instante UTC.
-//
-// `startDate` y `nextDue` se guardan como medianoche UTC (así los calculó el
-// service), pero "hoy" para el usuario es el día en su calendario. Si el taller
-// está en una zona ahead de UTC, la medianoche UTC de hoy todavía es "mañana" en
-// su reloj, y comparar ambos sin corregir la fecha movía todo un día.
-function startOfToday(now = new Date()) {
-  // Se lee la fecha en la zona del taller y se vuelve a construir en UTC. Es la
-  // forma de obtener "el UTC instant que representa la medianoche de ese día".
-  const partes = new Intl.DateTimeFormat("en-CA", {
-    timeZone: NOTIFICATION_TIMEZONE,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(now);
-
-  const get = (tipo) => Number(partes.find((p) => p.type === tipo)?.value);
-  return new Date(Date.UTC(get("year"), get("month") - 1, get("day")));
-}
 
 function endOfWindow() {
   const end = startOfToday();
