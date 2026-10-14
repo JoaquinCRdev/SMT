@@ -2,6 +2,7 @@ import "../styles/pages/home.css";
 import Sidebar from "../components/layout/sidebar";
 import { useAuth } from "../context/AuthContext";
 import { etiquetaRol } from "../utils/roles";
+import { Link, NavLink } from "react-router-dom";
 
 // ============================================================
 // DATOS DE MUESTRA

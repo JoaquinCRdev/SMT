@@ -2,6 +2,7 @@ import "../styles/pages/mismaquinas.css";
 import { useEffect, useState } from "react";
 import api from "../api/axios.js";
 import Sidebar from "../components/layout/sidebar.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const ESTADOS_FRONTEND = {
   active: "operativo",
@@ -82,6 +83,7 @@ const Mismaquinas = () => {
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
   const [form, setForm] = useState(() => formVacio("maquina"));
+  const { user, loading } = useAuth();
 
   const listar = () => api.get("/machine", { params: { limit: 100 } });
 

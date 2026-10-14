@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 import Sidebar from "../components/layout/sidebar";
-import api from "../api/axios";
 import "../styles/pages/historial.css";
 
 // Muestra de datos con formato de fecha YYYY-MM-DD
@@ -112,118 +111,41 @@ function MaintenanceCard({ mantenimiento, onVerDetalles }) {
 }
 
 export default function Historial() {
-  const [registros, setRegistros] = useState([]);
-  const [maquinas, setMaquinas] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState("");
-  // Referencia temporal fija: leer Date.now() durante el render no es puro.
-  const [ahora, setAhora] = useState(0);
-
   const [busqueda, setBusqueda] = useState("");
-  const [rangoFecha, setRangoFecha] = useState("todos");
+  const [rangoFecha, setRangoFecha] = useState("30");
+  const [filtroEstado, setFiltroEstado] = useState("Todos");
   const [orden, setOrden] = useState("recientes");
   const [itemSeleccionado, setItemSeleccionado] = useState(null);
-  useEffect(() => {
-    let cancelado = false;
 
-    (async () => {
-      try {
-        const [registrosRes, maquinasRes] = await Promise.all([
-          api.get("/records", { params: { limit: 200 } }),
-          api.get("/machine", { params: { limit: 200 } }),
-        ]);
-        if (cancelado) return;
-
-        setAhora(Date.now());
-        setRegistros(
-          (registrosRes.data.items ?? []).map((item) => ({
-            id: item._id,
-            titulo: item.title,
-            descripcion: item.description || "",
-            fecha: item.performedAt,
-            maquina: item.machineId || null,
-            plan: item.planId || null,
-            tecnico: item.technician || "",
-            duracion: item.duration,
-            costo: item.cost,
-            repuestos: item.partsUsed || "",
-            resultados: item.results || "",
-            notas: item.notes || "",
-          })),
-        );
-        setMaquinas(maquinasRes.data.items ?? []);
-      } catch (err) {
-        if (cancelado) return;
-        setError(
-          err.response?.data?.message || "No se pudo cargar el historial",
-        );
-      } finally {
-        if (!cancelado) setCargando(false);
-      }
-    })();
-
-    return () => {
-      cancelado = true;
-    };
-  }, []);
-
-  const resumen = useMemo(() => {
-    const porTipo = (tipo) => maquinas.filter((m) => m.tipo === tipo);
-    const operativos = (lista) =>
-      lista.filter((m) => m.status === "active").length;
-
-    const costoTotal = registros.reduce(
-      (total, r) => total + (r.costo ?? 0),
-      0,
-    );
-    const conDuracion = registros.filter((r) => r.duracion != null);
-    const duracionPromedio = conDuracion.length
-      ? conDuracion.reduce((t, r) => t + r.duracion, 0) / conDuracion.length
-      : 0;
-
-    const inicioMes = new Date(ahora);
-    inicioMes.setDate(1);
-    inicioMes.setHours(0, 0, 0, 0);
-    const esteMes = registros.filter(
-      (r) => new Date(r.fecha) >= inicioMes,
-    ).length;
-
-    return {
-      maquinas: porTipo("maquina"),
-      otros: porTipo("otro"),
-      operativosMaquinas: operativos(porTipo("maquina")),
-      operativosOtros: operativos(porTipo("otro")),
-      costoTotal,
-      duracionPromedio,
-      esteMes,
-    };
-  }, [registros, maquinas, ahora]);
-
+  // Lógica combinada de Filtrado y Ordenamiento
   const mantenimientosProcesados = useMemo(() => {
     const terminoBusqueda = busqueda.toLowerCase().trim();
 
-    return registros
+    return mantenimientosIniciales
       .filter((item) => {
         if (!terminoBusqueda) return true;
         return (
-          item.titulo.toLowerCase().includes(terminoBusqueda) ||
-          item.descripcion.toLowerCase().includes(terminoBusqueda) ||
-          (item.maquina?.nombre || "")
-            .toLowerCase()
-            .includes(terminoBusqueda)
+          item.nombre.toLowerCase().includes(terminoBusqueda) ||
+          item.descripcion.toLowerCase().includes(terminoBusqueda)
         );
       })
       .filter((item) => {
         if (rangoFecha === "todos") return true;
-        const dias = (ahora - new Date(item.fecha).getTime()) / 86400000;
-        return dias <= parseInt(rangoFecha, 10);
+        const fechaItem = new Date(`${item.fecha}T00:00:00`);
+        const hoy = new Date();
+        const diferenciaDias = (hoy - fechaItem) / (1000 * 60 * 60 * 24);
+        return diferenciaDias <= parseInt(rangoFecha, 10);
       })
-      .sort((a, b) =>
-        orden === "recientes"
-          ? new Date(b.fecha) - new Date(a.fecha)
-          : new Date(a.fecha) - new Date(b.fecha),
-      );
-  }, [registros, busqueda, rangoFecha, orden, ahora]);
+      .filter((item) => {
+        if (filtroEstado === "Todos") return true;
+        return item.estado.toLowerCase() === filtroEstado.toLowerCase();
+      })
+      .sort((a, b) => {
+        const fechaA = new Date(`${a.fecha}T00:00:00`).getTime();
+        const fechaB = new Date(`${b.fecha}T00:00:00`).getTime();
+        return orden === "recientes" ? fechaB - fechaA : fechaA - fechaB;
+      });
+  }, [busqueda, rangoFecha, filtroEstado, orden]);
 
   return (
     <div className="historial-layout">
@@ -248,8 +170,6 @@ export default function Historial() {
             </select>
           </div>
 
-          {error && <p className="historial-error">{error}</p>}
-
           <div className="stats-container">
             <StatCard number="5" text="máquinas registradas" status="4/5 operativos" />
             <StatCard number="11" text="otros registrados" status="6/11 operativos" />
@@ -259,6 +179,7 @@ export default function Historial() {
 
           <ResumenMantenimientos realizados={32} pendientes={10} proximos={5} vencidos={1} />
 
+          {/* BÚSQUEDA, FILTROS Y ORDENAMIENTO */}
           <div className="filters">
             <div className="search-group">
               <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -268,7 +189,7 @@ export default function Historial() {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Buscar equipo, título o descripción..."
+                placeholder="Buscar equipo o descripción..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
               />
@@ -302,29 +223,21 @@ export default function Historial() {
             </div>
           </div>
 
+          {/* LISTA */}
           <div className="maintenance-list">
-            {cargando && <p className="no-data">Cargando historial...</p>}
-
-            {!cargando && error && (
-              <p className="no-data">No se pudo cargar el historial.</p>
-            )}
-
-            {!cargando && !error && mantenimientosProcesados.length === 0 && (
-              <p className="no-data">
-                No hay mantenimientos en este rango de selección.
-              </p>
-            )}
-
-            {!cargando &&
-              !error &&
+            {mantenimientosProcesados.length > 0 ? (
               mantenimientosProcesados.map((mantenimiento) => (
                 <MaintenanceCard
                   key={mantenimiento.id}
                   mantenimiento={mantenimiento}
                   onVerDetalles={setItemSeleccionado}
                 />
-              ))}
+              ))
+            ) : (
+              <p className="no-data">No hay mantenimientos en este rango de selección.</p>
+            )}
           </div>
+
         </div>
       </main>
 
@@ -345,18 +258,18 @@ export default function Historial() {
             <div className="drawer-body">
               <div className="drawer-section">
                 <h3>Equipo</h3>
-                <p>
-                  {itemSeleccionado.maquina?.nombre || "Equipo eliminado"}
-                  {itemSeleccionado.maquina?.serialNumber
-                    ? ` (S/N ${itemSeleccionado.maquina.serialNumber})`
-                    : ""}
-                </p>
+                <p>{itemSeleccionado.nombre} ({itemSeleccionado.tipo})</p>
               </div>
 
               <div className="drawer-section">
-                <h3>Fecha de realización</h3>
+                <h3>{itemSeleccionado.estado === "Realizado" ? "Fecha de realización" : "Fecha programada"}</h3>
                 <p className="drawer-date">
-                  📅 {fechaLarga(itemSeleccionado.fecha)}
+                  📅 {new Date(`${itemSeleccionado.fecha}T00:00:00`).toLocaleDateString("es-ES", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </p>
               </div>
 
@@ -367,67 +280,12 @@ export default function Historial() {
                 </span>
               </div>
 
-              {itemSeleccionado.plan && (
-                <div className="drawer-section">
-                  <h3>Plan</h3>
-                  <p>{itemSeleccionado.plan.title}</p>
+              <div className="drawer-section">
+                <h3>{itemSeleccionado.estado === "Realizado" ? "¿Qué se hizo?" : "¿Qué se tiene que hacer?"}</h3>
+                <div className="drawer-description">
+                  {itemSeleccionado.descripcion}
                 </div>
-              )}
-
-              {itemSeleccionado.tecnico && (
-                <div className="drawer-section">
-                  <h3>Técnico</h3>
-                  <p>{itemSeleccionado.tecnico}</p>
-                </div>
-              )}
-
-              {itemSeleccionado.duracion != null && (
-                <div className="drawer-section">
-                  <h3>Duración</h3>
-                  <p>{itemSeleccionado.duracion} h</p>
-                </div>
-              )}
-
-              {itemSeleccionado.costo != null && (
-                <div className="drawer-section">
-                  <h3>Costo</h3>
-                  <p>{numero(itemSeleccionado.costo)}</p>
-                </div>
-              )}
-
-              {itemSeleccionado.repuestos && (
-                <div className="drawer-section">
-                  <h3>Repuestos</h3>
-                  <p>{itemSeleccionado.repuestos}</p>
-                </div>
-              )}
-
-              {itemSeleccionado.resultados && (
-                <div className="drawer-section">
-                  <h3>¿Qué se hizo?</h3>
-                  <div className="drawer-description">
-                    {itemSeleccionado.resultados}
-                  </div>
-                </div>
-              )}
-
-              {itemSeleccionado.descripcion && (
-                <div className="drawer-section">
-                  <h3>Descripción</h3>
-                  <div className="drawer-description">
-                    {itemSeleccionado.descripcion}
-                  </div>
-                </div>
-              )}
-
-              {itemSeleccionado.notas && (
-                <div className="drawer-section">
-                  <h3>Notas</h3>
-                  <div className="drawer-description">
-                    {itemSeleccionado.notas}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         )}

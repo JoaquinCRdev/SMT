@@ -148,27 +148,6 @@ export async function getMyWorkshop(user) {
   return workshop;
 }
 
-export async function getMyRequest(user) {
-  // El índice único permite una sola fila pending/approved por usuario, pero los `completed` se acumulan al rereunirse a otros talleres: primero la solicitud viva, y sólo como respaldo la última ya cerrada (sin código, porque verifyJoinCode lo anula).
-  const activa = await WorkshopJoinRequest.findOne({
-    user: user.id,
-    status: { $in: ["pending", "approved"] },
-  })
-    .sort({ createdAt: -1 })
-    .select("+code")
-    .populate("workshop", "name");
-
-  if (activa) return activa;
-
-  return WorkshopJoinRequest.findOne({
-    user: user.id,
-    status: "completed",
-  })
-    .sort({ createdAt: -1 })
-    .select("+code")
-    .populate("workshop", "name");
-}
-
 export async function listRequests(user) {
   if (!user.workshop) throw new ApiError(404, "Workshop not found");
   const workshop = await assertOwner(user.workshop, user.id);
