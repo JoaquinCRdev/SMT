@@ -110,6 +110,25 @@
     transform: translateY(-1px);
 }
 
+/* Sin nada sin leer el botón no hace nada, así que tiene que verse inerte. */
+.btn-marcar-leidas:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.45;
+
+    transform: none;
+}
+
+.btn-marcar-leidas:disabled:hover {
+    background-color: var(--FondoBoton);
+
+    border-color: var(--BordePrincipal);
+
+    color: var(--TextoPrincipal);
+
+    transform: none;
+}
+
 
 /* =====================================================
    FILTROS
@@ -333,6 +352,19 @@
     background-color: var(--FondoBoton);
 
     color: var(--Naranja);
+}
+
+
+/* =====================================================
+   TALLER
+   Avisos de ingresos al taller (solicitud, aprobación, rechazo).
+   El backend manda type "taller".
+===================================================== */
+
+.notificacion-icono.taller {
+    background-color: var(--FondoBoton);
+
+    color: var(--Verde);
 }
 
 

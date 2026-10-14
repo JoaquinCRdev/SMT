@@ -40,5 +40,9 @@ const taskLogSchema = new mongoose.Schema(
   }
 );
 
+taskLogSchema.index({ machineId: 1, createdAt: -1 });
+taskLogSchema.index({ taskId: 1 });
+taskLogSchema.index({ userId: 1, createdAt: -1 });
+
 const TaskLog = mongoose.model('TaskLog', taskLogSchema);
 export default TaskLog;

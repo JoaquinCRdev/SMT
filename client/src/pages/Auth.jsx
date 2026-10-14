@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Login from "../components/layout/auth/Login";
-import Register from "../components/layout/auth/Register";
+import Login from "../components/layout/auth/login";
+import Register from "../components/layout/auth/register";
 import "../styles/pages/auth.css";
 
 const Auth = () => {

@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import Workshop from "../models/workshop.model.js";
 import WorkshopJoinRequest from "../models/workshopJoinRequest.model.js";
 import ApiError from "../utils/ApiError.js";
+import * as notificationService from "./notification.service.js";
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
@@ -39,7 +40,10 @@ export async function createWorkshop(user, payload) {
   if (existing.workshop) throw new ApiError(409, "You already belong to a workshop");
 
   const workshop = await Workshop.create({ ...payload, owner: user.id });
-  await User.findByIdAndUpdate(user.id, { workshop: workshop._id });
+  await User.findByIdAndUpdate(user.id, {
+    workshop: workshop._id,
+    role: "admin",
+  });
   return workshop;
 }
 
@@ -49,16 +53,29 @@ export async function requestToJoin(user, code) {
   const workshop = await Workshop.findOne({ code });
   if (!workshop) throw new ApiError(404, "Invalid workshop code");
 
+  let request;
   try {
     return await WorkshopJoinRequest.create({ user: user.id, workshop: workshop._id });
   } catch (err) {
     if (err.code === 11000) throw new ApiError(409, "You already have a pending request");
     throw err;
   }
+
+  // Fuera del try: un aviso fallido no debe verse como un error de alta.
+  // `user` viene del token y no trae `name`, hay que buscarlo.
+  const requester = await User.findById(user.id).select("name");
+  await notificationService.notifyUser(workshop.owner, workshop._id, {
+    type: "taller",
+    title: "Nueva solicitud de ingreso",
+    message: `${requester?.name || "Alguien"} quiere unirse a ${workshop.name}.`,
+    link: "/configuracion",
+  });
+
+  return request;
 }
 
 export async function resolveRequest(requestId, user, status) {
-  const request = await WorkshopJoinRequest.findById(requestId);
+  const request = await WorkshopJoinRequest.findById(requestId).select("+code");
   if (!request) throw new ApiError(404, "Request not found");
 
   const workshop = await assertOwner(request.workshop, user.id);
@@ -75,6 +92,8 @@ export async function resolveRequest(requestId, user, status) {
     request.code = await generateUniqueJoinCode();
   }
 
+  request.status = "rejected";
+  request.code = null;
   await request.save();
   return request;
 }
@@ -106,7 +125,7 @@ export async function verifyJoinCode(user, code) {
     user: user.id,
     status: "approved",
     code,
-  });
+  }).select("+code");
 
   if (!request) throw new ApiError(404, "Invalid or expired code");
 
@@ -127,6 +146,27 @@ export async function getMyWorkshop(user) {
   const workshop = await Workshop.findById(user.workshop).populate("owner", "name email");
   if (!workshop) throw new ApiError(404, "Workshop not found");
   return workshop;
+}
+
+export async function getMyRequest(user) {
+  // El índice único permite una sola fila pending/approved por usuario, pero los `completed` se acumulan al rereunirse a otros talleres: primero la solicitud viva, y sólo como respaldo la última ya cerrada (sin código, porque verifyJoinCode lo anula).
+  const activa = await WorkshopJoinRequest.findOne({
+    user: user.id,
+    status: { $in: ["pending", "approved"] },
+  })
+    .sort({ createdAt: -1 })
+    .select("+code")
+    .populate("workshop", "name");
+
+  if (activa) return activa;
+
+  return WorkshopJoinRequest.findOne({
+    user: user.id,
+    status: "completed",
+  })
+    .sort({ createdAt: -1 })
+    .select("+code")
+    .populate("workshop", "name");
 }
 
 export async function listRequests(user) {
@@ -155,7 +195,9 @@ export async function getMembers(user) {
   const workshop = await Workshop.findById(user.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");
 
-  return User.find({ workshop: workshop._id }).select("name email role isActive");
+  return User.find({ workshop: workshop._id }).select(
+    "name email role isActive",
+  );
 }
 
 export async function addMember(user, payload) {
@@ -172,7 +214,9 @@ export async function addMember(user, payload) {
     workshop: workshop._id,
   });
 
-  return newUser;
+  // User.create devuelve el documento completo, con el hash incluido.
+  const { password, ...safeUser } = newUser.toObject();
+  return safeUser;
 }
 
 export async function updateMember(user, targetUserId, payload) {
@@ -193,7 +237,10 @@ export async function updateMember(user, targetUserId, payload) {
   if (payload.password !== undefined) member.password = payload.password;
 
   await member.save();
-  return member;
+
+  // El select("+password") existe sólo para poder rehashear: nunca se devuelve.
+  const { password, ...safeMember } = member.toObject();
+  return safeMember;
 }
 
 export async function updateWorkshop(id, user, payload) {

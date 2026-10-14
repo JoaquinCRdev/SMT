@@ -922,13 +922,23 @@ button {
 ========================================================= */
 
 .no-data {
-    text-align: center;
+  text-align: center;
 
-    color: var(--TextoSecundario);
+  color: var(--TextoSecundario);
 
-    padding: 24px;
+  padding: 24px;
 
-    font-size: var(--TamTexto);
+  font-size: var(--TamTexto);
+}
+
+.historial-error {
+  text-align: center;
+
+  color: #dc3545;
+
+  padding: 12px 24px;
+
+  font-size: var(--TamTexto);
 }
 
 

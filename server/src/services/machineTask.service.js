@@ -2,6 +2,7 @@ import MachineTask from "../models/machineTask.model.js";
 import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
 import {
+  assertAssignableUser,
   getAccessibleMachine,
   isValidObjectId,
 } from "../utils/access.js";
@@ -29,6 +30,10 @@ async function createTaskLog({ machineId, taskId, userId, action, notes }) {
 
 export async function createTask(machineId, payload, user) {
   const machine = await getAccessibleMachine(machineId, user);
+
+  if (payload.assignedTo !== undefined) {
+    await assertAssignableUser(payload.assignedTo, user);
+  }
 
   const task = await MachineTask.create({
     machineId: machine._id,
@@ -73,6 +78,10 @@ export async function getTaskById(id, user) {
 
 export async function updateTask(id, payload, user) {
   const task = await getAccessibleTask(id, user);
+
+  if (payload.assignedTo !== undefined) {
+    await assertAssignableUser(payload.assignedTo, user);
+  }
 
   if (payload.title !== undefined) task.title = payload.title;
   if (payload.description !== undefined) task.description = payload.description;
@@ -120,6 +129,8 @@ export async function changeTaskStatus(id, status, user) {
 
 export async function assignTaskToUser(id, assignedTo, user) {
   const task = await getAccessibleTask(id, user);
+
+  await assertAssignableUser(assignedTo, user);
 
   task.assignedTo = assignedTo;
   await task.save();

@@ -1,14 +1,22 @@
 import * as userService from "../services/user.service.js";
 
+// La cookie y el JWT se renuevan juntos: si la cookie durara menos que el
+// token, la sesión cortaría antes de que expire el token.
+const REFRESH_COOKIE_MAX_AGE = 10 * 24 * 60 * 60 * 1000; // 10 días
+
+const setRefreshCookie = (res, token) => {
+  res.cookie("refreshToken", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: REFRESH_COOKIE_MAX_AGE,
+  });
+};
+
 export async function register(req, res, next) {
   try {
     const result = await userService.register(req.body);
-    res.cookie("refreshToken", result.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-    });
+    setRefreshCookie(res, result.refreshToken);
     res
       .status(201)
       .json({ user: result.user, accessToken: result.accessToken });
@@ -20,12 +28,7 @@ export async function register(req, res, next) {
 export async function login(req, res, next) {
   try {
     const result = await userService.login(req.body);
-    res.cookie("refreshToken", result.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-    });
+    setRefreshCookie(res, result.refreshToken);
     res
       .status(200)
       .json({ user: result.user, accessToken: result.accessToken });
@@ -37,6 +40,9 @@ export async function login(req, res, next) {
 export async function refresh(req, res, next) {
   try {
     const result = await userService.refreshToken(req.cookies.refreshToken);
+    // La rotación invalida el token anterior, así que la cookie se renueva con
+    // el nuevo; si no, el siguiente refresh fallaría.
+    setRefreshCookie(res, result.refreshToken);
     res
       .status(200)
       .json({ user: result.user, accessToken: result.accessToken });
@@ -66,7 +72,7 @@ export async function getProfile(req, res, next) {
 
 export async function getUsers(req, res, next) {
   try {
-    const result = await userService.getUsers();
+    const result = await userService.getUsers(req.user);
     res.status(200).json(result);
   } catch (error) {
     next(error);

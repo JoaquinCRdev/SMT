@@ -13,7 +13,6 @@ const Register = ({ onToggle }) => {
     nombre: "",
     email: "",
     password: "",
-    role: "user",
   });
 
   const [error, setError] = useState("");
@@ -27,10 +26,6 @@ const Register = ({ onToggle }) => {
       ...formData,
       [name]: value,
     });
-  };
-
-  const handleRoleSelect = (role) => {
-    setFormData({ ...formData, role });
   };
 
   const handleSubmit = async (e) => {
@@ -59,7 +54,6 @@ const Register = ({ onToggle }) => {
         name: formData.nombre,
         email: formData.email,
         password: formData.password,
-        role: formData.role,
       });
 
       localStorage.setItem("accessToken", data.accessToken);
@@ -105,30 +99,12 @@ const Register = ({ onToggle }) => {
             minLength={8}
             required
           />
-
-          <div id="rolRegisterPersonal">
-            <button
-              type="button"
-              className={formData.role === "user" ? "rolActivo" : ""}
-              onClick={() => handleRoleSelect("user")}
-            >
-              Personal
-            </button>
-            <button
-              type="button"
-              className={formData.role === "admin" ? "rolActivo" : ""}
-              onClick={() => handleRoleSelect("admin")}
-            >
-              Admin
-            </button>
-          </div>
         </div>
         <button onClick={handleSubmit} disabled={submitting}>
           {submitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
         <p>
           ¿Ya tienes una cuenta?{" "}
-          
           <a
             href="#"
             onClick={(e) => {
@@ -165,8 +141,7 @@ const Register = ({ onToggle }) => {
             ></img>
             <p>
               Informacion segura
-              <br />
-              y confiable
+              <br />y confiable
             </p>
           </div>
           <div>

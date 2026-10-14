@@ -1,14 +1,45 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/planes.css";
+import { useAuth } from "../context/AuthContext";
+import { etiquetaRol } from "../utils/roles";
 
 const Planes = () => {
   const [planSeleccionado, setPlanSeleccionado] = useState("");
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  // Esta es la página de precios, no de mantenimientos: no lleva el sidebar de
+  // la app, pero sí necesitaba una salida y saber qué cuenta está abierta.
+  const nombre = user?.name || user?.email || "";
 
   return (
     <div id="nuevo">
       <div id="containerPlanes">
+        <header id="headerPlanes">
+          <button
+            id="volverPlanes"
+            type="button"
+            onClick={() => navigate("/home")}
+          >
+            Volver al panel
+          </button>
+
+          <div className="cuentaPlanes">
+            <span className="cuentaPlanes-nombre">{nombre || "—"}</span>
+            <span className="cuentaPlanes-rol">
+              {etiquetaRol(user?.role)}
+            </span>
+          </div>
+
+          <button
+            id="logoutPlanes"
+            type="button"
+            onClick={() => logout()}
+          >
+            Cerrar sesión
+          </button>
+        </header>
         <img id="smtpro" src="/smtpro.png" alt="Planes" />
         <p id="accede">Accede a todas las funcionalidades</p>
 

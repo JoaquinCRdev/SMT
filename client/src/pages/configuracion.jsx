@@ -1,6 +1,8 @@
 import Sidebar from "../components/layout/sidebar";
 import "../styles/pages/configuracion.css";
 import { useEffect, useState } from "react";
+import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 import i18n from "../i18n/i18n";
 import { useAuth } from "../context/AuthContext";
 import { useWorkshop } from "../context/WorkshopContext";

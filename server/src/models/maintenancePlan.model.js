@@ -32,6 +32,12 @@ const maintenancePlanSchema = new mongoose.Schema(
         ref: "MachineTask",
       },
     ],
+    assignedTo: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     startDate: {
       type: Date,
       required: true,
@@ -59,6 +65,8 @@ const maintenancePlanSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+maintenancePlanSchema.index({ machineId: 1, nextDue: 1 });
 
 const MaintenancePlan = mongoose.model(
   "MaintenancePlan",

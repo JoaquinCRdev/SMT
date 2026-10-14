@@ -12,6 +12,7 @@ export const WorkshopProvider = ({ children }) => {
   const fetchWorkshop = useCallback(async () => {
     if (!user?.workshop) {
       setWorkshop(null);
+      setLoading(false);
       return;
     }
 
@@ -27,7 +28,18 @@ export const WorkshopProvider = ({ children }) => {
   }, [user?.workshop]);
 
   useEffect(() => {
-    fetchWorkshop();
+    // Igual que en AuthContext: dentro de una IIFE para no setStatear
+    // sincrónicamente en el cuerpo del effect.
+    let cancelado = false;
+
+    (async () => {
+      await fetchWorkshop();
+      if (cancelado) return;
+    })();
+
+    return () => {
+      cancelado = true;
+    };
   }, [fetchWorkshop]);
 
   return (

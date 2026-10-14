@@ -80,11 +80,20 @@
                 },
 
                 "solicitudes": {
-                    "h2": "Pending Requests",
+                    "h2": "Requests",
                     "p": "Staff members who requested to join the workshop",
+
+                    "pendientes": "Pending",
+                    "resueltas": "Resolved",
+
+                    "estado": {
+                        "approved": "Approved",
+                        "completed": "Joined"
+                    },
 
                     "solicitud": {
                         "span": "requests to join the workshop",
+                        "resuelta": "already resolved request",
                         "aceptar": "Accept",
                         "rechazar": "Reject"
                     }

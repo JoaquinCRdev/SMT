@@ -300,6 +300,22 @@
     border-color: transparent;
 }
 
+.card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.card-actions .btn-detail {
+    margin-top: 0;
+    flex: 1;
+}
+
+.card-actions .btn-ghost {
+    margin-top: 0;
+    white-space: nowrap;
+}
+
 
 /* =========================================================
    MANTENIMIENTOS ACTIVOS
@@ -484,6 +500,13 @@
     flex: 1;
     font-size: var(--TamTexto);
     color: var(--TextoPrincipal);
+}
+
+.task-status {
+    font-size: calc(var(--TamTexto) - 2px);
+    color: var(--TextoSecundario);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .task-del {

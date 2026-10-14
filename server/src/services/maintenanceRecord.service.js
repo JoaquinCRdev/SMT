@@ -4,6 +4,7 @@ import MaintenanceRecord from "../models/maintenanceRecord.model.js";
 import ApiError from "../utils/ApiError.js";
 import {
   getAccessibleMachine,
+  getWorkshopMachineIds,
   isValidObjectId,
   requireWorkshop,
 } from "../utils/access.js";
@@ -68,16 +69,21 @@ export async function createRecord(payload, user) {
 export async function getRecords(user, query = {}) {
   const { page, limit, skip } = getPagination(query);
 
-  const filter = {};
+  const workshopId = requireWorkshop(user);
+  const workshopMachines = await getWorkshopMachineIds(workshopId);
+  const filter = { machineId: { $in: workshopMachines } };
 
-  if (user?.role !== "admin") {
-    const machines = await Machine.find({ workshopId: user.workshop }).select(
-      "_id",
+  if (query.machineId) {
+    const isOwnMachine = workshopMachines.some(
+      (m) => String(m) === String(query.machineId),
     );
-    const machineIds = machines.map((m) => m._id);
-    filter.machineId = { $in: machineIds };
+
+    if (!isOwnMachine) {
+      return { items: [], meta: { total: 0, page, limit, pages: 0 } };
+    }
+
+    filter.machineId = query.machineId;
   }
-  if (query.machineId) filter.machineId = query.machineId;
 
   const [items, total] = await Promise.all([
     MaintenanceRecord.find(filter)

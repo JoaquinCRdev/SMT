@@ -80,11 +80,20 @@
             },
 
             "solicitudes": {
-                "h2": "Solicitudes pendientes",
-                "p": "Personal que solicitaron unirse al taller",
+                "h2": "Solicitudes",
+                "p": "Personal que solicitó unirse al taller",
+
+                "pendientes": "Pendientes",
+                "resueltas": "Resueltas",
+
+                "estado": {
+                    "approved": "Aprobada",
+                    "completed": "Se unió"
+                },
 
                 "solicitud": {
                     "span": "solicita unirse al taller",
+                    "resuelta": "solicitud ya resuelta",
                     "aceptar": "Aceptar",
                     "rechazar": "Rechazar"
                 }

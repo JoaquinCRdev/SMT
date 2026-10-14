@@ -26,6 +26,18 @@ export async function getPlans(req, res, next) {
   }
 }
 
+export async function getAllPlans(req, res, next) {
+  try {
+    const result = await maintenancePlanService.getAllPlans(
+      req.user,
+      req.query,
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function getPlanById(req, res, next) {
   try {
     const plan = await maintenancePlanService.getPlanById(
@@ -73,6 +85,20 @@ export async function markPerformed(req, res, next) {
       req.params.planId,
       req.user,
       req.body,
+    );
+    res.status(200).json(plan);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function changePlanStatus(req, res, next) {
+  try {
+    const plan = await maintenancePlanService.changePlanStatus(
+      req.params.machineId,
+      req.params.planId,
+      req.body.status,
+      req.user,
     );
     res.status(200).json(plan);
   } catch (error) {
