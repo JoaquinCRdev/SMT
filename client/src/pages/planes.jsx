@@ -89,7 +89,7 @@ const Planes = () => {
             onClick={() => setPlanSeleccionado("mensual")}
           >
             <h1>Mensual</h1>
-            <p>$9.99</p>
+            <p>$9</p>
             <p>Pago mensual</p>
           </div>
 
@@ -100,7 +100,7 @@ const Planes = () => {
             onClick={() => setPlanSeleccionado("anual")}
           >
             <h1>Anual</h1>
-            <p>$59.99</p>
+            <p>$59</p>
             <p>Pago anual</p>
           </div>
 
@@ -111,7 +111,7 @@ const Planes = () => {
             onClick={() => setPlanSeleccionado("permanente")}
           >
             <h1>Permanente</h1>
-            <p>$199.99</p>
+            <p>$200</p>
             <p>Pago único</p>
           </div>
         </div>
