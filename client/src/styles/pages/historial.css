@@ -405,6 +405,45 @@ button {
 
 
 /* =========================================================
+   CARGAR MÁS
+   La lista se pagina de a bloques; este botón pide la
+   siguiente página y la agrega al final.
+========================================================= */
+
+.cargar-mas-container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 16px;
+}
+
+.cargar-mas {
+    padding: 10px 24px;
+
+    border: 1px solid var(--BordePrincipal);
+    border-radius: 8px;
+
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+
+    font-size: var(--TamTexto);
+    font-weight: 500;
+
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cargar-mas:hover:not(:disabled) {
+    border-color: var(--Naranja);
+    color: var(--Naranja);
+}
+
+.cargar-mas:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+
+/* =========================================================
    FILA DE MANTENIMIENTO
    El color de estado vive en el borde izquierdo y en el
    texto del estado, no se repite en cuatro lugares distintos.

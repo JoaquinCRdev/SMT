@@ -224,7 +224,57 @@
 
         "historial": {
             "titulo": "History",
-            "descripcion": "Review the history of activities and events related to your machines."
+            "descripcion": "Review the history of activities and events related to your machines.",
+            "de": "History of:",
+            "rangos": {
+                "7": "Last 7 days",
+                "30": "Last 30 days",
+                "90": "Last 90 days",
+                "365": "Last year",
+                "todos": "All history"
+            },
+            "maquinas": {
+                "registradas": "registered machines",
+                "operativos": "{{operativos}}/{{total}} operational"
+            },
+            "otros": {
+                "registrados": "other registered"
+            },
+            "seccion": "Maintenances",
+            "resumen": {
+                "realizado": "Completed",
+                "pendiente": "Pending",
+                "vencido": "Overdue"
+            },
+            "buscar": "Search machine or description...",
+            "estado": "Status:",
+            "estados": {
+                "todos": "All",
+                "realizado": "Completed",
+                "pendiente": "Pending",
+                "vencido": "Overdue"
+            },
+            "orden": "Sort by:",
+            "ordenes": {
+                "recientes": "Most Recent",
+                "antiguos": "Oldest"
+            },
+            "ver_detalle": "View detail",
+            "sin_datos": "There are no maintenances in this selection range.",
+            "cargar_mas": "Load more",
+            "cargando": "Loading...",
+            "error": "Could not load the history.",
+            "drawer": {
+                "titulo": "Maintenance detail",
+                "cerrar": "Close",
+                "equipo": "Machine",
+                "fecha_realizacion": "Completion date",
+                "fecha_programada": "Scheduled date",
+                "estado_actual": "Current status",
+                "hecho": "✔ Done",
+                "que_se_hizo": "What was done?",
+                "que_hacer": "What has to be done?"
+            }
         },
 
         "notificaciones": {

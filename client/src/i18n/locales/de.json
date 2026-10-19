@@ -224,7 +224,57 @@
 
         "historial": {
             "titulo": "Verlauf",
-            "descripcion": "Überprüfen Sie den Verlauf der Aktivitäten und Ereignisse im Zusammenhang mit Ihren Maschinen."
+            "descripcion": "Überprüfen Sie den Verlauf der Aktivitäten und Ereignisse im Zusammenhang mit Ihren Maschinen.",
+            "de": "Verlauf von:",
+            "rangos": {
+                "7": "Letzte 7 Tage",
+                "30": "Letzte 30 Tage",
+                "90": "Letzte 90 Tage",
+                "365": "Letztes Jahr",
+                "todos": "Gesamter Verlauf"
+            },
+            "maquinas": {
+                "registradas": "registrierte Maschinen",
+                "operativos": "{{operativos}}/{{total}} betriebsbereit"
+            },
+            "otros": {
+                "registrados": "andere registriert"
+            },
+            "seccion": "Wartungen",
+            "resumen": {
+                "realizado": "Abgeschlossen",
+                "pendiente": "Ausstehend",
+                "vencido": "Überfällig"
+            },
+            "buscar": "Maschine oder Beschreibung suchen...",
+            "estado": "Status:",
+            "estados": {
+                "todos": "Alle",
+                "realizado": "Abgeschlossen",
+                "pendiente": "Ausstehend",
+                "vencido": "Überfällig"
+            },
+            "orden": "Sortieren nach:",
+            "ordenes": {
+                "recientes": "Neueste",
+                "antiguos": "Älteste"
+            },
+            "ver_detalle": "Details ansehen",
+            "sin_datos": "In diesem Auswahlbereich gibt es keine Wartungen.",
+            "cargar_mas": "Mehr laden",
+            "cargando": "Wird geladen...",
+            "error": "Der Verlauf konnte nicht geladen werden.",
+            "drawer": {
+                "titulo": "Wartungsdetails",
+                "cerrar": "Schließen",
+                "equipo": "Maschine",
+                "fecha_realizacion": "Abschlussdatum",
+                "fecha_programada": "Geplantes Datum",
+                "estado_actual": "Aktueller Status",
+                "hecho": "✔ Erledigt",
+                "que_se_hizo": "Was wurde gemacht?",
+                "que_hacer": "Was muss getan werden?"
+            }
         },
 
         "notificaciones": {

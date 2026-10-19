@@ -224,7 +224,57 @@
 
     "historial": {
         "titulo": "Historial",
-        "descripcion": "Revisa el historial de actividades y eventos relacionados con tus máquinas."
+        "descripcion": "Revisa el historial de actividades y eventos relacionados con tus máquinas.",
+        "de": "Historial de:",
+        "rangos": {
+            "7": "Últ. 7 días",
+            "30": "Últ. 30 días",
+            "90": "Últ. 90 días",
+            "365": "Último año",
+            "todos": "Todo el historial"
+        },
+        "maquinas": {
+            "registradas": "máquinas registradas",
+            "operativos": "{{operativos}}/{{total}} operativos"
+        },
+        "otros": {
+            "registrados": "otros registrados"
+        },
+        "seccion": "Mantenimientos",
+        "resumen": {
+            "realizado": "Realizados",
+            "pendiente": "Pendientes",
+            "vencido": "Vencidos"
+        },
+        "buscar": "Buscar equipo o descripción...",
+        "estado": "Estado:",
+        "estados": {
+            "todos": "Todos",
+            "realizado": "Realizado",
+            "pendiente": "Pendiente",
+            "vencido": "Vencido"
+        },
+        "orden": "Ordenar por:",
+        "ordenes": {
+            "recientes": "Más Recientes",
+            "antiguos": "Más Antiguos"
+        },
+        "ver_detalle": "Ver detalle",
+        "sin_datos": "No hay mantenimientos en este rango de selección.",
+        "cargar_mas": "Cargar más",
+        "cargando": "Cargando...",
+        "error": "No se pudo cargar el historial.",
+        "drawer": {
+            "titulo": "Detalle del mantenimiento",
+            "cerrar": "Cerrar",
+            "equipo": "Equipo",
+            "fecha_realizacion": "Fecha de realización",
+            "fecha_programada": "Fecha programada",
+            "estado_actual": "Estado actual",
+            "hecho": "✔ Hecho",
+            "que_se_hizo": "¿Qué se hizo?",
+            "que_hacer": "¿Qué se tiene que hacer?"
+        }
     },
 
     "notificaciones": {
