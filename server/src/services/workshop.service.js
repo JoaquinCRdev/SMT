@@ -19,10 +19,7 @@ function generateJoinCode() {
 async function generateUniqueJoinCode() {
   for (let attempts = 0; attempts < 5; attempts++) {
     const code = generateJoinCode();
-    const exists = await WorkshopJoinRequest.exists({
-      code,
-      status: "approved",
-    });
+    const exists = await WorkshopJoinRequest.exists({ code, status: "approved" });
     if (!exists) return code;
   }
   throw new ApiError(500, "Could not generate a unique join code, try again");
@@ -40,8 +37,7 @@ async function assertOwner(workshopId, userId) {
 export async function createWorkshop(user, payload) {
   const existing = await User.findById(user.id);
   if (!existing) throw new ApiError(404, "User not found");
-  if (existing.workshop)
-    throw new ApiError(409, "You already belong to a workshop");
+  if (existing.workshop) throw new ApiError(409, "You already belong to a workshop");
 
   const workshop = await Workshop.create({ ...payload, owner: user.id });
   await User.findByIdAndUpdate(user.id, {
@@ -52,8 +48,7 @@ export async function createWorkshop(user, payload) {
 }
 
 export async function requestToJoin(user, code) {
-  if (user.workshop)
-    throw new ApiError(409, "You already belong to a workshop");
+  if (user.workshop) throw new ApiError(409, "You already belong to a workshop");
 
   const workshop = await Workshop.findOne({ code });
   if (!workshop) throw new ApiError(404, "Invalid workshop code");
@@ -65,8 +60,7 @@ export async function requestToJoin(user, code) {
       workshop: workshop._id,
     });
   } catch (err) {
-    if (err.code === 11000)
-      throw new ApiError(409, "You already have a pending request");
+    if (err.code === 11000) throw new ApiError(409, "You already have a pending request");
     throw err;
   }
 
@@ -115,10 +109,28 @@ export async function resolveRequest(requestId, user, status) {
   return request;
 }
 
-export async function verifyJoinCode(user, code) {
-  if (user.workshop) {
-    throw new ApiError(409, "You already belong to a workshop");
+// Permite al owner cancelar una solicitud YA aprobada (antes de que el colaborador
+// complete el ingreso con el código). La deja en "rejected" para que el colaborador
+// pueda volver a pedir asociarse si quiere.
+export async function cancelApprovedRequest(requestId, user) {
+  const request = await WorkshopJoinRequest.findById(requestId);
+  if (!request) throw new ApiError(404, "Request not found");
+
+  await assertOwner(request.workshop, user.id);
+
+  if (request.status !== "approved") {
+    throw new ApiError(400, "Only approved requests can be cancelled");
   }
+
+  request.status = "rejected";
+  request.code = null;
+  await request.save();
+
+  return request;
+}
+
+export async function verifyJoinCode(user, code) {
+  if (user.workshop) throw new ApiError(409, "You already belong to a workshop");
 
   const request = await WorkshopJoinRequest.findOne({
     user: user.id,
@@ -126,9 +138,7 @@ export async function verifyJoinCode(user, code) {
     code,
   }).select("+code");
 
-  if (!request) {
-    throw new ApiError(404, "Invalid or expired code");
-  }
+  if (!request) throw new ApiError(404, "Invalid or expired code");
 
   const workshop = await Workshop.findById(request.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");
@@ -147,10 +157,7 @@ export async function verifyJoinCode(user, code) {
 
 export async function getMyWorkshop(user) {
   if (!user.workshop) throw new ApiError(404, "Workshop not found");
-  const workshop = await Workshop.findById(user.workshop).populate(
-    "owner",
-    "name email",
-  );
+  const workshop = await Workshop.findById(user.workshop).populate("owner", "name email");
   if (!workshop) throw new ApiError(404, "Workshop not found");
   return workshop;
 }
@@ -255,7 +262,6 @@ export async function updateWorkshop(id, user, payload) {
 
 export async function regenerateCode(id, user) {
   const workshop = await assertOwner(id, user.id);
-
   workshop.code = crypto.randomBytes(4).toString("hex").toUpperCase();
   await workshop.save();
   return workshop;
@@ -280,10 +286,7 @@ export async function removeMember(id, userId, owner) {
 export async function deleteWorkshop(id, user) {
   const workshop = await assertOwner(id, user.id);
 
-  await User.updateMany(
-    { workshop: workshop._id },
-    { $set: { workshop: null } },
-  );
+  await User.updateMany({ workshop: workshop._id }, { $set: { workshop: null } });
   await WorkshopJoinRequest.deleteMany({ workshop: workshop._id });
   await Workshop.findByIdAndDelete(workshop._id);
 
@@ -291,8 +294,7 @@ export async function deleteWorkshop(id, user) {
 }
 
 export async function leaveWorkshop(user) {
-  if (!user.workshop)
-    throw new ApiError(400, "You do not belong to a workshop");
+  if (!user.workshop) throw new ApiError(400, "You do not belong to a workshop");
 
   const workshop = await Workshop.findById(user.workshop);
   if (!workshop) throw new ApiError(404, "Workshop not found");

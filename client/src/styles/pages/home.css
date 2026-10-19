@@ -1,4 +1,3 @@
-
 /* =========================================================
    CONTENEDOR PRINCIPAL
 ========================================================= */
@@ -20,11 +19,33 @@
 #ladohome {
   flex: 1;
   background-color: var(--FondoPrincipal);
-  padding: 0 32px 30px 32px;
+  padding: 0 28px 26px 28px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   color: var(--TextoPrincipal);
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #000000 transparent;
+}
+
+/* Chrome, Edge, Safari */
+#ladohome::-webkit-scrollbar {
+  width: 8px;
+}
+
+#ladohome::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#ladohome::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+#ladohome::-webkit-scrollbar-thumb:hover {
+  background-color: #1a1a1a;
 }
 
 
@@ -74,7 +95,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #segundodivhome p {
@@ -329,12 +350,7 @@
 
 
 /* =========================================================
-   BOTÓN +
-========================================================= */
-
-
-/* =========================================================
-   NOTIFICACIONES
+   NOTIFICACIONES (campanita del header)
 ========================================================= */
 
 .botonnotificaciones {
@@ -553,19 +569,14 @@
 
 
 /* =========================================================
-   TÍTULOS DE SECCIONES
+   TÍTULO DE SECCIÓN (Resumen general)
 ========================================================= */
 
 #resumengeneral {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
-#actividadhome {
-  margin-top: 30px;
-}
-
-#resumengeneral h2,
-#actividadhome h2 {
+#resumengeneral h2 {
   margin: 0 0 20px;
 
   font-size: var(--TamTitulo);
@@ -606,6 +617,8 @@
   align-items: flex-end;
 
   box-sizing: border-box;
+
+  text-decoration: none;
 }
 
 .tarjetaresumen > div {
@@ -646,107 +659,290 @@
 
 
 /* =========================================================
-   TABLA ACTIVIDAD
+   FILA: MANTENIMIENTOS QUE NECESITAN ATENCIÓN + ÚLTIMOS
+   MANTENIMIENTOS (dos tarjetas separadas, lado a lado)
 ========================================================= */
 
-#tablaactividad {
-  width: 100%;
+#filasegundaresumenhome {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 
+  margin-top: 25px;
+}
+
+.tarjetaseccionhome {
   border: 1px solid var(--BordePrincipal);
-
-  border-radius: 17px;
-
-  overflow: hidden;
+  border-radius: 12px;
 
   background-color: var(--FondoSecundario);
-}
 
-.filaactividad {
-  min-height: 56px;
-
-  display: grid;
-
-  grid-template-columns: 1.1fr 1.6fr 1fr 0.9fr;
-
-  align-items: center;
-
-  padding: 0 24px;
+  padding: 18px;
 
   box-sizing: border-box;
-
-  border-bottom: 1px solid var(--BordePrincipal);
 }
 
-.filaactividad:last-child {
-  border-bottom: none;
+.encabezado-seccion-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 14px;
 }
 
-.filaactividad span {
-  font-size: var(--TamTexto);
+.encabezado-seccion-home h2 {
+  margin: 0;
 
-  color: var(--TextoSecundario);
+  font-size: calc(var(--TamTitulo) - 4px);
+
+  font-weight: 400;
+
+  color: var(--TextoPrincipal);
 
   font-family: "Inter", sans-serif;
 }
 
-.filaactividad span:first-child {
+.encabezado-seccion-home a {
+  font-size: calc(var(--TamTexto) - 1px);
+
+  color: var(--Naranja);
+
+  text-decoration: none;
+
+  flex-shrink: 0;
+}
+
+.encabezado-seccion-home a:hover {
+  color: var(--NaranjaHover);
+}
+
+
+/* ---------- LISTA MANTENIMIENTOS URGENTES ---------- */
+
+#listaatencionhome {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filaatencionhome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 10px;
+
+  background-color: var(--FondoTarjeta);
+}
+
+.filaatencionhome > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.filaatencionhome strong {
+  font-size: calc(var(--TamTexto) + 1px);
+
   color: var(--TextoPrincipal);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.filaatencionhome span {
+  font-size: calc(var(--TamTexto) - 1px);
 
-/* =========================================================
-   CABECERA ACTIVIDAD
-========================================================= */
-
-.encabezadoactividad {
-  min-height: 48px;
+  color: var(--TextoSecundario);
 }
 
-.encabezadoactividad span {
-  color: var(--TextoTerciario);
-
+.estado-atencion {
   font-size: calc(var(--TamTexto) - 2px);
 
-  letter-spacing: 0.5px;
-}
-
-
-/* =========================================================
-   ESTADOS DE ACTIVIDAD
-========================================================= */
-
-.filaactividad .estado {
-  width: fit-content;
-
-  height: auto;
-
-  border: none;
-
-  padding: 4px 12px;
+  padding: 4px 10px;
 
   border-radius: 15px;
 
-  font-size: calc(var(--TamTexto) - 2px);
+  white-space: nowrap;
 
   font-weight: 500;
+}
+
+.estado-atencion.vencido {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.12);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.estado-atencion.proximo {
+  color: var(--Naranja);
+  background-color: rgba(242, 92, 5, 0.12);
+  border: 1px solid rgba(242, 92, 5, 0.3);
+}
+
+
+/* ---------- LISTA ÚLTIMOS MANTENIMIENTOS ---------- */
+
+#listaultimosmantenimientoshome {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filamantenimientohome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--BordeSecundario);
+  border-radius: 10px;
+
+  background-color: var(--FondoTarjeta);
+}
+
+.filamantenimientohome > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.filamantenimientohome strong {
+  font-size: calc(var(--TamTexto) + 1px);
+
+  color: var(--TextoPrincipal);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filamantenimientohome .tipo-mantenimiento {
+  font-size: calc(var(--TamTexto) - 1px);
+
+  color: var(--TextoSecundario);
+}
+
+.filamantenimientohome .info-derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+
+  flex-shrink: 0;
+}
+
+.filamantenimientohome .fecha-mantenimiento {
+  font-size: calc(var(--TamTexto) - 2px);
+
+  color: var(--TextoTerciario);
+
+  white-space: nowrap;
+}
+
+.estado-mini {
+  font-size: calc(var(--TamTexto) - 2px);
+
+  padding: 3px 10px;
+
+  border-radius: 15px;
+
+  white-space: nowrap;
+
+  font-weight: 500;
+}
+
+.estado-mini.realizado {
+  color: var(--Verde);
+  background-color: rgba(25, 196, 99, 0.12);
+  border: 1px solid rgba(25, 196, 99, 0.3);
+}
+
+.estado-mini.pendiente {
+  color: var(--Naranja);
+  background-color: rgba(242, 92, 5, 0.12);
+  border: 1px solid rgba(242, 92, 5, 0.3);
+}
+
+
+/* =========================================================
+   BANNER DE PLANES
+========================================================= */
+
+#bannerplanhome {
+  margin-top: 25px;
+
+  border: 1px solid rgba(242, 92, 5, 0.35);
+  border-radius: 14px;
+
+  background: linear-gradient(
+    to right,
+    rgba(242, 92, 5, 0.14),
+    rgba(242, 92, 5, 0.03)
+  );
+
+  padding: 20px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  box-sizing: border-box;
+}
+
+#bannerplanhome h2 {
+  margin: 0;
+
+  font-size: var(--TamTitulo);
+
+  font-weight: 400;
+
+  color: var(--TextoPrincipal);
 
   font-family: "Inter", sans-serif;
 }
 
-.estado.progreso {
-  color: var(--Naranja);
+#bannerplanhome p {
+  margin: 5px 0 0;
 
-  background-color: rgba(249, 115, 22, 0.1);
+  font-size: var(--TamTexto);
 
-  border: 1px solid rgba(249, 115, 22, 0.25);
+  color: var(--TextoSecundario);
 }
 
-.estado.completado {
-  color: var(--Verde);
+#botonverplanhome {
+  flex-shrink: 0;
 
-  background-color: rgba(25, 196, 99, 0.1);
+  background-color: var(--Naranja);
+  color: #ffffff;
 
-  border: 1px solid rgba(25, 196, 99, 0.25);
+  text-decoration: none;
+
+  padding: 10px 26px;
+
+  border-radius: 10px;
+
+  font-size: var(--TamTexto);
+
+  font-family: "Inter", sans-serif;
+
+  transition: 0.2s;
+}
+
+#botonverplanhome:hover {
+  background-color: var(--NaranjaHover);
 }
 
 
@@ -812,12 +1008,16 @@
 
   cursor: pointer;
 
+  text-decoration: none;
+
   font-family: "Inter", sans-serif;
 
   transition: 0.2s;
+
+  box-sizing: border-box;
 }
 
-.accionrapida:last-child {
+.accionrapida:last-of-type {
   margin-bottom: 0;
 }
 
@@ -861,6 +1061,56 @@
 .iconoaccion img {
   width: 22px;
   height: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICACIONES RESUMEN (dentro de acciones rápidas)
+========================================================= */
+
+#notificacionesresumenhome {
+  margin-top: 20px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid var(--BordeSuave);
+}
+
+#notificacionesresumenhome .encabezado-seccion-home h2 {
+  font-size: calc(var(--TamTitulo) - 6px);
+}
+
+.notifhome {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  padding: 10px 10px;
+
+  border-radius: 8px;
+
+  margin-bottom: 8px;
+}
+
+.notifhome:last-child {
+  margin-bottom: 0;
+}
+
+.notifhome-titulo {
+  font-size: calc(var(--TamTexto) - 1px);
+
+  color: var(--TextoPrincipal);
+}
+
+.notifhome-fecha {
+  font-size: calc(var(--TamTexto) - 3px);
+
+  color: var(--TextoSecundario);
+}
+
+.notifhome.no-leida {
+  background-color: rgba(242, 92, 5, 0.1);
+  border: 1px solid rgba(242, 92, 5, 0.25);
 }
 
 
@@ -1044,8 +1294,7 @@
     margin-top: 22px;
   }
 
-  #resumengeneral h2,
-  #actividadhome h2 {
+  #resumengeneral h2 {
     margin-bottom: 14px;
 
     font-size: var(--TamTitulo);
@@ -1087,38 +1336,29 @@
   }
 
 
-  /* ---------- ACTIVIDAD ---------- */
+  /* ---------- MANTENIMIENTOS + ÚLTIMOS MANTENIMIENTOS ---------- */
 
-  #actividadhome {
-    margin-top: 22px;
+  #filasegundaresumenhome {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    margin-top: 18px;
   }
 
-  #tablaactividad {
-    width: 100%;
-    border-radius: 13px;
+  .tarjetaseccionhome {
+    padding: 14px;
+    border-radius: 10px;
   }
 
-  .filaactividad {
-    min-height: 46px;
-    padding: 0 14px;
-  }
 
-  .filaactividad span {
-    font-size: calc(var(--TamTexto) - 2px);
-  }
+  /* ---------- BANNER PLANES ---------- */
 
-  .encabezadoactividad {
-    min-height: 40px;
-  }
+  #bannerplanhome {
+    margin-top: 18px;
 
-  .encabezadoactividad span {
-    font-size: calc(var(--TamTexto) - 4px);
-  }
+    padding: 16px 18px;
 
-  .filaactividad .estado {
-    padding: 3px 8px;
-
-    font-size: calc(var(--TamTexto) - 4px);
+    border-radius: 12px;
   }
 
 
@@ -1264,8 +1504,7 @@
     margin-top: 20px;
   }
 
-  #resumengeneral h2,
-  #actividadhome h2 {
+  #resumengeneral h2 {
     margin-bottom: 12px;
 
     font-size: var(--TamTitulo);
@@ -1308,44 +1547,42 @@
   }
 
 
-  /* ---------- TABLA ---------- */
+  /* ---------- MANTENIMIENTOS + ÚLTIMOS MANTENIMIENTOS ---------- */
+  /* En mobile se apilan, uno abajo del otro, pero cada uno
+     sigue siendo su propia tarjeta */
 
-  #actividadhome {
-    margin-top: 22px;
+  #filasegundaresumenhome {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    margin-top: 18px;
   }
 
-  #tablaactividad {
+  .tarjetaseccionhome {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+
+  /* ---------- BANNER PLANES ---------- */
+
+  #bannerplanhome {
+    margin-top: 18px;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 16px;
+
+    border-radius: 12px;
+  }
+
+  #botonverplanhome {
     width: 100%;
 
-    overflow-x: auto;
+    text-align: center;
 
-    border-radius: 13px;
-  }
-
-  .filaactividad {
-    min-width: 520px;
-
-    min-height: 48px;
-
-    padding: 0 14px;
-  }
-
-  .filaactividad span {
-    font-size: calc(var(--TamTexto) - 2px);
-  }
-
-  .encabezadoactividad {
-    min-height: 40px;
-  }
-
-  .encabezadoactividad span {
-    font-size: calc(var(--TamTexto) - 4px);
-  }
-
-  .filaactividad .estado {
-    padding: 3px 8px;
-
-    font-size: calc(var(--TamTexto) - 4px);
+    box-sizing: border-box;
   }
 
 
@@ -1355,4 +1592,3 @@
     display: none;
   }
 }
-

@@ -156,3 +156,15 @@ export async function leaveWorkshop(req, res, next) {
     next(error);
   }
 }
+
+export async function cancelApprovedRequest(req, res, next) {
+  try {
+    const request = await workshopService.cancelApprovedRequest(
+      req.params.requestId,
+      req.user,
+    );
+    res.status(200).json(request);
+  } catch (error) {
+    next(error);
+  }
+}

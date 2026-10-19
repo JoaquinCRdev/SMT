@@ -13,6 +13,51 @@
     },
 
     "pages": {
+        "auth": {
+            "login": {
+                "titulo": "Sign in to continue",
+                "label_email": "Email",
+                "label_password": "Password",
+                "boton": "Sign In",
+                "boton_cargando": "Signing in...",
+                "sin_cuenta": "Don't have an account?",
+                "link_registro": "Sign up",
+                "error_email_invalido": "Please enter a valid email address.",
+                "error_password_vacia": "Please enter your password.",
+                "error_generico": "Error signing in",
+                "alt_logo": "SMT Logo",
+                "alt_imagen": "Decorative image"
+            },
+            "register": {
+                "titulo": "Create your account to get started",
+                "placeholder_nombre": "Full name",
+                "placeholder_email": "Email",
+                "placeholder_password": "Password (minimum 8 characters)",
+                "rol_personal": "Staff",
+                "rol_admin": "Admin",
+                "boton": "Create account",
+                "boton_cargando": "Creating account...",
+                "ya_cuenta": "Already have an account?",
+                "link_login": "Sign in",
+                "error_nombre_corto": "Name must be at least 3 characters long",
+                "error_email_invalido": "Please enter a valid email address",
+                "error_password_corta": "Password must be at least 8 characters long",
+                "error_generico": "Error creating account",
+                "lado_derecho_titulo_1": "Join the network",
+                "lado_derecho_titulo_2": "of workshops that",
+                "lado_derecho_titulo_3": "grow with SMT",
+                "beneficio_dispositivo_1": "Access from",
+                "beneficio_dispositivo_2": "any device",
+                "beneficio_informacion_1": "Secure and",
+                "beneficio_informacion_2": "reliable information",
+                "beneficio_soporte": "Technical support",
+                "alt_registrar": "Register your workshop",
+                "alt_administrar": "Manage your machines",
+                "alt_contacto": "Contact",
+                "footer": "© 2026 SMT. All rights reserved."
+            }
+        },
+
         "home": {
             "bienvenidaH1": "Hello",
             "bienvenidaP": "Welcome back"

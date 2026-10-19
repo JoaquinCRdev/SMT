@@ -17,7 +17,9 @@ const joinRequestSchema = new mongoose.Schema(
       enum: ["pending", "approved", "rejected", "completed"],
       default: "pending",
     },
-    // Código temporal que el solicitante usa para confirmar su incorporación
+    // Código temporal que el solicitante usa para confirmar su incorporación.
+    // `select: false` lo deja fuera de toda consulta salvo que se pida
+    // explícitamente: solo lo ve quien lo generó.
     code: {
       type: String,
       default: null,
@@ -31,6 +33,12 @@ const joinRequestSchema = new mongoose.Schema(
 joinRequestSchema.index(
   { user: 1, status: 1 },
   { unique: true, partialFilterExpression: { status: "pending" } },
+);
+
+// El código solo existe (y debe ser único) mientras la solicitud está aprobada
+joinRequestSchema.index(
+  { code: 1 },
+  { unique: true, partialFilterExpression: { status: "approved" } },
 );
 
 export default mongoose.model("WorkshopJoinRequest", joinRequestSchema);
