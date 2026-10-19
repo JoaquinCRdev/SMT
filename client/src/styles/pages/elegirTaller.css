@@ -2,11 +2,12 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background-color: #111315;
+  background-color: var(--FondoPrincipal, #111315);
   justify-content: center;
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
+  transition: background-color 0.25s ease;
 }
 
 #cardElegirTaller {
@@ -19,15 +20,15 @@
 }
 
 #cardElegirTaller h1 {
-  color: #f5f5f5;
-  font-family: "inter";
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   font-size: 36px;
   text-align: center;
 }
 
 #subtituloElegirTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   text-align: center;
   padding-top: 10px;
@@ -45,32 +46,34 @@
   flex-direction: column;
   gap: 10px;
   padding: 25px;
-  background-color: #222428;
-  border: 2px solid #2d3135;
+  background-color: var(--FondoSecundario, #222428);
+  border: 2px solid var(--BordePrincipal, #2d3135);
   text-decoration: none;
-  transition: 0.3s;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.25s ease;
 }
 
 .opcionElegirTaller:hover {
-  border-color: #f97316;
+  border-color: var(--Naranja, #f97316);
 }
 
 .opcionElegirTaller h2 {
-  color: #f5f5f5;
-  font-family: "inter";
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   font-size: 20px;
 }
 
 .opcionElegirTaller p {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   line-height: 1.5;
 }
 
 .opcionElegirTaller span {
-  color: #f97316;
-  font-family: "inter";
+  color: var(--Naranja, #f97316);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 700;
 }

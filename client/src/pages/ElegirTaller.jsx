@@ -1,5 +1,6 @@
 import "../styles/pages/elegirTaller.css";
 import { Link } from "react-router-dom";
+import useApplyTheme from "../hooks/useApplyTheme";
 
 const opciones = [
   {
@@ -19,6 +20,8 @@ const opciones = [
 ];
 
 const ElegirTaller = () => {
+  useApplyTheme();
+
   return (
     <div id="contenedorElegirTaller">
       <div id="cardElegirTaller">

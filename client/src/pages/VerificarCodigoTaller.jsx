@@ -1,14 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useWorkshop } from "../context/WorkshopContext";
+import useApplyTheme from "../hooks/useApplyTheme";
 import "../styles/pages/verificarCodigoTaller.css";
 
 const CODE_LENGTH = 6;
 const VALID_CHAR = /^[A-HJ-NP-Z2-9]$/;
 
 const VerificarCodigoTaller = () => {
+  useApplyTheme();
+
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const { refetchWorkshop } = useWorkshop();
@@ -16,46 +19,7 @@ const VerificarCodigoTaller = () => {
   const [codigo, setCodigo] = useState(Array(CODE_LENGTH).fill(""));
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [aviso, setAviso] = useState("");
-  const [cargando, setCargando] = useState(true);
   const inputsRef = useRef([]);
-
-  // El solicitante recupera su propio código: antes dependía de que el administrador se lo pasara por otro medio, y el panel no lo mostraba.
-  useEffect(() => {
-    let vigente = true;
-
-    const cargar = async () => {
-      try {
-        const res = await api.get("/workshops/requests/mine");
-        if (!vigente) return;
-
-        const solicitud = res.data;
-
-        if (!solicitud) return;
-
-        if (solicitud.status === "approved" && solicitud.code) {
-          setCodigo(solicitud.code.split("").slice(0, CODE_LENGTH));
-          setAviso(
-            "Ya tenés tu código. Revisalo y confirmá para completar el ingreso.",
-          );
-        } else if (solicitud.status === "pending") {
-          setAviso("Tu solicitud está esperando la aprobación del taller.");
-        } else if (solicitud.status === "completed") {
-          navigate("/home", { replace: true });
-        }
-      } catch {
-        // Si el lookup falla no bloqueamos: el usuario puede escribir a mano.
-      } finally {
-        if (vigente) setCargando(false);
-      }
-    };
-
-    cargar();
-
-    return () => {
-      vigente = false;
-    };
-  }, [navigate]);
 
   const handleChange = (e, index) => {
     const valor = e.target.value.toUpperCase();
@@ -132,16 +96,20 @@ const VerificarCodigoTaller = () => {
     try {
       await api.post("/workshops/verify-code", { code: codeString });
 
-      // El backend ya asoció al usuario al taller; hay que refrescar
-      // el AuthContext y el WorkshopContext para que ProtectedRoute
-      // deje de mandarlo de vuelta a /asociarseTaller.
+      // El backend ya asoció al usuario al taller: refrescamos el contexto
+      // para que ProtectedRoute lo deje entrar al resto de la app.
       const { data: profile } = await api.get("/profile");
       setUser(profile);
       await refetchWorkshop();
 
       navigate("/home");
     } catch (err) {
-      setError(err.response?.data?.message || "Código inválido o expirado");
+      const status = err.response?.status;
+      setError(
+        status === 400 || status === 404
+          ? "Código inválido o expirado"
+          : err.response?.data?.message || "No se pudo verificar el código",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -154,41 +122,33 @@ const VerificarCodigoTaller = () => {
       <img id="imgcodigo" src="correo.png" alt="" />
       <div id="descodigo">
         <h2>Ingresá tu código de unión</h2>
-        <p>Ingresá tu código de unión de 6 caracteres</p>
+        <p>El administrador del taller te compartió un código de 6 caracteres</p>
       </div>
-
-      {aviso && <p id="avisoVerificarCodigo">{aviso}</p>}
 
       {error && <p id="errorVerificarCodigo">{error}</p>}
 
-      {cargando ? (
-        <p id="avisoVerificarCodigo">Buscando tu código...</p>
-      ) : (
-        <>
-          <div id="containerInputsCodigo">
-            {codigo.map((valor, index) => (
-              <input
-                key={index}
-                type="text"
-                maxLength={1}
-                value={valor}
-                ref={(el) => (inputsRef.current[index] = el)}
-                onChange={(e) => handleChange(e, index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                onPaste={handlePaste}
-              />
-            ))}
-          </div>
+      <div id="containerInputsCodigo">
+        {codigo.map((valor, index) => (
+          <input
+            key={index}
+            type="text"
+            maxLength={1}
+            value={valor}
+            ref={(el) => (inputsRef.current[index] = el)}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            onPaste={handlePaste}
+          />
+        ))}
+      </div>
 
-          <button
-            id="verificarcodigo"
-            onClick={handleVerificar}
-            disabled={submitting}
-          >
-            {submitting ? "Verificando..." : "Verificar código"}
-          </button>
-        </>
-      )}
+      <button
+        id="verificarcodigo"
+        onClick={handleVerificar}
+        disabled={submitting}
+      >
+        {submitting ? "Verificando..." : "Verificar código"}
+      </button>
     </div>
   );
 };

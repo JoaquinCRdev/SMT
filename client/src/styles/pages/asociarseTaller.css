@@ -2,32 +2,58 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background-color: #111315;
+  background-color: var(--FondoPrincipal, #111315);
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: background-color 0.25s ease;
 }
 
 #cardAsociarseTaller {
   display: flex;
   flex-direction: column;
   width: 500px;
+  max-width: 100%;
   padding: 50px 40px;
   box-sizing: border-box;
 }
 
+#linkVolverAsociarseTaller {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#linkVolverAsociarseTaller:hover {
+  color: var(--Naranja, #f97316);
+}
+
 #cardAsociarseTaller h1 {
-  color: #f5f5f5;
-  font-family: "inter";
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   font-size: 36px;
   text-align: center;
 }
 
 #subtituloAsociarseTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   text-align: center;
   padding-top: 10px;
+}
+
+#avisoAsociarseTaller {
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 15px;
 }
 
 #formAsociarseTaller {
@@ -40,21 +66,24 @@
 #formAsociarseTaller input {
   width: 100%;
   height: 50px;
-  background-color: #222428;
-  border: 2px solid #2d3135;
-  color: #b4b4b4;
-  font-family: "inter";
+  background-color: var(--FondoBoton, #222428);
+  border: 2px solid var(--BordePrincipal, #2d3135);
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   outline: none;
   box-sizing: border-box;
   padding: 0 15px;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
 }
 
 #formAsociarseTaller input::placeholder {
-  color: #b4b4b4;
+  color: var(--TextoTerciario, #b4b4b4);
 }
 
 #formAsociarseTaller input:focus {
-  border-color: #ff7a00;
+  border-color: var(--Naranja, #f97316);
 }
 
 #formAsociarseTaller button {
@@ -62,17 +91,17 @@
   height: 50px;
   border-radius: 5px;
   background-color: transparent;
-  border: 2px solid #f97316;
-  color: #f97316;
-  font-family: "inter";
+  border: 2px solid var(--Naranja, #f97316);
+  color: var(--Naranja, #f97316);
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 #formAsociarseTaller button:hover {
-  background-color: #f97316;
-  color: #f5f5f5;
+  background-color: var(--Naranja, #f97316);
+  color: #ffffff;
 }
 
 #formAsociarseTaller button:disabled {
@@ -81,8 +110,8 @@
 }
 
 #errorAsociarseTaller {
-  color: #e74c3c;
-  font-family: "inter";
+  color: #ef4444;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   text-align: center;
 }
@@ -95,10 +124,30 @@
   padding-top: 40px;
 }
 
+#tallerNombreAsociarseTaller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+#tallerNombreAsociarseTaller p:first-child {
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+
+#tallerNombreAsociarseTaller p:last-child {
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .badgeEstadoAsociarseTaller {
   padding: 8px 20px;
   border-radius: 20px;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 600;
   border: 2px solid;
@@ -110,48 +159,36 @@
 }
 
 .badge-approved {
-  color: #2ecc71;
-  border-color: #2ecc71;
-}
-
-.badge-rejected {
-  color: #e74c3c;
-  border-color: #e74c3c;
+  color: var(--Verde, #2ecc71);
+  border-color: var(--Verde, #2ecc71);
 }
 
 #mensajeAsociarseTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   text-align: center;
+  line-height: 1.5;
 }
 
 #linkVerificarCodigo {
-  color: #f97316;
-  font-family: "inter";
+  color: var(--Naranja, #f97316);
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
 }
 
 #linkVerificarCodigo:hover {
-  color: #d36313;
+  color: var(--NaranjaHover, #d36313);
 }
 
-#estadoAsociarseTaller button {
-  height: 45px;
-  padding: 0 25px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: 2px solid #2d3135;
-  color: #b4b4b4;
-  font-family: "inter";
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+@media (max-width: 480px) {
+  #cardAsociarseTaller {
+    padding: 35px 20px;
+  }
 
-#estadoAsociarseTaller button:hover {
-  border-color: #f97316;
-  color: #f97316;
+  #cardAsociarseTaller h1 {
+    font-size: 28px;
+  }
 }
