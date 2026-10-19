@@ -13,7 +13,7 @@ const PersonalizacionSection = ({
       <div className="personalizacion-grid">
         <div className="sub-card">
           <span className="sub-card-title">
-            {i18n.t("pages.configuracion.configs.plan.title", "Plan actual")}
+            {i18n.t("pages.configuracion.configs.plan.title")}
           </span>
 
           <div className="plan-box">
@@ -56,7 +56,7 @@ const PersonalizacionSection = ({
 
         <div className="sub-card">
           <span className="sub-card-title">
-            {i18n.t("pages.configuracion.configs.idioma.title", "Idioma")}
+            {i18n.t("pages.configuracion.configs.idioma.title")}
           </span>
 
           <div className="select-box">

@@ -169,8 +169,8 @@ const PersonalSection = ({ workshop, isOwner }) => {
                   <div className="status-indicator">
                     <span className={`dot ${staff.isActive ? "active" : "inactive"}`} />
                     {staff.isActive
-                      ? i18n.t("pages.configuracion.configs.personal.activo", "Activo")
-                      : i18n.t("pages.configuracion.configs.personal.inactivo", "Inactivo")}
+                      ? i18n.t("pages.configuracion.configs.personal.activo")
+                      : i18n.t("pages.configuracion.configs.personal.inactivo")}
                   </div>
                 </div>
 
