@@ -17,10 +17,12 @@ const router = Router();
 
 router.use(authenticate);
 
-// Sin authorize("admin"): el rol admin se obtiene al crear el taller, así que
-// exigirlo aquí dejaría el taller imposible de crear. El servicio ya impide
-// que un usuario tenga más de un taller y promueve al creador a admin.
-router.post("/", validate(createWorkshopSchema), workshopController.createWorkshop);
+router.post(
+  "/",
+  validate(createWorkshopSchema),
+  authorize("admin"),
+  workshopController.createWorkshop,
+);
 router.get("/mine", workshopController.getMyWorkshop);
 router.get("/mine/members", workshopController.getMembers);
 router.post(

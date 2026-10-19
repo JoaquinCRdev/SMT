@@ -1,21 +1,22 @@
 #containerRegistroTallerCodigo {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 20px;
   min-height: 100vh;
-  background-color: #111315;
-  background-size: cover;
+  box-sizing: border-box;
+  background-color: var(--FondoPrincipal, #111315);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.25s ease;
 }
 
 #containerRegistroTallerCodigo h1 {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal, #f5f5f5);
   font-size: 3.2rem;
   margin-bottom: 35px;
   text-align: center;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 #imgcodigo {
@@ -33,33 +34,23 @@
 }
 
 #descodigo h2 {
-  color: #f5f5f5;
+  color: var(--TextoPrincipal, #f5f5f5);
   font-size: 2rem;
   margin-bottom: 10px;
   font-weight: 700;
-  font-family: "inter";
+  font-family: "Inter", sans-serif;
 }
 
 #descodigo p {
-  color: #b4b4b4;
+  color: var(--TextoSecundario, #b4b4b4);
   font-size: 1.2rem;
   line-height: 1.5;
-  font-family: "inter";
-}
-
-#avisoVerificarCodigo {
-  color: #b4b4b4;
-  font-family: "inter";
-  font-size: 1rem;
-  font-weight: 500;
-  margin-top: 20px;
-  text-align: center;
-  line-height: 1.5;
+  font-family: "Inter", sans-serif;
 }
 
 #errorVerificarCodigo {
-  color: #e74c3c;
-  font-family: "inter";
+  color: #ef4444;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   margin-top: 20px;
@@ -75,37 +66,43 @@
 #containerInputsCodigo input {
   width: 70px;
   height: 80px;
-  background: #222428;
-  border: 1px solid #2d3135;
+  background: var(--FondoBoton, #222428);
+  border: 1px solid var(--BordePrincipal, #2d3135);
   border-radius: 14px;
-  color: white;
+  color: var(--TextoPrincipal, #f5f5f5);
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
 }
 
 #containerInputsCodigo input:focus {
-  border-color: #ff7a14;
+  border-color: var(--Naranja, #f97316);
   box-shadow: 0 0 10px rgba(255, 122, 20, 0.3);
 }
 
 #verificarcodigo {
   width: 420px;
+  max-width: 100%;
   height: 60px;
-  background: linear-gradient(to right, #c85d11, #d87b24);
-  color: white;
+  background-color: var(--Naranja, #f97316);
+  color: #ffffff;
   border: none;
   border-radius: 14px;
   font-size: 1.3rem;
   font-weight: 700;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   margin-top: 30px;
   transition: 0.3s;
 }
 
 #verificarcodigo:hover {
-  background: linear-gradient(to right, #93430b, #b5661c);
+  background-color: var(--NaranjaHover, #d36313);
 }
 
 #verificarcodigo:disabled {
@@ -113,13 +110,8 @@
   cursor: not-allowed;
 }
 
-/*tablet*/
+/* tablet */
 @media (min-width: 700px) and (max-width: 992px) {
-  #containerRegistroTallerCodigo {
-    padding: 20px;
-    text-align: center;
-  }
-
   #containerRegistroTallerCodigo h1 {
     font-size: 2.2rem;
     margin-bottom: 20px;
@@ -141,18 +133,20 @@
   }
 }
 
-/*celular*/
-
+/* celular */
 @media (max-width: 700px) {
-  #containerRegistroTallerCodigo {
-    padding: 20px;
-    text-align: center;
-  }
-
   #containerRegistroTallerCodigo h1 {
     font-size: 1.6rem;
     margin-bottom: 15px;
     width: 90%;
+  }
+
+  #descodigo h2 {
+    font-size: 1.4rem;
+  }
+
+  #descodigo p {
+    font-size: 1rem;
   }
 
   #imgcodigo {
@@ -163,6 +157,7 @@
   #containerInputsCodigo {
     gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   #containerInputsCodigo input {
