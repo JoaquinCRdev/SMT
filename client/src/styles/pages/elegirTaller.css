@@ -2,11 +2,12 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background-color: #111315;
+  background-color: var(--FondoPrincipal, #111315);
   justify-content: center;
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
+  transition: background-color 0.25s ease;
 }
 
 #cardElegirTaller {
@@ -28,37 +29,39 @@
 }
 
 #saludoElegirTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
 }
 
 #cerrarSesionElegirTaller {
   padding: 8px 14px;
   background-color: transparent;
-  border: 1px solid #2d3135;
-  color: #b4b4b4;
-  font-family: "inter";
+  border: 1px solid var(--BordePrincipal, #2d3135);
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 13px;
   cursor: pointer;
-  transition: 0.3s;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 #cerrarSesionElegirTaller:hover {
-  border-color: #f97316;
-  color: #f97316;
+  border-color: var(--Naranja, #f97316);
+  color: var(--Naranja, #f97316);
 }
 
 #cardElegirTaller h1 {
-  color: #f5f5f5;
-  font-family: "inter";
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   font-size: 36px;
   text-align: center;
 }
 
 #subtituloElegirTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   text-align: center;
   padding-top: 10px;
@@ -76,47 +79,49 @@
   flex-direction: column;
   gap: 10px;
   padding: 25px;
-  background-color: #222428;
-  border: 2px solid #2d3135;
+  background-color: var(--FondoSecundario, #222428);
+  border: 2px solid var(--BordePrincipal, #2d3135);
   text-decoration: none;
-  transition: 0.3s;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.25s ease;
 }
 
 .opcionElegirTaller:hover {
-  border-color: #f97316;
+  border-color: var(--Naranja, #f97316);
 }
 
 .opcionElegirTaller h2 {
-  color: #f5f5f5;
-  font-family: "inter";
+  color: var(--TextoPrincipal, #f5f5f5);
+  font-family: "Inter", sans-serif;
   font-size: 20px;
 }
 
 .opcionElegirTaller p {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   line-height: 1.5;
 }
 
 .opcionElegirTaller span {
-  color: #f97316;
-  font-family: "inter";
+  color: var(--Naranja, #f97316);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 700;
 }
 
 /* Enlace "¿Ya tenés cuenta?" al pie, equivalente al del login. */
 #otraCuentaElegirTaller {
-  color: #b4b4b4;
-  font-family: "inter";
+  color: var(--TextoSecundario, #b4b4b4);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   text-align: center;
   padding-top: 25px;
 }
 
 #otraCuentaElegirTaller a {
-  color: #f97316;
+  color: var(--Naranja, #f97316);
   text-decoration: none;
 }
 
@@ -129,19 +134,21 @@
   display: block;
   margin-top: 30px;
   padding: 15px;
-  background-color: #222428;
-  border: 2px solid #2d3135;
-  color: #f97316;
-  font-family: "inter";
+  background-color: var(--FondoSecundario, #222428);
+  border: 2px solid var(--BordePrincipal, #2d3135);
+  color: var(--Naranja, #f97316);
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
-  transition: 0.3s;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.25s ease;
 }
 
 #linkVerificarCodigo:hover {
-  border-color: #f97316;
+  border-color: var(--Naranja, #f97316);
 }
 
 @media (max-width: 480px) {

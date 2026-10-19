@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import useApplyTheme from "../hooks/useApplyTheme";
 
 // Pantalla a la que cae un usuario que todavía no pertenece a ningún taller.
 // Es la primera parada después de iniciar sesión, así que tiene tres estados:
@@ -27,6 +28,11 @@ const ElegirTaller = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
+  // Esta pantalla vive fuera del layout con sidebar, así que nadie le aplica el
+  // tema guardado (modo oscuro/claro y tamaño de fuente): lo hace ella misma,
+  // igual que registrarTaller, VerificarCodigoTaller y AsociarseTaller.
+  useApplyTheme();
 
   const [solicitud, setSolicitud] = useState(null);
   const [cargando, setCargando] = useState(true);

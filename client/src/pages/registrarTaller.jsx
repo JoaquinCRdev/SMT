@@ -1,10 +1,13 @@
 import "../styles/pages/registrarTaller.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import useApplyTheme from "../hooks/useApplyTheme";
 
 const RegistrarTaller = () => {
+  useApplyTheme();
+
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
@@ -40,8 +43,8 @@ const RegistrarTaller = () => {
         phone: formData.telefono || undefined,
       });
 
-      // El usuario ahora tiene workshop asignado; refrescamos el contexto
-      // pidiendo el perfil actualizado para que ProtectedRoute lo detecte.
+      // El usuario ahora tiene taller (y pasó a admin): refrescamos el perfil
+      // para que ProtectedRoute lo detecte.
       const { data: profile } = await api.get("/profile");
       setUser(profile);
 
@@ -55,8 +58,12 @@ const RegistrarTaller = () => {
 
   return (
     <div id="RegistrarTaller">
-      <button id="botonvolver" type="button">
-        <NavLink to="/mismaquinas">← Volver</NavLink>
+      <button
+        id="botonvolver"
+        type="button"
+        onClick={() => navigate("/elegirTaller")}
+      >
+        ← Volver
       </button>
 
       <div id="containerRegistrarTaller">
