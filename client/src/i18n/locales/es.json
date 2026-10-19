@@ -56,6 +56,30 @@
         }
     },
 
+    "elegirTaller": {
+                "saludo": "Hola, {{nombre}}",
+                "cerrar_sesion": "Cerrar sesión",
+                "cargando": "Cargando...",
+                "titulo": "¿Cómo querés empezar?",
+                "subtitulo": "Todavía no pertenecés a ningún taller. Elegí una opción para continuar.",
+                "otra_cuenta": "¿No sos vos?",
+                "iniciar_sesion": "Iniciar sesión con otra cuenta",
+                "crear": {
+                        "titulo": "Crear un taller",
+                        "descripcion": "Registrá tu taller y quedás como administrador. Vas a poder invitar a tu personal y administrar sus máquinas.",
+                        "accion": "Quiero crear un taller"
+                },
+                "unirse": {
+                        "titulo": "Unirme a un taller",
+                        "descripcion": "Ingresá el código que te compartió el administrador del taller y solicitá incorporarte a su equipo.",
+                        "accion": "Tengo un código"
+                },
+                "pendiente": {
+                        "titulo": "Solicitud pendiente",
+                        "descripcion": "Tu solicitud para unirte a {{taller}} está esperando que la apruebe el administrador.",
+                        "verificar": "Ya tengo mi código"
+                }
+        },
     "home": {
         "bienvenidaH1": "Hola",
         "bienvenidaP": "Bienvenido de nuevo",

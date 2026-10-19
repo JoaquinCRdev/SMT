@@ -56,6 +56,30 @@
             }
         },
 
+        "elegirTaller": {
+                        "saludo": "Hi, {{nombre}}",
+                        "cerrar_sesion": "Sign out",
+                        "cargando": "Loading...",
+                        "titulo": "How do you want to start?",
+                        "subtitulo": "You don't belong to any workshop yet. Choose an option to continue.",
+                        "otra_cuenta": "Not you?",
+                        "iniciar_sesion": "Sign in with another account",
+                        "crear": {
+                                    "titulo": "Create a workshop",
+                                    "descripcion": "Register your workshop and become its administrator. You'll be able to invite your staff and manage their machines.",
+                                    "accion": "I want to create a workshop"
+                        },
+                        "unirse": {
+                                    "titulo": "Join a workshop",
+                                    "descripcion": "Enter the code the workshop administrator shared with you and request to join their team.",
+                                    "accion": "I have a code"
+                        },
+                        "pendiente": {
+                                    "titulo": "Pending request",
+                                    "descripcion": "Your request to join {{taller}} is waiting for the administrator's approval.",
+                                    "verificar": "I already have my code"
+                        }
+            },
         "home": {
             "bienvenidaH1": "Hello",
             "bienvenidaP": "Welcome back",

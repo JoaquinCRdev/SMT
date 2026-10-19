@@ -56,6 +56,30 @@
             }
         },
 
+        "elegirTaller": {
+                        "saludo": "Hallo, {{nombre}}",
+                        "cerrar_sesion": "Abmelden",
+                        "cargando": "Wird geladen...",
+                        "titulo": "Wie möchten Sie beginnen?",
+                        "subtitulo": "Sie gehören noch keiner Werkstatt an. Wählen Sie eine Option, um fortzufahren.",
+                        "otra_cuenta": "Nicht Sie?",
+                        "iniciar_sesion": "Mit einem anderen Konto anmelden",
+                        "crear": {
+                                    "titulo": "Werkstatt erstellen",
+                                    "descripcion": "Registrieren Sie Ihre Werkstatt und werden Sie deren Administrator. Sie können Ihr Personal einladen und dessen Maschinen verwalten.",
+                                    "accion": "Ich möchte eine Werkstatt erstellen"
+                        },
+                        "unirse": {
+                                    "titulo": "Einer Werkstatt beitreten",
+                                    "descripcion": "Geben Sie den Code ein, den der Werkstatt-Administrator mit Ihnen geteilt hat, und beantragen Sie den Beitritt zum Team.",
+                                    "accion": "Ich habe einen Code"
+                        },
+                        "pendiente": {
+                                    "titulo": "Ausstehende Anfrage",
+                                    "descripcion": "Ihre Anfrage zum Beitritt zu {{taller}} wartet auf die Genehmigung durch den Administrator.",
+                                    "verificar": "Ich habe bereits meinen Code"
+                        }
+            },
         "home": {
             "bienvenidaH1": "Hallo",
             "bienvenidaP": "Willkommen zurück",
