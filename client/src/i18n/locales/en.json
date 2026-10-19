@@ -33,8 +33,6 @@
                 "placeholder_nombre": "Full name",
                 "placeholder_email": "Email",
                 "placeholder_password": "Password (minimum 8 characters)",
-                "rol_personal": "Staff",
-                "rol_admin": "Admin",
                 "boton": "Create account",
                 "boton_cargando": "Creating account...",
                 "ya_cuenta": "Already have an account?",

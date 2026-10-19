@@ -33,8 +33,6 @@
             "placeholder_nombre": "Nombre completo",
             "placeholder_email": "Correo electrónico",
             "placeholder_password": "Contraseña (mínimo 8 caracteres)",
-            "rol_personal": "Personal",
-            "rol_admin": "Admin",
             "boton": "Crear cuenta",
             "boton_cargando": "Creando cuenta...",
             "ya_cuenta": "¿Ya tienes una cuenta?",
