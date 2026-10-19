@@ -1,0 +1,25 @@
+# Usar junto con compose.yaml para desarrollar con MongoDB local en vez de Atlas:
+# docker compose -f compose.yaml -f compose.local-db.yaml up --build
+services:
+  server:
+    environment:
+      MONGO_URI: mongodb://mongo:27017/eestflow
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:

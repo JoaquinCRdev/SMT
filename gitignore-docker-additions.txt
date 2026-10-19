@@ -1,0 +1,11 @@
+# Agregar estas líneas al .gitignore existente en la raíz del repositorio.
+# No reemplaces tu .gitignore actual completo.
+.env
+.env.*
+!.env.example
+!.env.docker.example
+client/.env
+client/.env.*
+server/.env
+server/.env.*
+!server/.env.production.example
