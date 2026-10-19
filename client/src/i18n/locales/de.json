@@ -58,7 +58,65 @@
 
         "home": {
             "bienvenidaH1": "Hallo",
-            "bienvenidaP": "Willkommen zurück"
+            "bienvenidaP": "Willkommen zurück",
+            "resumen": {
+                "titulo": "Allgemeine Übersicht",
+                "maquinas": "Maschinen",
+                "registradas": "Registriert",
+                "otros": "Andere",
+                "registrados": "Registriert",
+                "mantenimientos": "Wartungen",
+                "activos": "Aktiv",
+                "personal": "Personal",
+                "miembros": "Mitglieder"
+            },
+            "atencion": {
+                "titulo": "Wartungen, die Aufmerksamkeit brauchen",
+                "ver_todos": "Alle ansehen",
+                "vacio": "Es gibt keine Wartungen, die Aufmerksamkeit brauchen.",
+                "vencido_hace": "Seit {{count}} Tag überfällig",
+                "vencido_hace_other": "Seit {{count}} Tagen überfällig",
+                "vence_en": "Fällig in {{count}} Tag",
+                "vence_en_other": "Fällig in {{count}} Tagen",
+                "vencido_hoy": "Heute überfällig",
+                "vence_hoy": "Heute fällig"
+            },
+            "ultimos": {
+                "titulo": "Letzte Wartungen",
+                "ver_todos": "Alle ansehen",
+                "vacio": "Es sind noch keine Wartungen registriert.",
+                "estado": {
+                    "realizado": "Abgeschlossen",
+                    "pendiente": "Ausstehend",
+                    "vencido": "Überfällig"
+                }
+            },
+            "acciones": {
+                "titulo": "Schnellaktionen",
+                "nueva_orden": "Neuer Auftrag",
+                "registrar_maquina": "Maschine registrieren",
+                "agregar_personal": "Personal hinzufügen",
+                "ver_reportes": "Berichte ansehen"
+            },
+            "notificaciones": {
+                "titulo": "Benachrichtigungen",
+                "ver_todas": "Alle ansehen",
+                "vacio": "Sie haben keine Benachrichtigungen.",
+                "fecha": {
+                    "hoy": "Heute, {{hora}}",
+                    "ayer": "Gestern, {{hora}}",
+                    "fecha": "{{fecha}}, {{hora}}"
+                }
+            },
+            "banner": {
+                "titulo": "Werfen Sie einen Blick auf unsere Tarife",
+                "subtitulo": "Entdecken Sie alles, was Sie mit SMT Pro freischalten können.",
+                "boton": "Tarife"
+            },
+            "rol_personal": "Mitarbeiter",
+            "rol_admin": "Admin",
+            "cargando": "Wird geladen...",
+            "error": "Die Übersicht konnte nicht geladen werden."
         },
 
         "mis_maquinas": {

@@ -1,115 +1,135 @@
 import "../styles/pages/home.css";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Sidebar from "../components/layout/sidebar";
+import i18n from "../i18n/i18n";
+import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
-// ============================================================
-// DATOS DE MUESTRA
-// Estas páginas (Mis máquinas, Mantenimientos, Configuración,
-// Notificaciones) todavía no comparten un mismo backend de
-// "resumen", así que por ahora estos números y listas son
-// mock, pensados para que coincidan con lo que ya se ve en
-// cada página. Cuando haya un endpoint de resumen (o varios
-// endpoints que consultemos acá), esto se reemplaza por fetchs
-// reales, tal como ya hace mismaquinas.jsx con api.get("/machine").
-// ============================================================
+const ULTIMOS_LIMIT = 5;
 
-const resumen = {
-  maquinas: 5,
-  otros: 11,
-  mantenimientosActivos: 3,
-  personal: 8,
-};
+// "Hola, Administrador" sin duplicar la lógica: el nombre viene del perfil.
+function primerNombre(name) {
+  return (name || "").trim().split(/\s+/)[0];
+}
 
-const mantenimientosUrgentes = [
-  {
-    id: 1,
-    maquina: "Generador B",
-    tipo: "Predictivo",
-    estado: "vencido",
-    detalle: "Vencido hace 12 días",
-  },
-  {
-    id: 2,
-    maquina: "Pinacho Mustang 225",
-    tipo: "Mantenimiento Trimestral",
-    estado: "vencido",
-    detalle: "Vencido hace 3 días",
-  },
-  {
-    id: 3,
-    maquina: "Bomba de Agua",
-    tipo: "Preventivo",
-    estado: "proximo",
-    detalle: "Vence en 2 días",
-  },
-];
+// La fecha del aviso se muestra relativa ("Ayer, 16:30") y se traduce.
+function fechaNotificacion(iso) {
+  const fecha = new Date(iso);
+  const hora = fecha.toLocaleTimeString(i18n.language || "es", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-// Últimos mantenimientos registrados (máquinas y tipos tomados
-// de mantenimiento.jsx). Cuando "Mantenimientos" tenga su propio
-// historial con fechas reales, acá se consultarían los últimos 5
-// que devuelva el backend en vez de este array fijo.
-const ultimosMantenimientos = [
-  {
-    id: 1,
-    maquina: "Pinacho Mustang 225",
-    tipo: "Mantenimiento Trimestral",
-    fecha: "28/09/2026",
-    estado: "realizado",
-  },
-  {
-    id: 2,
-    maquina: "Torno CNC HAAS",
-    tipo: "Mantenimiento Mensual",
-    fecha: "25/09/2026",
-    estado: "pendiente",
-  },
-  {
-    id: 3,
-    maquina: "Fresadora Bridgeport",
-    tipo: "Mantenimiento Semanal",
-    fecha: "22/09/2026",
-    estado: "realizado",
-  },
-  {
-    id: 4,
-    maquina: "Compresor Atlas",
-    tipo: "Cambio de filtros",
-    fecha: "18/09/2026",
-    estado: "pendiente",
-  },
-  {
-    id: 5,
-    maquina: "Pinacho Mustang 225",
-    tipo: "Lubricación",
-    fecha: "15/09/2026",
-    estado: "realizado",
-  },
-];
+  const hoy = new Date();
+  const mismoDia = (a, b) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
 
-const notificacionesRecientes = [
-  {
-    id: 1,
-    titulo: "Mantenimiento programado",
-    fecha: "Ayer, 16:30",
-    leida: false,
-  },
-  {
-    id: 2,
-    titulo: "Actualización del sistema",
-    fecha: "Ayer, 12:10",
-    leida: true,
-  },
-];
+  if (mismoDia(fecha, hoy)) {
+    return i18n.t("pages.home.notificaciones.fecha.hoy", { hora });
+  }
+
+  const ayer = new Date(hoy);
+  ayer.setDate(ayer.getDate() - 1);
+  if (mismoDia(fecha, ayer)) {
+    return i18n.t("pages.home.notificaciones.fecha.ayer", { hora });
+  }
+
+  return i18n.t("pages.home.notificaciones.fecha.fecha", {
+    fecha: fecha.toLocaleDateString(i18n.language || "es", {
+      day: "2-digit",
+      month: "2-digit",
+    }),
+    hora,
+  });
+}
+
+// Etiqueta de urgencia a partir de los datos del endpoint (estado + días).
+// El backend manda valores planos; acá se traducen.
+function etiquetaUrgencia({ estado, dias }) {
+  const vencido = estado === "vencido";
+  const abs = Math.abs(dias);
+
+  if (abs === 0) {
+    return i18n.t(vencido ? "pages.home.atencion.vencido_hoy" : "pages.home.atencion.vence_hoy");
+  }
+
+  const clave = vencido ? "vencido_hace" : "vence_en";
+  return i18n.t(`pages.home.atencion.${clave}`, { count: abs });
+}
+
+function estadoSlug(estado) {
+  return String(estado).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
 const Home = () => {
+  const { user } = useAuth();
+
+  const [resumen, setResumen] = useState(null);
+  const [urgentes, setUrgentes] = useState([]);
+  const [notificaciones, setNotificaciones] = useState([]);
+  const [ultimos, setUltimos] = useState([]);
+
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
+
+  // Si cambia el idioma hay que reformatear fechas y etiquetas.
+  const [, setTickIdioma] = useState(0);
+  useEffect(() => {
+    const alCambiarIdioma = () => setTickIdioma((n) => n + 1);
+    i18n.on("languageChanged", alCambiarIdioma);
+    return () => i18n.off("languageChanged", alCambiarIdioma);
+  }, []);
+
+  useEffect(() => {
+    let cancelado = false;
+
+    // IIFE para no setStatear sincrónicamente en el cuerpo del effect (mismo
+    // patrón que AuthContext/SolicitudesSection).
+    (async () => {
+      try {
+        // Dos consultas en paralelo: el resumen y los últimos mantenimientos
+        // (que reusan /api/history en vez de duplicar la lógica acá).
+        const [home, historial] = await Promise.all([
+          api.get("/home"),
+          api.get("/history", {
+            params: { state: "realizado", order: "recientes", limit: ULTIMOS_LIMIT },
+          }),
+        ]);
+
+        if (cancelado) return;
+
+        setResumen(home.data.resumen);
+        setUrgentes(home.data.mantenimientosUrgentes || []);
+        setNotificaciones(home.data.notificacionesRecientes || []);
+        setUltimos(historial.data.items || []);
+        setError("");
+      } catch {
+        if (cancelado) return;
+        setError(i18n.t("pages.home.error"));
+      } finally {
+        if (!cancelado) setCargando(false);
+      }
+    })();
+
+    return () => {
+      cancelado = true;
+    };
+  }, []);
+
+  const nombre = primerNombre(user?.name);
+  const esAdmin = user?.role === "admin";
+
   return (
     <div id="containerhome">
       <Sidebar />
       {/* ================= CONTENIDO PRINCIPAL ================= */}
       <div id="ladohome">
-        {/* ================= BARRA SUPERIOR (sin cambios) ================= */}
+        {/* ================= BARRA SUPERIOR ================= */}
         <div id="botonesarribahome">
-          <button className="notification-btn">
+          <Link to="/notificaciones" className="notification-btn">
             <svg
               width="20"
               height="20"
@@ -121,7 +141,7 @@ const Home = () => {
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-          </button>
+          </Link>
 
           <div className="separadorheader"></div>
 
@@ -141,8 +161,12 @@ const Home = () => {
             </div>
 
             <div className="user-info">
-              <span className="user-name">Administrador</span>
-              <span className="user-role">Admin</span>
+              <span className="user-name">{user?.name || ""}</span>
+              <span className="user-role">
+                {i18n.t(
+                  esAdmin ? "pages.home.rol_admin" : "pages.home.rol_personal",
+                )}
+              </span>
             </div>
           </div>
         </div>
@@ -151,115 +175,142 @@ const Home = () => {
         <div id="contenidohome">
           {/* COLUMNA PRINCIPAL */}
           <main id="columnaprincipalhome">
-            {/* BIENVENIDA (sin cambios) */}
+            {/* BIENVENIDA */}
             <div id="bienvenidahome">
               <div className="iconobienvenida">
                 <img src="personita.png" alt="" />
               </div>
 
               <div>
-                <h1>¡Hola, Administrador!</h1>
-                <p>Bienvenido de nuevo</p>
+                <h1>
+                  {i18n.t("pages.home.bienvenidaH1")}
+                  {nombre ? `, ${nombre}` : ""}!
+                </h1>
+                <p>{i18n.t("pages.home.bienvenidaP")}</p>
               </div>
             </div>
 
             {/* RESUMEN GENERAL */}
             <section id="resumengeneral">
-              <h2>Resumen general</h2>
+              <h2>{i18n.t("pages.home.resumen.titulo")}</h2>
 
-              <div id="tarjetasresumen">
-                {/* MAQUINAS */}
-                <Link to="/mismaquinas" className="tarjetaresumen">
-                  <div>
-                    <p>Máquinas</p>
-                    <strong>{resumen.maquinas}</strong>
-                    <span>Registradas</span>
-                  </div>
+              {cargando ? (
+                <p className="home-vacio">{i18n.t("pages.home.cargando")}</p>
+              ) : error ? (
+                <p className="home-vacio">{error}</p>
+              ) : (
+                <div id="tarjetasresumen">
+                  {/* MAQUINAS */}
+                  <Link to="/mismaquinas" className="tarjetaresumen">
+                    <div>
+                      <p>{i18n.t("pages.home.resumen.maquinas")}</p>
+                      <strong>{resumen.maquinas}</strong>
+                      <span>{i18n.t("pages.home.resumen.registradas")}</span>
+                    </div>
 
-                  <img src="mismaquinasnaranja.png" alt="" />
-                </Link>
+                    <img src="mismaquinasnaranja.png" alt="" />
+                  </Link>
 
-                {/* OTROS */}
-                <Link to="/mismaquinas" className="tarjetaresumen">
-                  <div>
-                    <p>Otros</p>
-                    <strong>{resumen.otros}</strong>
-                    <span>Registrados</span>
-                  </div>
+                  {/* OTROS */}
+                  <Link to="/mismaquinas" className="tarjetaresumen">
+                    <div>
+                      <p>{i18n.t("pages.home.resumen.otros")}</p>
+                      <strong>{resumen.otros}</strong>
+                      <span>{i18n.t("pages.home.resumen.registrados")}</span>
+                    </div>
 
-                  <img src="mismaquinasnaranja.png" alt="" />
-                </Link>
+                    <img src="mismaquinasnaranja.png" alt="" />
+                  </Link>
 
-                {/* MANTENIMIENTOS */}
-                <Link to="/mantenimientos" className="tarjetaresumen">
-                  <div>
-                    <p>Mantenimientos</p>
-                    <strong>{resumen.mantenimientosActivos}</strong>
-                    <span>Activos</span>
-                  </div>
+                  {/* MANTENIMIENTOS */}
+                  <Link to="/mantenimientos" className="tarjetaresumen">
+                    <div>
+                      <p>{i18n.t("pages.home.resumen.mantenimientos")}</p>
+                      <strong>{resumen.mantenimientosActivos}</strong>
+                      <span>{i18n.t("pages.home.resumen.activos")}</span>
+                    </div>
 
-                  <img src="mantenimientosnaranja.png" alt="" />
-                </Link>
+                    <img src="mantenimientosnaranja.png" alt="" />
+                  </Link>
 
-                {/* PERSONAL */}
-                <Link to="/configuracion" className="tarjetaresumen">
-                  <div>
-                    <p>Personal</p>
-                    <strong>{resumen.personal}</strong>
-                    <span>Miembros</span>
-                  </div>
+                  {/* PERSONAL */}
+                  <Link to="/configuracion" className="tarjetaresumen">
+                    <div>
+                      <p>{i18n.t("pages.home.resumen.personal")}</p>
+                      <strong>{resumen.personal}</strong>
+                      <span>{i18n.t("pages.home.resumen.miembros")}</span>
+                    </div>
 
-                  <img src="iconopersonal.png" alt="" />
-                </Link>
-              </div>
+                    <img src="iconopersonal.png" alt="" />
+                  </Link>
+                </div>
+              )}
             </section>
 
-            {/* MANTENIMIENTOS QUE NECESITAN ATENCIÓN + ÚLTIMOS MANTENIMIENTOS, lado a lado */}
+            {/* ATENCIÓN + ÚLTIMOS, lado a lado */}
             <div id="filasegundaresumenhome">
               <section id="mantenimientosAtencionHome" className="tarjetaseccionhome">
                 <div className="encabezado-seccion-home">
-                  <h2>Mantenimientos que necesitan atención</h2>
-                  <Link to="/historial">Ver todos</Link>
+                  <h2>{i18n.t("pages.home.atencion.titulo")}</h2>
+                  <Link to="/historial">{i18n.t("pages.home.atencion.ver_todos")}</Link>
                 </div>
 
                 <div id="listaatencionhome">
-                  {mantenimientosUrgentes.map((item) => (
-                    <div className="filaatencionhome" key={item.id}>
-                      <div>
-                        <strong>{item.maquina}</strong>
-                        <span>{item.tipo}</span>
-                      </div>
+                  {urgentes.length === 0 ? (
+                    <p className="home-vacio">{i18n.t("pages.home.atencion.vacio")}</p>
+                  ) : (
+                    urgentes.map((item) => (
+                      <div className="filaatencionhome" key={item.id}>
+                        <div>
+                          <strong>{item.machine?.name || "—"}</strong>
+                          <span>{item.title}</span>
+                        </div>
 
-                      <span className={`estado-atencion ${item.estado}`}>
-                        {item.detalle}
-                      </span>
-                    </div>
-                  ))}
+                        <span className={`estado-atencion ${item.estado}`}>
+                          {etiquetaUrgencia(item)}
+                        </span>
+                      </div>
+                    ))
+                  )}
                 </div>
               </section>
 
               <section id="ultimosmantenimientoshome" className="tarjetaseccionhome">
                 <div className="encabezado-seccion-home">
-                  <h2>Últimos mantenimientos</h2>
-                  <Link to="/mantenimientos">Ver todos</Link>
+                  <h2>{i18n.t("pages.home.ultimos.titulo")}</h2>
+                  <Link to="/mantenimientos">{i18n.t("pages.home.ultimos.ver_todos")}</Link>
                 </div>
 
                 <div id="listaultimosmantenimientoshome">
-                  {ultimosMantenimientos.slice(0, 5).map((item) => (
-                    <div className="filamantenimientohome" key={item.id}>
-                      <div>
-                        <strong>{item.maquina}</strong>
-                        <span className="tipo-mantenimiento">{item.tipo}</span>
-                      </div>
+                  {ultimos.length === 0 ? (
+                    <p className="home-vacio">{i18n.t("pages.home.ultimos.vacio")}</p>
+                  ) : (
+                    ultimos.map((item) => {
+                      const slug = estadoSlug(item.estado);
+                      return (
+                        <div className="filamantenimientohome" key={item.id}>
+                          <div>
+                            <strong>{item.machine?.name || "—"}</strong>
+                            <span className="tipo-mantenimiento">{item.title}</span>
+                          </div>
 
-                      <div className="info-derecha">
-                        <span className="fecha-mantenimiento">{item.fecha}</span>
-                        <span className={`estado-mini ${item.estado}`}>
-                          {item.estado === "realizado" ? "Realizado" : "Pendiente"}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                          <div className="info-derecha">
+                            <span className="fecha-mantenimiento">
+                              {new Date(`${item.fecha}T00:00:00`).toLocaleDateString(
+                                i18n.language || "es",
+                                { day: "2-digit", month: "2-digit", year: "numeric" },
+                              )}
+                            </span>
+                            <span className={`estado-mini ${slug}`}>
+                              {i18n.t(`pages.home.ultimos.estado.${slug}`, {
+                                defaultValue: item.estado,
+                              })}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               </section>
             </div>
@@ -267,76 +318,74 @@ const Home = () => {
             {/* BANNER DE PLANES */}
             <section id="bannerplanhome">
               <div>
-                <h2>Hechá un vistazo a nuestros planes</h2>
-                <p>Descubrí todo lo que podés desbloquear con SMT Pro.</p>
+                <h2>{i18n.t("pages.home.banner.titulo")}</h2>
+                <p>{i18n.t("pages.home.banner.subtitulo")}</p>
               </div>
 
               <Link to="/planes" id="botonverplanhome">
-                Planes
+                {i18n.t("pages.home.banner.boton")}
               </Link>
             </section>
           </main>
 
           {/* ================= ACCIONES RAPIDAS + NOTIFICACIONES ================= */}
           <aside id="accionesrapidas">
-            <h2>Acciones rápidas</h2>
+            <h2>{i18n.t("pages.home.acciones.titulo")}</h2>
 
             <NavLink to="/mantenimientos" className="accionrapida">
               <div className="iconoaccion">
                 <img src="nuevaorden.png" alt="" />
               </div>
-              <span>Nueva orden</span>
+              <span>{i18n.t("pages.home.acciones.nueva_orden")}</span>
             </NavLink>
 
             <NavLink to="/mismaquinas" className="accionrapida">
               <div className="iconoaccion">
                 <img src="mismaquinasnaranja.png" alt="" />
               </div>
-              <span>
-                Registrar
-                <br />
-                máquina
-              </span>
+              <span>{i18n.t("pages.home.acciones.registrar_maquina")}</span>
             </NavLink>
 
             <NavLink to="/configuracion" className="accionrapida">
               <div className="iconoaccion">
                 <img src="iconopersonal.png" alt="" />
               </div>
-              <span>
-                Agregar
-                <br />
-                personal
-              </span>
+              <span>{i18n.t("pages.home.acciones.agregar_personal")}</span>
             </NavLink>
 
             <NavLink to="/historial" className="accionrapida">
               <div className="iconoaccion">
                 <img src="reportesnaranja.png" alt="" />
               </div>
-              <span>
-                Ver
-                <br />
-                reportes
-              </span>
+              <span>{i18n.t("pages.home.acciones.ver_reportes")}</span>
             </NavLink>
 
             {/* NOTIFICACIONES RECIENTES */}
             <div id="notificacionesresumenhome">
               <div className="encabezado-seccion-home">
-                <h2>Notificaciones</h2>
-                <Link to="/notificaciones">Ver todas</Link>
+                <h2>{i18n.t("pages.home.notificaciones.titulo")}</h2>
+                <Link to="/notificaciones">
+                  {i18n.t("pages.home.notificaciones.ver_todas")}
+                </Link>
               </div>
 
-              {notificacionesRecientes.map((notif) => (
-                <div
-                  className={`notifhome ${notif.leida ? "" : "no-leida"}`}
-                  key={notif.id}
-                >
-                  <span className="notifhome-titulo">{notif.titulo}</span>
-                  <span className="notifhome-fecha">{notif.fecha}</span>
-                </div>
-              ))}
+              {notificaciones.length === 0 ? (
+                <p className="home-vacio">
+                  {i18n.t("pages.home.notificaciones.vacio")}
+                </p>
+              ) : (
+                notificaciones.map((notif) => (
+                  <div
+                    className={`notifhome ${notif.read ? "" : "no-leida"}`}
+                    key={notif._id}
+                  >
+                    <span className="notifhome-titulo">{notif.title}</span>
+                    <span className="notifhome-fecha">
+                      {fechaNotificacion(notif.createdAt)}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
           </aside>
         </div>

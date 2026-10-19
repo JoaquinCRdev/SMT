@@ -58,7 +58,65 @@
 
         "home": {
             "bienvenidaH1": "Hello",
-            "bienvenidaP": "Welcome back"
+            "bienvenidaP": "Welcome back",
+            "resumen": {
+                "titulo": "General summary",
+                "maquinas": "Machines",
+                "registradas": "Registered",
+                "otros": "Others",
+                "registrados": "Registered",
+                "mantenimientos": "Maintenances",
+                "activos": "Active",
+                "personal": "Staff",
+                "miembros": "Members"
+            },
+            "atencion": {
+                "titulo": "Maintenances that need attention",
+                "ver_todos": "View all",
+                "vacio": "There are no maintenances that need attention.",
+                "vencido_hace": "Overdue by {{count}} day",
+                "vencido_hace_other": "Overdue by {{count}} days",
+                "vence_en": "Due in {{count}} day",
+                "vence_en_other": "Due in {{count}} days",
+                "vencido_hoy": "Overdue today",
+                "vence_hoy": "Due today"
+            },
+            "ultimos": {
+                "titulo": "Latest maintenances",
+                "ver_todos": "View all",
+                "vacio": "There are no registered maintenances yet.",
+                "estado": {
+                    "realizado": "Completed",
+                    "pendiente": "Pending",
+                    "vencido": "Overdue"
+                }
+            },
+            "acciones": {
+                "titulo": "Quick actions",
+                "nueva_orden": "New order",
+                "registrar_maquina": "Register machine",
+                "agregar_personal": "Add staff",
+                "ver_reportes": "View reports"
+            },
+            "notificaciones": {
+                "titulo": "Notifications",
+                "ver_todas": "View all",
+                "vacio": "You have no notifications.",
+                "fecha": {
+                    "hoy": "Today, {{hora}}",
+                    "ayer": "Yesterday, {{hora}}",
+                    "fecha": "{{fecha}}, {{hora}}"
+                }
+            },
+            "banner": {
+                "titulo": "Take a look at our plans",
+                "subtitulo": "Discover everything you can unlock with SMT Pro.",
+                "boton": "Plans"
+            },
+            "rol_personal": "Staff",
+            "rol_admin": "Admin",
+            "cargando": "Loading...",
+            "error": "Could not load the summary."
         },
 
         "mis_maquinas": {

@@ -5,34 +5,10 @@ import {
   NOTIFICATION_TIMEZONE,
   startOfToday,
 } from "../utils/dates.js";
-
-// Ventana por defecto, usada por los planes `custom` (y por cualquier
-// frecuencia sin entrada en el mapa de abajo).
-const LOOKAHEAD_DAYS = Number(process.env.NOTIFICATION_LOOKAHEAD_DAYS) || 3;
-
-// Una ventana única para todas las frecuencias no Servía: un plan diario
-// avisando con 3 días de anticipación es ruido (si no está vencido, su
-// nextDue siempre cae dentro de la ventana, así que nunca distinguished
-// "vence mañana" de "vence en tres días"), mientras que un plan anual
-// necesitaría más margen para que haya tiempo de agendarlo. Ahora cada
-// frecuencia avisa con su propia anticipación.
-const LOOKAHEAD_BY_FREQUENCY = {
-  daily: 1,
-  weekly: 2,
-  monthly: 5,
-  yearly: 7,
-};
-
-function lookaheadFor(plan) {
-  return LOOKAHEAD_BY_FREQUENCY[plan.frequency] ?? LOOKAHEAD_DAYS;
-}
-
-// La ventana más amplia de todas: define hasta dónde mira la consulta. Después
-// cada plan se filtra por su propia ventana (más fina).
-const MAX_LOOKAHEAD_DAYS = Math.max(
-  LOOKAHEAD_DAYS,
-  ...Object.values(LOOKAHEAD_BY_FREQUENCY),
-);
+import {
+  endOfWindow,
+  isWithinDueWindow,
+} from "../utils/maintenanceDue.js";
 
 // La zona del aviso. El cron usa la hora local de ESTA zona y la ventana se
 // calcula en la misma, así no pueden desalinearse.
@@ -47,12 +23,6 @@ const MAX_LOOKAHEAD_DAYS = Math.max(
 // Ojo: node-cron interpreta la expresión en la zona del proceso salvo que se le
 // pase `timezone`, así que abajo se la pasamos explícita.
 const CRON_EXPRESSION = process.env.NOTIFICATION_CRON || "0 8 * * *";
-
-function endOfWindow() {
-  const end = startOfToday();
-  end.setUTCDate(end.getUTCDate() + MAX_LOOKAHEAD_DAYS + 1);
-  return end;
-}
 
 // La clave lleva la fecha exacta de vencimiento: si el plan se reprograma, la clave cambia y el aviso nuevo se crea igual.
 function dedupeKeyFor(plan) {
@@ -125,14 +95,7 @@ export async function sweepDueMaintenance() {
   // La consulta trajo todo lo que cabe en la ventana más amplia; cada plan
   // entra solo si cae dentro de la suya. Un plan vencido (nextDue < hoy) pasa
   // siempre, sea cual sea su frecuencia.
-  const enVentana = plans.filter((plan) => {
-    const due = new Date(plan.nextDue);
-    if (due < from) return true;
-
-    const limite = new Date(from);
-    limite.setUTCDate(limite.getUTCDate() + lookaheadFor(plan));
-    return due <= limite;
-  });
+  const enVentana = plans.filter((plan) => isWithinDueWindow(plan, from));
 
   // `scanned` cuenta los que realmente se evaluaron, no los que trajo la
   // consulta: con ventanas por frecuencia la consulta devuelve de más, y un

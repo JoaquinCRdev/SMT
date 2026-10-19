@@ -58,7 +58,65 @@
 
     "home": {
         "bienvenidaH1": "Hola",
-        "bienvenidaP": "Bienvenido de nuevo"
+        "bienvenidaP": "Bienvenido de nuevo",
+        "resumen": {
+            "titulo": "Resumen general",
+            "maquinas": "Máquinas",
+            "registradas": "Registradas",
+            "otros": "Otros",
+            "registrados": "Registrados",
+            "mantenimientos": "Mantenimientos",
+            "activos": "Activos",
+            "personal": "Personal",
+            "miembros": "Miembros"
+        },
+        "atencion": {
+            "titulo": "Mantenimientos que necesitan atención",
+            "ver_todos": "Ver todos",
+            "vacio": "No hay mantenimientos que necesiten atención.",
+            "vencido_hace": "Vencido hace {{count}} día",
+            "vencido_hace_other": "Vencido hace {{count}} días",
+            "vence_en": "Vence en {{count}} día",
+            "vence_en_other": "Vence en {{count}} días",
+            "vencido_hoy": "Venció hoy",
+            "vence_hoy": "Vence hoy"
+        },
+        "ultimos": {
+            "titulo": "Últimos mantenimientos",
+            "ver_todos": "Ver todos",
+            "vacio": "Todavía no hay mantenimientos registrados.",
+            "estado": {
+                "realizado": "Realizado",
+                "pendiente": "Pendiente",
+                "vencido": "Vencido"
+            }
+        },
+        "acciones": {
+            "titulo": "Acciones rápidas",
+            "nueva_orden": "Nueva orden",
+            "registrar_maquina": "Registrar máquina",
+            "agregar_personal": "Agregar personal",
+            "ver_reportes": "Ver reportes"
+        },
+        "notificaciones": {
+            "titulo": "Notificaciones",
+            "ver_todas": "Ver todas",
+            "vacio": "No tenés notificaciones.",
+            "fecha": {
+                "hoy": "Hoy, {{hora}}",
+                "ayer": "Ayer, {{hora}}",
+                "fecha": "{{fecha}}, {{hora}}"
+            }
+        },
+        "banner": {
+            "titulo": "Hechá un vistazo a nuestros planes",
+            "subtitulo": "Descubrí todo lo que podés desbloquear con SMT Pro.",
+            "boton": "Planes"
+        },
+        "rol_personal": "Personal",
+        "rol_admin": "Admin",
+        "cargando": "Cargando...",
+        "error": "No se pudo cargar el resumen."
     },
 
     "mis_maquinas": {

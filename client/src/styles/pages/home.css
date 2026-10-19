@@ -796,6 +796,14 @@
   gap: 10px;
 }
 
+/* Mensaje de lista vacía / cargando, usado en las secciones del resumen. */
+.home-vacio {
+  padding: 10px 0;
+
+  font-size: var(--TamTexto);
+  color: var(--TextoSecundario);
+}
+
 .filamantenimientohome {
   display: flex;
   justify-content: space-between;
