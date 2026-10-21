@@ -160,6 +160,17 @@
             "descripcion": "Schedule and track the maintenance of your machines."
         },
 
+        "mantenimiento": {
+            "eliminar_tarea": {
+                "boton": "Delete task",
+                "aria_label": "Delete the task {{titulo}}",
+                "confirmacion": "Are you sure you want to delete the task \"{{titulo}}\"?",
+                "error": "The task could not be deleted",
+                "error_no_encontrada": "The task no longer exists",
+                "error_sin_permiso": "You do not have permission to delete this task"
+            }
+        },
+
         "configuracion": {
             "title": "Customization",
             "subtitle": "Customize and manage your workshop",

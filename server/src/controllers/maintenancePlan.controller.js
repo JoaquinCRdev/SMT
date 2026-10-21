@@ -78,6 +78,20 @@ export async function deletePlan(req, res, next) {
   }
 }
 
+export async function deletePlanTask(req, res, next) {
+  try {
+    const result = await maintenancePlanService.deletePlanTask(
+      req.params.machineId,
+      req.params.planId,
+      req.params.taskId,
+      req.user,
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function markPerformed(req, res, next) {
   try {
     const plan = await maintenancePlanService.markPlanPerformed(

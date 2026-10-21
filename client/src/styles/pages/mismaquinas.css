@@ -1311,9 +1311,9 @@
 
 .search-input {
     width: 100%;
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
+    background-color: var(--FondoTarjeta);
+    color: var(--TextoPrincipal);
+    border: 1px solid var(--BordePrincipal);
     border-radius: 8px;
     padding: 6px 36px 6px 36px;
     font-size: 14.5px;
@@ -1328,11 +1328,11 @@
 
 .search-input:focus,
 .search-input:hover {
-    border-color: #555566;
+    border-color: var(--Naranja);
 }
 
 .search-input::placeholder {
-    color: var(--text-secondary);
+    color: var(--TextoSecundario);
 }
 
 .filter-group {

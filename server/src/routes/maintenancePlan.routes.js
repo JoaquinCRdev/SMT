@@ -26,6 +26,10 @@ router.put(
   maintenancePlanController.updatePlan,
 );
 router.delete("/:planId", maintenancePlanController.deletePlan);
+router.delete(
+  "/:planId/tasks/:taskId",
+  maintenancePlanController.deletePlanTask,
+);
 router.patch(
   "/:planId/status",
   validate(changePlanStatusSchema),

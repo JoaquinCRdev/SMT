@@ -1,6 +1,9 @@
 import request from "supertest";
 import { describe, expect, it, beforeAll } from "vitest";
 import { app } from "./setup.js";
+import MachineTask from "../src/models/machineTask.model.js";
+import MaintenancePlan from "../src/models/maintenancePlan.model.js";
+import TaskLog from "../src/models/Tasklog.model.js";
 
 let token, machineId, planId, workshopCode;
 
@@ -277,5 +280,156 @@ describe("workshop-wide plans", () => {
         assignedTo: ["no-es-un-objectid"],
       });
     expect(res.status).toBe(400);
+  });
+});
+
+describe("borrar una tarea de un plan", () => {
+  let planConTareas, tareaA, tareaB;
+
+  beforeAll(async () => {
+    const res = await request(app)
+      .post(`/api/machine/${machineId}/plans`)
+      .set(...auth(token))
+      .send({
+        title: "Plan con dos tareas para borrar",
+        frequency: "monthly",
+        startDate: "2026-10-01",
+        tasks: [
+          { title: "Revisar nivel de aceite" },
+          { title: "Limpiar filtros de aire" },
+        ],
+      });
+    planConTareas = res.body._id;
+    tareaA = res.body.tasks[0]._id;
+    tareaB = res.body.tasks[1]._id;
+  });
+
+  it("removes the task from the plan and deletes the document (200)", async () => {
+    const res = await request(app)
+      .delete(
+        `/api/machine/${machineId}/plans/${planConTareas}/tasks/${tareaA}`,
+      )
+      .set(...auth(token));
+    expect(res.status).toBe(200);
+
+    // El plan ya no guarda el id de la tarea borrada.
+    const plan = await MaintenancePlan.findById(planConTareas);
+    expect(plan.tasks.map((t) => String(t))).toEqual([String(tareaB)]);
+
+    // Y el documento de la tarea ya no existe.
+    expect(await MachineTask.findById(tareaA)).toBeNull();
+    expect(await MachineTask.findById(tareaB)).not.toBeNull();
+  });
+
+  it("logs the deletion (200)", async () => {
+    const logs = await TaskLog.find({ taskId: tareaA, action: "deleted" });
+    expect(logs.length).toBe(1);
+    expect(logs[0].userId).toBeTruthy();
+  });
+
+  it("returns the plan without the task when it is read (200)", async () => {
+    const res = await request(app)
+      .get(`/api/machine/${machineId}/plans/${planConTareas}`)
+      .set(...auth(token));
+    expect(res.status).toBe(200);
+    expect(res.body.tasks.length).toBe(1);
+    expect(res.body.tasks[0]._id).toBe(tareaB);
+  });
+
+  it("rejects deleting the same task twice (404)", async () => {
+    const res = await request(app)
+      .delete(
+        `/api/machine/${machineId}/plans/${planConTareas}/tasks/${tareaA}`,
+      )
+      .set(...auth(token));
+    expect(res.status).toBe(404);
+  });
+
+  it("rejects a task that belongs to another plan (404)", async () => {
+    const otro = await request(app)
+      .post(`/api/machine/${machineId}/plans`)
+      .set(...auth(token))
+      .send({
+        title: "Plan sin la tarea buscada",
+        frequency: "monthly",
+        startDate: "2026-10-01",
+      });
+
+    const res = await request(app)
+      .delete(
+        `/api/machine/${machineId}/plans/${otro.body._id}/tasks/${tareaB}`,
+      )
+      .set(...auth(token));
+    expect(res.status).toBe(404);
+
+    // La tarea sigue viva: el intento no la tocó.
+    expect(await MachineTask.findById(tareaB)).not.toBeNull();
+  });
+
+  it("rejects a malformed task id (400)", async () => {
+    const res = await request(app)
+      .delete(
+        `/api/machine/${machineId}/plans/${planConTareas}/tasks/no-es-un-objectid`,
+      )
+      .set(...auth(token));
+    expect(res.status).toBe(400);
+  });
+
+  it("does not let another workshop delete the task (403)", async () => {
+    const otherToken = await registerAndLogin("planTaskOther@test.com");
+    await request(app)
+      .post("/api/workshops")
+      .set(...auth(otherToken))
+      .send({ name: "Otro Taller Para Tareas" });
+
+    const res = await request(app)
+      .delete(
+        `/api/machine/${machineId}/plans/${planConTareas}/tasks/${tareaB}`,
+      )
+      .set(...auth(otherToken));
+    expect(res.status).toBe(403);
+
+    // Tampoco la puede borrar pasando su propia maquina.
+    const otherMachine = await request(app)
+      .post("/api/machine")
+      .set(...auth(otherToken))
+      .send({
+        name: "Maquina De Otro Taller Para Tareas",
+        brand: "Brand",
+        model: "Model",
+        tipo: "maquina",
+        serialNumber: "TAREA-0001",
+      });
+    const res2 = await request(app)
+      .delete(
+        `/api/machine/${otherMachine.body._id}/plans/${planConTareas}/tasks/${tareaB}`,
+      )
+      .set(...auth(otherToken));
+    expect(res2.status).toBe(403);
+
+    expect(await MachineTask.findById(tareaB)).not.toBeNull();
+  });
+
+  it("the machine-scoped delete also takes the task out of the plan (200)", async () => {
+    const plan = await request(app)
+      .post(`/api/machine/${machineId}/plans`)
+      .set(...auth(token))
+      .send({
+        title: "Plan para borrar la tarea por la maquina",
+        frequency: "monthly",
+        startDate: "2026-10-01",
+        tasks: [{ title: "Tarea que se borra desde la maquina" }],
+      });
+    const planId = plan.body._id;
+    const taskId = plan.body.tasks[0]._id;
+
+    const res = await request(app)
+      .delete(`/api/machine/${machineId}/tasks/${taskId}`)
+      .set(...auth(token));
+    expect(res.status).toBe(200);
+
+    // Antes el plan se quedaba guardando el id de una tarea inexistente.
+    const guardado = await MaintenancePlan.findById(planId);
+    expect(guardado.tasks.length).toBe(0);
   });
 });

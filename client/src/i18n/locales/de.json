@@ -160,6 +160,17 @@
             "descripcion": "Planen und verfolgen Sie die Wartung Ihrer Maschinen."
         },
 
+        "mantenimiento": {
+            "eliminar_tarea": {
+                "boton": "Aufgabe löschen",
+                "aria_label": "Aufgabe {{titulo}} löschen",
+                "confirmacion": "Möchten Sie die Aufgabe „{{titulo}}“ wirklich löschen?",
+                "error": "Die Aufgabe konnte nicht gelöscht werden",
+                "error_no_encontrada": "Die Aufgabe existiert nicht mehr",
+                "error_sin_permiso": "Sie haben keine Berechtigung, diese Aufgabe zu löschen"
+            }
+        },
+
         "configuracion": {
             "title": "Personalisierung",
             "subtitle": "Personalisieren und verwalten Sie Ihre Werkstatt",

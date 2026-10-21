@@ -1,5 +1,6 @@
 import MachineTask from "../models/machineTask.model.js";
 import MaintenancePlan from "../models/maintenancePlan.model.js";
+import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
 import {
   assertAssignableUser,
@@ -257,6 +258,38 @@ export async function deletePlan(machineId, planId, user) {
   await MaintenancePlan.findByIdAndDelete(plan._id);
 
   return { message: "Maintenance plan deleted" };
+}
+
+// Quita una tarea del plan: la saca del array `tasks` y borra el documento. Sin el `$pull` el plan quedaba guardando el id de una tarea que ya no existe, y al popularlo salía un hueco o un error.
+export async function deletePlanTask(machineId, planId, taskId, user) {
+  await getAccessibleMachine(machineId, user);
+  const plan = await getAccessiblePlan(planId, user);
+
+  if (!isValidObjectId(taskId)) throw new ApiError(400, "Invalid task id");
+
+  // La tarea tiene que ser de este plan: si no, el id no se toca.
+  const estaEnElPlan = plan.tasks?.some((t) => String(t) === String(taskId));
+  if (!estaEnElPlan) throw new ApiError(404, "Task not found in this plan");
+
+  const task = await MachineTask.findById(taskId);
+  if (!task) throw new ApiError(404, "Task not found");
+
+  await MaintenancePlan.updateOne(
+    { _id: plan._id },
+    { $pull: { tasks: task._id } },
+  );
+  await MachineTask.findByIdAndDelete(task._id);
+
+  // Mismo rastro que deja el borrado de tareas: queda registrado quién lo hizo.
+  await TaskLog.create({
+    machineId: plan.machineId,
+    taskId: task._id,
+    userId: user.id,
+    action: "deleted",
+    notes: `Task "${task.title}" deleted`,
+  });
+
+  return { message: "Task deleted from plan" };
 }
 
 export async function markPlanPerformed(machineId, planId, user, payload = {}) {

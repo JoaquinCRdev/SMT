@@ -1,4 +1,5 @@
 import MachineTask from "../models/machineTask.model.js";
+import MaintenancePlan from "../models/maintenancePlan.model.js";
 import TaskLog from "../models/Tasklog.model.js";
 import ApiError from "../utils/ApiError.js";
 import {
@@ -158,6 +159,12 @@ export async function deleteTask(id, user) {
   });
 
   await MachineTask.findByIdAndDelete(task._id);
+
+  // Si la tarea estaba en un plan, hay que sacarla de ahí: si no el plan queda guardando el id de una tarea que ya no existe.
+  await MaintenancePlan.updateMany(
+    { tasks: task._id },
+    { $pull: { tasks: task._id } },
+  );
 
   return { message: "Task deleted" };
 }

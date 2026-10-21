@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
+import i18n from "../i18n/i18n";
 import "../styles/pages/mantenimiento.css";
 import Sidebar from "../components/layout/sidebar";
 
@@ -127,6 +128,15 @@ export default function MantenimientoApp() {
   });
   const [showModal, setShowModal] = useState(false);
   const [nuevo, setNuevo] = useState({ machineId: "", title: "" });
+
+  // Los textos se leen con i18n.t, que no re-renderiza solo: si cambia el
+  // idioma hay que forzar el repintado para que se vean los textos nuevos.
+  const [, setTickIdioma] = useState(0);
+  useEffect(() => {
+    const alCambiarIdioma = () => setTickIdioma((n) => n + 1);
+    i18n.on("languageChanged", alCambiarIdioma);
+    return () => i18n.off("languageChanged", alCambiarIdioma);
+  }, []);
 
   const cargarDatos = useCallback(async ({ limpiarError = true } = {}) => {
     if (limpiarError) setError("");
@@ -256,6 +266,12 @@ export default function MantenimientoApp() {
     }));
   };
 
+  // Una tarea está "ocupada" mientras se la está guardando o borrando. Las
+  // tareas sin guardar todavía no tienen id, así que no se comparan por id:
+  // si no, quedarían siempre bloqueadas.
+  const estaOcupada = (tarea) =>
+    Boolean(tarea._id) && tareaPendiente === tarea._id;
+
   const alternarTarea = async (idx) => {
     const tarea = form.tareas[idx];
     const nuevoStatus = tarea.status === "done" ? "pending" : "done";
@@ -308,6 +324,72 @@ export default function MantenimientoApp() {
         };
       }),
     );
+  };
+
+  const eliminarTarea = async (idx) => {
+    const tarea = form.tareas[idx];
+    if (!tarea) return;
+
+    if (!tarea._id) {
+      // Todavía no se guardó: sale sólo del formulario, sin pedir nada al server.
+      setForm((f) => ({
+        ...f,
+        tareas: f.tareas.filter((_, i) => i !== idx),
+      }));
+      return;
+    }
+
+    if (
+      !window.confirm(
+        i18n.t("pages.mantenimiento.eliminar_tarea.confirmacion", {
+          titulo: tarea.title,
+        }),
+      )
+    )
+      return;
+
+    setTareaPendiente(tarea._id);
+    try {
+      const machineId = form.machineId || seleccionado?.machineId?._id;
+      await api.delete(
+        `/machine/${machineId}/plans/${seleccionado._id}/tasks/${tarea._id}`,
+      );
+
+      // El plan vuelve del server sin la tarea, así que se saca del formulario
+      // y de la lista para que el progreso no la siga contando.
+      setForm((f) => ({
+        ...f,
+        tareas: f.tareas.filter((t) => t._id !== tarea._id),
+      }));
+      setPlanes((prev) =>
+        prev.map((p) =>
+          p._id === seleccionado._id
+            ? {
+                ...p,
+                tasks: (p.tasks ?? []).filter((t) => t._id !== tarea._id),
+              }
+            : p,
+        ),
+      );
+    } catch (err) {
+      // El server responde en inglés ("Task not found in this plan",
+      // "Forbidden"), así que se traduce según el status en vez de mostrar
+      // ese mensaje crudo.
+      const status = err.response?.status;
+      if (status === 404) {
+        setError(
+          i18n.t("pages.mantenimiento.eliminar_tarea.error_no_encontrada"),
+        );
+      } else if (status === 403) {
+        setError(
+          i18n.t("pages.mantenimiento.eliminar_tarea.error_sin_permiso"),
+        );
+      } else {
+        setError(i18n.t("pages.mantenimiento.eliminar_tarea.error"));
+      }
+    } finally {
+      setTareaPendiente(null);
+    }
   };
 
   const alternarAsignado = (id) => {
@@ -781,15 +863,16 @@ export default function MantenimientoApp() {
                   <input
                     type="checkbox"
                     checked={t.status === "done"}
-                    disabled={tareaPendiente === t._id}
+                    disabled={estaOcupada(t)}
                     onChange={() => alternarTarea(i)}
                   />
                   <span
-                    className="task-text"
+                    className={
+                      t.status === "done" ? "task-text done" : "task-text"
+                    }
                     style={{
                       textDecoration:
                         t.status === "done" ? "line-through" : "none",
-                      color: t.status === "done" ? "#999" : "#111",
                     }}
                   >
                     {t.title}
@@ -797,6 +880,19 @@ export default function MantenimientoApp() {
                   <span className="task-status">
                     {TASK_STATUS_LABEL[t.status] ?? t.status}
                   </span>
+                  <button
+                    type="button"
+                    className="task-del"
+                    title={i18n.t("pages.mantenimiento.eliminar_tarea.boton")}
+                    aria-label={i18n.t(
+                      "pages.mantenimiento.eliminar_tarea.aria_label",
+                      { titulo: t.title },
+                    )}
+                    disabled={estaOcupada(t)}
+                    onClick={() => eliminarTarea(i)}
+                  >
+                    ✕
+                  </button>
                 </div>
               ))}
               <div className="task-new">

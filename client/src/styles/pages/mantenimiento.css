@@ -502,6 +502,12 @@
     color: var(--TextoPrincipal);
 }
 
+/* Una tarea hecha se ve apagada, pero con el color del tema: hardcodear un
+   gris dejaba el texto ilegible en modo oscuro. */
+.task-text.done {
+    color: var(--TextoSecundario);
+}
+
 .task-status {
     font-size: calc(var(--TamTexto) - 2px);
     color: var(--TextoSecundario);
@@ -521,6 +527,18 @@
 
 .task:hover .task-del {
     opacity: 1;
+}
+
+/* El hover no llega con el teclado ni en pantallas táctiles: sin esto el
+   botón de borrar quedaba inalcanzable. */
+.task-del:focus-visible {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .task-del {
+        opacity: 1;
+    }
 }
 
 .task-new {

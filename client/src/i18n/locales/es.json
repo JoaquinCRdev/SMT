@@ -160,6 +160,17 @@
         "descripcion": "Programa y realiza seguimientos de los mantenimientos de tus máquinas."
     },
 
+    "mantenimiento": {
+        "eliminar_tarea": {
+            "boton": "Eliminar tarea",
+            "aria_label": "Eliminar la tarea {{titulo}}",
+            "confirmacion": "¿Seguro que querés eliminar la tarea \"{{titulo}}\"?",
+            "error": "No se pudo eliminar la tarea",
+            "error_no_encontrada": "La tarea ya no existe",
+            "error_sin_permiso": "No tenés permiso para eliminar esta tarea"
+        }
+    },
+
     "configuracion": {
         "title": "Personalizacion",
         "subtitle": "Personaliza y gestiona tu taller",
