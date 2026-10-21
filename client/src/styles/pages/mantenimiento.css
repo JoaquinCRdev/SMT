@@ -499,7 +499,7 @@
 .task-text {
     flex: 1;
     font-size: var(--TamTexto);
-    color: var(--TextoPrincipal);
+    color: #ffffff !important; 
 }
 
 .task-status {
